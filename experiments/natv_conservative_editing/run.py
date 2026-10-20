@@ -81,7 +81,7 @@ def run_group(backend,arm,g,plan,destination,edit_script,apply_script):
     traces=[];diagnostics=[];start=time.monotonic()
     for stage,wt_sites in enumerate(g['update_WT_positions_0based']):
         positions=current_positions(base,wt_sites);masks=[positions]*count
-        encoded,evolution,receipts,unique=backend.features(current,masks,destination/f'stage{stage}',with_encoder=arm!='profile')
+        encoded,evolution,receipts,unique = yield (current,masks,destination/f'stage{stage}')
         logits,full=backend.logits(arm,model,encoded,evolution,z)
         if arm=='QVAE' and stage==len(g['update_WT_positions_0based'])-1:
             with torch.no_grad():
@@ -143,29 +143,52 @@ def main():
     generation=RUN/'generation';generation.mkdir(exist_ok=args.resume)
     rows=[];start=time.monotonic();completed=0
     try:
+        buckets=defaultdict(list)
         for group in groups:
-            for arm in plan['arms']:
-                directory=generation/arm/group['group_id'];directory.parent.mkdir(exist_ok=True)
-                if directory.exists():
-                    if not args.resume or not (directory/'results.json').exists():raise ValueError('Incomplete group requires inspection: '+str(directory))
-                    record=json.loads((directory/'results.json').read_text())
-                    for name,expected in record.get('artifacts',{}).items():
-                        if sha256_file(directory/name)!=expected:raise ValueError('Group artifact changed')
-                    result=record['rows']
-                else:
-                    directory.mkdir()
-                    result=run_group(backend,arm,group,plan,directory,edit_script,apply_script)
-                rows.extend(result);completed+=1
-                if completed%4==0:
-                    write(RUN/'run_status.json',{'status':'RUNNING','completed_groups':completed,'attempts':len(rows),
-                              'elapsed_seconds':time.monotonic()-start})
-                    print(json.dumps({'completed_groups':completed,'groups':len(groups)*len(plan['arms']),
-                                      'attempts':len(rows),'last':group['group_id'],'elapsed_seconds':time.monotonic()-start}),flush=True)
+            length=len(scaffold(group['event']).sequence)
+            for arm in plan['arms']:buckets[(arm,group['seed'],length)].append(group)
+        for (arm,seed,length),bucket in buckets.items():
+            for offset in range(0,len(bucket),plan['execution']['groups_per_batch']):
+                pending=[]
+                for group in bucket[offset:offset+plan['execution']['groups_per_batch']]:
+                    directory=generation/arm/group['group_id'];directory.parent.mkdir(exist_ok=True)
+                    if directory.exists():
+                        if not args.resume or not (directory/'results.json').exists():raise ValueError('Incomplete group requires inspection: '+str(directory))
+                        record=json.loads((directory/'results.json').read_text())
+                        for name,expected in record.get('artifacts',{}).items():
+                            if sha256_file(directory/name)!=expected:raise ValueError('Group artifact changed')
+                        rows.extend(record['rows']);completed+=1
+                    else:
+                        directory.mkdir()
+                        job=run_group(backend,arm,group,plan,directory,edit_script,apply_script)
+                        pending.append((job,next(job)))
+                batch_folder=generation/arm/f'batch_s{seed}_l{length}_{offset}'
+                stage=0
+                while pending:
+                    seqs=[];masks=[];sizes=[]
+                    for job,(sequences,positions,folder) in pending:
+                        sizes.append(len(sequences));seqs.extend(sequences);masks.extend(positions)
+                    encoded,evolution,receipts,unique=backend.features(seqs,masks,batch_folder/f'stage{stage}',
+                                             with_encoder=arm!='profile',with_retrieval=arm!='ESM2')
+                    following=[];begin=0
+                    for (job,request),size in zip(pending,sizes):
+                        end=begin+size
+                        enc=None if encoded is None else {k:v[begin:end] if isinstance(v,torch.Tensor) else v for k,v in encoded.items()}
+                        response=(enc,evolution[begin:end],receipts[begin:end],unique)
+                        try:following.append((job,job.send(response)))
+                        except StopIteration as done:rows.extend(done.value);completed+=1
+                        begin=end
+                    pending=following;stage+=1
+                    del encoded,evolution
+                write(RUN/'run_status.json',{'status':'RUNNING','completed_groups':completed,'attempts':len(rows),
+                          'elapsed_seconds':time.monotonic()-start,'last_arm':arm})
+                print(json.dumps({'completed_groups':completed,'groups':len(groups)*len(plan['arms']),
+                                  'attempts':len(rows),'arm':arm,'elapsed_seconds':time.monotonic()-start}),flush=True)
         frame=pd.DataFrame(rows);frame.to_csv(RUN/'raw_candidates.csv',index=False)
         if len(frame)!=json.loads((RUN/'run_identity.json').read_text())['attempts']:raise ValueError('Attempt denominator differs')
         write(RUN/'generation_receipt.json',{'loaded_models':backend.loaded,'imported_modules':backend.module_hashes,
                   'unique_actual_PLM_sequence_encodings':backend.forward_sequences,'retrieval_queries':backend.retrieval_sequences,
-                  'PLM_trainable_parameters':0,'elapsed_seconds':time.monotonic()-start,
+                  'stage_timing':backend.timing,'PLM_trainable_parameters':0,'elapsed_seconds':time.monotonic()-start,
                   'raw_candidates_sha256':sha256_file(RUN/'raw_candidates.csv')})
         write(RUN/'run_status.json',{'status':'GENERATION_COMPLETED','attempts':len(rows),'constraint_counts':frame.constraint_status.value_counts().to_dict()})
     except BaseException as exc:

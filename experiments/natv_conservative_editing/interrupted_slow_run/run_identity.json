@@ -1,0 +1,23 @@
+{
+  "git_revision": "bfdc360c2ed5d90597228039594e615a89527f01",
+  "files": {
+    "experiments/natv_conservative_editing/run.py": "6afbd3c900b9cf13f55940e011b6d9b1f1eaef72624d161068183b855da79957",
+    "experiments/natv_conservative_editing/evaluate.py": "d7fadc1657df4225aab777bece1ad012c88303e0862c3ebd9f5c1ff11a887165",
+    "src/natvqvae/family_screen.py": "ca3f5ec2edaa0e3004c07719835f621cfde227825dbd233b9b66041297caeb24",
+    "src/natvqvae/conservative_editing.py": "5039eec056e4506060bee506f7e92b5026ab18572d1cd96b151e5b4fed2d2ea5",
+    "src/natvqvae/conditional_backend.py": "458f62d01f2794281e46bb15a8e4d030955bc1b38d116b5dd62acd6c95642024",
+    "inputs/manifest.json": "542214010519a579373791f2fd39d0422be3c488c8f34a61525d1e94fc5f3508",
+    "contracts/objective.yaml": "886a398ee071287521951ad07141cf24757e4922b695a867e40105a29d50de33",
+    "experiments/natv_conservative_editing/plan.json": "c8c146fd919c4c802bfa6f35ade47c94aca96f5049820fd374bde8c723a769e5",
+    "experiments/natv_conservative_editing/sampling_groups.json": "f08303c4b4683273ddc4a6eb4cd8c82a8882aa60ee1b416631bc165ec62b2bfb",
+    "experiments/natv_conservative_editing/inputs/WT_HMM_reference.json": "33cc84be54f121ff3807e61b6654a49fc209ab9e8872dbe49864ebfc5b529d20",
+    "experiments/natv_conservative_editing/inputs/current_event_support.json": "38b3ab10b96e7b7a235e33ab6024d07e4f7559862eee9a8449a9268beeb6656a",
+    "experiments/natv_conservative_editing/inputs/g1_event_qualification.json": "c15e202082f08dc679099314984157cfca1bd1f9c4f59becbf390d1756d70d07",
+    "experiments/natv_conservative_editing/inputs/g1_source.json": "1f69708585fbee6dccc467577ab4a7fafe525ed6a090a23148597d9fd39f8922",
+    "experiments/natv_conservative_editing/inputs/g1b_event_qualification_source.py": "bf04b112eb3cf189975c59474c63f37549f0d698558ba66b20d35b3d84a2f79d",
+    "experiments/natv_conservative_editing/inputs/retrieval_database.fasta": "3097a6e854b43e3648e22346c559bedbf3bd721c4b33e8182247c5fd971013ce",
+    "experiments/natv_conservative_editing/inputs/source_checks.json": "d70c981dd8c0ad7623b7423d7af1e632fa14fb44667e10a0b702802251654c10"
+  },
+  "groups": 93,
+  "attempts": 2976
+}

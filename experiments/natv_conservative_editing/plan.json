@@ -64,5 +64,11 @@
   },
   "evaluation_scope": "development_comparison; HMM_and_family_evidence_correlated; no_function_or_indel_tolerance_claim",
   "test_payload_use": false,
-  "selection_scores_as_independent_judges": false
+  "selection_scores_as_independent_judges": false,
+  "execution": {
+    "groups_per_batch": 8,
+    "same_arm_seed_and_length": true,
+    "ESM2_retrieval": false,
+    "restart": "interrupted_slow_run retained; fresh full denominator"
+  }
 }

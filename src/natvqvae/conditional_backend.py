@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 from types import SimpleNamespace
 import sys
+import time
 
 import numpy as np
 import torch
@@ -34,6 +35,7 @@ class ConditionalBackend:
         self.model_class=H2RecoveryModel;self.models={}
         self.freeze=json.loads((source/'experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/generation/checkpoint_freeze.json').read_text())
         self.loaded={};self.forward_sequences=0;self.retrieval_sequences=0
+        self.timing={"retrieval_seconds":0.,"encoder_seconds":0.}
         # Record every actually imported legacy module, without importing its runners.
         self.module_hashes={str(Path(m.__file__).resolve()):sha256_file(m.__file__) for n,m in sys.modules.items()
                             if n.startswith('nad_qvae') and getattr(m,'__file__',None) and Path(m.__file__).suffix=='.py'}
@@ -54,7 +56,7 @@ class ConditionalBackend:
                                          'architecture':architecture,'training_epoch':saved['epoch']}
         return self.models[key]
 
-    def features(self,sequences,positions,folder,with_encoder=True):
+    def features(self,sequences,positions,folder,with_encoder=True,with_retrieval=True):
         unique=[];index={};inverse=[]
         for sequence,mask in zip(sequences,positions):
             key=(sequence,tuple(mask))
@@ -63,16 +65,26 @@ class ConditionalBackend:
         queries=[{'query_id':f'q{i}','current_sequence':sequence,'positions':list(mask),
                   'masked_sequence':''.join('X' if j in mask else a for j,a in enumerate(sequence))}
                  for i,(sequence,mask) in enumerate(unique)]
-        profiles,receipts=self.retrieval.search(queries,folder)
-        self.retrieval_sequences+=len(unique)
-        evolution=torch.tensor(np.stack([profiles[f'q{i}'] for i in inverse]),device='cuda')
+        folder.mkdir(parents=True,exist_ok=True)
+        started=time.monotonic()
+        if with_retrieval:
+            profiles,receipts=self.retrieval.search(queries,folder/'retrieval')
+            self.retrieval_sequences+=len(unique)
+            evolution=torch.tensor(np.stack([profiles[f'q{i}'] for i in inverse]),device='cuda')
+        else:
+            receipts=[{'query_id':q['query_id'],'not_applicable':'ESM2_does_not_consume_retrieval'} for q in queries]
+            evolution=torch.zeros((len(sequences),max(map(len,sequences)),21),device='cuda')
+        self.timing['retrieval_seconds']+=time.monotonic()-started
         encoded=None
         if with_encoder:
+            torch.cuda.synchronize();started=time.monotonic()
             with torch.no_grad(),torch.autocast('cuda',dtype=torch.bfloat16):
                 encoded=self.frozen([q['current_sequence'] for q in queries],[q['positions'] for q in queries])
+            torch.cuda.synchronize();self.timing["encoder_seconds"]+=time.monotonic()-started
             self.forward_sequences+=len(unique)
             idx=torch.tensor(inverse,device='cuda')
             encoded={k:v.index_select(0,idx) if isinstance(v,torch.Tensor) else v for k,v in encoded.items()}
+        (folder/"timing.json").write_text(json.dumps(self.timing))
         return encoded,evolution,[receipts[i] for i in inverse],len(unique)
 
     @torch.no_grad()
