@@ -7,7 +7,7 @@
     "read_only": true,
     "copy_large_files": false,
     "fail_closed_on_hash_mismatch": true,
-    "population_reuse_rule": "The 2430-entry family_population FASTA is discovery-only; fitting requires a separately bound 1644-core-train roles split and held-out exclusions."
+    "population_reuse_rule": "2430条为发现群体；拟合与检索限定为角色表中1644条正式训练序列，验证227条，测试及隔离记录排除。"
   },
   "entries": [
     {
@@ -18,7 +18,7 @@
       "link": "family_population.fasta",
       "expected_records": 2430,
       "training_admission": "discovery_only_not_core_train",
-      "notes": "core_train=1644 with 47 redundancy components under the prior study; training-role and validation split identities must be imported separately before fitting."
+      "notes": "正式训练资格与验证测试身份由 family_roles、core_split 绑定；不得按发现群体直接拟合。"
     },
     {
       "name": "domain_pocket_map",
@@ -61,6 +61,62 @@
       "sha256": "dfa4baaf8fec72c6fcc3f701ad231e60a39388bc09380a4c4327a5255db1349d",
       "role": "public KVP40 genome; CDS162 nucleotide provenance",
       "link": "AY283928.2.gb"
+    },
+    {
+      "name": "family_roles",
+      "path": "data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "role": "正式训练资格、验证测试角色与组分",
+      "link": "family_roles.parquet"
+    },
+    {
+      "name": "core_split",
+      "path": "data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json",
+      "sha256": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "role": "正式群体身份清单",
+      "link": "core_split.json"
+    },
+    {
+      "name": "allowed_samples",
+      "path": "data/processed/releases/natv_formal_training_data_v1/allowed_samples.parquet",
+      "sha256": "9d542c27db44e0e4506fc0a4a726a59c58e1ebf2afe65c82e3a169d5e33950dd",
+      "role": "仅训练与验证的序列输入",
+      "link": "allowed_samples.parquet"
+    },
+    {
+      "name": "training_samples",
+      "path": "data/processed/releases/natv_formal_training_data_v1/training_samples.csv",
+      "sha256": "618d9ffed8bbd5873505ad82a26a6edb5b21d9dfbee6faa0cc281b7200ee7c08",
+      "role": "历史1644条正式训练样本表",
+      "link": "training_samples.csv"
+    },
+    {
+      "name": "train_sequences",
+      "path": "data/processed/releases/natv_formal_training_data_v1/train_only.fasta",
+      "sha256": "d00b94e090efa022ac13b5c61d12eb7036a2755ef8b44b4b5dd630df18829ca4",
+      "role": "仅1644条正式训练序列；亦为检索群体",
+      "link": "train_only.fasta"
+    },
+    {
+      "name": "masked_input_plan",
+      "path": "data/processed/releases/natv_formal_training_data_v1/input_plan.json",
+      "sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
+      "role": "历史掩码任务、检索ID与输入校验值",
+      "link": "masked_input_plan.json"
+    },
+    {
+      "name": "masked_contexts",
+      "path": "data/processed/releases/natv_formal_training_data_v1/context_manifest.json",
+      "sha256": "111beacac69991430b885cbab4f573c583edf101c718956ee1eb2619e6186709",
+      "role": "历史掩码表示文件及其校验值",
+      "link": "masked_context_manifest.json"
+    },
+    {
+      "name": "evolution_features",
+      "path": "data/processed/releases/natv_formal_training_data_v1/evolution_manifest.json",
+      "sha256": "cc71b79924ec35a8a5c01e3cbc8ac2328ba57d1f3e8245fba16d0ad51e71cfa3",
+      "role": "历史逐掩码查询的演化特征文件及校验值",
+      "link": "evolution_manifest.json"
     }
   ]
 }

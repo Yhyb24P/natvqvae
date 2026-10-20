@@ -8,7 +8,7 @@ NMN + ATP 生成 NAD⁺ 的净积累。允许 Nudix 水解下降或丢失，前�
 
 1. **数据。** 使用来源可追溯、结构域对应明确、训练与验证边界清楚的
    NatV 家族和同源实验结构。
-2. **生成。** QVAE 与无潜在变量 SE 基线在同一任务上公平比较。以正式比较结果确定后续生成方式。
+2. **生成。** 优先复用已有 QVAE 实现，与同任务无潜变量基线公平比较，以结果确定后续生成方式。
 3. **评价与选择。** 序列相容性、候选自身全长结构、NMNAT 催化环境、
    Nudix 扰动；选出机制可描述、假设多样的候选面板。
 4. **酶学验证。** 分别测量合成、水解与净积累。
@@ -25,12 +25,13 @@ NMN + ATP 生成 NAD⁺ 的净积累。允许 Nudix 水解下降或丢失，前�
 | `docs/DATA_PROVENANCE.md` | 数据群体、划分与模型来源 |
 | `contracts/` | 目标、位点规则与评价定义 |
 | `inputs/manifest.json` | 固定 SHA256 的源文件清单 |
-| `experiments/natv_candidate_sequences/` | 一次探索性局部编辑运行及其报告 |
+| `experiments/natv_candidate_sequences/` | 探索性局部编辑运行 |
+| `experiments/natv_wt_columns/` | WT 对齐列先验生成比较、产物与报告 |
 | `src/natvqvae/` | 当前研究路线用到的可复用代码 |
 | `tests/` | 对实际能力和科学约定的测试 |
 
-已有运行及其限制见
-[候选报告](experiments/natv_candidate_sequences/REPORT.md)。
+已有运行及其限制见[局部编辑报告](experiments/natv_candidate_sequences/REPORT.md)和
+[WT 对齐列生成比较](experiments/natv_wt_columns/REPORT.md)。
 
 ## 安装与检查
 

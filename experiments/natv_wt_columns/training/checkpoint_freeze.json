@@ -1,0 +1,82 @@
+{
+  "identity": {
+    "git_revision": "2eeac914257a70e83327f5210af194719e34eb4f",
+    "plan_sha256": "614089497795076e94e22127f1bd7c29b627b67c55ac6a363bba7a77b887ba35",
+    "runner_sha256": "b096f0df84c0209029db304457654d430eb6559c502739fef60c81feded56fae",
+    "model_wrapper_sha256": "4b4d8f4e25264bf50b222a1196c329db1093fc4cb4632c1a5c613ee7437af932",
+    "input_checks_sha256": "742d0ce62feed2f53df0764d2744c1d75c76d96a69d8fa1bc6fb9e0f6c2812bc",
+    "source_receipt_sha256": "627ae4e4465bad5f5880ec638ad89e633aa5af3f02634998cd6bbce2f6e7fafa",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 5090 D",
+    "torch": "2.11.0+cu128",
+    "threads": 4
+  },
+  "runs": [
+    {
+      "arm": "categorical_vae",
+      "seed": 42,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 6,
+      "best_validation_negative_elbo": 1.6935028563827677,
+      "seconds": 11.52510873398569,
+      "checkpoint": "training/categorical_vae_seed42/model_best.pt",
+      "sha256": "a4829cda92033003e7fd206afa28bc2aee7e9d84bdefe56a1e5f54e72542e298"
+    },
+    {
+      "arm": "no_latent",
+      "seed": 42,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 5,
+      "best_validation_negative_elbo": 1.7151792701772501,
+      "seconds": 10.303424310986884,
+      "checkpoint": "training/no_latent_seed42/model_best.pt",
+      "sha256": "9e940656d000c4b218d5069de550610f710a2202a90df325ceb8a26a2cfd1388"
+    },
+    {
+      "arm": "categorical_vae",
+      "seed": 43,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 8,
+      "best_validation_negative_elbo": 1.6941843946028476,
+      "seconds": 42.76015206300508,
+      "checkpoint": "training/categorical_vae_seed43/model_best.pt",
+      "sha256": "069fffaff59d765dc59b0a3586c7e25c24f8bed19ac47abaaeecee57e9a06c66"
+    },
+    {
+      "arm": "no_latent",
+      "seed": 43,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 5,
+      "best_validation_negative_elbo": 1.7192859160913558,
+      "seconds": 10.504754461966513,
+      "checkpoint": "training/no_latent_seed43/model_best.pt",
+      "sha256": "1dda40662a156ce5a5df8de7e72b0d8dd8c56f1d6dad57e1984a33491fc813fd"
+    },
+    {
+      "arm": "categorical_vae",
+      "seed": 44,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 8,
+      "best_validation_negative_elbo": 1.6963912077207342,
+      "seconds": 10.760218809991784,
+      "checkpoint": "training/categorical_vae_seed44/model_best.pt",
+      "sha256": "29b34a92145437f208e6f4cb2e26053029edfc4768ffa855fb4935143d32da3a"
+    },
+    {
+      "arm": "no_latent",
+      "seed": 44,
+      "epochs": 20,
+      "optimizer_steps": 520,
+      "best_epoch": 5,
+      "best_validation_negative_elbo": 1.7179925065717614,
+      "seconds": 10.475532873002521,
+      "checkpoint": "training/no_latent_seed44/model_best.pt",
+      "sha256": "f0e96f7ff25ba316d92ac6fa71127e5d8f9c824382a13e31824d88abe3cbab30"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "arm": "categorical_vae",
+  "seed": 43,
+  "epochs": 20,
+  "optimizer_steps": 520,
+  "best_epoch": 8,
+  "best_validation_negative_elbo": 1.6941843946028476,
+  "seconds": 42.76015206300508,
+  "checkpoint": "training/categorical_vae_seed43/model_best.pt",
+  "sha256": "069fffaff59d765dc59b0a3586c7e25c24f8bed19ac47abaaeecee57e9a06c66"
+}

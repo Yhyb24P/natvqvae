@@ -1,0 +1,11 @@
+{
+  "arm": "no_latent",
+  "seed": 42,
+  "epochs": 20,
+  "optimizer_steps": 520,
+  "best_epoch": 5,
+  "best_validation_negative_elbo": 1.7151792701772501,
+  "seconds": 10.303424310986884,
+  "checkpoint": "training/no_latent_seed42/model_best.pt",
+  "sha256": "9e940656d000c4b218d5069de550610f710a2202a90df325ceb8a26a2cfd1388"
+}
