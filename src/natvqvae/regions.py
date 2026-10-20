@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-REGIONS_PATH = REPO_ROOT / "contracts" / "regions_v1.json"
+REGIONS_PATH = REPO_ROOT / "contracts" / "regions.json"
 DESIGN_CLASSES = ("A", "B", "C")
 
 

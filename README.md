@@ -1,42 +1,38 @@
-# NatV-QVAE | NAD⁺ net-production enzyme design
+# NatV-QVAE | NAD⁺ 净生成酶设计
 
-Research code for designing **KVP40 NatV-derived enzymes** with greater **net NAD⁺ production** in a specified purified-enzyme NMN + ATP reaction. Loss of Nudix-mediated NAD⁺ hydrolysis is acceptable **if NMNAT synthesis is retained**. This is a computational design project; **no variant has yet been shown experimentally to outperform WT**.
+研究 KVP40 NatV 衍生的 NMNAT–Nudix 双功能酶，目标是在纯化酶体系中提高
+NMN + ATP 生成 NAD⁺ 的净积累。允许 Nudix 水解下降或丢失，前提是 NMNAT
+合成保留到具有实际应用意义的程度。目前没有变体经实验证明优于野生型。
 
-## Scientific objective
+## 研究路线
 
-NMNAT: `NMN + ATP ⇌ NAD⁺ + PPi`. KVP40 Nudix can hydrolyse NAD⁺ to NMN + AMP. Increasing NMNAT catalysis and reducing NAD⁺ hydrolysis are **distinct causal routes** to greater net accumulation. The primary application endpoint is experimentally measured NAD⁺ accumulation under controlled conditions; NMNAT kinetics and Nudix hydrolysis must be measured separately to explain it. **No current model predicts catalytic efficiency or net yield.**
+1. **数据。** 使用来源可追溯、结构域对应明确、训练与验证边界清楚的
+   NatV 家族和同源实验结构。
+2. **生成。** QVAE 与无潜在变量 SE 基线在同一任务上公平比较。以正式比较结果确定后续生成方式。
+3. **评价与选择。** 序列相容性、候选自身全长结构、NMNAT 催化环境、
+   Nudix 扰动；选出机制可描述、假设多样的候选面板。
+4. **酶学验证。** 分别测量合成、水解与净积累。
 
-## Research route
+研究终点、证据层级、设计假设与比较标准见
+[研究计划](docs/RESEARCH_PLAN.md)。
 
-1. **Data and biochemical context.** Reuse the curated NatV NMNAT–Nudix family and experimental homolog structures with traceable source, domain correspondence and train/validation boundaries. Generic NAD-related proteins are *not* automatically NatV family members.
-2. **Generate.** Investigate QVAE alongside the existing no-latent SE baseline. Test real prior-driven generation and WT-relative editing as **different tasks**; do not mistake masked residue recovery for unconditional full-length synthesis. Keep training data, comparison budget and candidate provenance explicit.
-3. **Assess and select.** Examine sequence novelty/diversity, candidate-specific full-length double-domain structures, catalytic-site plausibility and possible Nudix hydrolysis risk. Model-based readouts are evidence about compatibility, **not kcat labels**. Select a diverse, auditable panel rather than claim an in silico optimum.
-4. **Future biochemical validation.** Compare WT and variants for NMNAT initial rates/kinetics, NAD⁺ hydrolysis and net NAD⁺ accumulation. No wet-lab execution is implied or authorised by this repository.
+## 仓库内容
 
-A/B/C describe **hypotheses**, not three required models: **A** modifies NMNAT to seek synthesis improvement; **B** modifies Nudix to seek reduced NAD⁺ hydrolysis; **C** combines both. Preserving fold/domain organisation matters; keeping natural Nudix hydrolytic function is *not* a requirement.
-
-## What is actually available
-
-The repository currently contains the WT identity, **provisional CDD-derived domain ranges**, a WT-relative substitution representation, a read-only source manifest and tests. **No trained model, inference adapter, evaluated candidate or experimentally verified gain has been imported or executed here.** The generator interface currently describes masked recovery only and must not be presented as a family prior sampler.
-
-The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutable research evidence source**, not an import dependency. Existing research supports an SE comparator; prior H2 QVAE comparisons did *not* establish latent-variable benefit for their fixed-4/8-edit task. G0 chemical conditioning remains parked, G1-a is an optional site-selection comparator, and G1-b variable-length generation is deferred. These are bounded findings, not universal bans on QVAE, chemistry or InDels.
-
-## Repository responsibilities
-
-| Location | Purpose |
+| 位置 | 用途 |
 |---|---|
-| `docs/RESEARCH_PLAN.md` | Current questions, research path and decision criteria |
-| `docs/DATA_PROVENANCE.md` | Population boundaries, source inheritance, evidence limitations |
-| `contracts/` | Objective, **pilot-only** position rules, evaluation semantics |
-| `inputs/manifest.json` | SHA-pinned **source files**; does not grant use of all files for training |
-| `assets/PROVENANCE.md` | Checkpoint admission and identity; no models imported yet |
-| `src/natvqvae/` | Only reusable capabilities exercised by a current research path |
-| `tests/` | Tests of actual capabilities and scientific contracts |
-| `runs/` | Ignored, per-run outputs with manifest and reproducible source identity |
+| `docs/RESEARCH_PLAN.md` | 研究问题、路线与判断标准 |
+| `docs/NATV_PAIRING_AUDIT.md` | 序列、构建体、坐标与同源关系核对 |
+| `docs/DATA_PROVENANCE.md` | 数据群体、划分与模型来源 |
+| `contracts/` | 目标、位点规则与评价定义 |
+| `inputs/manifest.json` | 固定 SHA256 的源文件清单 |
+| `experiments/natv_candidate_sequences/` | 一次探索性局部编辑运行及其报告 |
+| `src/natvqvae/` | 当前研究路线用到的可复用代码 |
+| `tests/` | 对实际能力和科学约定的测试 |
 
-`AGENTS.md` defines contributor boundaries; it is not another research plan. Results belong to individual run directories, not to a growing collection of "current status" documents.
+已有运行及其限制见
+[候选报告](experiments/natv_candidate_sequences/REPORT.md)。
 
-## Install and inspect
+## 安装与检查
 
 ```bash
 python -m venv .venv
@@ -46,6 +42,8 @@ pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
 
-The last command checks actual local source files against `inputs/manifest.json` and fails if the source is absent/mismatched. `inputs/link_inputs.py --check-only --root /path/to/nad_qvae` verifies without creating symlinks. The source data are **not** shipped in this repository. No training or generation starts during installation or tests.
+`doctor` 用 `inputs/manifest.json` 核对本地源文件，缺失或校验不一致即
+失败；`inputs/link_inputs.py --check-only --root /path/to/nad_qvae` 只检查
+不建链。源数据不在本仓库中。
 
-**Status:** research and repository foundation only. The next scientific deliverable is a reproducible QVAE-versus-baseline **generation-and-candidate-evaluation** study, not more skeleton code.
+贡献边界见 `AGENTS.md`。

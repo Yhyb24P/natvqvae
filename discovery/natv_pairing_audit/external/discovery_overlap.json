@@ -1,0 +1,57 @@
+{
+ "generated_at_utc": "2026-10-20T05:22:43.132429+00:00",
+ "family_population": {
+  "records": 2430,
+  "unique_sequences": 2430
+ },
+ "rcsb_sequence_search": {
+  "union_polymer_entities": 28,
+  "in_frozen_corpus": 28,
+  "incremental_vs_corpus": 0,
+  "qualifying_full_length_dual": 3,
+  "qualifying_entities": [
+   "2QJO_1",
+   "2QJT_1",
+   "2R5W_1"
+  ],
+  "incremental_qualifying": []
+ },
+ "uniprot_dual_pfam": {
+  "records": 880,
+  "reviewed": 1,
+  "qualifying_full_length_dual": 378,
+  "in_family_by_sequence": 500,
+  "not_in_family_by_sequence": 380,
+  "with_pdb": 2,
+  "with_pdb_not_in_corpus": 0
+ },
+ "uniprot_candidates": {
+  "records": 361,
+  "in_family_by_sequence": 266,
+  "new_by_sequence": 95,
+  "new_phage_host": 8,
+  "new_af_metadata_queried": 5,
+  "new_with_af_model": 3,
+  "new_af_no_model_404": 2,
+  "new_af_not_queried": 90,
+  "overlap_roles": {
+   "training": 179,
+   "annotation_conflict_quarantine": 44,
+   "validation": 20,
+   "test": 16,
+   "quarantined_old_sealed_component": 7
+  }
+ },
+ "uniprot_ipr041750": {
+  "records": 34,
+  "qualifying_full_length_dual": 17,
+  "in_family_by_sequence": 26,
+  "with_pdb": 2
+ },
+ "alphafold": {
+  "metadata_records": 10,
+  "accessions": 10,
+  "with_model": 7,
+  "without_model_404": 3
+ }
+}

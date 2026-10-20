@@ -1,0 +1,1224 @@
+{
+  "record": "\u672c\u6b21\u8fd0\u884c\u8bfb\u53d6\u7684\u6587\u4ef6",
+  "written_at_utc": "2026-10-20T07:21:01Z",
+  "scope": "\u4ec5\u8bb0\u5f55\u672c\u6b21\u8fd0\u884c\u5b9e\u9645\u8bfb\u53d6\u7684\u6587\u4ef6\uff1b\u6b63\u5f0f\u8bad\u7ec3\u5e8f\u5217\u96c6\u6ca1\u6709\u6539\u53d8",
+  "files": [
+    {
+      "source": "nad_qvae",
+      "path": "config/natv/h2_architecture_generation_comparison_v1.json",
+      "bytes": 8179,
+      "sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+      "purpose": "H2 \u4e0a\u6e38\u8bbe\u7f6e\u6587\u4ef6",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "config/natv/multimodal_deterministic_runtime_v2.json",
+      "bytes": 861,
+      "sha256": "fcbdcef87760624b8073c5d3385a9480503c8f3ed8cd73261bb2860ff19789b3",
+      "purpose": "\u786e\u5b9a\u6027\u8fd0\u884c\u8bbe\u7f6e",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "config/natv/formal_training_v1.json",
+      "bytes": 4298,
+      "sha256": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
+      "purpose": "\u8bad\u7ec3\u4e0e\u5212\u5206\u8bbe\u7f6e",
+      "used_in": "\u6765\u6e90\u8bb0\u5f55"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_formal_training_data_v1/input_plan.json",
+      "bytes": 27424325,
+      "sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
+      "purpose": "\u6b63\u5f0f\u8bad\u7ec3\u8f93\u5165\u65b9\u6848",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_formal_training_data_v1/data_ready.json",
+      "bytes": 1169,
+      "sha256": "494fcf88a984284fff34df05780ed94788410fa842ac4f81e01ef711fb04378a",
+      "purpose": "\u6b63\u5f0f\u8bad\u7ec3\u6570\u636e\u51c6\u5907\u8bb0\u5f55",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_formal_training_data_v1/context_manifest.json",
+      "bytes": 5545128,
+      "sha256": "111beacac69991430b885cbab4f573c583edf101c718956ee1eb2619e6186709",
+      "purpose": "\u63a9\u7801\u4e0a\u4e0b\u6587\u8bb0\u5f55",
+      "used_in": "\u6765\u6e90\u8bb0\u5f55"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_formal_training_data_v1/training_samples.csv",
+      "bytes": 845561,
+      "sha256": "618d9ffed8bbd5873505ad82a26a6edb5b21d9dfbee6faa0cc281b7200ee7c08",
+      "purpose": "1,644 \u6761\u8bad\u7ec3\u5e8f\u5217",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_formal_training_data_v1/train_only.fasta",
+      "bytes": 690897,
+      "sha256": "d00b94e090efa022ac13b5c61d12eb7036a2755ef8b44b4b5dd630df18829ca4",
+      "purpose": "\u8bad\u7ec3\u5e8f\u5217 FASTA\uff08\u540c\u6e90\u68c0\u7d22\u5e93\uff09",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_formal_training_data_v1/allowed_samples.parquet",
+      "bytes": 390684,
+      "sha256": "9d542c27db44e0e4506fc0a4a726a59c58e1ebf2afe65c82e3a169d5e33950dd",
+      "purpose": "\u5141\u8bb8\u4f7f\u7528\u7684\u6837\u672c\u89d2\u8272",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "bytes": 603885,
+      "sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "purpose": "\u5bb6\u65cf\u89d2\u8272\u8868\uff1b\u7528\u4e8e\u5224\u65ad\u5e8f\u5217\u662f\u5426\u4e0e\u73b0\u6709\u5bb6\u65cf\u91cd\u590d",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json",
+      "bytes": 162764,
+      "sha256": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "purpose": "\u6838\u5fc3\u5212\u5206\u8bb0\u5f55",
+      "used_in": "\u6765\u6e90\u8bb0\u5f55"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "config/natv/se_full_g0_v1.json",
+      "bytes": 5116,
+      "sha256": "86fb6a7aa68c9bcfb20507e2ada64a03d0b7c6e950461ba6eecd9fc35ad2b142",
+      "purpose": "\u91ce\u751f\u578b\u5e8f\u5217\u4e0e\u8eab\u4efd",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "config/natv/g0_target_constraints_v1.json",
+      "bytes": 565,
+      "sha256": "a40687112f15cc2322f81c09e7a0eae94916f795d0a7a2958926e8b8f95d1216",
+      "purpose": "T135A \u9650\u5236",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/selected_checkpoints.json",
+      "bytes": 4176,
+      "sha256": "56b652018d9468231946f241beaaa8b7013aa42af1b1c7a563d960fe2895f96a",
+      "purpose": "\u9a8c\u8bc1\u96c6\u9009\u51fa\u7684 H2 \u6a21\u578b\u53c2\u6570",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/generation/checkpoint_freeze.json",
+      "bytes": 3523,
+      "sha256": "a69e8470d4b32fe630337406b1165254a0d874c2e99609572ebc9121fa716bd4",
+      "purpose": "H2 \u751f\u6210\u9636\u6bb5\u7684\u53c2\u6570\u8bb0\u5f55",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
+      "bytes": 7963857,
+      "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+      "purpose": "H2_no_latent \u6a21\u578b\u53c2\u6570",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
+      "bytes": 8118129,
+      "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
+      "purpose": "H2_continuous_mmd \u6a21\u578b\u53c2\u6570",
+      "used_in": "\u751f\u6210"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "nad_models/esm2/config.json",
+      "bytes": 724,
+      "sha256": "539095c22efc52a09d6147074ba4ca119f76a890df5901213b2b55f7d2f96b2b",
+      "purpose": "ESM2 \u6a21\u578b\u6587\u4ef6",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "nad_models/esm2/model.safetensors",
+      "bytes": 2609506392,
+      "sha256": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0",
+      "purpose": "ESM2 \u6a21\u578b\u6587\u4ef6",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "nad_models/esm2/special_tokens_map.json",
+      "bytes": 125,
+      "sha256": "3aedcd4211c0d43aec4e607ff60a63255f3174ead795e997350f09a5f8cd9ee1",
+      "purpose": "ESM2 \u6a21\u578b\u6587\u4ef6",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "nad_models/esm2/tokenizer_config.json",
+      "bytes": 95,
+      "sha256": "7e9161ecdb548ec45a41cbc6b24aa4476fdd418461f491c4207baa99419a29ad",
+      "purpose": "ESM2 \u6a21\u578b\u6587\u4ef6",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "nad_models/esm2/vocab.txt",
+      "bytes": 93,
+      "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+      "purpose": "ESM2 \u6a21\u578b\u6587\u4ef6",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "natvqvae",
+      "path": "discovery/natv_pairing_audit/structural_interpretation_basis.json",
+      "bytes": 16336,
+      "sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
+      "purpose": "\u7ed3\u6784\u6ce8\u91ca\u4f9d\u636e",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "natvqvae",
+      "path": "discovery/natv_pairing_audit/build_structural_basis.py",
+      "bytes": 14005,
+      "sha256": "46584cd493acd86c441f3fba5136ec14c543ee3e547e631e8ab777bc72e1db6a",
+      "purpose": "\u7ed3\u6784\u6ce8\u91ca\u4f9d\u636e\u7684\u751f\u6210\u811a\u672c",
+      "used_in": "\u6765\u6e90\u8bb0\u5f55"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_formal_generation_v1_attempt1/frozen_WP5_candidates.csv",
+      "bytes": 15328,
+      "sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
+      "purpose": "\u65e7 WP5 \u5019\u9009\u5e8f\u5217",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_formal_generation_v1_attempt1/frozen_WP5_CDD_domains.csv",
+      "bytes": 196475,
+      "sha256": "bc15ac92f1e2a32ad49f1731957c7d930865547c139727530eb501256e429142",
+      "purpose": "\u65e7 WP5 \u7684 CDD \u7ed3\u6784\u57df\u7ed3\u679c",
+      "used_in": "\u8bc4\u4ef7\u4e0e\u590d\u6838"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "experiments/run_reports/natv_formal_generation_v1_attempt1/internal_PLM_scores.csv",
+      "bytes": 89217,
+      "sha256": "17da1632e3a499937c4955509d4ed501f51a064cc2d9d9542f5f88abc98c58d4",
+      "purpose": "\u65e7 WP5 \u7684 ESM2 \u5206\u6570",
+      "used_in": "\u8bc4\u4ef7\u4e0e\u590d\u6838"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/h2_model_v1.py",
+      "bytes": 8928,
+      "sha256": "c6837516070e4e502dcaf19c8dfacaa2fc822110133b9c0983ffdc32c0378717",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/h2_execution_v1.py",
+      "bytes": 13802,
+      "sha256": "279e9e0d6348b70dfe295af0a7fb73fd0b5699b63e8d5f9ea01cbdb957d558d6",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/h2_generation_v1.py",
+      "bytes": 9106,
+      "sha256": "22447218cfc528a6ca03539bc1cae804d830f33bd95a0a550809ec5a7e32b30d",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/g0_benchmark.py",
+      "bytes": 23404,
+      "sha256": "1484fa3e6c990ac70d81c40f1d392a12111c0559aa93a18b411e32c888e0d533",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/formal_generation.py",
+      "bytes": 26349,
+      "sha256": "78eff51fffb1d9dcb5f9a9d914177237ec2f4e00a7b6f72f4f822071a219dd18",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/formal_training_data.py",
+      "bytes": 19940,
+      "sha256": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/se_full.py",
+      "bytes": 22146,
+      "sha256": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_evaluation_contracts.py",
+      "bytes": 7691,
+      "sha256": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_family_v2.py",
+      "bytes": 15234,
+      "sha256": "f96c406571384aeb49a33a5d21155358e269d320cef1f1921c6873a6f386dd98",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_model.py",
+      "bytes": 14838,
+      "sha256": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_residual_model.py",
+      "bytes": 2523,
+      "sha256": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_residual_pilot.py",
+      "bytes": 22187,
+      "sha256": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/vnext_residual_pilot_inputs.py",
+      "bytes": 10646,
+      "sha256": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/context_restoration.py",
+      "bytes": 16015,
+      "sha256": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/sequence_corpus.py",
+      "bytes": 13430,
+      "sha256": "7e21989f5c9f5970ccee65a84eb2237f88880304c4621e10cc909909172a7e41",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "src/nad_qvae/design/multimodal_deterministic_runtime_v2.py",
+      "bytes": 4395,
+      "sha256": "a82d946da882f228cff623e8c2e45929f15934a1cbb161453871e651478f3f0b",
+      "purpose": "\u5b9e\u9645\u6267\u884c\u7684\u6e90\u7801",
+      "used_in": "\u751f\u6210\u4e0e\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.aux",
+      "bytes": 41869,
+      "sha256": "ba40150af2740f80830cf7ab3ecfff3c3584d892b0e80c466c71e4144fcfe27e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.freq",
+      "bytes": 57830296,
+      "sha256": "f98725ac09765109a6cd8e853bc2bec1140eae029ae4e8462cae22f00e31c873",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.loo",
+      "bytes": 24880508,
+      "sha256": "e86d44d3d2e43b125192f00c56af921573be709cf64a224b7a1a9425aadd96fe",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pdb",
+      "bytes": 94208,
+      "sha256": "b80b54ec894a711bd731d9ce214791088fc0cf501f25d06a47b8c4f1285bdee2",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.phr",
+      "bytes": 2254737,
+      "sha256": "1a7b109d966a431a9b613b4b0969a2849088fe54c08df7061e15db1902aff0ad",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pin",
+      "bytes": 20000,
+      "sha256": "aa047c3b7c1d59fec3c4081dd388f5d624495491af7a698b91a2e55a658c3688",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pos",
+      "bytes": 47246,
+      "sha256": "9680c6ede3dd01e6cba3b51d09e3678f836db0a7a71d4a6f9d68e4a8ef930146",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pot",
+      "bytes": 29852,
+      "sha256": "7b239c8168948db175a2a010cb4dc21691e89733c6cc98b90780abf78ee82f83",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.psq",
+      "bytes": 516254,
+      "sha256": "b322845535bf8a73669afab2602854f9b86e8ca8c16ff4ae1e698f5a8762b01f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.ptf",
+      "bytes": 16384,
+      "sha256": "5f84cb4297bcc650c0c5c7754b98296111242c5efdd81d8c880e43dd06f79b85",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pto",
+      "bytes": 10192,
+      "sha256": "502a49e7f8390b19346f179c36aef77a49e8c82e03c7e3d87c4b2795bbe06a53",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.rps",
+      "bytes": 57830296,
+      "sha256": "1a3b9f68944d58ab3d181a5edd3acdcee6bedf375753f331d151f8b4f17dab22",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.aux",
+      "bytes": 41783,
+      "sha256": "d4df246025db2a1fe9d6cf23f75a574e8c8f2fb2b58fe6d616f9db161abfe05e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.freq",
+      "bytes": 57433932,
+      "sha256": "0a1794d48fa87a6b5ab53fc783d270009b37ebbc126543eec8f1b56a8cd4f72e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.loo",
+      "bytes": 32066956,
+      "sha256": "95be48361672a7b72ee00c98778db4fd4f978be829aef7cc7511a3b055438fa2",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pdb",
+      "bytes": 94208,
+      "sha256": "7c9360b82dbfc00bed9e2a21d856dc949f893d974e25a2d7f101b965d405f992",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.phr",
+      "bytes": 2887782,
+      "sha256": "29bb313171dbba8cc0bc6e77ff50defa0f6c59c47eb5d5126699e775d02efd9b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pin",
+      "bytes": 20008,
+      "sha256": "a850725fde49800719dd9b34bbf559b3a94e87cdf78b53d3073de7ac6fbf4a66",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pos",
+      "bytes": 47098,
+      "sha256": "5e93f829b28d939ee529f35c0cf51517b2c3aa31626becb56d5934ff8ebb330f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pot",
+      "bytes": 29864,
+      "sha256": "a3c0bc115894817d025aade866b07902f8f13d415e23cd4d247d4f74fb126685",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.psq",
+      "bytes": 512715,
+      "sha256": "34e430cd147afa0270fdcd457651448e72b4ca9d719e33a22090b1bf587d1e99",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.ptf",
+      "bytes": 16384,
+      "sha256": "5f54dbf2324bdf6f29a83aa51efb9f0825ed47b0da777e272edbebadb057495d",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pto",
+      "bytes": 10152,
+      "sha256": "06fb7404c33202ee230943c4bfc45d831baf21b446f1f7f852d8fc697268cbfe",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.rps",
+      "bytes": 57433932,
+      "sha256": "dc1f5a8d68bb56ca21e8165d6c21557f68328fec6440865a2878e61a2c051c2e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.aux",
+      "bytes": 41786,
+      "sha256": "f71f2f02d5bc92c4572391c5b5a861fb0e1697973e06231864dc17f65ef27f83",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.freq",
+      "bytes": 56792060,
+      "sha256": "5c9c9a07b34b3f874f64ceb9a4062409cf090a2a55c772b9ce5c9d59f03da9bd",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.loo",
+      "bytes": 30016368,
+      "sha256": "163994a995e06c9b6804f558811023ca4d737b76305382339b8baa7d93f4239b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pdb",
+      "bytes": 94208,
+      "sha256": "045d11863e581370b8142e10fa316309bc15a6f0dd354cfafea6720e5047ee55",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.phr",
+      "bytes": 3170341,
+      "sha256": "5f7b48fb23e2aa27960c5a2c0216458f92de579f745256875bc4a674018c09e9",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pin",
+      "bytes": 20008,
+      "sha256": "21db0ff828d44c478402617745b35779288839d14e391aced1c10aea5920f992",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pos",
+      "bytes": 47280,
+      "sha256": "ac8871b5a4679b602b14f4496d1a4f8c89eb3708440db36a84d8e3975f5770dc",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pot",
+      "bytes": 29864,
+      "sha256": "77a929226c48ef48d19e784e497fdd306c5fa9da649ef828787de5c5ab2fc5e5",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.psq",
+      "bytes": 506984,
+      "sha256": "cb7307a1a00552afb138196518823218411daa2f2944e208a98cd4fd138c5285",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.ptf",
+      "bytes": 16384,
+      "sha256": "4853bc2805dfdd691490b47700459d2b495fbd2321aec8806fc959e068a24fdf",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pto",
+      "bytes": 10144,
+      "sha256": "0efc10a58acf044859cec6ad74dfbc7e091ebfdf45e1d7bfc1c965a948a29277",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.rps",
+      "bytes": 56792060,
+      "sha256": "c5cbfa6fc9be160ba50bb72d60fffeac979f167e69b80348f4b63c1320645b70",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.aux",
+      "bytes": 41079,
+      "sha256": "53a7ef14dc4b4a71d5f0751bc3f824de97a6d02c871510d5c2f482ed116f9b5c",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.freq",
+      "bytes": 47937676,
+      "sha256": "e421b0b045dc2aba5a87a11f1421ae6b306d6e550cf15aa5af5f80de40cfc575",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.loo",
+      "bytes": 26941824,
+      "sha256": "d6a9bf91a1ceb76fd3b22f1bee0a2ea78bfb6536d0d3122e394e343380c5eb07",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pdb",
+      "bytes": 94208,
+      "sha256": "d7829e03b151514fae61afa6f4dcf3819421d139eab23fa3548761624069fcb2",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.phr",
+      "bytes": 2907562,
+      "sha256": "f5ab5f97d32b7fcbbba8aa381c4f3a97edfdbaf7f801326d0f8aafe23070de21",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pin",
+      "bytes": 20008,
+      "sha256": "ae97419ccae5cd7eb7748cbd76817ac3468d8b872ffdf5ac6493f06638106fde",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pos",
+      "bytes": 47280,
+      "sha256": "90da07487ede6676bef11b51e17104e70e879d9e58761986c735f3eff6a3cc0b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pot",
+      "bytes": 29864,
+      "sha256": "8f99838eba5d3e8379ba2b95ea9066b981109a7efef9d74ea6aa0438142d96b8",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.psq",
+      "bytes": 427927,
+      "sha256": "b2da25528858a2a718dce07e65b1e46a3a4a32576ae99f93ca70cb964eab60d5",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.ptf",
+      "bytes": 16384,
+      "sha256": "ecc5e4e127f8e57decda39b04de3ea1a11552cc7e5030a4c123369cbe9c61b8f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pto",
+      "bytes": 10312,
+      "sha256": "8df9ea562cb75f7de4d5b3b3ad1bc81ff396398c79e1ed10fe61c7eaf99284c1",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.rps",
+      "bytes": 47937676,
+      "sha256": "e1ff2b2cf21ca1a3df6a68eca86abde40826122031e3be398b4c97400f8ea7f5",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.aux",
+      "bytes": 41778,
+      "sha256": "b99e0864c4c13c68da1bdd2c4ef62c133e22fd59fc93a6e43742c32c5d767b4a",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.freq",
+      "bytes": 55751356,
+      "sha256": "ee8fc261f0f03f5513ad605f2c8357bebc4959f6bbe243a3239e1370137918b3",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.loo",
+      "bytes": 28327840,
+      "sha256": "71ebba96bfa51057845cc47facf88120e909ff99844d424c9122f7ab41019dba",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pdb",
+      "bytes": 94208,
+      "sha256": "1e0464395ad0f14bbc3395ad6afd3eec8c1e05e63d17a24b096f99cedb18cf7a",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.phr",
+      "bytes": 3126832,
+      "sha256": "0d7327a1e213ec56b8c6c5a8346a72dbe24746106d4962fefadd957767464955",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pin",
+      "bytes": 20008,
+      "sha256": "6c4191cca94dbc125d978b4532128aead5e5df1cf131371db99a07893dbb7534",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pos",
+      "bytes": 47280,
+      "sha256": "22a52b3f8286c71ab0858facad99486fa8783de1dc4206ec9ca36da9c887efed",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pot",
+      "bytes": 29864,
+      "sha256": "b1893a7704bc33595f59c47b0605c3b3ad5fb737a99fbcae8ca22d44e3cdefef",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.psq",
+      "bytes": 497692,
+      "sha256": "5e1764fd95f16739b2942a82ca9be03adb64ed5c417e3b63c871fc104484764e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.ptf",
+      "bytes": 16384,
+      "sha256": "b8915df8031b5952313fe05864950fe9d5a1559a5083beb73d48ca3de019f04e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pto",
+      "bytes": 10344,
+      "sha256": "d8aee43e9947e8300a632207cab95746b48499dcf180de8d3a228d41afcb43cd",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.rps",
+      "bytes": 55751356,
+      "sha256": "4d22c354b41d68f87f038ed49df1f08b3d6c3e204e13e98edb049a29f16cc596",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.aux",
+      "bytes": 41413,
+      "sha256": "152a658f1b2e8a81bf7b6f302adcf28b7da22dc0d24d96f420d2224765780ca8",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.freq",
+      "bytes": 43766124,
+      "sha256": "7e041afb29578e97313c91d7376b81d784e552687a1aaf33df09874b0ffae5b3",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.loo",
+      "bytes": 24845268,
+      "sha256": "520601819aaf0d0f2ce51b009df6b9464a4bb29e568e3f6c7357f860d97e80f3",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pdb",
+      "bytes": 94208,
+      "sha256": "e789b905eff7dadd6cbe4e6e879ee975c417438a9bd3669836db6e9c820428ed",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.phr",
+      "bytes": 2701936,
+      "sha256": "c2f3bdd654ce8e26b320c5d4c9c5f4bcd972e0771b044e7a994573c768bc99cd",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pin",
+      "bytes": 20008,
+      "sha256": "0a5e34e27e16f831f613b605dee4a3b301594c0640e0b14e22093cc3786761d0",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pos",
+      "bytes": 47280,
+      "sha256": "e9e8cfa05fba1e5675dfa1aab26b76936758aa6e753f60bf34cf94ca65f33877",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pot",
+      "bytes": 29864,
+      "sha256": "171f10d6bf8f891a704ac4fb423acb9d4fd851f9957ef75721dbe483f5ffa4e3",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.psq",
+      "bytes": 390681,
+      "sha256": "eec0be9470a88669c13d630bf49246528e1703a34059313342abaaa4057f5a8f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.ptf",
+      "bytes": 16384,
+      "sha256": "286f267fee269e5eedd24be8abd4b408563bdee36c8079fa82b337db37b8e556",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pto",
+      "bytes": 10260,
+      "sha256": "3e37421ca90e90a8cd2c2f4d619b0342bd5bd226727a26c39ac7bd893933c94d",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.rps",
+      "bytes": 43766124,
+      "sha256": "86374d7aa62ae1795e35b3806e557b7696b41133844b4f2fa3912b5e04abb0e5",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.aux",
+      "bytes": 41330,
+      "sha256": "12a2507333d53a83384efb2c7014abf3aee2a433f1676196015817000ee03c19",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.freq",
+      "bytes": 43235580,
+      "sha256": "5db3b11b2792dd5c882061fe420dd1aaee2dffa224689e632513575fae992896",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.loo",
+      "bytes": 25951292,
+      "sha256": "9b5c9745777441331389d637de86a5c959aa222f4f40f554b1a4d788f9f965e8",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pdb",
+      "bytes": 94208,
+      "sha256": "23198bfe9f4c0e13d1f7e08d4393179af71594b161ecd332fc2bf2512879ad3b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.phr",
+      "bytes": 2655081,
+      "sha256": "46e6807e5840fd24e1af6aeff236505fcb1892ecd6f743a8c499d75c9500a7cd",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pin",
+      "bytes": 20008,
+      "sha256": "16564aa85f06fc707a06e869298252bc98a7c4cbfc8136c46cce1c11cb8d4174",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pos",
+      "bytes": 47280,
+      "sha256": "12c2797af60b568e82d01bfa483fc6a56f9b337431e33ac7f7536977864d18ef",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pot",
+      "bytes": 29864,
+      "sha256": "a6c04fdc3d4b9e9ae600779cedf76a06eb5f5319c8f70ef203a0a190e4eec110",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.psq",
+      "bytes": 385944,
+      "sha256": "d5cf86b8f629b5f28b781a42c6e1245d8480cb1a9e8ccb88b4c7e641bc3c628f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.ptf",
+      "bytes": 16384,
+      "sha256": "f059ca460baf61cea367cd939369c452435a759150f65d8891f03a9414e01263",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pto",
+      "bytes": 10616,
+      "sha256": "7af9e1d5e22d7ae5dda52423f330282edd850f02f80b7430eb865ed7e760e657",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.rps",
+      "bytes": 43235580,
+      "sha256": "77b080a645adb5e01bd715f1850a4e6370edd4e16917b1954a82740417b42936",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.aux",
+      "bytes": 41277,
+      "sha256": "995dd71122973f013c7cd7ccb800c9d5f4e29441889a6be30eb25a9ddc3a98d4",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.freq",
+      "bytes": 45448808,
+      "sha256": "4fe18da3de114105f367c4189922e5d3aa19975a028f158298b90843e539ab6d",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.loo",
+      "bytes": 45521096,
+      "sha256": "782fe0ead1bb7aa265432e644f00c88938d917b4b61369d3c6e41695dbe42912",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pdb",
+      "bytes": 94208,
+      "sha256": "903a7e13aa630f0219e2445c1cbc5377090c862fcab48cc4d00a8e744d7a079e",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.phr",
+      "bytes": 2767428,
+      "sha256": "891b86523080db26185048d07a66a0a587783060d098fa9ad9b668159bc77adf",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pin",
+      "bytes": 20000,
+      "sha256": "8c28c93be5263280749e9781bcac53a4e8406b245114fef2c4d022d98108249b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pos",
+      "bytes": 47261,
+      "sha256": "6cae8be0210c5dbb04800b81a810f24d6366090bae4b2843d6330f7452de6009",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pot",
+      "bytes": 29852,
+      "sha256": "a7c5b44959bb8a7aa68c0fce4a78b4599adbb11736d4dc942c3472dd82fe0304",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.psq",
+      "bytes": 405705,
+      "sha256": "9b139529b3f698289332727a625a303bbc0d6ad6f1b769345df051038da386e9",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.ptf",
+      "bytes": 24576,
+      "sha256": "03ff8ce24af3ee0484f333cb67bf42b2c6dd34a44b42e4bafd060bcdfbfb7fd7",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pto",
+      "bytes": 10932,
+      "sha256": "fb244f371e2c82b984c43d0851be5ad59dd279c6afc9ab552dd1c6e7a9b7ec9b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.rps",
+      "bytes": 45448808,
+      "sha256": "039151a213c6dbfe61cf049699f78d026faab1d91beee5f25d8b6ac62ce98ab3",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.pal",
+      "bytes": 212,
+      "sha256": "90ea08a24fb68c22f1dec40ec34029b55d83c13659c8556f410849b5f8808105",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/bitscore_specific.txt",
+      "bytes": 1484814,
+      "sha256": "bf24d622f8b127651ba1c4338965ff8fbe730281c70936f85cddeb13432a0939",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot.dat",
+      "bytes": 5046712,
+      "sha256": "6c351b62b17e5d1e42ab207a50d34260ea22ca84ccc15108ac605ecbe0e15b01",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot.dat.gz",
+      "bytes": 812840,
+      "sha256": "9b028a6847322188dad39f0ba854de9c38ca2e057a16705ee47ca0fae42258bd",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot_generic.dat",
+      "bytes": 3110805,
+      "sha256": "4f5137acb2d12fd53482db59ef960e28210a3868cd82e56ac8a030e5f521798c",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot_generic.dat.gz",
+      "bytes": 451349,
+      "sha256": "97b15f39741293e155e0e95b49c70243cedb2b0b2ed59440c4f8f7287f134a13",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddid.tbl",
+      "bytes": 34383893,
+      "sha256": "b2a41de75186685252b82cba0ed923244d28edf125e5b48690c9dd76e92b6777",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddid.tbl.gz",
+      "bytes": 7769948,
+      "sha256": "852cb4c22f604b38f34c399c2fdad3d737fd15deaa5736c1a632249f0a6f6264",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/cdtrack.txt",
+      "bytes": 1768701,
+      "sha256": "263046b8bc6bf4ce19db46913479b99f83914c2b7db0e6db6fb23139084cf828",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc_data/family_superfamily_links",
+      "bytes": 1936994,
+      "sha256": "780a29f2ae698131c719b9a8cade4bfe54390380b6a388240695299c09916e9b",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/blast/ncbi-blast-2.17.0+/bin/rpsblast",
+      "bytes": 36106336,
+      "sha256": "b295bf5b13203f383b1dd30807f5e1c6e0f1a6c5b684d0d58aa2c7d8481ac05f",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "nad_qvae",
+      "path": "data/reference/ncbi_cdd_3.21/rpsbproc/RpsbProc-x64-linux/rpsbproc",
+      "bytes": 18950504,
+      "sha256": "32b2a1ad691359db4a5c1807e4e772cfdbbaefd40441f5ca4acab8d710399fd8",
+      "purpose": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
+      "used_in": "\u8bc4\u4ef7"
+    },
+    {
+      "source": "environment",
+      "path": "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs",
+      "bytes": 206201408,
+      "sha256": "d6d1bf1b50c095eb0cb66f685a7fb1d9b8b69497e1e88416fd48f28e313cc773",
+      "purpose": "MMseqs \u7a0b\u5e8f",
+      "used_in": "\u751f\u6210",
+      "version": "18.8cc5c"
+    }
+  ]
+}

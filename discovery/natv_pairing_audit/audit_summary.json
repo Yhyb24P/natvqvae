@@ -1,0 +1,187 @@
+{
+ "generated_at_utc": "2026-10-20T05:24:18.643944+00:00",
+ "script_sha256": "3b6107a73e1dd47357fc78a10c9cc04d17e2807b32878ce9bc86a05f3f1d9019",
+ "inputs": {
+  "family_population_records": 2430,
+  "family_roles_rows": 2430,
+  "active_g_rows": 1871,
+  "structure_corpus_pdbs": 285,
+  "structure_polymer_entities": 308
+ },
+ "family": {
+  "training_role_v2_counts": {
+   "training": 1644,
+   "annotation_conflict_quarantine": 249,
+   "test": 231,
+   "validation": 227,
+   "quarantined_old_sealed_component": 75,
+   "excluded_noncanonical_or_domain": 4
+  },
+  "split_v2_counts": {
+   "training": 1879,
+   "validation": 235,
+   "test": 235,
+   "quarantined_old_sealed_component": 77,
+   "excluded": 4
+  },
+  "legacy_split_counts": {
+   "excluded": 1556,
+   "training": 488,
+   "validation": 309,
+   "reference": 71,
+   "test": 6
+  },
+  "sequence_id_hash_mismatches": 0,
+  "fasta_parquet_sequence_mismatches": 0,
+  "source_role_counts": {
+   "retrieval_only": 1355,
+   "core": 809,
+   "excluded": 263,
+   "reference/anchor": 3
+  },
+  "annotation_conflict_not_negative_label": true
+ },
+ "active_g": {
+  "rows": 1871,
+  "missing_from_family_population": 0,
+  "population_not_in_active_g": 559
+ },
+ "structures": {
+  "pdbs": 285,
+  "polymer_entities": 308,
+  "dual_pfam_entities": 3,
+  "dual_pfam_entity_ids": [
+   "2QJO_1",
+   "2QJT_1",
+   "2R5W_1"
+  ],
+  "dual_hmm_entities": 3,
+  "qualifying_entities": 3,
+  "qualifying_entity_ids": [
+   "2QJO_1",
+   "2QJT_1",
+   "2R5W_1"
+  ],
+  "unique_uniprot_in_qualifying": [
+   "Q55928",
+   "Q5NHR1"
+  ]
+ },
+ "templates": {
+  "2QJO": {
+   "uniprot": [
+    "Q55928"
+   ],
+   "construct_length": 341,
+   "native_length": 339,
+   "sifts_entity_beg": 3,
+   "tag_length": 2,
+   "artifacts": [
+    [
+     1,
+     2
+    ]
+   ],
+   "observed_residues": 995,
+   "chains": [
+    "A",
+    "B",
+    "C"
+   ]
+  },
+  "2QJT": {
+   "uniprot": [
+    "Q5NHR1"
+   ],
+   "construct_length": 352,
+   "native_length": 347,
+   "sifts_entity_beg": 6,
+   "tag_length": 5,
+   "artifacts": [
+    [
+     1,
+     5
+    ]
+   ],
+   "observed_residues": 684,
+   "chains": [
+    "A",
+    "B"
+   ]
+  },
+  "2R5W": {
+   "uniprot": [
+    "Q5NHR1"
+   ],
+   "construct_length": 352,
+   "native_length": 347,
+   "sifts_entity_beg": 6,
+   "tag_length": 5,
+   "artifacts": [
+    [
+     1,
+     5
+    ]
+   ],
+   "observed_residues": 689,
+   "chains": [
+    "A",
+    "B"
+   ]
+  }
+ },
+ "alignments": {
+  "KVP40_to_Q5NHR1": {
+   "score": 388.0,
+   "aligned_len": 326,
+   "identity": 0.3589,
+   "query_coverage": 0.956
+  },
+  "KVP40_to_Q55928": {
+   "score": 442.0,
+   "aligned_len": 327,
+   "identity": 0.3547,
+   "query_coverage": 0.9589
+  },
+  "Q5NHR1_to_Q55928": {
+   "score": 551.0,
+   "aligned_len": 334,
+   "identity": 0.3802,
+   "query_coverage": 0.9625
+  },
+  "KVP40_length": 341,
+  "KVP40_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+ },
+ "anchors": {
+  "total": 12,
+  "mapping_status_counts": {
+   "PASS": 12
+  },
+  "ligand_proximity_counts": {
+   "PASS": 12
+  },
+  "all_wt_residues_match": true,
+  "all_template_positions_match_Q5NHR1": true,
+  "all_alignment_pairs_consistent": true,
+  "same_position_matches_Q55928": 1,
+  "cross_species_mapping_consistent_with_direct_wt": true,
+  "cross_species_identity_conserved_in_Q55928": 11,
+  "identity_conserved_claim_matches_actual": true
+ },
+ "key_findings": [
+  "The curated '2QJT' anchor positions are Q5NHR1/2QJT auth numbering, not PDB entity/label_seq numbering; the 2QJT and 2R5W entity offset is +5 and the 2QJO entity offset is +2.",
+  "All 12 anchor template positions match Q5NHR1 and all 12 WT positions match the GenBank AAQ64231.1 translation; the global KVP40-Q5NHR1 alignment preserves every anchor pair.",
+  "The 2QJO column cannot use same-number positions: 11 of 12 anchors would land on a different residue. The valid 2QJO mapping is Q5NHR1->Q55928 by global alignment, and it agrees with the direct KVP40->Q55928 alignment for all 12 anchors.",
+  "E238/H236 is the only non-identity-conserved anchor; the aligned 2QJO residue is K236 rather than E, so the Nudix anchor correspondence is positional, not identity-conserved, across all three templates.",
+  "2QJT and 2R5W are the same UniProt sequence Q5NHR1 in different experimental states; they are not independent sequence diversity.",
+  "Only 2QJO, 2QJT and 2R5W qualify as full-length dual-domain experimental templates in the 285-PDB corpus.",
+  "No experimentally measured NatV variant activity is present in these inputs; structural correspondence is not catalytic activity."
+ ],
+ "limitations": [
+  "SIFTS maps construct/entity residues to UniProt; cross-species KVP40 correspondence is a separate homology alignment and is not a SIFTS claim.",
+  "The 2QJO anchor positions depend on a Q5NHR1-Q55928 global alignment (38% identity over the aligned region), not on identical residue numbering.",
+  "The 12 anchors are structural proxies; ligand proximity does not establish substrate geometry, catalysis or net NAD+ yield.",
+  "The 285-PDB corpus is a frozen local candidate set; external discovery results are recorded separately and do not silently broaden the training population.",
+  "Roles in training_role_v2 are preserved as-is; annotation-conflict quarantine is not an experimental negative label."
+ ]
+}

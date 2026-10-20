@@ -1,0 +1,563 @@
+{
+ "generated_at_utc": "2026-10-20T06:05:40.532415+00:00",
+ "script_sha256": "46584cd493acd86c441f3fba5136ec14c543ee3e547e631e8ab777bc72e1db6a",
+ "formal_input_manifest": false,
+ "intended_use": "Structural interpretation and risk annotation of generated candidates. Not a training input, activity label or selector.",
+ "target": {
+  "name": "NatV_KVP40",
+  "source": "GenBank AY283928.2 / AAQ64231.1",
+  "length": 341,
+  "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+  "domains": {
+   "NTERM": [
+    1,
+    3
+   ],
+   "NMNAT": [
+    4,
+    181
+   ],
+   "LINKER": [
+    182,
+    203
+   ],
+   "NUDIX": [
+    204,
+    338
+   ],
+   "CTERM": [
+    339,
+    341
+   ]
+  },
+  "domain_source": "CDD-derived WT-relative intervals"
+ },
+ "experimental_references": [
+  {
+   "uniprot": "Q5NHR1",
+   "length": 347,
+   "sequence_sha256": "171f8a5afd881a4e4b0f3a0d9e73e9fedd470aaec3b7c8874cb2dc29d5cfbaf2",
+   "sequence": "MYDISVFIGRFQPFHKGHLHNIIIALQNSKKVIINIGSCFNTPNIKNPFSFEQRKQMIESDLQVAGIDLDTVVIEPLADYFYQEQKWQDELRKNVYKHAKNNNSIAIVGHIKDSSSYYIRSFPEWDYIGVDNYKNFNATEFRQKFYNGIISKQYMCSNDPKLGTYNFLTKFMDTQVYQDLVAENNYVIEYKRLWLKAPFKPNFVTVDALVIVNDHILMVQRKAHPGKDLWALPGGFLECDETIAQAIIRELFEETNINLTHEQLAIAKRCEKVFDYPDRSVRGRTISHVGLFVFDQWPSLPEINAADDAKDVKWISLGSNIKNICDRMLEDHYQIITILLEECGKKL",
+   "domains": {
+    "NMNAT": [
+     4,
+     187
+    ],
+    "NUDIX": [
+     203,
+     341
+    ]
+   },
+   "domain_source": "anchors_cdd_domains.parquet specific hits cd02168 4-187 and cd18873 203-341",
+   "template_entities": [
+    "2QJT_1",
+    "2R5W_1"
+   ]
+  },
+  {
+   "uniprot": "Q55928",
+   "length": 339,
+   "sequence_sha256": "6967f311cdba742871b9c8fda80e62d0a873c8c714f18d8bc60296a7a24ba034",
+   "sequence": "MQTKYQYGIYIGRFQPFHLGHLRTLNLALEKAEQVIIILGSHRVAADTRNPWRSPERMAMIEACLSPQILKRVHFLTVRDWLYSDNLWLAAVQQQVLKITGGSNSVVVLGHRKDASSYYLNLFPQWDYLETGHYPDFSSTAIRGAYFEGKEGDYLDKVPPAIADYLQTFQKSERYIALCDEYQFLQAYKQAWATAPYAPTFITTDAVVVQAGHVLMVRRQAKPGLGLIALPGGFIKQNETLVEGMLRELKEETRLKVPLPVLRGSIVDSHVFDAPGRSLRGRTITHAYFIQLPGGELPAVKGGDDAQKAWWMSLADLYAQEEQIYEDHFQIIQHFVSKV",
+   "domains": null,
+   "domain_source": "No independent domain interval in the pinned release; map through Q5NHR1 by global alignment.",
+   "template_entities": [
+    "2QJO_1"
+   ]
+  }
+ ],
+ "templates": [
+  {
+   "entity_id": "2QJO_1",
+   "pdb_id": "2QJO",
+   "uniprot": "Q55928",
+   "method": "X-RAY DIFFRACTION",
+   "resolution_A": 2.6,
+   "construct_length": 341,
+   "native_length": 339,
+   "n_terminal_tag_length": 2,
+   "auth_to_entity_offset": 2,
+   "observed_residues_total": 995,
+   "ligand_inventory": "APR:3;NAD:3;POP:3;SO4:4",
+   "chains": [
+    {
+     "chain": "A",
+     "observed_residues": 332,
+     "first_label": 1,
+     "last_label": 338,
+     "missing_ranges": "304-309;339-341",
+     "auth_minus_label": -2,
+     "ligands": "APR:1;NAD:1;POP:1;SO4:3"
+    },
+    {
+     "chain": "B",
+     "observed_residues": 336,
+     "first_label": 6,
+     "last_label": 341,
+     "missing_ranges": "1-5",
+     "auth_minus_label": -2,
+     "ligands": "APR:1;NAD:1;POP:1;SO4:1"
+    },
+    {
+     "chain": "C",
+     "observed_residues": 327,
+     "first_label": 6,
+     "last_label": 339,
+     "missing_ranges": "1-5;303-309;340-341",
+     "auth_minus_label": -2,
+     "ligands": "APR:1;NAD:1;POP:1"
+    }
+   ],
+   "designated_use": "NMNAT domain, product-bound NAD proxy",
+   "restriction": "Use Q5NHR1-to-Q55928 cross-species alignment; same-numbered positions are invalid. No NMN+ATP substrate ternary geometry.",
+   "independent_sequence": true
+  },
+  {
+   "entity_id": "2QJT_1",
+   "pdb_id": "2QJT",
+   "uniprot": "Q5NHR1",
+   "method": "X-RAY DIFFRACTION",
+   "resolution_A": 2.3,
+   "construct_length": 352,
+   "native_length": 347,
+   "n_terminal_tag_length": 5,
+   "auth_to_entity_offset": 5,
+   "observed_residues_total": 684,
+   "ligand_inventory": "AMP:2;MN:9",
+   "chains": [
+    {
+     "chain": "A",
+     "observed_residues": 340,
+     "first_label": 6,
+     "last_label": 349,
+     "missing_ranges": "1-5;115-118;350-352",
+     "auth_minus_label": -5,
+     "ligands": "AMP:1;MN:5"
+    },
+    {
+     "chain": "B",
+     "observed_residues": 344,
+     "first_label": 6,
+     "last_label": 349,
+     "missing_ranges": "1-5;350-352",
+     "auth_minus_label": -5,
+     "ligands": "AMP:1;MN:4"
+    }
+   ],
+   "designated_use": "Nudix domain, AMP + Mn product/metal proxy",
+   "restriction": "No ADPR substrate geometry; ligand proximity is not a hydrolysis-rate measurement.",
+   "independent_sequence": true
+  },
+  {
+   "entity_id": "2R5W_1",
+   "pdb_id": "2R5W",
+   "uniprot": "Q5NHR1",
+   "method": "X-RAY DIFFRACTION",
+   "resolution_A": 2.3,
+   "construct_length": 352,
+   "native_length": 347,
+   "n_terminal_tag_length": 5,
+   "auth_to_entity_offset": 5,
+   "observed_residues_total": 689,
+   "ligand_inventory": "CL:3;MG:6",
+   "chains": [
+    {
+     "chain": "A",
+     "observed_residues": 344,
+     "first_label": 6,
+     "last_label": 349,
+     "missing_ranges": "1-5;350-352",
+     "auth_minus_label": -5,
+     "ligands": "CL:1;MG:3"
+    },
+    {
+     "chain": "B",
+     "observed_residues": 345,
+     "first_label": 6,
+     "last_label": 350,
+     "missing_ranges": "1-5;351-352",
+     "auth_minus_label": -5,
+     "ligands": "CL:2;MG:3"
+    }
+   ],
+   "designated_use": "alternate experimental state of Q5NHR1",
+   "restriction": "Mg/Cl state of the same sequence as 2QJT; not an independent sequence or a second family member.",
+   "independent_sequence": false
+  }
+ ],
+ "numbering": {
+  "wt": "1-based inclusive, GenBank AAQ64231.1",
+  "2QJO": "entity/label = auth + 2; auth_minus_label = -2; construct = Q55928 native + 2",
+  "2QJT": "entity/label = auth + 5; auth_minus_label = -5; construct = Q5NHR1 native + 5",
+  "2R5W": "entity/label = auth + 5; auth_minus_label = -5; construct = Q5NHR1 native + 5",
+  "warning": "Do not equate same-numbered positions across KVP40, Q5NHR1 and Q55928. Use the recorded global alignments."
+ },
+ "mapping_routes": {
+  "WT_to_Q5NHR1": "Global pairwise alignment; domain-wise anchor mapping. Self-check 12/12.",
+  "WT_to_Q55928": "Direct global pairwise alignment; self-check 12/12. Preferred route for the 2QJO column.",
+  "Q5NHR1_to_Q55928": "Global pairwise alignment. Required for cross-species 2QJO template correspondence; 11/12 same-number positions would land on a different residue.",
+  "construct_to_native": "construct = UniProt native position + tag length",
+  "native_to_observed": "Check chain-specific missing ranges; no chain resolves every residue."
+ },
+ "anchor_table": [
+  {
+   "domain": "NMNAT",
+   "wt_position": 14,
+   "wt_residue": "H",
+   "q5_position": 15,
+   "q5_residue": "H",
+   "q559_position_by_alignment": 18,
+   "q559_residue_by_alignment": "H",
+   "q559_same_position_residue": "Q",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 20,
+    "2QJT": 20,
+    "2R5W": 20
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJO",
+   "min_ligand_distance_A": 3.638,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "NMNAT",
+   "wt_position": 17,
+   "wt_residue": "H",
+   "q5_position": 18,
+   "q5_residue": "H",
+   "q559_position_by_alignment": 21,
+   "q559_residue_by_alignment": "H",
+   "q559_same_position_residue": "H",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 23,
+    "2QJT": 23,
+    "2R5W": 23
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJO",
+   "min_ligand_distance_A": 3.611,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "NMNAT",
+   "wt_position": 135,
+   "wt_residue": "T",
+   "q5_position": 139,
+   "q5_residue": "T",
+   "q559_position_by_alignment": 140,
+   "q559_residue_by_alignment": "T",
+   "q559_same_position_residue": "S",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 142,
+    "2QJT": 144,
+    "2R5W": 144
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJO",
+   "min_ligand_distance_A": 7.667,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "NMNAT",
+   "wt_position": 138,
+   "wt_residue": "R",
+   "q5_position": 142,
+   "q5_residue": "R",
+   "q559_position_by_alignment": 143,
+   "q559_residue_by_alignment": "R",
+   "q559_same_position_residue": "I",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 145,
+    "2QJT": 147,
+    "2R5W": 147
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJO",
+   "min_ligand_distance_A": 6.775,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 232,
+   "wt_residue": "G",
+   "q5_position": 234,
+   "q5_residue": "G",
+   "q559_position_by_alignment": 232,
+   "q559_residue_by_alignment": "G",
+   "q559_same_position_residue": "F",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 234,
+    "2QJT": 239,
+    "2R5W": 239
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 2.142,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 236,
+   "wt_residue": "H",
+   "q5_position": 238,
+   "q5_residue": "E",
+   "q559_position_by_alignment": 236,
+   "q559_residue_by_alignment": "K",
+   "q559_same_position_residue": "N",
+   "identity_conserved_across_templates": false,
+   "construct_positions": {
+    "2QJO": 238,
+    "2QJT": 243,
+    "2R5W": 243
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 3.97,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 247,
+   "wt_residue": "R",
+   "q5_position": 249,
+   "q5_residue": "R",
+   "q559_position_by_alignment": 247,
+   "q559_residue_by_alignment": "R",
+   "q559_same_position_residue": "L",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 249,
+    "2QJT": 254,
+    "2R5W": 254
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 4.002,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 248,
+   "wt_residue": "E",
+   "q5_position": 250,
+   "q5_residue": "E",
+   "q559_position_by_alignment": 248,
+   "q559_residue_by_alignment": "E",
+   "q559_same_position_residue": "K",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 250,
+    "2QJT": 255,
+    "2R5W": 255
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 2.167,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 251,
+   "wt_residue": "E",
+   "q5_position": 253,
+   "q5_residue": "E",
+   "q559_position_by_alignment": 251,
+   "q559_residue_by_alignment": "E",
+   "q559_same_position_residue": "T",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 253,
+    "2QJT": 258,
+    "2R5W": 258
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 3.922,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 252,
+   "wt_residue": "E",
+   "q5_position": 254,
+   "q5_residue": "E",
+   "q559_position_by_alignment": 252,
+   "q559_residue_by_alignment": "E",
+   "q559_same_position_residue": "R",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 254,
+    "2QJT": 259,
+    "2R5W": 259
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 2.006,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 307,
+   "wt_residue": "D",
+   "q5_position": 307,
+   "q5_residue": "D",
+   "q559_position_by_alignment": 304,
+   "q559_residue_by_alignment": "D",
+   "q559_same_position_residue": "Q",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 306,
+    "2QJT": 312,
+    "2R5W": 312
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 3.445,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  },
+  {
+   "domain": "Nudix",
+   "wt_position": 308,
+   "wt_residue": "D",
+   "q5_position": 308,
+   "q5_residue": "D",
+   "q559_position_by_alignment": 305,
+   "q559_residue_by_alignment": "D",
+   "q559_same_position_residue": "K",
+   "identity_conserved_across_templates": true,
+   "construct_positions": {
+    "2QJO": 307,
+    "2QJT": 313,
+    "2R5W": 313
+   },
+   "observed": {
+    "2QJO": true,
+    "2QJT": true,
+    "2R5W": true
+   },
+   "designated_template": "2QJT",
+   "min_ligand_distance_A": 2.212,
+   "mapping_status": "PASS",
+   "ligand_proximity_status": "PASS"
+  }
+ ],
+ "anchor_summary": {
+  "count": 12,
+  "mapping_status": "PASS 12/12",
+  "designated_ligand_proximity_status": "PASS 12/12",
+  "variable_anchor": {
+   "wt": "H236",
+   "q5": "E238",
+   "q559": "K236",
+   "note": "Positional Nudix correspondence, not identity-conserved. Substitutions at this site are not anchor losses."
+  },
+  "roles": {
+   "NMNAT": "ATP-motif / catalysis-adjacent proxy from the 2QJO NAD product state; not a substrate ternary complex",
+   "NUDIX": "Nudix motif / metal-water network proxy from 2QJT AMP + Mn; not ADPR substrate geometry"
+  }
+ },
+ "ligand_states": {
+  "2QJO": {
+   "ligands": "APR, NAD, POP, SO4",
+   "interpretation": "NMNAT product-bound NAD proxy",
+   "nudix_anchor_distance_to_nmnat_site_A": "23-33"
+  },
+  "2QJT": {
+   "ligands": "AMP, Mn",
+   "interpretation": "Nudix product/metal proxy"
+  },
+  "2R5W": {
+   "ligands": "Mg, Cl",
+   "interpretation": "alternate metal state of the same Q5NHR1 sequence; E238 is 4.655 A from the designated ligand"
+  }
+ },
+ "evidence_semantics": {
+  "allowed": [
+   "Map candidate residues to template positions along the declared routes.",
+   "Check whether candidate substitutions hit anchor positions.",
+   "Annotate NMNAT catalytic-environment compatibility and Nudix risk as hypotheses.",
+   "Report predicted structural confidence separately from experimental templates."
+  ],
+  "not_allowed": [
+   "Treat anchor preservation or ligand proximity as catalytic activity.",
+   "Infer kcat, binding affinity or net NAD+ production from geometry.",
+   "Treat 2QJT and 2R5W as independent sequences.",
+   "Use a predicted structure as an experimental template."
+  ]
+ },
+ "limitations": [
+  "No chain resolves all residues; use the recorded missing ranges.",
+  "Full-length refers to the construct sequence, not complete observed coordinates.",
+  "2QJO/2QJT are product/metal states; no NMN+ATP or ADPR ternary geometry.",
+  "The 2QJO Nudix anchors are 23-33 A from the NMNAT-site NAD; 2QJT is the Nudix template.",
+  "Anchor mapping across species at ~35% identity is near the twilight zone.",
+  "The basis contains no catalytic measurement and no candidate sequence."
+ ],
+ "sources": {
+  "sequence_registry.csv": "0e4888569ebbba38707d525c88391c8f78d8d464d0b60785e48988cc6f8b67c0",
+  "anchor_mapping_audit.csv": "7ba702100030b1bb5fc388e9d18af11ddb459cc5603a91fa9798955b36605838",
+  "construct_observed_audit.csv": "bcbb353806f64f0d9121d814530e16dee3052e2dea0ce98ccf7ae54fdd334cbf",
+  "structure_registry.csv": "4aad08270f4c7b2553c14e2bf2044ca3c3eebd06f14d12bcae1a24b0ef2f1e0a"
+ }
+}

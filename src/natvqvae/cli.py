@@ -36,7 +36,7 @@ def _doctor(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="natvqvae", description="NatV net-NAD+ design (v0 skeleton)")
+    parser = argparse.ArgumentParser(prog="natvqvae", description="NatV net-NAD+ design and input checks")
     parser.add_argument("--version", action="version", version=f"natvqvae {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
     doctor = sub.add_parser("doctor", help="validate contracts and input hashes")

@@ -1,0 +1,13 @@
+domain,wt_position,wt_residue,q5_position,q5_residue,q5_match,q5_unmapped,q5_top_substitutions,wt_match,wt_unmapped,wt_top_substitutions
+NMNAT,14,H,15,H,92,2,H:92;-:2;T:1,92,3,H:92;-:3
+NMNAT,17,H,18,H,87,2,H:87;Q:6;-:2,88,1,H:88;Q:6;-:1
+NMNAT,135,T,139,T,79,7,T:79;-:7;K:4;S:3;A:2,77,7,T:77;A:8;-:7;S:3
+NMNAT,138,R,142,R,88,7,R:88;-:7,82,9,R:82;-:9;S:2;T:1;G:1
+Nudix,232,G,234,G,91,0,G:91;E:3;A:1,92,0,G:92;E:3
+Nudix,236,H,238,E,49,0,E:49;D:29;G:6;R:2;K:2,2,0,E:50;D:27;G:6;R:2;K:2
+Nudix,247,R,249,R,95,0,R:95,94,0,R:94;H:1
+Nudix,248,E,250,E,86,0,E:86;K:4;A:3;I:1;G:1,85,0,E:85;K:4;A:3;G:2;I:1
+Nudix,251,E,253,E,89,0,E:89;Q:2;G:2;N:1;A:1,89,0,E:89;Q:2;G:2;N:1;A:1
+Nudix,252,E,254,E,93,0,E:93;K:1;A:1,93,0,E:93;K:1;A:1
+Nudix,307,D,307,D,66,4,D:66;S:22;-:4;K:3,64,4,D:64;S:22;-:4;K:3;L:2
+Nudix,308,D,308,D,87,4,D:87;-:4;N:3;E:1,85,4,D:85;-:4;N:3;G:2;E:1
