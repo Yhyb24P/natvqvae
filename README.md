@@ -1,86 +1,51 @@
-# natvqvae
+# NatV-QVAE | NAD⁺ net-production enzyme design
 
-Engineering **KVP40 NatV** for higher **net NAD⁺ synthesis** with computational sequence design.
+Research code for designing **KVP40 NatV-derived enzymes** with greater **net NAD⁺ production** in a specified purified-enzyme NMN + ATP reaction. Loss of Nudix-mediated NAD⁺ hydrolysis is acceptable **if NMNAT synthesis is retained**. This is a computational design project; **no variant has yet been shown experimentally to outperform WT**.
 
-This repository is intentionally new and self-contained. It references the original
-research repository **read-only** (raw sequences, family data, HMMs, experimental
-structures) and does not import its package, contracts, or run directories.
+## Scientific objective
 
-## Objective (v1)
+NMNAT: `NMN + ATP ⇌ NAD⁺ + PPi`. KVP40 Nudix can hydrolyse NAD⁺ to NMN + AMP. Increasing NMNAT catalysis and reducing NAD⁺ hydrolysis are **distinct causal routes** to greater net accumulation. The primary application endpoint is experimentally measured NAD⁺ accumulation under controlled conditions; NMNAT kinetics and Nudix hydrolysis must be measured separately to explain it. **No current model predicts catalytic efficiency or net yield.**
 
-Starting from the 341-aa KVP40 NatV (bifunctional NMNAT + Nudix), design sequences
-that increase net NAD⁺ accumulation in a defined **in vitro** reaction:
+## Research route
 
-```
-J(θ) = ( [NAD⁺]_θ(T) − [NAD⁺](0) ) / E_{θ,0}
-```
+1. **Data and biochemical context.** Reuse the curated NatV NMNAT–Nudix family and experimental homolog structures with traceable source, domain correspondence and train/validation boundaries. Generic NAD-related proteins are *not* automatically NatV family members.
+2. **Generate.** Investigate QVAE alongside the existing no-latent SE baseline. Test real prior-driven generation and WT-relative editing as **different tasks**; do not mistake masked residue recovery for unconditional full-length synthesis. Keep training data, comparison budget and candidate provenance explicit.
+3. **Assess and select.** Examine sequence novelty/diversity, candidate-specific full-length double-domain structures, catalytic-site plausibility and possible Nudix hydrolysis risk. Model-based readouts are evidence about compatibility, **not kcat labels**. Select a diverse, auditable panel rather than claim an in silico optimum.
+4. **Future biochemical validation.** Compare WT and variants for NMNAT initial rates/kinetics, NAD⁺ hydrolysis and net NAD⁺ accumulation. No wet-lab execution is implied or authorised by this repository.
 
-- NMNAT: `NMN + ATP ⇌ NAD⁺ + PPi` — must remain catalytically competent.
-- Nudix: `NAD⁺ + H₂O → NMN + AMP` — may be attenuated, including loss of hydrolysis.
-- `J` is an **experimental** quantity. No model in this repository predicts `k_cat`.
-- NMNAT `k_cat`, `K_m(NMN)`, `K_m(ATP)`, `k_cat/K_m`, Nudix hydrolysis rate and net
-  accumulation are reported as **separate** endpoints. Net accumulation alone does
-  not establish improved synthesis.
+A/B/C describe **hypotheses**, not three required models: **A** modifies NMNAT to seek synthesis improvement; **B** modifies Nudix to seek reduced NAD⁺ hydrolysis; **C** combines both. Preserving fold/domain organisation matters; keeping natural Nudix hydrolytic function is *not* a requirement.
 
-## Design classes
+## What is actually available
 
-| Class | Intent | Allowed edits |
-|---|---|---|
-| A | improve synthesis | NMNAT domain (4–181); Nudix catalytic anchors untouched |
-| B | reduce NAD⁺ hydrolysis | Nudix domain (204–338), catalytic center prioritized; NMNAT untouched |
-| C | joint | A ∪ B under both regional constraints |
+The repository currently contains the WT identity, **provisional CDD-derived domain ranges**, a WT-relative substitution representation, a read-only source manifest and tests. **No trained model, inference adapter, evaluated candidate or experimentally verified gain has been imported or executed here.** The generator interface currently describes masked recovery only and must not be presented as a family prior sampler.
 
-**Hard constraint:** the Nudix domain must remain present and folded. Domain
-deletion or truncation designs are forbidden — the Nudix region also contributes to
-oligomerization and interdomain organization.
+The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutable research evidence source**, not an import dependency. Existing research supports an SE comparator; prior H2 QVAE comparisons did *not* establish latent-variable benefit for their fixed-4/8-edit task. G0 chemical conditioning remains parked, G1-a is an optional site-selection comparator, and G1-b variable-length generation is deferred. These are bounded findings, not universal bans on QVAE, chemistry or InDels.
 
-## Non-goals
+## Repository responsibilities
 
-- Predicting `k_cat`, `k_cat/K_m`, or any catalytic rate.
-- Converting docking scores, pLDDT, L_topo, or Vina outputs into catalytic efficiency.
-- Modeling cellular metabolism. Scope is the purified-enzyme NMN + ATP system.
-- Claiming activity for any computational candidate.
+| Location | Purpose |
+|---|---|
+| `docs/RESEARCH_PLAN.md` | Current questions, research path and decision criteria |
+| `docs/DATA_PROVENANCE.md` | Population boundaries, source inheritance, evidence limitations |
+| `contracts/` | Objective, **pilot-only** position rules, evaluation semantics |
+| `inputs/manifest.json` | SHA-pinned **source files**; does not grant use of all files for training |
+| `assets/PROVENANCE.md` | Checkpoint admission and identity; no models imported yet |
+| `src/natvqvae/` | Only reusable capabilities exercised by a current research path |
+| `tests/` | Tests of actual capabilities and scientific contracts |
+| `runs/` | Ignored, per-run outputs with manifest and reproducible source identity |
 
-## Inherited rulings (recorded to avoid silent re-opening)
+`AGENTS.md` defines contributor boundaries; it is not another research plan. Results belong to individual run directories, not to a growing collection of "current status" documents.
 
-- The G0 chemical-conditioning plan stays **PARK**.
-- G1-a is a site-selection baseline only; it does not define the generation mainline.
-- G1-b is not re-activated by permission to lose Nudix hydrolysis.
-- Historical OD570/λ570 wet-lab data are **not** accepted as functional evidence in
-  this project.
-- S2 / T135A stay quarantined.
-- No run authorization is inherited. Each generation or folding run needs its own
-  contract and output directory.
-
-## Scientific honesty note on generation
-
-The frozen NatV sequence models available to this project are **masked-recovery**
-models: they score and recover residues under a mask, conditioned on a frozen PLM.
-They are not free de novo generators. Any candidate produced here is therefore a
-*recovery sample under a specified mask*, and must be described that way.
-
-## Layout
-
-```
-contracts/    objective, region map, evidence ladder
-inputs/       hash-verified symlinks to read-only source data (manifest.json)
-assets/       frozen weights + provenance (empty until a generation arm is chosen)
-src/natvqvae/ intake, regions, sequence, CLI, generator protocol
-tests/        pytest
-runs/         ignored; every run gets its own frozen-config directory
-```
-
-## Quick start
+## Install and inspect
 
 ```bash
-python -m venv .venv && . .venv/bin/activate
-pip install -e ".[dev]"
-python inputs/link_inputs.py --check-only   # verify hashes, create nothing
-python inputs/link_inputs.py                # create read-only symlinks
-python -m natvqvae doctor
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
 pytest -q
+python -m natvqvae doctor --root /path/to/nad_qvae
 ```
 
-## Status
+The last command checks actual local source files against `inputs/manifest.json` and fails if the source is absent/mismatched. `inputs/link_inputs.py --check-only --root /path/to/nad_qvae` verifies without creating symlinks. The source data are **not** shipped in this repository. No training or generation starts during installation or tests.
 
-v0 skeleton only: no generators, no checkpoints, no folding, no candidates.
+**Status:** research and repository foundation only. The next scientific deliverable is a reproducible QVAE-versus-baseline **generation-and-candidate-evaluation** study, not more skeleton code.
