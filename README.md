@@ -1,32 +1,32 @@
-# NatV-QVAE｜KVP40 保守蛋白质生成
+# NatV-QVAE｜KVP40 保守序列生成研究
 
-以 KVP40 NatV（341 aa，NMNAT–Nudix 双结构域）为参考，研究 WT 邻域的条件序列生成，最终为提高纯化酶体系中的 NAD⁺ 净积累提出可检验变体。Nudix 水解可减弱，NMNAT 合成需保留实际应用价值。
+以噬菌体 KVP40 NatV（341 aa，NMNAT–Nudix 双结构域）为研究对象，通过计算生成可检验的保守变体，面向纯化酶体系中的 NAD⁺ 净积累改善；最终需要保留有应用价值的 NMNAT 合成能力。
 
-## 科学主线
+## 研究路线
 
-高质量 NatV 数据 → 生成模型研究 → 工程化序列生成 → 候选自身结构与催化环境评价 → 候选库 → 未来酶学验证。
+**研究对象与功能目标 → 高质量数据 → 训练与模型 → 生成候选 → 初步计算评价 → 遴选工程化 NatV 候选 → 优选候选序列库 → 未来酶学验证与反馈。**
 
-当前处于 **②生成模型研究向③工程化候选生成的过渡**。首轮以 **90%–100% WT 全局相似性**为范围，从家族演化和已核对的 NMNAT–Nudix 实验同源结构提出编辑位置，重点探索 Nudix 扰动与 NMNAT 合成环境保留。**Categorical QVAE 负责条件生成，冻结 ESM-2 提供必要参照**；短 InDel 仅在具备相应结构理由时纳入。研究定义见[研究计划](docs/RESEARCH_PLAN.md)。
+当前重点是**④生成候选**：基于现有 Categorical QVAE，在 KVP40 WT 的 **90%–100% 全局编辑相似性**范围内充分生成完整序列。让模型在可变位置上选择残基，包括保留 WT；不预先要求每条提案符合 NMNAT/Nudix 功能假设。冻结 ESM-2 仅作为必要参照。⑤评价序列、结构和催化环境，⑥根据证据遴选候选，必要时返回⑤做针对性分析。研究判断见[研究计划](docs/RESEARCH_PLAN.md)。
 
-已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)及[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)两轮运行。首轮有目的候选生成的依据、范围与评价见研究计划；历史实测运行结果以各自报告为准。
+已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)和[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)的真实运行记录；它们不等于已完成本轮自由保守生成或候选遴选。
 
 ## 资料与目录
 
 | 位置 | 用途 |
 |---|---|
-| [研究计划](docs/RESEARCH_PLAN.md) | 研究问题、生成任务、比较与证据标准、文献 |
-| [数据来源](docs/DATA_PROVENANCE.md) | 家族角色、训练划分、旧模型与衍生输入来源 |
-| [结构配对](docs/NATV_PAIRING_AUDIT.md) | 序列—构建体—坐标—同源关系 |
-| `contracts/` | 科学目标及已有实验的位点与评价约定 |
-| `inputs/manifest.json` | 旧项目只读输入与 SHA256 |
-| `discovery/` | 数据发现与继承裁决的实际记录 |
-| `experiments/natv_candidate_sequences/` | 历史局部编辑结果 |
-| `experiments/natv_wt_columns/` | 全列先验生成训练、序列与评价 |
-| `experiments/natv_conservative_editing/` | 保守条件编辑比较、序列与完整轨迹 |
-| `src/natvqvae/` | 当前研究中实际使用的模型接口与序列工具 |
-| `tests/` | 序列身份、输入和代码行为检查 |
+| [研究计划](docs/RESEARCH_PLAN.md) | 八环节科学问题、当前生成任务与评价标准、文献 |
+| [数据与模型来源](docs/DATA_PROVENANCE.md) | 序列角色、划分、权重继承、数据边界 |
+| [序列与结构对应](docs/NATV_PAIRING_AUDIT.md) | WT、同源构建体、残基坐标及配体状态 |
+| `contracts/` | 科学目标和历史设计约定 |
+| `inputs/manifest.json` | 只读来源路径与校验值 |
+| `discovery/` | 数据与模型来源核对、研究决定 |
+| `experiments/natv_candidate_sequences/` | 历史局部编辑 |
+| `experiments/natv_wt_columns/` | WT 对齐列先验生成比较 |
+| `experiments/natv_conservative_editing/` | 2,976 次保守编辑生成及真实轨迹 |
+| `src/natvqvae/` | 现役序列工具、条件生成与评价接口 |
+| `tests/` | 代码和数据约定的核对 |
 
-## 安装与核对
+## 安装与检查
 
 ```bash
 python -m venv .venv
@@ -36,4 +36,4 @@ pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
 
-源数据与大型权重保存在只读来源及当地研究主机；`doctor` 检查 `inputs/manifest.json` 所列本地文件。已有运行的来源与复现入口以各自报告为准。贡献与执行边界见 [AGENTS.md](AGENTS.md)。
+`doctor` 核对 `inputs/manifest.json` 指向的本地来源；大型数据与权重保存在研究主机。各次实验以自身 `REPORT.md` 为复现入口，贡献与执行边界见 [AGENTS.md](AGENTS.md)。
