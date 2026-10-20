@@ -6,9 +6,9 @@
 
 高质量 NatV 数据 → 生成模型研究 → 工程化序列生成 → 候选自身结构与催化环境评价 → 候选库 → 未来酶学验证。
 
-当前优先 **90%–100% WT 全局相似性**的保守设计：多位点协同替换为主体，允许有定位依据的少量短 InDel。**以已有 Categorical QVAE 为主要研究生成器，冻结 ESM-2 为必要参照**；研究潜变量能否支持有意义的 NatV 序列组合，不以证明 QVAE 优于其他模型为前提。科学判断与评价边界见[研究计划](docs/RESEARCH_PLAN.md)。
+当前处于 **②生成模型研究向③工程化候选生成的过渡**。首轮以 **90%–100% WT 全局相似性**为范围，从家族演化和已核对的 NMNAT–Nudix 实验同源结构提出编辑位置，重点探索 Nudix 扰动与 NMNAT 合成环境保留。**Categorical QVAE 负责条件生成，冻结 ESM-2 提供必要参照**；短 InDel 仅在具备相应结构理由时纳入。研究定义见[研究计划](docs/RESEARCH_PLAN.md)。
 
-已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)及[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)两轮真实运行；原始结果、负结果和复现方法以各自报告为准。
+已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)及[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)两轮运行。首轮有目的候选生成的依据、范围与评价见研究计划；历史实测运行结果以各自报告为准。
 
 ## 资料与目录
 
