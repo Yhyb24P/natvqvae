@@ -1,0 +1,343 @@
+{
+  "source_root": "/home/yhshy/git_files/nad_qvae",
+  "source_git_revision": "4277b1d1f929236dfd33e21bdd58c48bf19bc490",
+  "script_sha256": "6f9f2eed31c0bb39199747d68619110416787781d2c8c8b0c83f146aa0148197",
+  "inputs": {
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/checkpoint_freeze.json": {
+      "sha256": "02b63cda4883591d0dc7b6d36bfa33d0cc1d86cb2ee93acd54c38c631b8f230b",
+      "bytes": 3052
+    },
+    "src/nad_qvae/design/sequence_corpus.py": {
+      "sha256": "7e21989f5c9f5970ccee65a84eb2237f88880304c4621e10cc909909172a7e41",
+      "bytes": 13430
+    },
+    "src/nad_qvae/design/sequence_generator.py": {
+      "sha256": "8c30bba064f749ea4a10bff106428e0f3910b4c4e4baa2c1f0a0c6aedaec4e88",
+      "bytes": 6190
+    },
+    "src/nad_qvae/design/sequence_experiment.py": {
+      "sha256": "a6e70fddd4b95ea6c2a0ef8e9eb7728bae0c6380bf9251d9230cf5456a30d740",
+      "bytes": 42872
+    },
+    "tools/run_natv_sequence_design.py": {
+      "sha256": "1fc519ee7970dc8656200c6c840fd10cff0123f16b0365055dbae91bf7d2a58a",
+      "bytes": 1086
+    },
+    "config/natv/sequence_design_dev_v1.yaml": {
+      "sha256": "7a7f10c313e69946fa844fd2dd738b8f974cf7e06b4ca51ef35d2efdc4118dc4",
+      "bytes": 2921
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/condition/provenance.json": {
+      "sha256": "524307f49c90db461c1aa15d266fb246e6bd1c3f018b20e9f1ae1406b152bcbf",
+      "bytes": 532
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/condition/wt_condition.pt": {
+      "sha256": "05aa86dfac3c3480c4b1b5cc42cea18ed16ccd4ccfc783a0995cfc8ec55dedbe",
+      "bytes": 1775501
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/frozen_identity.json": {
+      "sha256": "79c3320421f1d37cc67757e63c64e9d19007615e17282448c006822140fbd46b",
+      "bytes": 1355
+    },
+    "data/processed/releases/natv_sequence_design_dev_v1/sequence_manifest.jsonl": {
+      "sha256": "55b2c7c8569303be4b62756373d958dd9aaf74a6bd13bf7bc8c797396cdf0d6f",
+      "bytes": 7675937
+    },
+    "data/processed/releases/natv_sequence_design_dev_v1/split_manifest.json": {
+      "sha256": "0acece45c743fdb2a906f6479862bd3dda78aefb289948185da0132925354720",
+      "bytes": 184186
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/formal_source_freeze.json": {
+      "sha256": "68b50b551a5ebf9132652488375c6ba385f9fca6d2dc28c10bf87e023e443565",
+      "bytes": 1406
+    },
+    "src/nad_qvae/design/h2_execution_v1.py": {
+      "sha256": "279e9e0d6348b70dfe295af0a7fb73fd0b5699b63e8d5f9ea01cbdb957d558d6",
+      "bytes": 13802
+    },
+    "src/nad_qvae/design/h2_model_v1.py": {
+      "sha256": "c6837516070e4e502dcaf19c8dfacaa2fc822110133b9c0983ffdc32c0378717",
+      "bytes": 8928
+    },
+    "src/nad_qvae/design/vnext_model.py": {
+      "sha256": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+      "bytes": 14838
+    },
+    "src/nad_qvae/design/natv_model.py": {
+      "sha256": "43cacfd08afae12fcc94da0039500d8a6f5a063810df431950ab44300962faf5",
+      "bytes": 6958
+    },
+    "src/nad_qvae/design/formal_training.py": {
+      "sha256": "e5a5072827b6bc4b49f6e6947e7bff8047327e4b684dc910be4bc36309ddeb44",
+      "bytes": 18835
+    },
+    "src/nad_qvae/design/formal_training_data.py": {
+      "sha256": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "bytes": 19940
+    },
+    "src/nad_qvae/design/multimodal_reader_v1.py": {
+      "sha256": "26a9e97bd0a5c1c666940c3d3cbaf97ae0cb22582fb8f3473200702baaeb5c97",
+      "bytes": 14619
+    },
+    "src/nad_qvae/design/multimodal_deterministic_runtime_v2.py": {
+      "sha256": "a82d946da882f228cff623e8c2e45929f15934a1cbb161453871e651478f3f0b",
+      "bytes": 4395
+    },
+    "config/natv/h2_architecture_generation_comparison_v1.json": {
+      "sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+      "bytes": 8179
+    },
+    "src/nad_qvae/core/model.py": {
+      "sha256": "ab2d3f274f6d02a6600cf3f974fb285b5907c5c8aac12be06ea4e90747e0fed5",
+      "bytes": 28660
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed42/model_best.pt": {
+      "sha256": "dbded2773f2567f155968b95265187a28befdd0af5ae128947215b2e6d782734",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed43/model_best.pt": {
+      "sha256": "05ce06ce4bdc42d7b0db98bb3db088fbdb1e584a518fb0a67adfc502749e2eda",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed44/model_best.pt": {
+      "sha256": "0c6a00b7ea652099c8731c6f472926aeafa6e42033af23cfa46157d297a97e72",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed42/model_best.pt": {
+      "sha256": "ca9a8f7326a40974989b2bceddc188231d743690bd9a17c72f8556c7e89375a2",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed43/model_best.pt": {
+      "sha256": "9024ef17a4023e7700a4887d5ddceaea9ae168ec15b7b2e3cfeb2b9dad950815",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed44/model_best.pt": {
+      "sha256": "d083b7f51a8bd59f81ef796fe5e3c55a2624a2cf72e1ef1a151ebeb578b1952d",
+      "bytes": 4878773
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/generation/checkpoint_freeze.json": {
+      "sha256": "a69e8470d4b32fe630337406b1165254a0d874c2e99609572ebc9121fa716bd4",
+      "bytes": 3523
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt": {
+      "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+      "bytes": 7963857
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt": {
+      "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
+      "bytes": 8118129
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261081/epoch02.pt": {
+      "sha256": "07428d0c5d2fc9e8adcdd84626cade6cde027d8261122f855b3e9ca521e320ad",
+      "bytes": 8759409
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261082/epoch02.pt": {
+      "sha256": "e1b82dfc0692376da1b9e28c39e92072ba5d05eb941882d26d71afdf4ff402be",
+      "bytes": 7963857
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261082/epoch02.pt": {
+      "sha256": "255eeccae10917e8b4b4305623709c6dcc79ac31c4e239f810d1d22f4a1e5a81",
+      "bytes": 8118129
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261082/epoch02.pt": {
+      "sha256": "85f39c5c97f7720465f50344360547136f24ef1ad3fe5bcfaba9d1292d359f07",
+      "bytes": 8759409
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261083/epoch02.pt": {
+      "sha256": "c1513604db27ae53c0076d371ccd4d00ab9de94cd9acdb873ceb8afadd310635",
+      "bytes": 7963857
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261083/epoch02.pt": {
+      "sha256": "284653478fed9361f06988d676e7d773619707c125090a40e9c7b5b644cfce86",
+      "bytes": 8118129
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261083/epoch02.pt": {
+      "sha256": "a6b82527a34769376415c18590c9cc208165d60da1a1ef5568ba713c24070e7d",
+      "bytes": 8759409
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261084/epoch02.pt": {
+      "sha256": "830aa1c8f971621b040b16d1514aa8c8a400e610be2207c56542c084949afb79",
+      "bytes": 7963857
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261084/epoch02.pt": {
+      "sha256": "8abf5b10a3eb841979541ddfa8ab01ca8d673be58e81cdda5e4f6ce0ed47f2dd",
+      "bytes": 8118129
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261084/epoch02.pt": {
+      "sha256": "a46829f63d8da5ca6a58c190ea709bcf774a1067aab7e4eb72f88cd61e55b0be",
+      "bytes": 8759409
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261085/epoch02.pt": {
+      "sha256": "637297c0d022fe3beb420e9d7bfd81c6f429ff9020748b2d407d39e0b75e1196",
+      "bytes": 7963857
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261085/epoch02.pt": {
+      "sha256": "ef69f220f7c188579abd07455937daeb2da9bec0f8ff3a66def93e8f97ecad7b",
+      "bytes": 8118129
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261085/epoch02.pt": {
+      "sha256": "fa797c8552bd880ccd26957b7ffe27b8e93d0a9c795a7359361bcfbfd787dd82",
+      "bytes": 8759409
+    },
+    "data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet": {
+      "sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "bytes": 603885
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/REPORT.md": {
+      "sha256": "ba08c54b90e5f13d0b08a8dec9b2a8b3724b6daf7b21114e7c19c20d843c552d",
+      "bytes": 6625
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/scientific_interpretation.json": {
+      "sha256": "f8784fd0289e59ae4a06cf36932f5fade0cada72529a3c14f66c8ec8d61355d6",
+      "bytes": 857
+    },
+    "experiments/run_reports/natv_sequence_design_dev_v1/evaluation/health.json": {
+      "sha256": "3e1192efbd3af8122c6f0219b8494f3d00d09a967b1567f659856f935770d4e0",
+      "bytes": 2082
+    },
+    "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/PHASE_SUMMARY.md": {
+      "sha256": "30b958b3adab4b8d8b47806ca2b313fe836e677c6f2ed5edf1374ae9c33248a6",
+      "bytes": 4473
+    }
+  },
+  "checkpoint_loads": [
+    {
+      "model": "categorical_vae",
+      "seed": 42,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed42/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "categorical_vae",
+      "seed": 43,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed43/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "categorical_vae",
+      "seed": 44,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/categorical_vae_seed44/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "sequence_denoiser",
+      "seed": 42,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed42/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "sequence_denoiser",
+      "seed": 43,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed43/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "sequence_denoiser",
+      "seed": 44,
+      "path": "experiments/run_reports/natv_sequence_design_dev_v1/training/sequence_denoiser_seed44/model_best.pt",
+      "strict_load": "PASS",
+      "output_positions": 341
+    },
+    {
+      "model": "H2/no_latent",
+      "seed": 20261081,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/continuous_mmd",
+      "seed": 20261081,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/categorical",
+      "seed": 20261081,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261081/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/no_latent",
+      "seed": 20261082,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261082/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/continuous_mmd",
+      "seed": 20261082,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261082/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/categorical",
+      "seed": 20261082,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261082/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/no_latent",
+      "seed": 20261083,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261083/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/continuous_mmd",
+      "seed": 20261083,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261083/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/categorical",
+      "seed": 20261083,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261083/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/no_latent",
+      "seed": 20261084,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261084/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/continuous_mmd",
+      "seed": 20261084,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261084/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/categorical",
+      "seed": 20261084,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261084/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/no_latent",
+      "seed": 20261085,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261085/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/continuous_mmd",
+      "seed": 20261085,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261085/epoch02.pt",
+      "strict_load": "PASS"
+    },
+    {
+      "model": "H2/categorical",
+      "seed": 20261085,
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261085/epoch02.pt",
+      "strict_load": "PASS"
+    }
+  ],
+  "split_overlap_sha256": "ffc0698c4f25e2e8d833f9a47f135f95c6bebc71c4e7f011cd934bb1a51e1efe",
+  "old_training_in_current_validation": 190,
+  "old_training_in_current_test": 219,
+  "implementation_reuse": "SequenceGenerator preferred for WT-conditioned aligned-column prior generation",
+  "historical_weights_as_current_formal_model": "NOT_ADMITTED",
+  "new_task_generation_advantage": "UNKNOWN"
+}

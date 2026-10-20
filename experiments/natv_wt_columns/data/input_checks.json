@@ -1,0 +1,37 @@
+{
+  "source_root": "/home/yhshy/git_files/nad_qvae",
+  "WT_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "role_counts": {
+    "training": 1644,
+    "validation": 227
+  },
+  "component_counts": {
+    "training": 47,
+    "validation": 44
+  },
+  "inserted_residues_retained": 60178,
+  "gap_columns": 35996,
+  "inputs": {
+    "family_roles": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce"
+    },
+    "core_split": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json",
+      "sha256": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f"
+    },
+    "allowed_samples": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/allowed_samples.parquet",
+      "sha256": "9d542c27db44e0e4506fc0a4a726a59c58e1ebf2afe65c82e3a169d5e33950dd"
+    }
+  },
+  "condition_source": {
+    "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_sequence_design_dev_v1/condition/wt_condition.pt",
+    "sha256": "05aa86dfac3c3480c4b1b5cc42cea18ed16ccd4ccfc783a0995cfc8ec55dedbe"
+  },
+  "outputs": {
+    "aligned_samples.jsonl": "e227fd0b7337aba604f21758d4744703a5a3e1dbd5aa7b081ac03f0fda3465cf",
+    "wt_embeddings.pt": "363bf4c5175688c2efb724ad22a872928b8d49588d6e72067feb24da859793b5",
+    "training_weights.npy": "6e8388323189d41ffec865734fa09ed66a7fe7cf2f365563ef4c7cbc4b7112ad"
+  }
+}
