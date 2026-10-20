@@ -26,6 +26,7 @@ The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutabl
 | Location | Purpose |
 |---|---|
 | `docs/RESEARCH_PLAN.md` | Current questions, research path and decision criteria |
+| `docs/NATV_PAIRING_AUDIT.md` | Sequence–construct–coordinate–homology audit, experimental templates and 12-anchor mapping |
 | `docs/DATA_PROVENANCE.md` | Population boundaries, source inheritance, evidence limitations |
 | `contracts/` | Objective, **pilot-only** position rules, evaluation semantics |
 | `inputs/manifest.json` | SHA-pinned **source files**; does not grant use of all files for training |
@@ -34,7 +35,7 @@ The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutabl
 | `tests/` | Tests of actual capabilities and scientific contracts |
 | `runs/` | Ignored, per-run outputs with manifest and reproducible source identity |
 
-`AGENTS.md` defines contributor boundaries; it is not another research plan. Results belong to individual run directories, not to a growing collection of "current status" documents.
+`AGENTS.md` defines contributor boundaries; it is not another research plan. Results belong to individual run directories, not to a growing collection of "current status" documents. The current pairing audit remains in `discovery/natv_pairing_audit/`; `docs/NATV_PAIRING_AUDIT.md` is its reading entry point.
 
 ## Install and inspect
 

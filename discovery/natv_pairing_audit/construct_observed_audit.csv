@@ -1,0 +1,11 @@
+template_pdb,scope,chain,construct_length,observed_residues,first_label,last_label,missing_ranges,auth_minus_label,ligands
+2QJO,chain,A,341,332,1,338,304-309;339-341,-2,APR:1;NAD:1;POP:1;SO4:3
+2QJO,chain,B,341,336,6,341,1-5,-2,APR:1;NAD:1;POP:1;SO4:1
+2QJO,chain,C,341,327,6,339,1-5;303-309;340-341,-2,APR:1;NAD:1;POP:1
+2QJO,template,ALL,341,995,1,341,,,APR:3;NAD:3;POP:3;SO4:4
+2QJT,chain,A,352,340,6,349,1-5;115-118;350-352,-5,AMP:1;MN:5
+2QJT,chain,B,352,344,6,349,1-5;350-352,-5,AMP:1;MN:4
+2QJT,template,ALL,352,684,6,349,,,AMP:2;MN:9
+2R5W,chain,A,352,344,6,349,1-5;350-352,-5,CL:1;MG:3
+2R5W,chain,B,352,345,6,350,1-5;351-352,-5,CL:2;MG:3
+2R5W,template,ALL,352,689,6,350,,,CL:3;MG:6
