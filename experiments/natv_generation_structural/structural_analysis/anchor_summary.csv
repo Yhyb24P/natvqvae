@@ -1,0 +1,13 @@
+domain,wt_position,wt_residue,identity_conserved_across_templates,variable_anchor,designated_template,min_ligand_distance_A,mapping_status,ligand_proximity_status,bounded_new_candidates_total,bounded_new_candidates_changed,bounded_new_mutations,bounded_new_candidates_near_window,bounded_new_near_window_mutations,formal_WP5_frozen_candidates_total,formal_WP5_frozen_candidates_changed,formal_WP5_frozen_mutations,formal_WP5_frozen_candidates_near_window,formal_WP5_frozen_near_window_mutations
+NMNAT,14,H,True,False,2QJO,3.638,PASS,PASS,32,0,,2,P12T,24,0,,3,F10M;R11Q
+NMNAT,17,H,True,False,2QJO,3.611,PASS,PASS,32,0,,4,S19F;S19G;S19H,24,0,,2,A20F;S19Y
+NMNAT,135,T,True,False,2QJO,7.667,PASS,PASS,32,0,,4,I132L,24,1,T135S,2,I132Y;V131K
+NMNAT,138,R,True,False,2QJO,6.775,PASS,PASS,32,0,,4,E139K,24,0,,2,E139N;F137I
+NUDIX,232,G,True,False,2QJT,2.142,PASS,PASS,32,6,G232A;G232S,6,A229T;L230F;L230W,24,0,,2,G233A;H234F
+NUDIX,236,H,False,True,2QJT,3.97,PASS,PASS,32,0,,0,,24,0,,1,K235R
+NUDIX,247,R,True,False,2QJT,4.002,PASS,PASS,32,0,,2,A245G,24,0,,2,A245S;I246L
+NUDIX,248,E,True,False,2QJT,2.167,PASS,PASS,32,4,E248G;E248S,4,L249T;L249V,24,0,,0,
+NUDIX,251,E,True,False,2QJT,3.922,PASS,PASS,32,0,,0,,24,0,,1,Q250E
+NUDIX,252,E,True,False,2QJT,2.006,PASS,PASS,32,2,E252K,0,,24,0,,0,
+NUDIX,307,D,True,False,2QJT,3.445,PASS,PASS,32,0,,4,P305G,24,1,D307S,3,A306G;K304D;V303T
+NUDIX,308,D,True,False,2QJT,2.212,PASS,PASS,32,4,D308E;D308N,0,,24,0,,1,S311G

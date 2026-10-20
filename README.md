@@ -17,7 +17,7 @@ A/B/C describe **hypotheses**, not three required models: **A** modifies NMNAT t
 
 ## What is actually available
 
-The repository currently contains the WT identity, **provisional CDD-derived domain ranges**, a WT-relative substitution representation, a read-only source manifest and tests. **No trained model, inference adapter, evaluated candidate or experimentally verified gain has been imported or executed here.** The generator interface currently describes masked recovery only and must not be presented as a family prior sampler.
+The repository contains the WT identity, **provisional CDD-derived domain ranges**, a WT-relative substitution representation, a read-only source manifest, the sequence–structure pairing audit, and one bounded generation/evaluation run. That run used two **already-frozen H2 checkpoints from the read-only `nad_qvae` source** to generate 32 WT-relative proposals (27 unique), then annotated them against the audited experimental-template anchors. **No model was trained in this repository, no candidate has been experimentally tested, and no variant has been shown to outperform WT.** The run's models are masked local editors, not family prior samplers; its ESM2 and CDD scores are compatibility diagnostics, not activity.
 
 The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutable research evidence source**, not an import dependency. Existing research supports an SE comparator; prior H2 QVAE comparisons did *not* establish latent-variable benefit for their fixed-4/8-edit task. G0 chemical conditioning remains parked, G1-a is an optional site-selection comparator, and G1-b variable-length generation is deferred. These are bounded findings, not universal bans on QVAE, chemistry or InDels.
 
@@ -31,6 +31,7 @@ The older [nad_qvae](https://github.com/Yhyb24P/nad_qvae) remains the **immutabl
 | `contracts/` | Objective, **pilot-only** position rules, evaluation semantics |
 | `inputs/manifest.json` | SHA-pinned **source files**; does not grant use of all files for training |
 | `assets/PROVENANCE.md` | Checkpoint admission and identity; no models imported yet |
+| `experiments/natv_generation_structural/` | Bounded 32-proposal H2 generation, ESM2/CDD reproduction and structure-informed annotation |
 | `src/natvqvae/` | Only reusable capabilities exercised by a current research path |
 | `tests/` | Tests of actual capabilities and scientific contracts |
 | `runs/` | Ignored, per-run outputs with manifest and reproducible source identity |
@@ -49,4 +50,4 @@ python -m natvqvae doctor --root /path/to/nad_qvae
 
 The last command checks actual local source files against `inputs/manifest.json` and fails if the source is absent/mismatched. `inputs/link_inputs.py --check-only --root /path/to/nad_qvae` verifies without creating symlinks. The source data are **not** shipped in this repository. No training or generation starts during installation or tests.
 
-**Status:** research and repository foundation only. The next scientific deliverable is a reproducible QVAE-versus-baseline **generation-and-candidate-evaluation** study, not more skeleton code.
+**Status:** the bounded conditional local-editing generation run is complete and reproducible, including ESM2/CDD reproduction and structure-informed annotation ([`REPORT.md`](experiments/natv_generation_structural/REPORT.md)). It does not establish catalytic benefit or net NAD⁺ improvement: no candidate has been experimentally tested. The next scientific decision requires measured NMNAT kinetics, Nudix hydrolysis and net NAD⁺ accumulation; no wet-lab execution is authorised by this repository.

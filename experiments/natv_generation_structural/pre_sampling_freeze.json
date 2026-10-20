@@ -1,0 +1,144 @@
+{
+  "schema": "natv-generation-structural-pre-sampling-freeze",
+  "status": "PRE_SAMPLING_FREEZE",
+  "generated_at_utc": "2026-10-20T06:27:15Z",
+  "run_script_sha256": "aa8df70d89b076fa7212278c66305e23fb46162d1dc9e0c6857474b50b724f5c",
+  "source_root": "/home/yhshy/git_files/nad_qvae",
+  "sampling_manifest_sha256": "6f7cd87f53b62912d11220e86eb811bf02783619a3f4b6360f2f86ff547efccd",
+  "input_manifest_sha256": "f0761e05f53f88c60c15bfec96fad8524ae61637ba9264599ee3dc5716c97f7d",
+  "preflight_report_sha256": "ee92d96de7ff12835effd1d63c655e8f3e124ff87f4806891a6a5df7519b3609",
+  "h2_contract_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+  "structural_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
+  "formal_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
+  "constraints_sha256": "a40687112f15cc2322f81c09e7a0eae94916f795d0a7a2958926e8b8f95d1216",
+  "runtime_environment": {
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "matmul_precision": "highest",
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "autocast_enabled": false,
+    "MHA_fastpath": true,
+    "CPU_threads": 8
+  },
+  "checkpoints": [
+    {
+      "label": "H2_no_latent",
+      "architecture": "no_latent",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
+      "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+      "training_seed": 20261081,
+      "epoch": 2,
+      "steps": 822,
+      "validation_CE": 1.654838123953725,
+      "parameter_tensors": 84,
+      "parameters": 840405,
+      "finite_state_dict": true
+    },
+    {
+      "label": "H2_continuous_mmd",
+      "architecture": "continuous_mmd",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
+      "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
+      "training_seed": 20261081,
+      "epoch": 2,
+      "steps": 822,
+      "validation_CE": 1.6573922181489764,
+      "parameter_tensors": 88,
+      "parameters": 852885,
+      "finite_state_dict": true
+    }
+  ],
+  "sampling": {
+    "streams_seed": 20261201,
+    "prior_seed_base": 20261202,
+    "edit_budgets": [
+      4,
+      8
+    ],
+    "streams_per_budget": 8,
+    "sweeps": 3,
+    "batch_size": 4,
+    "proposal_count": 32
+  },
+  "state_at_freeze": {
+    "proposals_written": 0,
+    "evaluation_written": false,
+    "training_runs": 0,
+    "folding_runs": 0,
+    "wet_lab": false,
+    "remote_downloads": 0,
+    "test_payload_reads": 0
+  },
+  "source_drift": [
+    {
+      "path": "config/natv/formal_training_v1.json",
+      "expected": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
+      "current": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
+      "match": true
+    },
+    {
+      "path": "data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json",
+      "expected": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "current": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "match": true
+    },
+    {
+      "path": "data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "expected": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "current": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/formal_training_data.py",
+      "expected": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "current": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/se_full.py",
+      "expected": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "current": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_model.py",
+      "expected": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+      "current": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_model.py",
+      "expected": "dcf479fb07a1cc99210098643b54c6fe283f09338fbc0b1760d15b58f0d53d9f",
+      "current": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+      "match": false
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_evaluation_contracts.py",
+      "expected": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "current": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_pilot.py",
+      "expected": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+      "current": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_pilot_inputs.py",
+      "expected": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+      "current": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/context_restoration.py",
+      "expected": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+      "current": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+      "match": true
+    }
+  ]
+}

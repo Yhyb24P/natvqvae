@@ -112,6 +112,17 @@ current objective; the formal population, splits and contracts remain
 unchanged and the 95 remain a discovery pool. See
 [`dataset_update_decision.md`](../discovery/natv_pairing_audit/dataset_update_decision.md).
 
+## Use in generation evaluation
+
+The 12-anchor mapping is the structural annotation basis for the bounded H2
+generation run in
+[`experiments/natv_generation_structural/REPORT.md`](../experiments/natv_generation_structural/REPORT.md).
+The basis remains a discovery artifact (`formal_input_manifest=false`): it did
+not enter training, retrieval or candidate selection. Substitutions at anchor
+positions are reported as mapped perturbations only; no catalytic direction is
+assigned. Exact scope and limitations are recorded in
+`structural_analysis/structural_interpretation.json`.
+
 ## Evidence boundaries
 
 - 2QJO/2QJT are product/metal pocket proxies; no substrate ternary geometry.

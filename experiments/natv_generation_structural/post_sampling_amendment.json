@@ -1,0 +1,41 @@
+{
+  "schema": "natv-generation-structural-post-sampling-amendment",
+  "status": "POST_SAMPLING_EVALUATION_AMENDMENT",
+  "generated_at_utc": "2026-10-20T06:41:07Z",
+  "sampling_script_sha256": "aa8df70d89b076fa7212278c66305e23fb46162d1dc9e0c6857474b50b724f5c",
+  "evaluation_script_sha256": "5cbe75d2f1caf2873d989aef0c55b6539a49231474af570d3f465c224a8d7109",
+  "changed_stage": "evaluate",
+  "reason": "Evaluation-stage code changed after sampling was frozen; no sampling code or output changed. Revisions corrected evaluation-stage defects and expanded unique-sequence and duplicate reporting.",
+  "sampling_manifest_sha256": "6f7cd87f53b62912d11220e86eb811bf02783619a3f4b6360f2f86ff547efccd",
+  "input_manifest_sha256": "f0761e05f53f88c60c15bfec96fad8524ae61637ba9264599ee3dc5716c97f7d",
+  "preflight_report_sha256": "ee92d96de7ff12835effd1d63c655e8f3e124ff87f4806891a6a5df7519b3609",
+  "sampling_artifacts": {
+    "proposals.csv": "976bac55f79f3f1f5bad13f7d2b86e1143460b409e29996c0f3471104609ca6b",
+    "sampling_trace.jsonl.gz": "0c2c100709a603fb6727e6e3fdfc322c28eeb354d05d0b1153115e02d4f28d6f",
+    "retrieval_receipts.json.gz": "8d686dd235560081841b19531498f53291b566065773e49fd2eebf526fa3c814",
+    "retrieval_hits_summary.csv": "ab569318b53223aaae3daf6dec3952a3e538a31a94d6dabeff6dd55756dc57a3"
+  },
+  "sampling_outputs_unchanged": true,
+  "revisions": [
+    {
+      "evaluation_script_sha256": "6185b104b20dc171f12b01a63cdb448e9f96d2f36ab503e8b654b7edf37e211b",
+      "recorded_at_utc": "2026-10-20T06:30:50Z",
+      "reason": "Fixed an evaluation-stage guard that called Series.is_unique.sum(); no sampling code or output changed."
+    },
+    {
+      "evaluation_script_sha256": "dcfdf164cf508369517852013bb1e7a98fd19564b28c455cffef2a7dd33e77e3",
+      "recorded_at_utc": "2026-10-20T06:32:42Z",
+      "reason": "Fixed two evaluation-stage defects: a boolean Series.is_unique.sum() guard and string-to-tuple variant unpacking; no sampling code or output changed."
+    },
+    {
+      "evaluation_script_sha256": "d97a81eee19b82e84ae38f0f9fd8ccb405e60693be162f66187e60aa8851bc73",
+      "recorded_at_utc": "2026-10-20T06:35:15Z",
+      "reason": "Fixed two evaluation-stage defects: a boolean Series.is_unique.sum() guard and string-to-tuple variant unpacking; no sampling code or output changed."
+    },
+    {
+      "evaluation_script_sha256": "5cbe75d2f1caf2873d989aef0c55b6539a49231474af570d3f465c224a8d7109",
+      "recorded_at_utc": "2026-10-20T06:41:07Z",
+      "reason": "Evaluation-stage code changed after sampling was frozen; no sampling code or output changed. Revisions corrected evaluation-stage defects and expanded unique-sequence and duplicate reporting."
+    }
+  ]
+}

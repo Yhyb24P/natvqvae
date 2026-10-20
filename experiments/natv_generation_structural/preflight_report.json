@@ -1,0 +1,318 @@
+{
+  "schema": "natv-generation-structural-preflight",
+  "status": "PREFLIGHT_PASS",
+  "generated_at_utc": "2026-10-20T06:27:15Z",
+  "run_script_sha256": "aa8df70d89b076fa7212278c66305e23fb46162d1dc9e0c6857474b50b724f5c",
+  "runtime_environment": {
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "matmul_precision": "highest",
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "autocast_enabled": false,
+    "MHA_fastpath": true,
+    "CPU_threads": 8
+  },
+  "device": "NVIDIA GeForce RTX 5090 D",
+  "checks": [
+    {
+      "check": "H2 frozen generation contract",
+      "status": "PASS",
+      "detail": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76"
+    },
+    {
+      "check": "H2 input manifest",
+      "status": "PASS",
+      "detail": "input_plan, context_manifest, data_ready"
+    },
+    {
+      "check": "Formal F-train inputs",
+      "status": "PASS",
+      "detail": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b"
+    },
+    {
+      "check": "Frozen family role metadata",
+      "status": "PASS",
+      "detail": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce"
+    },
+    {
+      "check": "Formal source drift",
+      "status": "PASS",
+      "detail": "only vnext_model.py; equals H2 historical basis"
+    },
+    {
+      "check": "MMseqs",
+      "status": "PASS",
+      "detail": "18.8cc5c at /home/yhshy/miniconda3/envs/nad_data/bin/mmseqs"
+    },
+    {
+      "check": "Frozen ESM2 and tokenizer",
+      "status": "PASS",
+      "detail": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0"
+    },
+    {
+      "check": "WT and T135A constraint",
+      "status": "PASS",
+      "detail": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+    },
+    {
+      "check": "Frozen H2 checkpoints",
+      "status": "PASS",
+      "detail": [
+        "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+        "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c"
+      ]
+    },
+    {
+      "check": "Structural interpretation basis",
+      "status": "PASS",
+      "detail": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7"
+    },
+    {
+      "check": "Frozen WP5 retrospective candidates",
+      "status": "PASS",
+      "detail": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f"
+    },
+    {
+      "check": "CDD rpsblast/rpsbproc assets",
+      "status": "PASS",
+      "detail": "108 files"
+    },
+    {
+      "check": "Matched stream plan",
+      "status": "PASS",
+      "detail": "16 streams, 8 batches"
+    }
+  ],
+  "source_drift": [
+    {
+      "path": "config/natv/formal_training_v1.json",
+      "expected": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
+      "current": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
+      "match": true
+    },
+    {
+      "path": "data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json",
+      "expected": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "current": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "match": true
+    },
+    {
+      "path": "data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "expected": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "current": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/formal_training_data.py",
+      "expected": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "current": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/se_full.py",
+      "expected": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "current": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_model.py",
+      "expected": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+      "current": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_model.py",
+      "expected": "dcf479fb07a1cc99210098643b54c6fe283f09338fbc0b1760d15b58f0d53d9f",
+      "current": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+      "match": false
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_evaluation_contracts.py",
+      "expected": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "current": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_pilot.py",
+      "expected": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+      "current": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/vnext_residual_pilot_inputs.py",
+      "expected": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+      "current": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+      "match": true
+    },
+    {
+      "path": "src/nad_qvae/design/context_restoration.py",
+      "expected": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+      "current": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+      "match": true
+    }
+  ],
+  "h2_contract_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+  "data_ready_sha256": "494fcf88a984284fff34df05780ed94788410fa842ac4f81e01ef711fb04378a",
+  "formal_input_plan_sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
+  "family_roles_sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+  "structural_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
+  "formal_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
+  "checkpoints": [
+    {
+      "label": "H2_no_latent",
+      "architecture": "no_latent",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
+      "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+      "training_seed": 20261081,
+      "epoch": 2,
+      "steps": 822,
+      "validation_CE": 1.654838123953725,
+      "parameter_tensors": 84,
+      "parameters": 840405,
+      "finite_state_dict": true
+    },
+    {
+      "label": "H2_continuous_mmd",
+      "architecture": "continuous_mmd",
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
+      "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
+      "training_seed": 20261081,
+      "epoch": 2,
+      "steps": 822,
+      "validation_CE": 1.6573922181489764,
+      "parameter_tensors": 88,
+      "parameters": 852885,
+      "finite_state_dict": true
+    }
+  ],
+  "cdd_assets": {
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.aux": "ba40150af2740f80830cf7ab3ecfff3c3584d892b0e80c466c71e4144fcfe27e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.freq": "f98725ac09765109a6cd8e853bc2bec1140eae029ae4e8462cae22f00e31c873",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.loo": "e86d44d3d2e43b125192f00c56af921573be709cf64a224b7a1a9425aadd96fe",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pdb": "b80b54ec894a711bd731d9ce214791088fc0cf501f25d06a47b8c4f1285bdee2",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.phr": "1a7b109d966a431a9b613b4b0969a2849088fe54c08df7061e15db1902aff0ad",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pin": "aa047c3b7c1d59fec3c4081dd388f5d624495491af7a698b91a2e55a658c3688",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pos": "9680c6ede3dd01e6cba3b51d09e3678f836db0a7a71d4a6f9d68e4a8ef930146",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pot": "7b239c8168948db175a2a010cb4dc21691e89733c6cc98b90780abf78ee82f83",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.psq": "b322845535bf8a73669afab2602854f9b86e8ca8c16ff4ae1e698f5a8762b01f",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.ptf": "5f84cb4297bcc650c0c5c7754b98296111242c5efdd81d8c880e43dd06f79b85",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.pto": "502a49e7f8390b19346f179c36aef77a49e8c82e03c7e3d87c4b2795bbe06a53",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.rps": "1a3b9f68944d58ab3d181a5edd3acdcee6bedf375753f331d151f8b4f17dab22",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.aux": "d4df246025db2a1fe9d6cf23f75a574e8c8f2fb2b58fe6d616f9db161abfe05e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.freq": "0a1794d48fa87a6b5ab53fc783d270009b37ebbc126543eec8f1b56a8cd4f72e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.loo": "95be48361672a7b72ee00c98778db4fd4f978be829aef7cc7511a3b055438fa2",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pdb": "7c9360b82dbfc00bed9e2a21d856dc949f893d974e25a2d7f101b965d405f992",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.phr": "29bb313171dbba8cc0bc6e77ff50defa0f6c59c47eb5d5126699e775d02efd9b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pin": "a850725fde49800719dd9b34bbf559b3a94e87cdf78b53d3073de7ac6fbf4a66",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pos": "5e93f829b28d939ee529f35c0cf51517b2c3aa31626becb56d5934ff8ebb330f",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pot": "a3c0bc115894817d025aade866b07902f8f13d415e23cd4d247d4f74fb126685",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.psq": "34e430cd147afa0270fdcd457651448e72b4ca9d719e33a22090b1bf587d1e99",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.ptf": "5f54dbf2324bdf6f29a83aa51efb9f0825ed47b0da777e272edbebadb057495d",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.pto": "06fb7404c33202ee230943c4bfc45d831baf21b446f1f7f852d8fc697268cbfe",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.01.rps": "dc1f5a8d68bb56ca21e8165d6c21557f68328fec6440865a2878e61a2c051c2e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.aux": "f71f2f02d5bc92c4572391c5b5a861fb0e1697973e06231864dc17f65ef27f83",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.freq": "5c9c9a07b34b3f874f64ceb9a4062409cf090a2a55c772b9ce5c9d59f03da9bd",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.loo": "163994a995e06c9b6804f558811023ca4d737b76305382339b8baa7d93f4239b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pdb": "045d11863e581370b8142e10fa316309bc15a6f0dd354cfafea6720e5047ee55",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.phr": "5f7b48fb23e2aa27960c5a2c0216458f92de579f745256875bc4a674018c09e9",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pin": "21db0ff828d44c478402617745b35779288839d14e391aced1c10aea5920f992",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pos": "ac8871b5a4679b602b14f4496d1a4f8c89eb3708440db36a84d8e3975f5770dc",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pot": "77a929226c48ef48d19e784e497fdd306c5fa9da649ef828787de5c5ab2fc5e5",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.psq": "cb7307a1a00552afb138196518823218411daa2f2944e208a98cd4fd138c5285",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.ptf": "4853bc2805dfdd691490b47700459d2b495fbd2321aec8806fc959e068a24fdf",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.pto": "0efc10a58acf044859cec6ad74dfbc7e091ebfdf45e1d7bfc1c965a948a29277",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.02.rps": "c5cbfa6fc9be160ba50bb72d60fffeac979f167e69b80348f4b63c1320645b70",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.aux": "53a7ef14dc4b4a71d5f0751bc3f824de97a6d02c871510d5c2f482ed116f9b5c",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.freq": "e421b0b045dc2aba5a87a11f1421ae6b306d6e550cf15aa5af5f80de40cfc575",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.loo": "d6a9bf91a1ceb76fd3b22f1bee0a2ea78bfb6536d0d3122e394e343380c5eb07",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pdb": "d7829e03b151514fae61afa6f4dcf3819421d139eab23fa3548761624069fcb2",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.phr": "f5ab5f97d32b7fcbbba8aa381c4f3a97edfdbaf7f801326d0f8aafe23070de21",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pin": "ae97419ccae5cd7eb7748cbd76817ac3468d8b872ffdf5ac6493f06638106fde",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pos": "90da07487ede6676bef11b51e17104e70e879d9e58761986c735f3eff6a3cc0b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pot": "8f99838eba5d3e8379ba2b95ea9066b981109a7efef9d74ea6aa0438142d96b8",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.psq": "b2da25528858a2a718dce07e65b1e46a3a4a32576ae99f93ca70cb964eab60d5",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.ptf": "ecc5e4e127f8e57decda39b04de3ea1a11552cc7e5030a4c123369cbe9c61b8f",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.pto": "8df9ea562cb75f7de4d5b3b3ad1bc81ff396398c79e1ed10fe61c7eaf99284c1",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.03.rps": "e1ff2b2cf21ca1a3df6a68eca86abde40826122031e3be398b4c97400f8ea7f5",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.aux": "b99e0864c4c13c68da1bdd2c4ef62c133e22fd59fc93a6e43742c32c5d767b4a",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.freq": "ee8fc261f0f03f5513ad605f2c8357bebc4959f6bbe243a3239e1370137918b3",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.loo": "71ebba96bfa51057845cc47facf88120e909ff99844d424c9122f7ab41019dba",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pdb": "1e0464395ad0f14bbc3395ad6afd3eec8c1e05e63d17a24b096f99cedb18cf7a",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.phr": "0d7327a1e213ec56b8c6c5a8346a72dbe24746106d4962fefadd957767464955",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pin": "6c4191cca94dbc125d978b4532128aead5e5df1cf131371db99a07893dbb7534",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pos": "22a52b3f8286c71ab0858facad99486fa8783de1dc4206ec9ca36da9c887efed",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pot": "b1893a7704bc33595f59c47b0605c3b3ad5fb737a99fbcae8ca22d44e3cdefef",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.psq": "5e1764fd95f16739b2942a82ca9be03adb64ed5c417e3b63c871fc104484764e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.ptf": "b8915df8031b5952313fe05864950fe9d5a1559a5083beb73d48ca3de019f04e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.pto": "d8aee43e9947e8300a632207cab95746b48499dcf180de8d3a228d41afcb43cd",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.04.rps": "4d22c354b41d68f87f038ed49df1f08b3d6c3e204e13e98edb049a29f16cc596",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.aux": "152a658f1b2e8a81bf7b6f302adcf28b7da22dc0d24d96f420d2224765780ca8",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.freq": "7e041afb29578e97313c91d7376b81d784e552687a1aaf33df09874b0ffae5b3",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.loo": "520601819aaf0d0f2ce51b009df6b9464a4bb29e568e3f6c7357f860d97e80f3",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pdb": "e789b905eff7dadd6cbe4e6e879ee975c417438a9bd3669836db6e9c820428ed",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.phr": "c2f3bdd654ce8e26b320c5d4c9c5f4bcd972e0771b044e7a994573c768bc99cd",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pin": "0a5e34e27e16f831f613b605dee4a3b301594c0640e0b14e22093cc3786761d0",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pos": "e9e8cfa05fba1e5675dfa1aab26b76936758aa6e753f60bf34cf94ca65f33877",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pot": "171f10d6bf8f891a704ac4fb423acb9d4fd851f9957ef75721dbe483f5ffa4e3",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.psq": "eec0be9470a88669c13d630bf49246528e1703a34059313342abaaa4057f5a8f",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.ptf": "286f267fee269e5eedd24be8abd4b408563bdee36c8079fa82b337db37b8e556",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.pto": "3e37421ca90e90a8cd2c2f4d619b0342bd5bd226727a26c39ac7bd893933c94d",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.05.rps": "86374d7aa62ae1795e35b3806e557b7696b41133844b4f2fa3912b5e04abb0e5",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.aux": "12a2507333d53a83384efb2c7014abf3aee2a433f1676196015817000ee03c19",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.freq": "5db3b11b2792dd5c882061fe420dd1aaee2dffa224689e632513575fae992896",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.loo": "9b5c9745777441331389d637de86a5c959aa222f4f40f554b1a4d788f9f965e8",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pdb": "23198bfe9f4c0e13d1f7e08d4393179af71594b161ecd332fc2bf2512879ad3b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.phr": "46e6807e5840fd24e1af6aeff236505fcb1892ecd6f743a8c499d75c9500a7cd",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pin": "16564aa85f06fc707a06e869298252bc98a7c4cbfc8136c46cce1c11cb8d4174",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pos": "12c2797af60b568e82d01bfa483fc6a56f9b337431e33ac7f7536977864d18ef",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pot": "a6c04fdc3d4b9e9ae600779cedf76a06eb5f5319c8f70ef203a0a190e4eec110",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.psq": "d5cf86b8f629b5f28b781a42c6e1245d8480cb1a9e8ccb88b4c7e641bc3c628f",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.ptf": "f059ca460baf61cea367cd939369c452435a759150f65d8891f03a9414e01263",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.pto": "7af9e1d5e22d7ae5dda52423f330282edd850f02f80b7430eb865ed7e760e657",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.06.rps": "77b080a645adb5e01bd715f1850a4e6370edd4e16917b1954a82740417b42936",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.aux": "995dd71122973f013c7cd7ccb800c9d5f4e29441889a6be30eb25a9ddc3a98d4",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.freq": "4fe18da3de114105f367c4189922e5d3aa19975a028f158298b90843e539ab6d",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.loo": "782fe0ead1bb7aa265432e644f00c88938d917b4b61369d3c6e41695dbe42912",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pdb": "903a7e13aa630f0219e2445c1cbc5377090c862fcab48cc4d00a8e744d7a079e",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.phr": "891b86523080db26185048d07a66a0a587783060d098fa9ad9b668159bc77adf",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pin": "8c28c93be5263280749e9781bcac53a4e8406b245114fef2c4d022d98108249b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pos": "6cae8be0210c5dbb04800b81a810f24d6366090bae4b2843d6330f7452de6009",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pot": "a7c5b44959bb8a7aa68c0fce4a78b4599adbb11736d4dc942c3472dd82fe0304",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.psq": "9b139529b3f698289332727a625a303bbc0d6ad6f1b769345df051038da386e9",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.ptf": "03ff8ce24af3ee0484f333cb67bf42b2c6dd34a44b42e4bafd060bcdfbfb7fd7",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.pto": "fb244f371e2c82b984c43d0851be5ad59dd279c6afc9ab552dd1c6e7a9b7ec9b",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.07.rps": "039151a213c6dbfe61cf049699f78d026faab1d91beee5f25d8b6ac62ce98ab3",
+    "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.pal": "90ea08a24fb68c22f1dec40ec34029b55d83c13659c8556f410849b5f8808105",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/bitscore_specific.txt": "bf24d622f8b127651ba1c4338965ff8fbe730281c70936f85cddeb13432a0939",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot.dat": "6c351b62b17e5d1e42ab207a50d34260ea22ca84ccc15108ac605ecbe0e15b01",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot.dat.gz": "9b028a6847322188dad39f0ba854de9c38ca2e057a16705ee47ca0fae42258bd",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot_generic.dat": "4f5137acb2d12fd53482db59ef960e28210a3868cd82e56ac8a030e5f521798c",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddannot_generic.dat.gz": "97b15f39741293e155e0e95b49c70243cedb2b0b2ed59440c4f8f7287f134a13",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddid.tbl": "b2a41de75186685252b82cba0ed923244d28edf125e5b48690c9dd76e92b6777",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cddid.tbl.gz": "852cb4c22f604b38f34c399c2fdad3d737fd15deaa5736c1a632249f0a6f6264",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/cdtrack.txt": "263046b8bc6bf4ce19db46913479b99f83914c2b7db0e6db6fb23139084cf828",
+    "data/reference/ncbi_cdd_3.21/rpsbproc_data/family_superfamily_links": "780a29f2ae698131c719b9a8cade4bfe54390380b6a388240695299c09916e9b",
+    "data/reference/ncbi_cdd_3.21/blast/ncbi-blast-2.17.0+/bin/rpsblast": "b295bf5b13203f383b1dd30807f5e1c6e0f1a6c5b684d0d58aa2c7d8481ac05f",
+    "data/reference/ncbi_cdd_3.21/rpsbproc/RpsbProc-x64-linux/rpsbproc": "32b2a1ad691359db4a5c1807e4e772cfdbbaefd40441f5ca4acab8d710399fd8"
+  },
+  "population": {
+    "training": 2177,
+    "family_rows": 2430,
+    "retrieval_database_ids": 1644,
+    "test_payload_reads": 0
+  },
+  "declared_scope": {
+    "training_runs": 0,
+    "folding_runs": 0,
+    "docking_runs": 0,
+    "md_runs": 0,
+    "wet_lab": false,
+    "remote_downloads": 0,
+    "test_payload_reads": 0,
+    "proposal_count": 32
+  }
+}

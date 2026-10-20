@@ -1,0 +1,47 @@
+{
+  "status": "EVALUATION_COMPLETE",
+  "generated_at_utc": "2026-10-20T06:42:01Z",
+  "unique_sequences": 52,
+  "proposals": 57,
+  "WT_PLM_blocked_CE": 1.8650238171350921,
+  "WT_PLM_blocked_CE_reference": 1.8650238171350921,
+  "WT_PLM_blocked_CE_delta": 0.0,
+  "formal_CE_reproduction": {
+    "n": 24,
+    "max_abs_delta": 4.440892098500626e-16,
+    "median_abs_delta": 0.0,
+    "n_within_1e_4": 24,
+    "n_within_1e_3": 24,
+    "note": "Batch composition differs from the original formal scoring; this is a reproducibility diagnostic."
+  },
+  "formal_CDD_rows_identical": true,
+  "formal_CDD_rows_compared": 25,
+  "WT_CDD_pair": {
+    "ordered_CDD_pair": true,
+    "CDD_NMNAT_pssm": 173919,
+    "CDD_NMNAT_accession": "cd02168",
+    "CDD_NMNAT_range": "4-181",
+    "CDD_NMNAT_evalue": 2.7252100000000003e-40,
+    "CDD_NMNAT_bitscore": 138.28,
+    "CDD_NUDIX_pssm": 467585,
+    "CDD_NUDIX_accession": "cd18873",
+    "CDD_NUDIX_range": "204-338",
+    "CDD_NUDIX_evalue": 9.38945e-30,
+    "CDD_NUDIX_bitscore": 108.784,
+    "CDD_linker_length": 22,
+    "n_NMNAT_family_hits": 1,
+    "n_cd18873_hits": 1
+  },
+  "post_sampling_amendment": {
+    "path": "post_sampling_amendment.json",
+    "evaluation_script_sha256": "5cbe75d2f1caf2873d989aef0c55b6539a49231474af570d3f465c224a8d7109",
+    "evaluation_revisions": 4,
+    "sampling_outputs_unchanged": true
+  },
+  "test_payload_reads": 0,
+  "training_runs": 0,
+  "folding_runs": 0,
+  "docking_runs": 0,
+  "md_runs": 0,
+  "wet_lab": false
+}
