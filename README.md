@@ -8,7 +8,7 @@
 
 当前优先 **90%–100% WT 全局相似性**的保守设计：多位点协同替换为主体，允许有定位依据的少量短 InDel。用冻结 ESM-2/SE 条件掩码生成与合理简单编辑作为基线，检验 QVAE 潜变量能否提供实际生成收益；不预设 QVAE 胜出。相似性不等于活性，计算分数不等于 NAD⁺ 净积累。
 
-此前完成 WT 对齐列先验生成比较，但其不受控 gap 和大幅序列偏离不能代表现役保守编辑任务。结果及判断见[原实验报告](experiments/natv_wt_columns/REPORT.md)；下一轮任务和比较标准见[研究计划](docs/RESEARCH_PLAN.md)。
+此前完成 WT 对齐列先验生成比较，但其不受控 gap 和大幅序列偏离不能代表现役保守编辑任务。结果及判断见[原实验报告](experiments/natv_wt_columns/REPORT.md)；本轮[保守条件编辑结果](experiments/natv_conservative_editing/REPORT.md)已完成；任务和比较标准见[研究计划](docs/RESEARCH_PLAN.md)。
 
 ## 资料与目录
 
@@ -22,6 +22,7 @@
 | `discovery/` | 数据发现与继承裁决的实际记录 |
 | `experiments/natv_candidate_sequences/` | 历史局部编辑结果 |
 | `experiments/natv_wt_columns/` | 全列先验生成训练、序列与评价 |
+| `experiments/natv_conservative_editing/` | 保守条件编辑比较、序列与完整轨迹 |
 | `src/natvqvae/` | 当前研究中实际使用的模型接口与序列工具 |
 | `tests/` | 序列身份、输入和代码行为检查 |
 

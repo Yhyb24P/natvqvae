@@ -1,0 +1,13 @@
+{
+  "attempts": 2976,
+  "exact_script_reconstructions": 2976,
+  "verified_trajectory_steps": 14880,
+  "protected_anchors_and_exact_selected_sites_verified": true,
+  "protocol_hashes_verified": true,
+  "artifacts": {
+    "raw_candidates.csv": "ea8cc39ed57b3a8e21607b61af439234fb04ce0c35099dc5c84e93c2373399c9",
+    "trajectory.jsonl.gz": "151759cb6f311e1819597e4bc1959736616f9de0b409445729c5b44f0a7591ed",
+    "edit_scripts.jsonl.gz": "123f1b6f8fe0fea8cb2a3b40c98eff35fc1dd1749903840e7790560ba4fb4b2f"
+  },
+  "audit_code_sha256": "ec25ef8f670687cea971dd8da7d3779271af5b952487d5cabb2bdfd9f19fd43a"
+}

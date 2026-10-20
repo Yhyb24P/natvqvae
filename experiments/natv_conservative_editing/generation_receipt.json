@@ -1,0 +1,89 @@
+{
+  "loaded_models": {
+    "SE/20261081": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
+      "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
+      "parameters": 840369,
+      "architecture": "no_latent",
+      "training_epoch": 2
+    },
+    "QVAE/20261081": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261081/epoch02.pt",
+      "sha256": "07428d0c5d2fc9e8adcdd84626cade6cde027d8261122f855b3e9ca521e320ad",
+      "parameters": 906289,
+      "architecture": "categorical",
+      "training_epoch": 2
+    },
+    "SE/20261082": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261082/epoch02.pt",
+      "sha256": "e1b82dfc0692376da1b9e28c39e92072ba5d05eb941882d26d71afdf4ff402be",
+      "parameters": 840369,
+      "architecture": "no_latent",
+      "training_epoch": 2
+    },
+    "QVAE/20261082": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261082/epoch02.pt",
+      "sha256": "85f39c5c97f7720465f50344360547136f24ef1ad3fe5bcfaba9d1292d359f07",
+      "parameters": 906289,
+      "architecture": "categorical",
+      "training_epoch": 2
+    },
+    "SE/20261083": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261083/epoch02.pt",
+      "sha256": "c1513604db27ae53c0076d371ccd4d00ab9de94cd9acdb873ceb8afadd310635",
+      "parameters": 840369,
+      "architecture": "no_latent",
+      "training_epoch": 2
+    },
+    "QVAE/20261083": {
+      "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/categorical/20261083/epoch02.pt",
+      "sha256": "a6b82527a34769376415c18590c9cc208165d60da1a1ef5568ba713c24070e7d",
+      "parameters": 906289,
+      "architecture": "categorical",
+      "training_epoch": 2
+    }
+  },
+  "imported_modules": {
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/__init__.py": "9cd850e036a8ada5d7cc62c5469953dbe81de067ff319f08c547bbc1b9325499",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/__init__.py": "0669c0488467a515bfc8d68bc5761a84170f3015284110d88325cf46fa853ddb",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/utils.py": "2516f7032d99cf4ef5c5590221f166af07b8836291596f70a12a44b963370adf",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/pipeline/__init__.py": "b26017f03169b4aa83f5918b133a6240cf9282bd6e03827b2b66d1e66e8f0586",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/pipeline/common/hashing.py": "eaabb04623941268dd292b9b7b527399763b4aa068f18c01452899ed4f050ab2",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/pipeline/common/config.py": "a4f4943ee952faf53c06981a031d871e7b0d39991ce8b2844bb6d14c62dcc073",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/pipeline/common/__init__.py": "95eec8f586126754c47e05196ba220fa3383ecf38f052e579ebcd108046823eb",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/dataset.py": "a84a510d17664972b118ac3c6567fb5cff111e6498ff895f23c4d7c40730b605",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/structure_conditioning.py": "c2d2e08856211c03a08b2c064843724945a7770cf5b9e91e1421d0db58a5600c",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/model.py": "ab2d3f274f6d02a6600cf3f974fb285b5907c5c8aac12be06ea4e90747e0fed5",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/__init__.py": "90fc8bff6794aee26d951d36227014df5ddddb9079c845e42d7f3007bdd7a755",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/backbone_graph.py": "61cdc7f0e84288960fcdbcf45637359d7483a32d8198bf7a30234141876d7a43",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/natv_model.py": "43cacfd08afae12fcc94da0039500d8a6f5a063810df431950ab44300962faf5",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_model.py": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_model_v1.py": "c6837516070e4e502dcaf19c8dfacaa2fc822110133b9c0983ffdc32c0378717",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/sequence_corpus.py": "7e21989f5c9f5970ccee65a84eb2237f88880304c4621e10cc909909172a7e41",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/context_restoration.py": "fcaae24ab8087d9d4ec7af2562bbe909dd15c97738da1b92541207bfce381e76",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_evaluation_contracts.py": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_family_v2.py": "f96c406571384aeb49a33a5d21155358e269d320cef1f1921c6873a6f386dd98",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_residual_model.py": "7b7113fa8403e99d5fa0e2e58a9b3bf92e592e9323bce9de4bab220c88738e1f",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_residual_pilot.py": "517ec2db33ebc97ce4633551d6c8d856b2ebfa47be5333360f8d235505f43175",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_residual_pilot_inputs.py": "61a8f688a0e3cd62fee0deeaba52c10a4933dc803f360daac6a98ea09eb85d1a",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/se_full.py": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/formal_training_data.py": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/multimodal_reader_v1.py": "26a9e97bd0a5c1c666940c3d3cbaf97ae0cb22582fb8f3473200702baaeb5c97",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/formal_training.py": "e5a5072827b6bc4b49f6e6947e7bff8047327e4b684dc910be4bc36309ddeb44",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/multimodal_runner_v1.py": "1f84139954e39bd8be3588d7d5237da8d14cbb5d036ec531d7a05f12c8059299",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/multimodal_deterministic_runtime_v2.py": "a82d946da882f228cff623e8c2e45929f15934a1cbb161453871e651478f3f0b",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_execution_v1.py": "279e9e0d6348b70dfe295af0a7fb73fd0b5699b63e8d5f9ea01cbdb957d558d6",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/g0_benchmark.py": "1484fa3e6c990ac70d81c40f1d392a12111c0559aa93a18b411e32c888e0d533",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/formal_generation.py": "78eff51fffb1d9dcb5f9a9d914177237ec2f4e00a7b6f72f4f822071a219dd18",
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_generation_v1.py": "22447218cfc528a6ca03539bc1cae804d830f33bd95a0a550809ec5a7e32b30d"
+  },
+  "unique_actual_PLM_sequence_encodings": 8980,
+  "retrieval_queries": 8949,
+  "stage_timing": {
+    "retrieval_seconds": 621.0975686589009,
+    "encoder_seconds": 70.7168338620395
+  },
+  "PLM_trainable_parameters": 0,
+  "elapsed_seconds": 744.329377920003,
+  "raw_candidates_sha256": "ea8cc39ed57b3a8e21607b61af439234fb04ce0c35099dc5c84e93c2373399c9"
+}

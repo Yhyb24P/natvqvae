@@ -48,6 +48,8 @@ A、B、C 是共用生成器的设计假设：**A** 探索 NMNAT 环境的保守
 
 ## 已有结果及其适用范围
 
+[保守条件编辑比较](../experiments/natv_conservative_editing/REPORT.md)已检验扩大替换预算和有来源短 InDel 背景下的旧 H2 生成能力。主要唯一组合指标在高预算下饱和，仍不能判定 QVAE 优于 SE；下一项模型比较须能区分联合条件分布质量。现有序列可进入匹配预算的候选自身结构评价，不据此认定已形成优选库。
+
 [WT 对齐列先验生成比较](../experiments/natv_wt_columns/REPORT.md) 对正式训练/验证数据完成 6 次拟合、6,144 次先验采样。QVAE 相对等参数的确定性对照未显示清晰优势；每种方法约 39% 的 HMM 有序双域命中、较短的去 gap 序列以及大幅 WT 偏离，证明该实验的输出不能直接当作保守工程候选。保留其完整运行产物，不调整旧评价口径。
 
 [历史局部编辑](../experiments/natv_candidate_sequences/REPORT.md) 已产生 32 条候选（27 条不同序列），只覆盖旧 4/8 位点探索；[H2 历史结果](../discovery/natv_model_inheritance/model_reuse_decision.md) 的负结果同样限于相应掩码编辑。旧 G0/SE 的生成收益未获得决定性支持；G1-a 显示选位评分容易与评价指标共享信息。G1-b 的连接区双峰由注释偏移导致，InDel 事件仍只提供候选假设。历史编号用于证据追溯，不代表必须逐阶段重做。

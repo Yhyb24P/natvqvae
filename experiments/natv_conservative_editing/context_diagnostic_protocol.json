@@ -1,0 +1,7 @@
+{
+  "role": "auxiliary_mechanism_probe_not_primary_or_independent_quality_metric",
+  "selection": "first_seed_first_shared_mask_or_first_event_per_mode_and_budget; draw0_last_stage",
+  "counterfactual": "same_explicit_Indel_scaffold; all_substitutions_removed; same_masked_positions_and_same_prior_z",
+  "outputs": ["masked_canonical_probability_L1", "masked_canonical_KL", "masked_logits_max_difference"],
+  "interpretation": "within_model_response_to_visible_other_edits; not_functional_epistasis; not_cross_model_superiority"
+}

@@ -1,0 +1,8 @@
+{
+  "shared_mask_summary.csv": "c41ce5f66a4ec4e97bcca49df09084ae327e55bc3b6b5c9bb1e5b45fddf70d03",
+  "per_seed_summary.csv": "e525555360e91f8ed9bcacdb15fe393e71eee1fbd0d218cf5d246cffb1630c83",
+  "HMM_domains.csv": "fe2130a0dac83b0ea262622a755283fbd036c47317439c2d9a8dcf13fef1743f",
+  "candidates.fasta": "1cdd4cd3edc2596d2a1be99cdbd1dbb06f309be845ade2b56a0bf12600fe8fa7",
+  "results.json": "1c3bd1e30239fbcc019d2baa7ad1a4e5d2787da5864835dfd394bc6335cca7ba",
+  "candidate_evaluation.csv": "22ee6f3a4ca83782b53a7c747f0581761c3b2415392c9dbd11a5b3658db6f6cf"
+}

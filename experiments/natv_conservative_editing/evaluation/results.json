@@ -1,0 +1,131 @@
+{
+  "status": "COMPLETED",
+  "attempts": 2976,
+  "constraint_counts": {
+    "PASS": 2976
+  },
+  "primary": "constraint_valid_unique_combinations_per_shared_mask_divided_by_8_attempts",
+  "by_arm": {
+    "ESM2": {
+      "attempts": 744,
+      "unique": 732,
+      "HMM_qualified": 698,
+      "exact_training": 0,
+      "exact_validation": 0,
+      "minimum_identity": 0.9002932551319648
+    },
+    "QVAE": {
+      "attempts": 744,
+      "unique": 729,
+      "HMM_qualified": 697,
+      "exact_training": 0,
+      "exact_validation": 0,
+      "minimum_identity": 0.9002932551319648
+    },
+    "SE": {
+      "attempts": 744,
+      "unique": 728,
+      "HMM_qualified": 700,
+      "exact_training": 0,
+      "exact_validation": 0,
+      "minimum_identity": 0.9002932551319648
+    },
+    "profile": {
+      "attempts": 744,
+      "unique": 717,
+      "HMM_qualified": 686,
+      "exact_training": 0,
+      "exact_validation": 0,
+      "minimum_identity": 0.9002932551319648
+    }
+  },
+  "contrasts": [
+    {
+      "mode": "sourced_indel_repair",
+      "edit_budget": 6,
+      "QVAE_minus_SE": 0.008333333333333333,
+      "conditional_95_interval": [
+        0.0,
+        0.03333333333333333
+      ],
+      "saturated_all_arms": false
+    },
+    {
+      "mode": "sourced_indel_repair",
+      "edit_budget": 18,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        0.0,
+        0.0
+      ],
+      "saturated_all_arms": true
+    },
+    {
+      "mode": "sourced_indel_repair",
+      "edit_budget": 30,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        0.0,
+        0.0
+      ],
+      "saturated_all_arms": true
+    },
+    {
+      "mode": "substitution",
+      "edit_budget": 2,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        -0.08333333333333333,
+        0.052083333333333336
+      ],
+      "saturated_all_arms": false
+    },
+    {
+      "mode": "substitution",
+      "edit_budget": 12,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        0.0,
+        0.0
+      ],
+      "saturated_all_arms": true
+    },
+    {
+      "mode": "substitution",
+      "edit_budget": 24,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        0.0,
+        0.0
+      ],
+      "saturated_all_arms": true
+    },
+    {
+      "mode": "substitution",
+      "edit_budget": 34,
+      "QVAE_minus_SE": 0.0,
+      "conditional_95_interval": [
+        0.0,
+        0.0
+      ],
+      "saturated_all_arms": true
+    }
+  ],
+  "HMM_inputs": {
+    "hmm_pf01467": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/reference/domain_profiles_v1/PF01467.hmm",
+      "sha256": "3055836d6ce3009a9d7f976acddda55cd10f79a29937e8fb442b9a99b1994f73",
+      "pyhmmer": "0.12.3"
+    },
+    "hmm_pf00293": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/reference/domain_profiles_v1/PF00293.hmm",
+      "sha256": "4a00411798c912ea708bc0e06a3ae61e03929767ddbebc08483a8cfacb201dc1",
+      "pyhmmer": "0.12.3"
+    }
+  },
+  "latent_probe_count": 93,
+  "latent_probe_max_logit_difference": 0.35060155391693115,
+  "scope": "conditional_development_comparison_not_indel_tolerance_or_catalytic_activity",
+  "function": "UNKNOWN",
+  "source_test_payloads_used": false
+}

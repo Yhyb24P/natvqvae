@@ -2,3 +2,4 @@ generation/
 interrupted_slow_run/generation/
 batching_check/small/
 batching_check/large/
+context_diagnostic/*/

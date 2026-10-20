@@ -16,6 +16,8 @@
 
 旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 提供冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索能力；旧 `vnext_edits.py` 支持带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本、准确复原及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于有一定演化证据的短事件筛选而非已训练插入/删除生成器。复用这些算法时须核验其实际源码身份和原数据角色；历史支持数不是 InDel 安全性、发生率或酶活标签。
 
+`experiments/natv_conservative_editing/inputs/` 固定实际 H2 源码、checkpoint 和 G1-b 事件身份；事件支持只从现役训练人口重算，插入载荷保留训练供体及组分。WT 锚点、构建后的当前坐标和最终全局编辑脚本分别保存在该次轨迹与脚本中；事件定义不构成新训练样本。运行结果归该目录的 `REPORT.md`。
+
 ## 结构和其他来源
 
 KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contracts/regions.json`；实验模板、构建体标签、观测残基和 12 个映射锚点见 [NATV_PAIRING_AUDIT.md](NATV_PAIRING_AUDIT.md)。家族同源模板不等于 KVP40 实验结构。预测结构与实验结构独立标记；结构数据输入先校验文件来源和实际残基对应。
