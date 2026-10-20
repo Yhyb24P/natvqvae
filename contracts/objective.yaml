@@ -15,36 +15,39 @@ application_endpoint:
   experiment_only: true
   conditions_to_fix: [enzyme_amount_and_normalisation, NMN, ATP, Mg2plus, pH, temperature, time_window, PPi_handling]
   meaning: "Compare WT and candidates at matched assay conditions; not a computational activity label."
-  interpretations:
-    - "Net accumulation can improve through more formation, less hydrolysis, or both."
-    - "An initial rate, kcat/Km and fixed-time accumulation are distinct endpoints."
-    - "Two-substrate apparent Km depends on the other substrate concentration."
+
+design_hypotheses:
+  A: "Seek improved NMNAT synthesis with catalytic competence retained."
+  B: "Seek reduced Nudix NAD+ hydrolysis while preserving NMNAT competence and double-domain organization."
+  C: "Explore both in one candidate; mechanism is not determined by the class label."
+
+current_generation_research:
+  task: WT_conditioned_conservative_editing
+  WT_length: 341
+  WT_reference: contracts/regions.json
+  candidate_similarity: "global Levenshtein identity 0.90 to 1.00 inclusive, using max(candidate_length, 341) as denominator"
+  design_modes: [multi_site_substitution, short_indel_with_conditional_local_repair]
+  exploratory_short_indel: "one local insertion or deletion event, 1 to 3 residues; applicability unverified"
+  edit_representation: [KEEP, SUB, INSERT, DELETE]
+  note: "Scientific design space; sampling capability must be demonstrated, not inferred from previous models."
+
+historical_substitution_pilot:
+  reference: contracts/regions.json
+  allowed_length: 341
+  substitutions_only: true
+  meaning: "Existing A/B/C position masks and no-InDel assertions describe historical fixed-length runs only."
 
 separate_experimental_endpoints:
   synthesis: [initial_NAD_formation_rate, kcat_if_identifiable, Km_NMN_apparent, Km_ATP_apparent]
   degradation: [NAD_hydrolysis_rate]
   integrated: [NAD_accumulation_timecourse, substrate_conversion, ATP_consumption, stability]
 
-design_hypotheses:
-  A: "Change the NMNAT environment to seek improved synthesis while retaining catalytic competence."
-  B: "Change Nudix substrate/catalytic behavior to reduce NAD+ hydrolysis while preserving a competent NMNAT scaffold."
-  C: "Combine NMNAT and Nudix changes; mechanism must not be inferred from the class label."
-  note: "These labels classify generated candidates, not required models or guaranteed activity outcomes."
-
-current_WT_editing_pilot:
-  reference: contracts/regions.json
-  allowed_length: 341
-  substitutions_only: true
-  meaning: "Local controlled editing scope only; not a universal constraint on future NatV family generation."
-
-not_currently_supported:
-  - "Prediction of catalytic rates or net NAD+ output from structure/model scores."
-  - "Claims that designed proteins are more active before biochemical measurements."
-  - "Unconditional full-family generation by the current masked-recovery generator interface."
-  - "Extrapolation to cellular NAD metabolism."
-
 future_experimental_controls:
   WT: required
   nudix_catalytic_dead_structurally_intact: proposed_not_yet_verified
   nmnat_catalytic_dead: proposed_negative
-  claim_limit: "Controls are hypotheses until measured; no wet-lab run is authorized here."
+
+nonclaims:
+  - "Sequence identity does not establish enzyme activity."
+  - "Model, structure and docking metrics do not estimate net NAD+ accumulation."
+  - "Legacy gap sampling is not validated InDel engineering."

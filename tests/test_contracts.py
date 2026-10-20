@@ -25,7 +25,8 @@ def test_objective_distinguishes_synthesis_and_net_accumulation():
     assert set(c["design_hypotheses"]) >= {"A", "B", "C"}
     assert "kcat_if_identifiable" in c["separate_experimental_endpoints"]["synthesis"]
     assert "NAD_hydrolysis_rate" in c["separate_experimental_endpoints"]["degradation"]
-    assert c["current_WT_editing_pilot"]["substitutions_only"] is True
+    assert c["current_generation_research"]["task"] == "WT_conditioned_conservative_editing"
+    assert c["historical_substitution_pilot"]["substitutions_only"] is True
 
 
 def test_unmeasured_evidence_does_not_pass():

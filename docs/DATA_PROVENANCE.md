@@ -1,41 +1,23 @@
 # 数据与模型来源
 
-## 序列群体与划分
+## 序列人口与训练边界
 
-旧项目的正式 NatV 双结构域训练群体含 1,644 条 core-train 序列，分为 47 个冗余组分（70% identity / 80% coverage）。组分用于控制序列冗余，不代表独立祖先或实测催化表型。部分结构分析使用的家族 MSA 经对应关系和缺口筛选后有 1,638 条，不能把缺少的 6 条计入 MSA。
+旧项目冻结 NatV 双域人口为 2,430 条。按 `training_role_v2`，正式训练 1,644 条（47 个 70% identity / 80% coverage 组分），验证 227、测试 231、注释冲突隔离 249、旧封存 75、排除 4；组分不等于 47 条独立进化谱系。`inputs/manifest.json` 的发现人口 FASTA 不等于训练资格，`split_v2` 和 `core_training_eligible_v2` 均不能替代 `training_role_v2`。具体文件身份与计数见 `discovery/natv_data_readiness/data_checks.json` 和 `discovery/natv_pairing_audit/audit_summary.json`。
 
-`inputs/manifest.json` 固定的是旧工作目录中的 2,430 条发现群体 FASTA。`training_role_v2` 将其分为 1,644 条训练、227 条验证、231 条测试、249 条注释冲突隔离、75 条旧封存记录和 4 条排除记录。`split_v2` 与角色表含义不同，不能仅凭 FASTA 或 split 标签确定训练资格；详细计数见 `discovery/natv_pairing_audit/audit_summary.json`。这份 FASTA 不等于正式训练集，也不等于已验证功能的 NatV 群体。
+`discovery/natv_data_readiness/` 有正式训练/验证 FASTA、逐条角色与 CDD 位置；检索严格使用训练人口。现役 90%–100% 相似性是**生成候选对 WT 的约束**，并不筛除天然训练家族中的远缘序列。外部新发现序列仍由 `discovery/natv_pairing_audit/dataset_update_decision.md` 裁决，不能直接混入既定训练、验证或测试。
 
-`inputs/manifest.json` 已分别登记 `family_roles`、`core_split`、`allowed_samples`、`training_samples` 与 `train_sequences`。`core_training_eligible_v2` 表示核心群体资格，不能单独作为训练选择条件；正式训练还须满足 `training_role_v2=training`，验证和测试仍按角色隔离。
+家族 MSA 某次结构对应分析为 1,638 条，较 1,644 的差异来自其额外筛选；不可混称。旧逐查询 ESM-2 和演化特征来自掩码输入规划，不是新任务通用张量。训练来源在参考查询前要核对角色，历史的公开 WT 和同源实验模板是参照，不是可以偷偷补入训练的样本。
 
-`discovery/natv_data_readiness/` 提供按既有角色导出的训练与验证 FASTA、含序列和 CDD 坐标的 `samples.csv`，以及不含序列的全群体 `roles.csv`；检索使用同一份训练 FASTA。任务与模型无关的序列输入可直接读取，掩码、张量形状和采样方式仍由具体生成任务决定。本轮 WT 对齐列任务的数据位于 `experiments/natv_wt_columns/data/`：`aligned_samples.jsonl` 保留正式角色、源序列位置对应与插入索引，`training_weights.npy` 按现役训练组分等权，`wt_embeddings.pt` 只含冻结的公开 WT 表示；来源与派生文件校验值见同目录 `input_checks.json`。该次核查结果与复现方法见 `discovery/natv_data_readiness/data_readiness_decision.md`。
+## 模型与对齐资料
 
-其他 NAD 代谢酶（尤其 NadE）不自动属于全长 NatV 同源训练样本。通用蛋白语料可提供固定的预训练权重，或用于另有说明的迁移学习实验；两者均需明确序列选择、架构归属和留出同源物来源。ESM-2 预训练可能包含 NatV；在已核对数据中未发现重叠，不能证明预训练模型未接触该家族。
+`nad_qvae` 作为只读研究档案，源码、权重、配置与分割差异入口为 `discovery/natv_model_inheritance/model_reuse_decision.md` 和 `source_checks.json`。旧 `SequenceGenerator` 在 WT ESM-2 条件下直接解码 341 对齐列，输出 20 种氨基酸及 gap；不表示新插入残基。旧角色与现役划分不相容，历史 checkpoint 不可直接当成新划分的独立验证结果。
 
-外部待研究序列及是否扩充数据的判断见 `discovery/natv_pairing_audit/dataset_update_decision.md`。
+现役 `experiments/natv_wt_columns/` 重新按正式训练/验证人口训练了 categorical VAE 和确定性对照，其 `data/aligned_samples.jsonl` 保留每条天然序列到 WT 的列映射及插入位置；训练的对齐列丢失了插入残基的生成目标。已保存的模型身份、原始提案和完整负结果归该目录的 `REPORT.md`，不能把本次结果再解释为已训练的保守编辑模型。
 
-## 参考序列与结构输入
+旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 提供冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索能力；旧 `vnext_edits.py` 支持带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本、准确复原及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于有一定演化证据的短事件筛选而非已训练插入/删除生成器。复用这些算法时须核验其实际源码身份和原数据角色；历史支持数不是 InDel 安全性、发生率或酶活标签。
 
-KVP40 NatV 参考序列及其 SHA256 见 `contracts/regions.json`。CDD 窗口 NMNAT 4–181、连接区 182–203、Nudix 204–338 是注释坐标；其适用范围见 `docs/RESEARCH_PLAN.md`。模板、构建体、天然序列、坐标编号、关键残基与配体状态的对应入口是 `docs/NATV_PAIRING_AUDIT.md`。
+## 结构和其他来源
 
-旧研究包含 2QJO、2QJT、2R5W 结构及化学口袋资源，部分资产可能仅存于原计算主机。`discovery/natv_pairing_audit/structural_interpretation_basis.json` 汇总已核对的结构对应关系，`formal_input_manifest=false`；实际运行读取时，由该次运行记录路径和校验值。候选运行如何使用它见 `experiments/natv_candidate_sequences/REPORT.md`。
+KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contracts/regions.json`；实验模板、构建体标签、观测残基和 12 个映射锚点见 [NATV_PAIRING_AUDIT.md](NATV_PAIRING_AUDIT.md)。家族同源模板不等于 KVP40 实验结构。预测结构与实验结构独立标记；结构数据输入先校验文件来源和实际残基对应。
 
-## 目标合同与模型继承
-
-当前合同为 `contracts/objective.yaml`、`contracts/evidence_ladder.yaml` 和 `contracts/regions.json`。旧仓库的 `config/natv/target_contract.yaml` 仅是历史构建体元数据，不是此处固定的输入；其中 `apparent_kcat_over_Km_NMN` 不定义当前的 NAD⁺ 净积累目标。
-
-`nad_qvae` 是外部研究档案。旧 checkpoint 未作为现役模型权重导入；本轮重新训练的权重及其来源见 `experiments/natv_wt_columns/REPORT.md`。继承权重须核对架构源码、训练合同、数据划分、checkpoint SHA256、输出字母表和实际采样方式，不能根据文件名中的 QVAE 判定模型身份。
-
-旧 `design/sequence_generator.py` 与配套 `sequence_corpus.py`、`sequence_experiment.py` 属于 `natv_sequence_design_dev_v1`；其冻结源码、WT 条件与 checkpoint 的本地身份，以及旧角色与现役划分的对应，见 `discovery/natv_model_inheritance/model_reuse_decision.md` 和同目录 `source_checks.json`。实现可继承，数据角色与权重资格须分别判断。
-
-已知历史来源包括 H2 categorical / continuous / no-latent（旧仓库 `experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/PHASE_SUMMARY.md`）、H1/H2 SE / no-latent checkpoint、早期 `qvae_v9_seed2028` 和 H3/G0 chemical adapter。它们的研究判断见 `docs/RESEARCH_PLAN.md`；具体运行使用的权重见各自报告。
-
-`masked_input_plan` 绑定旧任务的查询、掩码、检索 ID 与样本校验值；`masked_contexts` 和 `evolution_features` 分别列出逐查询表示与演化特征的路径和 SHA256。大文件留在只读来源，通过清单定位。它们是历史掩码任务的输入，不是任意全长生成模型的通用特征。
-
-权重的训练任务和使用方式须区分全长先验生成、WT-relative masked editing 与残基恢复验证，不能相互继承能力结论。
-
-## 文件边界
-
-`NATV_SOURCE_ROOT` 或 `--root` 指定旧仓库路径。`inputs/link_inputs.py` 核对校验值并建立本地链接；软链接本身不提供只读权限。贡献与写入边界见 `AGENTS.md`。
-
-源文件在本机是否可用由 README 中的本地检查确定，GitHub CI 不能验证所有者的本地研究数据。大文件和临时输出保存在 Git 外，运行记录须提供校验值和可访问的存储位置。
+源文件通过 `inputs/manifest.json` 的 SHA256 定位，`NATV_SOURCE_ROOT` 或 `--root` 指向旧仓库。大文件及 checkpoint 位于研究主机，运行报告记录使用的文件及哈希；符号链接不使来源在系统层自动只读。数据准备和运行产生的文件应写入本仓库相应的运行目录，不写回旧档案。
