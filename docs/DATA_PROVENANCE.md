@@ -14,7 +14,7 @@
 
 现役 `experiments/natv_wt_columns/` 重新按正式训练/验证人口训练了 categorical VAE 和确定性对照，其 `data/aligned_samples.jsonl` 保留每条天然序列到 WT 的列映射及插入位置；训练的对齐列丢失了插入残基的生成目标。已保存的模型身份、原始提案和完整负结果归该目录的 `REPORT.md`，不能把本次结果再解释为已训练的保守编辑模型。
 
-旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 提供冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索能力；旧 `vnext_edits.py` 支持带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本、准确复原及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于可疑变长位点筛选而非已训练插入/删除生成器。复用这些算法时须核验其实际源码身份和原数据角色；历史支持数不是 InDel 安全性、发生率或酶活标签。
+旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 提供冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索能力；旧 `vnext_edits.py` 支持带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本、准确复原及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于有一定演化证据的短事件筛选而非已训练插入/删除生成器。复用这些算法时须核验其实际源码身份和原数据角色；历史支持数不是 InDel 安全性、发生率或酶活标签。
 
 ## 结构和其他来源
 

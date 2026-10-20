@@ -64,4 +64,6 @@ Lee, J. Y., Li, Z., & Miller, E. S. (2017). Vibrio phage KVP40 encodes a functio
 
 Hayes, T., et al. (2025). Simulating 500 million years of evolution with a language model. *Science*. https://doi.org/10.1126/science.ads0018
 
-DPLM-Evo (2026), edit-based diffusion model for substitutions, insertions and deletions. https://arxiv.org/abs/2601.01578
+Wang, X., et al. (2026). Towards A Generative Protein Evolution Machine with DPLM-Evo. *Proceedings of Machine Learning Research*, 306. https://proceedings.mlr.press/v306/wang26by.html
+
+Deutschmann, N., et al. (2026). EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering. https://arxiv.org/abs/2603.11703
