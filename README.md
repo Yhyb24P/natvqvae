@@ -1,39 +1,31 @@
-# NatV-QVAE | NAD⁺ 净生成酶设计
+# NatV-QVAE｜KVP40 保守蛋白质生成
 
-研究 KVP40 NatV 衍生的 NMNAT–Nudix 双功能酶，目标是在纯化酶体系中提高
-NMN + ATP 生成 NAD⁺ 的净积累。允许 Nudix 水解下降或丢失，前提是 NMNAT
-合成保留到具有实际应用意义的程度。目前没有变体经实验证明优于野生型。
+以 KVP40 NatV（341 aa，NMNAT–Nudix 双结构域）为参考，研究 WT 邻域的条件序列生成，最终为提高纯化酶体系中的 NAD⁺ 净积累提出可检验变体。Nudix 水解可减弱，NMNAT 合成需保留实际应用价值。
 
-## 研究路线
+## 科学主线
 
-1. **数据。** 使用来源可追溯、结构域对应明确、训练与验证边界清楚的
-   NatV 家族和同源实验结构。
-2. **生成。** 优先复用已有 QVAE 实现，与同任务无潜变量基线公平比较，以结果确定后续生成方式。
-3. **评价与选择。** 序列相容性、候选自身全长结构、NMNAT 催化环境、
-   Nudix 扰动；选出机制可描述、假设多样的候选面板。
-4. **酶学验证。** 分别测量合成、水解与净积累。
+高质量 NatV 数据 → 生成模型研究 → 工程化序列生成 → 候选自身结构与催化环境评价 → 候选库 → 未来酶学验证。
 
-研究终点、证据层级、设计假设与比较标准见
-[研究计划](docs/RESEARCH_PLAN.md)。
+当前优先 **90%–100% WT 全局相似性**的保守设计：多位点协同替换为主体，允许有定位依据的少量短 InDel。用冻结 ESM-2/SE 条件掩码生成与合理简单编辑作为基线，检验 QVAE 潜变量能否提供实际生成收益；不预设 QVAE 胜出。相似性不等于活性，计算分数不等于 NAD⁺ 净积累。
 
-## 仓库内容
+此前完成 WT 对齐列先验生成比较，但其不受控 gap 和大幅序列偏离不能代表现役保守编辑任务。结果及判断见[原实验报告](experiments/natv_wt_columns/REPORT.md)；下一轮任务和比较标准见[研究计划](docs/RESEARCH_PLAN.md)。
+
+## 资料与目录
 
 | 位置 | 用途 |
 |---|---|
-| `docs/RESEARCH_PLAN.md` | 研究问题、路线与判断标准 |
-| `docs/NATV_PAIRING_AUDIT.md` | 序列、构建体、坐标与同源关系核对 |
-| `docs/DATA_PROVENANCE.md` | 数据群体、划分与模型来源 |
-| `contracts/` | 目标、位点规则与评价定义 |
-| `inputs/manifest.json` | 固定 SHA256 的源文件清单 |
-| `experiments/natv_candidate_sequences/` | 探索性局部编辑运行 |
-| `experiments/natv_wt_columns/` | WT 对齐列先验生成比较、产物与报告 |
-| `src/natvqvae/` | 当前研究路线用到的可复用代码 |
-| `tests/` | 对实际能力和科学约定的测试 |
+| [研究计划](docs/RESEARCH_PLAN.md) | 研究问题、生成任务、比较与证据标准、文献 |
+| [数据来源](docs/DATA_PROVENANCE.md) | 家族角色、训练划分、旧模型与衍生输入来源 |
+| [结构配对](docs/NATV_PAIRING_AUDIT.md) | 序列—构建体—坐标—同源关系 |
+| `contracts/` | 科学目标及已有实验的位点与评价约定 |
+| `inputs/manifest.json` | 旧项目只读输入与 SHA256 |
+| `discovery/` | 数据发现与继承裁决的实际记录 |
+| `experiments/natv_candidate_sequences/` | 历史局部编辑结果 |
+| `experiments/natv_wt_columns/` | 全列先验生成训练、序列与评价 |
+| `src/natvqvae/` | 当前研究中实际使用的模型接口与序列工具 |
+| `tests/` | 序列身份、输入和代码行为检查 |
 
-已有运行及其限制见[局部编辑报告](experiments/natv_candidate_sequences/REPORT.md)和
-[WT 对齐列生成比较](experiments/natv_wt_columns/REPORT.md)。
-
-## 安装与检查
+## 安装与核对
 
 ```bash
 python -m venv .venv
@@ -43,8 +35,4 @@ pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
 
-`doctor` 用 `inputs/manifest.json` 核对本地源文件，缺失或校验不一致即
-失败；`inputs/link_inputs.py --check-only --root /path/to/nad_qvae` 只检查
-不建链。源数据不在本仓库中。
-
-贡献边界见 `AGENTS.md`。
+源数据与大型权重保存在只读来源及当地研究主机；`doctor` 检查 `inputs/manifest.json` 所列本地文件。已有运行的来源与复现入口以各自报告为准。贡献与执行边界见 [AGENTS.md](AGENTS.md)。
