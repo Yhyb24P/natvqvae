@@ -1,19 +1,6 @@
 # NatV 序列、构建体、坐标与同源关系核对
 
-本页记录当前可复现的核对结果。详细文件保存在
-[`discovery/natv_pairing_audit/`](../discovery/natv_pairing_audit/)，没有搬进
-`src/`、`contracts/` 等核心目录。
-
-## 核对范围
-
-- KVP40 野生型：341 aa，SHA256
-  `8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8`。
-- 本次采用的家族全集：2,430 条记录、2,430 条不同序列；保留原有
-  `training_role_v2` 角色和 `split_v2` 划分。
-- 实验结构：285 个 PDB 条目、308 个聚合物实体。
-- 外部检索：三次 RCSB 序列检索、一次限定范围的 UniProt 双 Pfam 查询、
-  IPR041750 注释，以及 10 个候选的 AlphaFold 元数据。没有批量下载，也没有
-  训练、生成或折叠。
+参考序列、群体和模型输入边界见 [DATA_PROVENANCE.md](DATA_PROVENANCE.md)。核对运行的范围、检索结果、数据扩充判断与限制见 [dataset_update_decision.md](../discovery/natv_pairing_audit/dataset_update_decision.md)。
 
 ## 可信的实验模板
 
@@ -48,87 +35,18 @@ auth + 5。不能把 2QJO 中编号相同的位点直接当作对应位点：12 
 | Nudix | D307 | D307 | D304 | 306 | 312 | 是 |
 | Nudix | D308 | D308 | D305 | 307 | 313 | 是 |
 
-E238↔K236 只是位置对应，残基本身并不相同。12 个关键残基在指定模板中
-都通过配体邻近检查（NMNAT 关键残基到 2QJO 的 NAD：3.611–7.667 Å；Nudix
-关键残基到 2QJT 的 AMP/Mn：2.006–4.002 Å）。这些是几何检查，不是催化
-测量。
+E238↔K236 是位置对应，残基本身不同。配体距离及几何检查结果见发现目录的决策记录。
 
-核对过的结构域、模板、构建体偏移、未解析缺口、配体状态、关键残基行和
-对应路径都整理在
-`discovery/natv_pairing_audit/structural_interpretation_basis.json`
-（由 `build_structural_basis.py` 生成）。它用于解释生成的候选序列，不是
-训练输入。文件中的 `formal_input_manifest` 为 `false`；只有当某次实际
-训练或评价读取它时，才需要把它列入正式输入。
+## 对应文件
 
-## 外部检索结果
+文件均位于 `discovery/natv_pairing_audit/`：
 
-RCSB 检索找到 28 个聚合物实体，全部已在此前的家族全集中；没有新的合格
-全长双结构域结构。UniProt 双 Pfam 查询返回 880 条记录（378 条通过双
-结构域筛选，361 条去重候选），其中没有候选带 PDB 交叉引用。266 条候选
-与家族全集中的序列完全相同，95 条在精确序列层面是新的，包括 8 条与
-噬菌体相关的序列。这 95 条只是待研究序列，不是已验证的训练补充。
+| 文件 | 核对内容 |
+|---|---|
+| `sequence_registry.csv` | WT、家族、PDB 实体与模板序列的校验值和角色 |
+| `structure_registry.csv`、`dual_domain_scan.csv` | 实验结构群体、配体与双结构域筛选 |
+| `construct_observed_audit.csv`、`residue_mapping.csv` | 构建体、标签、逐链未解析缺口及坐标对应 |
+| `anchor_mapping_audit.csv` | 关键残基对应、残基身份和配体距离 |
+| `structural_interpretation_basis.json` | 汇总结构域、模板、构建体偏移、缺口、配体与关键残基对应 |
 
-## 同源增量分析
-
-用与 `vnext_family_split` 相同的 70/80 组分判定（局部一致度 ≥0.70；
-两段覆盖度均 ≥0.80 序列长度），对 95 条精确新序列与家族全集进行比较。
-MMseqs2 提供候选命中，所有会影响结论的命中都做了精确重比对。
-
-| 项目 | 数值 |
-|---|---:|
-| 与家族最近的一致度：中位数（范围） | 69.4%（21.6–100%） |
-| 候选按一致度 ≥90% / ≥70% / <70% 计数 | 26 / 47 / 48 |
-| 只含新候选的簇 | 45 |
-| 并入已有组分的簇 | 12（47 条候选） |
-| 形成新组分 | 33（48 条候选） |
-| 组分数量：分析前 → 分析后 | 142 → 175（+33） |
-| 桥接 / 合并 | 0 / 0 |
-| 新组分大小 | 6、6、五个含两条序列的组分、26 个单条序列组分 |
-
-33 个新组分大多很稀疏；26 条候选与已有序列的一致度 ≥90%，其中 6 条在
-合格比对段上达到 100%。在并入已有组分的 47 条候选中，34 条会并入测试
-组分、8 条并入训练组分、5 条并入验证组分。如果直接合并，就会改变原有的
-测试集和验证集，需要重新聚类和划分。
-
-对照 WT 和 Q5NHR1 的结构域检查关键残基恢复情况（自检 12/12；第 6 个
-关键残基因已知的 H236/E238 差异不计入）：51 条保留 11/11，24 条保留
-10/11，8 条保留 9/11，12 条少于 9/11。R249 在 95/95 条中恢复，D307 在
-66/95 条中恢复（其中 22 条为 Ser 替换）。这些只能说明结构上可能相容，
-不是功能证据。
-
-结论是：这些候选只是序列层面的扩充，不是经过验证的功能家族扩充。95 条
-候选都没有实验结构、活性测量或经过审核的注释。针对当前目标，数据扩充
-到此结束；正式序列集、划分和约定都没有改变，这 95 条仍是待研究序列。
-详见
-[`dataset_update_decision.md`](../discovery/natv_pairing_audit/dataset_update_decision.md)。
-
-## 用途与限制
-
-`structural_interpretation_basis.json` 为候选序列中的关键残基位置提供解释
-依据，不是训练、检索或候选挑选的输入（`formal_input_manifest=false`）。
-落在关键残基上的替换只作为已定位的扰动报告，不给出催化方向。适用范围和
-限制记录在 `structure_analysis/interpretation.json`。
-
-## 这些结果不能说明什么
-
-- 2QJO/2QJT 是产物或金属口袋的参照，没有底物三元复合物几何。
-- 关键残基保留和配体邻近不能证明结合、kcat 或净 NAD⁺ 生成。
-- RCSB 检索限制在一致度 ≥30%；差异较大的结构同源物需要另行检索。
-- AlphaFold 模型只是预测，这份核对没有折叠或评分。
-
-## 复现与来源
-
-```bash
-cd discovery/natv_pairing_audit
-python build_local_audit.py
-python query_external.py
-python summarize_external.py
-python analyze_incremental_homology.py
-python build_structural_basis.py
-```
-
-- `source_hashes.json`：866 个输入文件与语料目录树的校验值
-  `ef61977a312de176cce875f6e7c2774a830d3b45a70eb2397db30b3b2eb1b8c6`。
-- `external/query_log.json`：每次外部请求、状态和响应校验值。
-- `hashes.json`：117 个已提交核对文件的 SHA256 清单（可重新生成的
-  `external/homology/raw/*.m8` 原始输出未计入）。
+文件索引与复现方法见 [发现目录 README](../discovery/natv_pairing_audit/README.md)。

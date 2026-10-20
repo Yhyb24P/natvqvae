@@ -1,16 +1,16 @@
 {
- "generated_at_utc": "2026-10-20T06:05:59.660531+00:00",
+ "generated_at_utc": "2026-10-20T12:08:43.497145+00:00",
  "root": "/home/yhshy/git_files/natvqvae/discovery/natv_pairing_audit",
  "file_count": 117,
- "tree_sha256": "f44ba469438fb18186496968b6f18933b584bd4af0123ad738fcce74d9696b10",
+ "tree_sha256": "bea2c6828951afc8a591d55c7b3bbd46dfaf36257815e304a5427fd2d1de3b77",
  "excluded": [
   "external/homology/raw/*.m8 and MMseqs temp output (regenerable, not committed)"
  ],
  "files": [
   {
    "path": "README.md",
-   "size_bytes": 17933,
-   "sha256": "3984787698e0b77fc804d53b3f501f36ec8f800f89470f4771ae66ca00b752b2"
+   "size_bytes": 2091,
+   "sha256": "f4013200ecf83fe35bb3d0f96a8d5312927b94cd1f0d438d4a36965dafe40866"
   },
   {
    "path": "active_g_registry.csv",
@@ -49,8 +49,8 @@
   },
   {
    "path": "dataset_update_decision.md",
-   "size_bytes": 13649,
-   "sha256": "1e8b53b3b03a349bb693ffe9188ad1c257d7c5badf39acdeb19b5b7221afb913"
+   "size_bytes": 7325,
+   "sha256": "dd91736ef96ea2c87cceacb205ff5d426d1aed03ab518c7c725e70c5a7c4a6b4"
   },
   {
    "path": "dual_domain_scan.csv",

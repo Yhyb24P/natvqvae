@@ -1,257 +1,73 @@
-# Dataset update decision
+# NatV 数据扩充判断
 
-Date: 2026-10-20. Branch: `research/natv-pairing-audit`.
-Scope: local NatV pairing audit plus bounded external discovery.
+日期：2026-10-20。范围：本地序列—结构核对、限定范围的外部检索，以及 95 条候选的同源增量分析。
 
-## Decision
+## 判断
 
-**Keep the formal NatV dataset unchanged.**
+当前目标下结束这轮序列扩充，正式 NatV 群体及角色划分保持原状。95 条精确序列新颖的 UniProt 记录保留为待研究群体，见 `external/incremental_uniprot_candidates.csv`。它们扩大了序列组分图，但没有增加经验证的功能成员；直接并入还会影响现有验证与测试比较。输入群体含义见 `../../docs/DATA_PROVENANCE.md`，模板和残基对应见 `../../docs/NATV_PAIRING_AUDIT.md`。
 
-- No records are added to or removed from `natv_vnext_family_v2`.
-- `training_role_v2`, `split_v2`, the legacy split, the 1,644 core-train
-  population and the active-G manifest keep their current assignments.
-- No core input contract, WT identity, domain interval or evidence-ladder
-  definition is changed.
-- `main` is not merged or rewritten. This work is confined to the discovery
-  directory on the research branch.
+## 本地核对
 
-The audit produced **no new experimentally measured activity data and no new
-qualifying full-length experimental structure**. The correct update is
-therefore a provenance/mapping correction and a discovery pool, not a
-training-population change.
+2,430 条记录均为不同序列，序列 ID / hash 不一致及 FASTA / parquet 不一致均为 0。`training_role_v2` 的群体含义与计数见数据来源文档；另有 `split_v2` 训练 / 验证 / 测试 1,879 / 235 / 235，旧封存 / 排除 77 / 4；legacy split 训练 / 验证 / 参考 / 测试 / 排除为 488 / 309 / 71 / 6 / 1,556。不同字段不能互换。
 
-## What the audit established
+Active-G 有 1,871 条，均在群体中；群体中另有 559 条不在 Active-G。`exclusions.csv` 共 633 条：249 条注释冲突隔离、75 条旧封存、4 条非标准序列或结构域排除，以及 305 个不合格结构实体。
 
-1. The frozen population is internally consistent: 2,430 records, 2,430
-   unique sequences, zero sequence-ID/hash mismatches and zero
-   FASTA/parquet mismatches. Legacy and v2 split counts are distinct objects
-   and were not conflated.
-2. Only three experimental polymer entities in the 285-PDB corpus are
-   full-length dual-domain NatV constructs: 2QJO_1 (Q55928), 2QJT_1 (Q5NHR1)
-   and 2R5W_1 (Q5NHR1). 2QJT and 2R5W are the same sequence in different
-   experimental states, so the corpus has two unique full-length sequences.
-3. The curated 12-anchor table is numerically consistent with Q5NHR1/2QJT
-   auth numbering and with the KVP40 GenBank translation. The 2QJO column
-   requires a cross-species Q5NHR1→Q55928 alignment; same-numbered positions
-   are invalid. All 12 anchor mappings and all 12 designated-template ligand
-   proximities pass under that mapping.
-4. E238 in the 2QJT template corresponds to K236 in Q55928, not E. The Nudix
-   anchor correspondence is positional, not identity-conserved, at that site.
-   This caveat must travel with any use of the anchor table.
-5. External RCSB sequence search found 28 polymer entities, all already in
-   the frozen corpus. None is a new qualifying full-length structure. This is
-   a valid negative result at the ≥30% identity search threshold.
-6. The bounded UniProt dual-Pfam query found 880 records, 378 passing the
-   dual-domain HMM screen, and 361 deduplicated candidates. None has a PDB
-   cross-reference. 266 are already in the frozen population by exact
-   sequence; 95 are exact-sequence novel, including 8 phage-associated
-   sequences. These are sequence-only candidates without experimental
-   structures or activity measurements.
-7. The 95 candidates were then analysed under the same 70/80 component
-   predicate used to build the frozen split (exact local identity ≥0.70 and
-   both alignment spans ≥0.80 of length). They do increase the operational
-   sequence graph from 142 to 175 components, but they do not provide a
-   validated functional family expansion; details below.
+285 个 PDB 条目共 308 个聚合物实体，仅 3 个通过双 Pfam、双 HMM、结构域顺序与长度 ≥300 的筛选；对应两条不同全长序列。三个实体所有链的已解析残基数分别为 995、684、689；配体为 2QJO 的 APR/NAD/POP/SO4、2QJT 的 AMP/MN、2R5W 的 CL/MG。逐链缺口见 `construct_observed_audit.csv`。
 
-## Incremental homology analysis of the 95 sequences
+12 个关键残基的对应与指定模板配体邻近检查均满足本次几何判定。2QJO NMNAT 到 NAD 的最短重原子距离为 3.638、3.611、7.667、6.775 Å（2 个 ≤4.5 Å，全部 ≤8 Å）；2QJT Nudix 到 AMP/Mn 为 2.142、3.970、4.002、2.167、3.922、2.006、3.445、2.212 Å（全部 ≤4.5 Å）；2R5W 对应距离为 2.201、4.655、4.227、2.083、3.983、2.182、4.158、2.321 Å（E238 为 4.655 Å，其余 ≤4.5 Å）。2QJO Nudix 关键残基距 NMNAT 位点的 NAD 为 23–33 Å，因此 Nudix 指定模板使用 2QJT。
 
-All 95 are unique, unreviewed TrEMBL entries with no PDB cross-reference and
-no measured activity. Exact local re-alignment against the 2,430-sequence
-population gives:
+## 外部检索
 
-| Quantity | Value |
+RCSB 用 KVP40、Q55928、Q5NHR1 三个种子检索（identity ≥30%，E ≤1），并集为 28 个聚合物实体，全部已在本地结构群体中。3 个是已知全长双结构域实体，其余 25 个是单结构域或不合格同源物；例如 3GZ5/3GZ6/3GZ8 是 Shewanella NrtR。没有找到新的合格全长双结构域实验结构。
+
+UniProt 查询 `xref:pfam-PF01467 AND xref:pfam-PF00293` 返回 880 条（1 条 reviewed），378 条通过双结构域 HMM 筛选；长度 280–450、排除已知模板并去重后为 361 条，均无 PDB 交叉引用。266 条与既有群体精确相同，角色为训练 179、注释冲突隔离 44、验证 20、测试 16、旧封存 7。
+
+其余 95 条为精确序列新颖的 unreviewed TrEMBL 记录，没有实验结构或实测活性。其中 8 条关联噬菌体：Pectobacterium phage vB_PcaM_CBB、Serratia phage BF、Sphingobium phage Lacusarx、Burkholderia phage BcepSauron/BcepSaruman、Stenotrophomonas phage Mendera/Moby、Colwellia phage 9A。噬菌体背景不等于 NatV 功能证据。
+
+IPR041750 查询返回 34 条，17 条通过双结构域筛选，26 条已在家族中，2 条带 PDB 引用且均为已知模板。该注释也含单结构域 NMNAT，不能单独定义双结构域成员。
+
+AlphaFold 元数据查询覆盖 10 个 accession，7 个有模型、3 个返回 404。其中属于 95 条新增候选的有 5 条（3 个有模型、2 个无模型），其余 90 条未查询；现有预测模型尚无结构评价。
+
+## 同源增量分析
+
+采用与 `vnext_family_split` 相同的 70/80 判定：局部 identity ≥0.70，双方比对跨度均 ≥序列长度的 0.80。MMseqs2 提供候选命中，影响判断的命中均用 Biopython 精确重比对。
+
+| 项目 | 结果 |
 |---|---:|
-| Candidates | 95 |
-| Nearest family identity: median | 69.4% |
-| Nearest family identity: IQR | 52.5–92.9% |
-| Nearest family identity: range | 21.6–100% |
-| Candidates ≥90% identity to a family sequence | 26 |
-| Candidates ≥70% identity | 47 |
-| Candidates <70% identity | 48 |
-| Candidates with a qualifying 70/80 component | 47 |
+| 最近家族 identity：中位数、IQR、范围 | 69.4%；52.5–92.9%；21.6–100% |
+| identity ≥90% / ≥70% / <70% | 26 / 47 / 48 |
+| 候选内部簇 | 45 |
+| 并入已有组分 | 12 个簇，47 条候选 |
+| 新组分 | 33 个，48 条候选 |
+| 组分数变化 | 142 → 175 |
+| 桥接 / 已有组分合并 | 0 / 0 |
+| 新组分大小 | 两个 6 条、五个 2 条、26 个单条 |
 
-For comparison, 2,359 of the 2,430 frozen sequences have a non-self ≥70%
-edge, with median nearest-neighbour identity 99.45%. The candidates are
-therefore mostly distant or redundant relative to the frozen population.
+既有群体中 2,359/2,430 条有非自身 ≥70% 命中，最近邻 identity 中位数为 99.45%。新增候选中 6 条在合格局部比对段上达到 100% identity，但完整序列不同；精确新颖不等于家族独立性。
 
-Under the frozen 70/80 component predicate:
+47 条并入已有组分的候选中，34 条进入测试组分、8 条进入训练组分、5 条进入验证组分。8 条噬菌体相关序列中，4 条并入已有组分、4 条形成新组分。若合并用于正式数据，需要重新聚类和划分，不能沿用原有评价基准。
 
-- 45 candidate clusters form.
-- 12 clusters (47 candidates) join 12 existing components; 33 new components
-  (48 candidates) are added.
-- There are no bridges between existing components and no component merges.
-- Component count goes from 142 to 175 (+33).
-- The 33 new components contain two 6-member clusters, five pairs and 26
-  singletons; only 7 contain more than one candidate.
+以 WT 和 Q5NHR1 结构域映射关键残基，自检均恢复 12/12。排除已知 H236/E238 差异位点后，51 条保留 11/11，24 条保留 10/11，8 条保留 9/11，12 条少于 9/11；共 26 个关键残基位置未映射。R249、E254、H15、G234 分别在 95、93、92、91 条中恢复；D307 在 66 条中恢复，另有 22 条为 Ser；非保守 E238 位点在 49 条中匹配。
 
-Split integrity is the decisive constraint. Of the 47 candidates that join an
-existing component, 34 would join a **test** component, 8 a training
-component and 5 a validation component under the frozen assignments. Six
-candidates are 100% identical to a family sequence over the qualifying
-aligned span while differing elsewhere (usually outside that span), so
-exact-sequence novelty is not family-level novelty. Adding the 95 would
-require re-clustering and re-splitting the frozen population and would
-change test/validation membership, invalidating the current evaluation
-baseline.
+## 解释限制与后续条件
 
-Anchor conservation was mapped through the WT and Q5NHR1 reference domains.
-Self-checks map 12/12 anchors for both references. Excluding the
-non-conserved anchor 6, 51 candidates retain 11/11 anchors, 24 retain 10/11,
-8 retain 9/11 and 12 retain fewer than 9/11; 26 anchor positions are
-unmapped. Per-position matches are high for R249 (95/95), E254 (93/95), H15
-(92/95) and G234 (91/95), lower for D307 (66/95, with 22 Ser substitutions)
-and E238 (49/95, expected because WT is H236 at this position). Anchor
-recovery degrades with sequence distance and is not functional evidence.
+本次配体结构是产物或金属状态参照，不提供候选自身的 NMN+ATP 或 ADPR 底物三元复合物几何。距离和关键残基恢复只支持结构相容性假设，催化方向与净产量仍为 UNKNOWN。证据层级遵循 `../../docs/RESEARCH_PLAN.md`。
 
-**Conclusion for the data question:** the 95 expand the operational
-sequence-component graph, but not the *validated* family distribution:
-they add no experimental structure, no measured activity, no reviewed
-annotation, and no functionally characterised member; most new components
-are singletons, and a quarter of the candidates are near-duplicates. There is
-no clear gain for the net-NAD⁺ objective. **Data expansion is ended for the
-current objective.** The 95 remain a traceable discovery pool only.
+外部计数对应 2026-10-20 的数据库快照。RCSB 检索限于 ≥30% 序列 identity；MMseqs 搜索并非穷尽，未做其他阈值聚类。低 identity（约 35%）下的关键残基对应存在较大不确定性，局部序列比对不能替代结构比对。正式群体的分类学分布尚无汇总表。
 
-## Trusted experimental proxy set
+未来若重新考虑扩充，可依据新的全长双结构域实验结构、实测 NMNAT/Nudix/净 NAD⁺ 数据，或有独立聚类与划分方案的发现群体研究。预测结构可帮助安排优先级，不能替代前两类证据。对现有 3 个 AlphaFold 模型的结构评价、8 条噬菌体相关序列的文献核对、差异更大的同源物结构检索，均需另定任务与预算；这些是可选方向。
 
-Until new evidence arrives, the only trusted full-length experimental
-template set is:
+## 证据文件
 
-| Template | Use | Restriction |
-|---|---|---|
-| 2QJO | NMNAT domain, product-bound NAD proxy | Q55928; use cross-species mapping from Q5NHR1; tag length 2 |
-| 2QJT | Nudix domain, AMP + Mn product/metal proxy | Q5NHR1; tag length 5; no ADPR substrate geometry |
-| 2R5W | alternate state of the same Q5NHR1 sequence | Mg/Cl state, not an independent sequence |
+| 路径 | 内容 |
+|---|---|
+| `audit_summary.json`、`source_hashes.json` | 本地核对、866 个输入文件及语料目录树校验值 |
+| `external/external_summary.json`、`external/discovery_overlap.json` | 外部检索结果与群体重叠 |
+| `external/query_log.json`、`external/source_hashes.json` | 请求状态与响应、派生文件校验值 |
+| `external/homology/homology_summary.json` | 同源分析汇总及限制 |
+| `external/homology/candidate_homology_assessment.csv` | 逐候选 identity、组分、划分邻近与关键残基恢复 |
+| `external/homology/component_expansion.csv`、`external/homology/candidate_candidate_edges.csv` | 组分成员与候选间合格边 |
+| `external/homology/anchor_conservation_by_position.csv` | 两个参考的逐位点恢复与替换计数 |
+| `external/homology/candidate_family_hits_exact.csv.gz` | 用于判断的精确重比对 |
 
-These templates support coordinate hypotheses and residue mapping. They do
-not establish substrate binding, catalysis, catalytic efficiency or net NAD⁺
-production. The ligand-distance results are geometry checks, not activity
-predictions.
-
-## Incremental discovery pool
-
-`external/incremental_uniprot_candidates.csv` contains the 95 sequences absent
-from the frozen population by exact SHA256. It is a **discovery pool**, not a
-new training set:
-
-- No experimental structure and no measured activity for any of the 95.
-- Only 5 of the 95 were queried for AlphaFold metadata (3 models, 2 without a
-  model); the other 90 were not queried. AlphaFold models are predictions.
-- Exact-sequence novelty is not independence. Under the 70/80 component
-  predicate the 95 form 45 clusters, 47 join existing components and 48 fall
-  into 33 mostly singleton new components. 26 are ≥90% identical to a
-  frozen sequence over the qualifying span and 6 are 100% locally identical.
-  They must not be counted as 95 independent family additions.
-- The 8 phage-associated sequences are the most relevant to the KVP40 phage
-  context, but relevance is not evidence of NatV function or improved NAD⁺
-  yield; 4 join existing components and 4 form new components.
-
-Recommended handling: retain the CSV, the homology assessment and their
-hashes as a discovery artifact; do not assign roles, do not merge into
-training/validation/test, and do not use the sequences as templates without
-an experimental or carefully qualified predicted-structure assessment.
-Further sequence-only expansion is not planned for the current objective.
-
-## Conditions that would justify a future dataset update
-
-A future update should be a separate, pre-registered change with its own
-scope and budget. At minimum it needs one of:
-
-1. A new experimental full-length dual-domain NatV structure outside the
-   frozen corpus, with UniProt/construct/observed-coordinate correspondence
-   audited as in this work and its ligand state identified.
-2. New experimentally measured NMNAT/Nudix/net-NAD⁺ data that defines a
-   phenotype or assay endpoint, not a model score.
-3. A deliberate discovery-only release that adds sequences with provenance,
-   redundancy clustering, split-integrity checks and explicit separation from
-   the formal training population.
-
-Predicted structures may support prioritization, but they cannot satisfy
-condition 1 or 2 by themselves.
-
-The 95-sequence analysis does not satisfy condition 3 either. Provenance is
-present, but the redundancy and split-integrity checks show that a naive
-discovery-only merge would change test/validation membership (34 of the 47
-component-joining candidates would join test components) and would import 26
-near-duplicates. A future discovery release would need its own clustering and
-split policy before it could be used, and it would still carry no activity
-labels.
-
-## Scientific gain and limits
-
-The gain is a corrected, reproducible correspondence audit, a bounded
-negative discovery result and a quantified homology-increment result:
-
-- the 12-anchor table is now tied to the correct Q5NHR1/2QJT auth numbering,
-  with an explicit cross-species route for 2QJO and an explicit E238/K236
-  caveat;
-- the corpus is shown to contain only two unique full-length experimental
-  sequences (three entities/states), not three independent sequences;
-- external RCSB discovery finds no new qualifying full-length experimental
-  structure at the declared search threshold;
-- 95 exact-sequence-novel UniProt candidates (8 phage-associated) are retained
-  as a traceable discovery pool;
-- under the frozen 70/80 predicate the 95 add 33 operational components
-  (142→175; 47 candidates join existing components, 48 form new ones), with
-  no bridges or merges; the added components are mostly singletons and the
-  set includes near-duplicates, so this is sequence-level rather than
-  validated functional expansion;
-- anchor conservation is quantified against both references, with self-checks
-  at 12/12 and a large drop at the non-conserved E238/H236 site, so anchor
-  loss can be separated from the known reference difference.
-
-The limits are equally important: no new catalytic measurement, no new
-experimental template, no reviewed functional annotation for any of the 95,
-no structural assessment of their predicted models, and no taxonomic table
-for the frozen population. Anchor mapping at ~35% identity is near the
-twilight zone; MMseqs search is not exhaustive. These limits are why the
-formal dataset is not updated.
-
-## Recommended next actions (not executed)
-
-1. Sequence-only expansion is closed for the current objective. If a future
-   discovery release is considered, first run a bounded structural assessment
-   of the 3 available AlphaFold models and optionally fetch models for the 90
-   unqueried candidates. Report confidence, domain arrangement and anchor
-   geometry as predictions, with a separate clustering/split policy.
-2. For the 8 phage-associated new sequences, search experimental structures
-   and literature explicitly; a phage context alone is not a functional
-   annotation.
-3. If the negative RCSB result needs to be strengthened, run a
-   structure-based search for divergent homologs (fold/structural alignment),
-   not only a ≥30% sequence-identity search.
-4. Keep 2QJO/2QJT/2R5W as the experimental template set, with the E238/K236
-   and construct-numbering caveats, until new experimental evidence exists.
-
-## Non-actions in this round
-
-- No model training, sequence generation, folding or wet-lab execution.
-- No writes to `/home/yhshy/git_files/nad_qvae`; it remains read-only.
-- No change to `main`, the formal population, splits, contracts or WT hash.
-- No new external query for the homology analysis; it uses the local frozen
-  family sequences and the 95 already-fetched candidate sequences.
-- The audit and homology outputs are committed only on
-  `research/natv-pairing-audit`; nothing is merged to `main`.
-
-## Verification artifacts
-
-- `audit_summary.json` — local audit counts and limitations.
-- `source_hashes.json` — 866 pinned input files; corpus tree SHA256
-  `ef61977a312de176cce875f6e7c2774a830d3b45a70eb2397db30b3b2eb1b8c6`.
-- `external/external_summary.json` — external counts and `negative_result`.
-- `external/discovery_overlap.json` — population overlap and new-candidate
-  counts.
-- `external/homology/homology_summary.json` — nearest-neighbour,
-  component-expansion and anchor-conservation results, with limitations.
-- `external/homology/candidate_homology_assessment.csv` — per-candidate
-  identity, component membership, split proximity and anchor recovery.
-- `external/homology/component_expansion.csv` — cluster membership and
-  existing-component joins.
-- `external/homology/anchor_conservation_by_position.csv` — per-anchor
-  substitution counts for both references.
-- `external/query_log.json` — HTTP status/size/hash for every external request.
-- `hashes.json` — SHA256 manifest of the committed discovery output tree;
-  regenerable MMseqs raw output under `external/homology/raw/` is excluded and
-  documented in the discovery README.
-
-All structural statements above are conditional coordinate/annotation
-evidence, not catalytic measurements.
+复现方法与完整文件入口见 `README.md`。

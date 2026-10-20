@@ -1,12 +1,12 @@
-# Contributor instructions
+# 贡献与执行边界
 
-Work toward **KVP40 NatV-derived enzymes with higher experimentally measured net NAD⁺ production**. Treat QVAE, SE, structural models and evaluation metrics as competing tools, not mandatory features.
-
-1. **Evidence before implementation.** Read `README.md`, `docs/RESEARCH_PLAN.md`, `docs/DATA_PROVENANCE.md` and the files relevant to the task. Distinguish completed runs, published experiments, hypotheses and unexecuted proposals. No model-based score is catalytic activity.
-2. **Preserve source boundaries.** `nad_qvae` is an external, read-only source of research assets and history. Never modify it, write through linked inputs, silently broaden the NatV training population, or migrate its entire runner/archive tree. Verify source paths/hashes before use.
-3. **One current implementation, not a runner per experiment.** Add a reusable module only when a real experiment needs it; put run-specific inputs, logs, manifests, figures and negative results under its run directory. Keep contract filenames unversioned unless a real compatibility boundary requires a new version. Avoid duplicate schemas, generic registries, compatibility shims, placeholder stages or mechanical testing gates.
-4. **Research comparators must be fair.** Bind split and retrieval population, model/checkpoint/source version, sampling mode, seed, attempt count and evaluation information budget. Keep failures and duplicates in denominators. Separate latent effects from capacity, mask policy and compute; do not use selector-derived scores as independent judges.
-5. **Do not turn hypotheses into bans.** `contracts/regions.json` applies to the present **WT-relative substitution pilot**, not every future QVAE family sampler. A/B/C are proposal intents, not a requirement to train three architectures. Unmeasured constraints remain UNKNOWN, never PASS.
-6. **Execution boundary.** Discussion, review and code implementation do not authorise model training, remote downloads, sequence generation, folding, wet-lab work or irreversible asset changes. An execution request must specify scope and budget. Preserve historical negative evidence and work on a branch/PR; do not force-push, rewrite main or merge without approval.
-
-A deliverable is complete only when the actual code/data or scientific result is accessible, reproducible within its declared inputs, and its limitations are stated. Additional files and tests alone are not progress.
+1. **先读证据。** 修改前读 `README.md`、`docs/RESEARCH_PLAN.md`、`docs/DATA_PROVENANCE.md` 及任务相关文件，区分已完成运行、已发表实验、假设与未执行提议；研究判断遵循研究计划。
+2. **来源只读。** `nad_qvae` 是外部研究资产与历史来源；不得修改、通过链接写入、擅自扩大 NatV 训练群体或整体迁入其运行与归档目录。使用前核对来源路径和校验值。
+3. **维护一套实现。** 真实实验需要时才添加可复用模块；单次输入、日志、清单、图和负结果放在运行目录。合同文件名不带版本，除非存在真实兼容边界；不建重复 schema、通用注册表、兼容垫片、占位阶段或机械测试关卡。
+4. **记录可复现运行。** 绑定 Git revision、输入与 checkpoint 校验值、训练与检索群体、采样方式、评价定义、随机种子、尝试次数和实际成本；保留失败与重复。公平比较标准见 `docs/RESEARCH_PLAN.md`。
+5. **遵守执行边界。** 讨论、审阅和代码实现不授权训练、远程下载、序列生成、折叠、湿实验或不可逆资产变更；执行请求须给出范围与预算。保留历史负结果，在分支或 PR 上工作；未经批准不得 force-push、重写 main 或合并。
+6. **按归属写文档。** README 负责目标、路线、目录、安装与检查；`docs/RESEARCH_PLAN.md` 负责研究判断与文献；`docs/DATA_PROVENANCE.md` 负责输入含义与来源边界；`docs/NATV_PAIRING_AUDIT.md` 是序列—构建体—坐标—同源关系核对入口；运行报告与 discovery 决策记录负责该次证据和限制；本文件负责贡献与执行边界。一条信息只写在归属文档，其他位置给路径。
+7. **只留有用内容。** 保留影响研究判断或下一步操作的事实、分析和证据；同一限制只写一处。不写惯例性免责声明、操作播报、修订说明或“本次未做 X”；不堆标题、嵌套列表、固定模板或结尾复述，不添无信息量的限定句。
+8. **使用清楚的中文。** 正文用中文，方法与专名保留英文；不用互联网、软件工程、咨询行话或私设名词。文献只取可核实来源，不把摘要扩展成新的机制主张。提交信息正文说明改动本身。
+9. **控制篇幅。** README 约 60 行、研究计划约 150 行、本文件不超过 12 条；超出先检查冗余和职责错位。编号与版本号仅用于真实兼容边界，历史实验名称和来源字段保留原名。
+10. **交付实际结果。** 代码、数据或科学结果须可访问、可在声明的输入下复现，并说明限制；增加文件和测试本身不算研究进展。
