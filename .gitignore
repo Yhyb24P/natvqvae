@@ -1,0 +1,10 @@
+runs/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+# read-only symlinks into the source repository are generated, not tracked
+inputs/data/

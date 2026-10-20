@@ -1,0 +1,71 @@
+{
+  "manifest_version": "natvqvae-inputs-v1",
+  "created": "2026-10-20",
+  "source_root_default": "/home/yhshy/git_files/nad_qvae",
+  "source_root_env_override": "NATV_SOURCE_ROOT",
+  "policy": {
+    "read_only": true,
+    "copy_large_files": false,
+    "fail_closed_on_hash_mismatch": true
+  },
+  "entries": [
+    {
+      "name": "wt_target_contract",
+      "path": "config/natv/target_contract.yaml",
+      "sha256": "3607e893fbeb9f5bde4a914c640aad10f001423a75b3940ce870f18e7cc2f864",
+      "role": "canonical 341-aa WT sequence, numbering, construct metadata",
+      "link": "wt_target_contract.yaml",
+      "notes": "sequence inside must hash to 8804bca1... (checked by natvqvae.sequence)"
+    },
+    {
+      "name": "family_population",
+      "path": "data/processed/releases/natv_vnext_family_v2/population.fasta",
+      "sha256": "d8bbc6125e5efc94c73c2f2fb231344092ec06a63bbe9f8b398ba2fa88d726f5",
+      "role": "NatV/NadM family sequences used for evolutionary evidence",
+      "link": "family_population.fasta",
+      "expected_records": 2430
+    },
+    {
+      "name": "domain_pocket_map",
+      "path": "experiments/run_reports/natv_round1_panel_refold_qc_v1/revised_panel/domain_pocket_map.json",
+      "sha256": "5d016646f146e5b1619cdee58a6442b097c79fc4c69ca32b2b1d4a71e4452bec",
+      "role": "CDD-derived domain intervals, template contexts, 12 functional anchors",
+      "link": "domain_pocket_map.json"
+    },
+    {
+      "name": "hmm_pf01467",
+      "path": "data/reference/domain_profiles_v1/PF01467.hmm",
+      "sha256": "3055836d6ce3009a9d7f976acddda55cd10f79a29937e8fb442b9a99b1994f73",
+      "role": "NMNAT-like domain profile",
+      "link": "PF01467.hmm"
+    },
+    {
+      "name": "hmm_pf00293",
+      "path": "data/reference/domain_profiles_v1/PF00293.hmm",
+      "sha256": "4a00411798c912ea708bc0e06a3ae61e03929767ddbebc08483a8cfacb201dc1",
+      "role": "Nudix domain profile",
+      "link": "PF00293.hmm"
+    },
+    {
+      "name": "template_2qjo",
+      "path": "data/experimental_structures/2QJO.pdb",
+      "sha256": "4b711bba053b5ccc449501c1ae3aa841249300f930fd86adfa52fc4bbf256e3e",
+      "role": "NMNAT domain experimental template with NAD/proxy ligand",
+      "link": "2QJO.pdb"
+    },
+    {
+      "name": "template_2qjt",
+      "path": "data/experimental_structures/2qjt.pdb",
+      "sha256": "dfa21accb0c6f4c9abe2062b50d7f99f58586c240f2482f1ffb19f2595b993cb",
+      "role": "Nudix domain experimental template with AMP and Mn",
+      "link": "2qjt.pdb"
+    },
+    {
+      "name": "genome_ay283928",
+      "path": "data/reference/natv_literature_2017/genbank/AY283928.2.gb",
+      "sha256": "dfa4baaf8fec72c6fcc3f701ad231e60a39388bc09380a4c4327a5255db1349d",
+      "role": "public KVP40 genome; CDS162 nucleotide provenance",
+      "link": "AY283928.2.gb"
+    }
+  ]
+}

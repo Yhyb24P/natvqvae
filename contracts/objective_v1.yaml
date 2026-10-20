@@ -1,0 +1,83 @@
+schema_version: natvqvae-objective-v1
+status: frozen_for_v0_skeleton
+scope: in_vitro_purified_enzyme
+
+objective:
+  statement: >-
+    Starting from the 341-aa KVP40 NatV, design sequences that increase net NAD+
+    accumulation in a defined in vitro reaction, while retaining competent NMNAT
+    catalysis.
+  functional_form: "J(theta) = ([NAD+]_theta(T) - [NAD+](0)) / E_{theta,0}"
+  experimental_only: true
+  note: >-
+    J is not predicted by any model in this repository. Computational work can only
+    produce candidates with a stated mechanistic hypothesis.
+
+reactions:
+  nmnat:
+    equation: "NMN + ATP <=> NAD+ + PPi"
+    requirement: must_remain_catalytically_competent
+    mg_dependent: true
+  nudix:
+    equation: "NAD+ + H2O -> NMN + AMP"
+    requirement: may_be_attenuated_or_lost
+  constraint: >-
+    Nudix attenuation does not authorize domain deletion. The Nudix region
+    contributes to oligomerization and interdomain organization; every candidate
+    must keep a present and folded Nudix domain.
+
+required_reporting:
+  - nad_formation_initial_rate
+  - substrate_conversion
+  - enzyme_stability
+  - atp_consumption
+  - nudix_hydrolysis_rate
+  - net_nad_accumulation
+
+separate_metrics:
+  nmnat: [kcat, Km_NMN, Km_ATP, kcat_over_Km_NMN, kcat_over_Km_ATP]
+  nudix: [nad_hydrolysis_rate]
+  interpretation_rule: >-
+    Increased net accumulation must not be attributed to improved synthesis when it
+    can be explained by reduced hydrolysis. Report both channels.
+
+design_classes:
+  A:
+    intent: improve_nmnat_synthesis
+    editable_regions: [NMNAT]
+    protected: [nudix_catalytic_anchors]
+    hypothesis_required: true
+  B:
+    intent: reduce_nad_hydrolysis
+    editable_regions: [NUDIX]
+    priority_sites: nudix_catalytic_anchors
+    protected: [NMNAT]
+    hypothesis_required: true
+  C:
+    intent: joint
+    editable_regions: [NMNAT, NUDIX]
+    constraints: [class_A_constraints, class_B_constraints]
+    hypothesis_required: true
+
+hard_constraints:
+  - full_length_341_aa
+  - substitutions_only
+  - both_domains_present_and_folded
+  - interdomain_organization_preserved
+  - no_domain_deletion_or_truncation
+  - no_S2_or_T135A_background
+
+non_goals:
+  - predict_kcat_or_kcat_over_Km
+  - map_docking_score_plddt_or_ltopo_to_catalytic_efficiency
+  - model_cellular_metabolism_or_nad_salvage_network
+  - claim_activity_for_computational_candidates
+
+future_controls:
+  required_experimental_pair:
+    - KVP40_WT
+    - nudix_catalytic_dead_but_structurally_intact
+  purpose: >-
+    Quantify how much net NAD+ gain is attributable to reduced hydrolysis, and
+    decide whether joint (class C) optimization is necessary.
+  status: not_yet_measured

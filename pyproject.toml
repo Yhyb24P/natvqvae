@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "natvqvae"
+version = "0.0.1"
+description = "Computational design of KVP40 NatV variants for net NAD+ synthesis"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+# reserved for later phases; intentionally not installed by default
+science = ["numpy>=1.26", "pandas>=2.1", "biopython>=1.83"]
+
+[project.scripts]
+natvqvae = "natvqvae.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

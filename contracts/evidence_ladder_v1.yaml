@@ -1,0 +1,78 @@
+schema_version: natvqvae-evidence-ladder-v1
+status: rules_only_no_run_authorized
+no_composite_score: true
+
+principle: >-
+  Evidence is reported as an ordered ladder of hard gates followed by a vector of
+  descriptive channels. No weighted sum, no single ranking score.
+
+gates:
+  - id: G1_sequence
+    checks:
+      - length_equals_341
+      - substitutions_only
+      - region_compliance_for_declared_class
+      - not_S2_or_T135A_background
+    failure: reject
+  - id: G2_fold
+    checks:
+      - heavy_atom_completeness
+      - no_backbone_geometry_anomaly
+      - no_nonlocal_clash_below_threshold
+      - mean_plddt_at_least_threshold
+      - ptm_at_least_threshold
+    failure: reject
+  - id: G3_domain_organization
+    checks:
+      - both_domains_folded
+      - interdomain_contact_count_not_below_wt_fraction
+      - no_domain_collapse_or_swap
+    failure: reject
+  - id: G4_catalytic_geometry
+    checks:
+      - class_A_or_C: nmnat_anchor_distances_to_nad_proxy_within_tolerance
+      - class_B_or_C: nudix_catalytic_center_disrupted_with_fold_preserved
+      - n_domain_presence_required_in_all_classes
+    failure: reject
+  - id: G5_descriptive
+    checks:
+      - plm_masked_marginal_log_odds
+      - family_position_support
+      - novelty_vs_wt_and_panel
+    failure: report_only
+
+interpretation_rules:
+  - plddt_is_not_activity
+  - docking_score_is_not_activity
+  - interdomain_contacts_are_not_activity
+  - nudix_disruption_must_not_be_called_net_gain_without_measured_hydrolysis
+  - a_candidate_passing_all_gates_is_a_hypothesis_not_a_validated_enzyme
+
+reporting:
+  per_candidate:
+    - declared_class
+    - edits_with_positions_and_residues
+    - gate_status_per_gate
+    - geometric_measurements_with_uncertainty
+    - descriptive_channels
+  panel_level:
+    - class_balance
+    - wt_and_control_inclusion
+    - no_ranking_by_composite
+
+controls_required_before_any_candidate_panel:
+  required:
+    - KVP40_WT
+    - nudix_catalytic_dead_but_structurally_intact_design
+    - nmnat_catalytic_dead_negative
+    - nudix_domain_deleted_negative_must_be_rejected
+    - scrambled_nudix_negative_must_be_rejected
+  rationale: >-
+    The funnel must first separate these controls. If it cannot, it is not ready to
+    rank candidates.
+
+thresholds:
+  status: to_be_frozen_before_first_screening_run
+  note: >-
+    pLDDT, pTM, clash and interface-fraction thresholds must be fixed in a separate
+    run contract, not tuned after seeing candidate results.
