@@ -215,14 +215,28 @@ python experiments/natv_generation_structural/run_generation.py --stage evaluate
 
 ## Files
 
-- `sampling_manifest.json`, `pre_sampling_freeze.json`, `preflight_report.json`,
-  `input_manifest.json`, `post_sampling_amendment.json`, `job_status.json`
-- `proposals.csv`, `sampling_trace.jsonl.gz`, `retrieval_receipts.json.gz`,
-  `retrieval_hits_summary.csv`
-- `evaluation/CDD_domains.csv`, `evaluation/CDD_pair_summary.csv`,
+Retained primary evidence:
+
+- Freeze and provenance: `sampling_manifest.json`, `pre_sampling_freeze.json`,
+  `preflight_report.json`, `input_manifest.json`, `post_sampling_amendment.json`.
+- Sampling: `proposals.csv`, `sampling_trace.jsonl.gz`,
+  `retrieval_receipts.json.gz`, `retrieval_hits_summary.csv`.
+- Evaluation: `evaluation/CDD_domains.csv`,
   `evaluation/internal_PLM_scores.csv`, `evaluation/CDD_reproduction_check.csv`,
-  `evaluation/evaluation_receipt.json`
-- `structural_analysis/candidate_level.csv`, `substitution_level.csv`,
-  `anchor_summary.csv`, `domain_summary.csv`, `arm_summary.csv`,
-  `direct_anchor_candidates.csv`, `structural_interpretation.json`
-- Raw MMseqs outputs under `retrieval/` are local-only and git-ignored.
+  `evaluation/evaluation_receipt.json`.
+- Annotation: `structural_analysis/structural_interpretation.json`.
+
+`retrieval_hits_summary.csv` is retained because
+`post_sampling_amendment.json` hashes it as a frozen sampling artifact.
+
+The evaluation stage also generates `job_status.json`,
+`evaluation/CDD_queries.fasta`, `evaluation/CDD_pair_summary.csv` and the
+per-candidate/per-anchor tables (`structural_analysis/candidate_level.csv`,
+`substitution_level.csv`, `anchor_summary.csv`, `domain_summary.csv`,
+`arm_summary.csv`, `direct_anchor_candidates.csv`). These are derived,
+regenerable tables and were removed from git in the post-run curation commit;
+the counts and direct-anchor records remain in
+`structural_analysis/structural_interpretation.json` and this report. Raw
+MMseqs outputs under `retrieval/` and raw `CDD.asn1`/`CDD.tsv`/`CDD.log` were
+local-only and were removed after the run; rerunning `sample` and `evaluate`
+regenerates them from the declared inputs.
