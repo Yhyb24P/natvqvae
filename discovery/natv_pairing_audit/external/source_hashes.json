@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-10-20T06:04:01.175960+00:00",
+ "generated_at_utc": "2026-10-20T06:05:59.650851+00:00",
  "excluded": [
   "external/homology/raw/*.m8 and MMseqs temp output (regenerable, not committed)"
  ],
@@ -466,8 +466,8 @@
   },
   {
    "path": "source_hashes.json",
-   "size_bytes": 15418,
-   "sha256": "8a21bafa11fa4d708055d30146c0f8370be10c11d38e421a7cf291d65a11630a"
+   "size_bytes": 15578,
+   "sha256": "ad69c8bcd130a02e310bf06bf60ee461c9e2eb795daf7d870213de0a2b6f20f9"
   },
   {
    "path": "uniprot_candidates.csv",

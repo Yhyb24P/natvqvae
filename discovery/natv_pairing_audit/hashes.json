@@ -1,16 +1,16 @@
 {
- "generated_at_utc": "2026-10-20T06:04:01.185112+00:00",
+ "generated_at_utc": "2026-10-20T06:05:59.660531+00:00",
  "root": "/home/yhshy/git_files/natvqvae/discovery/natv_pairing_audit",
- "file_count": 115,
- "tree_sha256": "d5dfce211767c32a19adf7bd0b5d4dc75f9d01154eba53a89aef80a63d7a2a18",
+ "file_count": 117,
+ "tree_sha256": "f44ba469438fb18186496968b6f18933b584bd4af0123ad738fcce74d9696b10",
  "excluded": [
   "external/homology/raw/*.m8 and MMseqs temp output (regenerable, not committed)"
  ],
  "files": [
   {
    "path": "README.md",
-   "size_bytes": 16894,
-   "sha256": "a4bc4830bb43b2f21d3e63ec30d857dd8a685b2c0cb66b2cc090124d9c7e8e91"
+   "size_bytes": 17933,
+   "sha256": "3984787698e0b77fc804d53b3f501f36ec8f800f89470f4771ae66ca00b752b2"
   },
   {
    "path": "active_g_registry.csv",
@@ -36,6 +36,11 @@
    "path": "build_local_audit.py",
    "size_bytes": 49493,
    "sha256": "3b6107a73e1dd47357fc78a10c9cc04d17e2807b32878ce9bc86a05f3f1d9019"
+  },
+  {
+   "path": "build_structural_basis.py",
+   "size_bytes": 14005,
+   "sha256": "46584cd493acd86c441f3fba5136ec14c543ee3e547e631e8ab777bc72e1db6a"
   },
   {
    "path": "construct_observed_audit.csv",
@@ -520,7 +525,7 @@
   {
    "path": "external/source_hashes.json",
    "size_bytes": 15578,
-   "sha256": "ad69c8bcd130a02e310bf06bf60ee461c9e2eb795daf7d870213de0a2b6f20f9"
+   "sha256": "097c04e85b8a13994585dd9c9af13a52a880423114d89b8d185860095a7e4e57"
   },
   {
    "path": "external/uniprot_candidates.csv",
@@ -571,6 +576,11 @@
    "path": "source_hashes.json",
    "size_bytes": 350004,
    "sha256": "ad746e645092c1a5e68640a6884897fb84ebebca52497a1de656a3e24060644f"
+  },
+  {
+   "path": "structural_interpretation_basis.json",
+   "size_bytes": 16336,
+   "sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7"
   },
   {
    "path": "structure_registry.csv",

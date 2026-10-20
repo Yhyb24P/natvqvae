@@ -237,6 +237,20 @@ singletons and a quarter of the candidates are near-duplicates. Data
 expansion is therefore ended for the current objective. The 95 stay a
 discovery pool.
 
+### 6. Structural interpretation basis
+
+`build_structural_basis.py` consolidates the audited WT/Q5NHR1 references,
+three experimental templates, construct offsets, chain-specific observed
+gaps, ligand states, 12 anchors and the three mapping routes into
+`structural_interpretation_basis.json`.
+
+The JSON is intended for annotating generated candidates: map substitutions
+to template positions, identify anchor hits, and describe NMNAT-environment
+compatibility or Nudix risk as hypotheses. It is **not** a training input,
+activity label or candidate selector, and `formal_input_manifest` is `false`.
+It should be added to `inputs/manifest.json` only when a real training or
+evaluation run consumes it, with that run's own provenance record.
+
 ## Files
 
 | Path | Content |
@@ -245,6 +259,8 @@ discovery pool.
 | `query_external.py` | bounded external query implementation |
 | `summarize_external.py` | overlap/new-candidate summarization |
 | `analyze_incremental_homology.py` | 70/80 component and anchor analysis of the 95 candidates |
+| `build_structural_basis.py` | builds the machine-readable structural interpretation basis |
+| `structural_interpretation_basis.json` | trusted domains, templates, offsets, anchors and evidence boundaries for evaluation |
 | `sequence_registry.csv` | WT, family, PDB-entity and template sequences with hashes/roles |
 | `structure_registry.csv` | 285-PDB corpus metadata and ligand inventory |
 | `dual_domain_scan.csv` | 308-entity dual-domain screen |
@@ -294,6 +310,7 @@ no_proxy=search.rcsb.org,data.rcsb.org,files.rcsb.org,rest.uniprot.org,alphafold
 /home/yhshy/miniconda3/envs/nad_data/bin/python query_external.py
 /home/yhshy/miniconda3/envs/nad_data/bin/python summarize_external.py
 /home/yhshy/miniconda3/envs/nad_data/bin/python analyze_incremental_homology.py
+/home/yhshy/miniconda3/envs/nad_data/bin/python build_structural_basis.py
 ```
 
 The homology step requires MMseqs2 and Biopython in the same environment
