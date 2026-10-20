@@ -1,0 +1,212 @@
+{
+ "authorization": "read-only event qualification authorized by the owner 2026-10-18; generation and folding flags stay false",
+ "date": "2026-10-18",
+ "evidence_bound": "component support and scoring stability are comparison properties of the frozen alignments, not independent evolutionary events; nothing here is an InDel rate and nothing here licenses generation",
+ "ladder": {
+  "anchor_quality": {
+   "ANCHORS_CONSERVED": 21,
+   "ANCHORS_VARIABLE": 142
+  },
+  "anchor_quality_cross_short": {
+   "ANCHORS_CONSERVED | length<=6=False": 2,
+   "ANCHORS_CONSERVED | length<=6=True": 19,
+   "ANCHORS_VARIABLE | length<=6=False": 31,
+   "ANCHORS_VARIABLE | length<=6=True": 111
+  },
+  "anchor_quality_cross_ss": {
+   "ANCHORS_CONSERVED | HELX_P": 14,
+   "ANCHORS_CONSERVED | NO_ELEMENT_AT_ANCHOR": 7,
+   "ANCHORS_VARIABLE | HELX_P": 85,
+   "ANCHORS_VARIABLE | NO_ELEMENT_AT_ANCHOR": 57
+  },
+  "in_pocket_cross_anchor_quality": {
+   "in_pocket=False | ANCHORS_CONSERVED": 16,
+   "in_pocket=False | ANCHORS_VARIABLE": 81,
+   "in_pocket=True | ANCHORS_CONSERVED": 5,
+   "in_pocket=True | ANCHORS_VARIABLE": 61
+  },
+  "inside_a_frozen_g0_pocket_neighbourhood": 66,
+  "lengths": {
+   "1": 44,
+   "2": 25,
+   "3": 17,
+   "4": 23,
+   "5": 10,
+   "6": 11,
+   "7": 7,
+   "8": 3,
+   "9": 5,
+   "10": 5,
+   "11": 3,
+   "12": 3,
+   "13": 2,
+   "14": 1,
+   "15": 1,
+   "17": 1,
+   "20": 1,
+   "24": 1
+  },
+  "multi_component_definitions": 242,
+  "regions": {
+   "NMNAT": 137,
+   "Nudix": 15,
+   "interdomain_or_termini": 11
+  },
+  "secondary_structure_class_of_the_homolog_at_anchor": {
+   "HELX_P": 99,
+   "NO_ELEMENT_AT_ANCHOR": 64
+  },
+  "stable_across_scoring": 163
+ },
+ "population": {
+  "components": 47,
+  "core_train_sequences": 1644,
+  "declared_scheme": {
+   "extend_gap": -0.5,
+   "matrix": "BLOSUM62",
+   "open_gap": -10.0
+  },
+  "msa_pool_sequences": 1638,
+  "perturbation_scheme": {
+   "extend_gap": -0.8,
+   "matrix": "BLOSUM45",
+   "open_gap": -12.0
+  }
+ },
+ "qualified_candidates": {
+  "count": 8,
+  "rows": [
+   {
+    "anchor_flank_gap_free_fraction": 1.0,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 181,
+    "components_shared_with_perturbation": 9,
+    "components_supporting": 12,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 4,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 414,
+    "type": "DELETE"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 1.0,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 23,
+    "components_shared_with_perturbation": 2,
+    "components_supporting": 6,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 3,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 46,
+    "type": "DELETE"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 1.0,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 55,
+    "components_shared_with_perturbation": 4,
+    "components_supporting": 4,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 1,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 57,
+    "type": "DELETE"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 0.9996947496947497,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 180,
+    "components_shared_with_perturbation": 2,
+    "components_supporting": 4,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 4,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 12,
+    "type": "DELETE"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 0.9995929995929996,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 181,
+    "components_shared_with_perturbation": 2,
+    "components_supporting": 4,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 2,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 6,
+    "type": "INSERT"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 0.9995929995929996,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 181,
+    "components_shared_with_perturbation": 2,
+    "components_supporting": 4,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 1,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 10,
+    "type": "DELETE"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 1.0,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 30,
+    "components_shared_with_perturbation": 3,
+    "components_supporting": 3,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 1,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 6,
+    "type": "INSERT"
+   },
+   {
+    "anchor_flank_gap_free_fraction": 1.0,
+    "anchor_quality": "ANCHORS_CONSERVED",
+    "anchor_wt_1based": 54,
+    "components_shared_with_perturbation": 2,
+    "components_supporting": 3,
+    "in_g0_pocket_neighbourhood": false,
+    "length": 4,
+    "pocket": null,
+    "region": "NMNAT",
+    "ss_class_2QJO": "HELX_P",
+    "stable_across_scoring": true,
+    "supporting_sequences": 3,
+    "type": "INSERT"
+   }
+  ],
+  "rule": "stable across scoring AND conserved flanking columns AND length <= 6 residues AND at least three supporting components"
+ },
+ "reading_rules": {
+  "domain-call or alignment residue": "stable definitions concentrate in variable anchors, long lengths, or the inter-domain region",
+  "insufficient evidence": "an empty qualified set with most definitions unresolved on anchors",
+  "real localized insertion/deletion material": "a non-empty qualified set inside conserved anchors"
+ },
+ "schema": "natv-g1-event-qualification-v1",
+ "secondary_structure_sources": {
+  "2QJO_B": 14,
+  "2QJT_A": 12
+ }
+}

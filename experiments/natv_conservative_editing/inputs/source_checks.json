@@ -1,0 +1,167 @@
+{
+  "source_root": "/home/yhshy/git_files/nad_qvae",
+  "source_revision": "4277b1d1f929236dfd33e21bdd58c48bf19bc490",
+  "mmseqs_version": "18.8cc5c",
+  "files": {
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/sequence_corpus.py": {
+      "sha256": "7e21989f5c9f5970ccee65a84eb2237f88880304c4621e10cc909909172a7e41",
+      "bytes": 13430
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/sequence_generator.py": {
+      "sha256": "8c30bba064f749ea4a10bff106428e0f3910b4c4e4baa2c1f0a0c6aedaec4e88",
+      "bytes": 6190
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/sequence_experiment.py": {
+      "sha256": "a6e70fddd4b95ea6c2a0ef8e9eb7728bae0c6380bf9251d9230cf5456a30d740",
+      "bytes": 42872
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_execution_v1.py": {
+      "sha256": "279e9e0d6348b70dfe295af0a7fb73fd0b5699b63e8d5f9ea01cbdb957d558d6",
+      "bytes": 13802
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_model_v1.py": {
+      "sha256": "c6837516070e4e502dcaf19c8dfacaa2fc822110133b9c0983ffdc32c0378717",
+      "bytes": 8928
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_model.py": {
+      "sha256": "c4524aa1deef9637b7eb897e379f16e3ff5cbcb65f92b28950099c613effab6f",
+      "bytes": 14838
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/natv_model.py": {
+      "sha256": "43cacfd08afae12fcc94da0039500d8a6f5a063810df431950ab44300962faf5",
+      "bytes": 6958
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/formal_training.py": {
+      "sha256": "e5a5072827b6bc4b49f6e6947e7bff8047327e4b684dc910be4bc36309ddeb44",
+      "bytes": 18835
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/formal_training_data.py": {
+      "sha256": "7598f3fe47e361f7daa49fa4966bd086b93912ec9fbb71b04dad92f0f37f23dc",
+      "bytes": 19940
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/multimodal_reader_v1.py": {
+      "sha256": "26a9e97bd0a5c1c666940c3d3cbaf97ae0cb22582fb8f3473200702baaeb5c97",
+      "bytes": 14619
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/multimodal_deterministic_runtime_v2.py": {
+      "sha256": "a82d946da882f228cff623e8c2e45929f15934a1cbb161453871e651478f3f0b",
+      "bytes": 4395
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/core/model.py": {
+      "sha256": "ab2d3f274f6d02a6600cf3f974fb285b5907c5c8aac12be06ea4e90747e0fed5",
+      "bytes": 28660
+    },
+    "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/generation/checkpoint_freeze.json": {
+      "sha256": "a69e8470d4b32fe630337406b1165254a0d874c2e99609572ebc9121fa716bd4",
+      "bytes": 3523
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/g0_benchmark.py": {
+      "sha256": "1484fa3e6c990ac70d81c40f1d392a12111c0559aa93a18b411e32c888e0d533",
+      "bytes": 23404
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/se_full.py": {
+      "sha256": "de7439f20dd0f8ce40be37f15abb8a38b3a213f81a523c6f279d11ffa34b7e3c",
+      "bytes": 22146
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_edits.py": {
+      "sha256": "7ee3d29962978893d570745d7eb0fd29a36249a875c85b04de2ae3dff93179f2",
+      "bytes": 9253
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/vnext_evaluation_contracts.py": {
+      "sha256": "885b36d40d74a787b00fd75189ec33bdd3aa5eeb66415651838d19afcf17454d",
+      "bytes": 7691
+    },
+    "/home/yhshy/git_files/nad_qvae/src/nad_qvae/design/h2_generation_v1.py": {
+      "sha256": "22447218cfc528a6ca03539bc1cae804d830f33bd95a0a550809ec5a7e32b30d",
+      "bytes": 9106
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/core_split_manifest_v2.json": {
+      "sha256": "fb296f6e9127625e293766f75bdbbd12e7700403bbe0796d664a6679527fec4f",
+      "bytes": 162764
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/allowed_samples.parquet": {
+      "sha256": "9d542c27db44e0e4506fc0a4a726a59c58e1ebf2afe65c82e3a169d5e33950dd",
+      "bytes": 390684
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/train_only.fasta": {
+      "sha256": "d00b94e090efa022ac13b5c61d12eb7036a2755ef8b44b4b5dd630df18829ca4",
+      "bytes": 690897
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/input_plan.json": {
+      "sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
+      "bytes": 27424325
+    },
+    "/home/yhshy/git_files/natvqvae/experiments/natv_conservative_editing/inputs/g1_event_qualification.json": {
+      "sha256": "c15e202082f08dc679099314984157cfca1bd1f9c4f59becbf390d1756d70d07",
+      "bytes": 6056
+    },
+    "/home/yhshy/git_files/natvqvae/experiments/natv_conservative_editing/inputs/g1b_event_qualification_source.py": {
+      "sha256": "bf04b112eb3cf189975c59474c63f37549f0d698558ba66b20d35b3d84a2f79d",
+      "bytes": 13232
+    },
+    "/home/yhshy/git_files/nad_qvae/nad_models/esm2/config.json": {
+      "sha256": "539095c22efc52a09d6147074ba4ca119f76a890df5901213b2b55f7d2f96b2b",
+      "bytes": 724
+    },
+    "/home/yhshy/git_files/nad_qvae/nad_models/esm2/model.safetensors": {
+      "sha256": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0",
+      "bytes": 2609506392
+    },
+    "/home/yhshy/git_files/nad_qvae/nad_models/esm2/special_tokens_map.json": {
+      "sha256": "3aedcd4211c0d43aec4e607ff60a63255f3174ead795e997350f09a5f8cd9ee1",
+      "bytes": 125
+    },
+    "/home/yhshy/git_files/nad_qvae/nad_models/esm2/tokenizer_config.json": {
+      "sha256": "7e9161ecdb548ec45a41cbc6b24aa4476fdd418461f491c4207baa99419a29ad",
+      "bytes": 95
+    },
+    "/home/yhshy/git_files/nad_qvae/nad_models/esm2/vocab.txt": {
+      "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+      "bytes": 93
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train": {
+      "sha256": "941b4a6ddadc20b62aba91581f5508790bec0718944210a0a283f5ea7945adfe",
+      "bytes": 584037
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train.dbtype": {
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "bytes": 4
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train.index": {
+      "sha256": "8cb4d213f8742e1ba30066068bcad4c023177ff6546f624b0c4b27505e2ad287",
+      "bytes": 24879
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train.lookup": {
+      "sha256": "e1979a037a12af9b818779801c6344bb0d7b6df9a6461461a101295fd59fc746",
+      "bytes": 117258
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train.source": {
+      "sha256": "250b5111df5aab83ccfe4aa8f9d398b76be22c912ab01410841f07f19da532da",
+      "bytes": 19
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train_h": {
+      "sha256": "76ca48876bc5831b2c302ba217a441d44d030d2840fffda95914c916b1cc4f92",
+      "bytes": 108504
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train_h.dbtype": {
+      "sha256": "42f4aeb81c1ef81f771f3de8abca9dcf66901c575530e7672e4b1146474ae650",
+      "bytes": 4
+    },
+    "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_formal_training_data_v1/retrieval_db/train_h.index": {
+      "sha256": "b8e918fea0bb07528fc70e2e98a139022c5d7235cd044ecc56085e7d5394c415",
+      "bytes": 21863
+    },
+    "/home/yhshy/git_files/natvqvae/src/natvqvae/conservative_editing.py": {
+      "sha256": "5039eec056e4506060bee506f7e92b5026ab18572d1cd96b151e5b4fed2d2ea5",
+      "bytes": 5659
+    },
+    "/home/yhshy/git_files/natvqvae/experiments/natv_conservative_editing/prepare.py": {
+      "sha256": "69a75331e89578923a2aea24ca0424695a1dbd4499f6e95af5c505b7e3f95ea5",
+      "bytes": 6654
+    }
+  },
+  "training_sequences": 1644,
+  "retrieval_records_verified": 1644,
+  "retained_short_events": 5,
+  "git_revision": "97bb51e008cd4f3d02f36dc0a465e79f43a0c3ef"
+}

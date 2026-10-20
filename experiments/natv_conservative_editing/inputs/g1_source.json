@@ -1,0 +1,13 @@
+{
+  "repository": "Yhyb24P/nad_qvae",
+  "commit": "2fcb59e8154e9669b2034a57638acaea8370d1f1",
+  "path": "results/natv_g1_event_qualification_v1/event_qualification.json",
+  "git_blob_sha": "8e234b864c716b60795820967545b541d99f4d67",
+  "sha256": "c15e202082f08dc679099314984157cfca1bd1f9c4f59becbf390d1756d70d07",
+  "bytes": 6056,
+  "qualification_source": {
+    "path": "src/nad_qvae/design/g1b_event_qualification_v1.py",
+    "git_blob_sha": "e1c62ae62f70652be7fe84c295922dde9a237e61",
+    "sha256": "bf04b112eb3cf189975c59474c63f37549f0d698558ba66b20d35b3d84a2f79d"
+  }
+}
