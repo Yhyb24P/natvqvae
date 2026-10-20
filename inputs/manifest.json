@@ -1,5 +1,5 @@
 {
-  "manifest_version": "natvqvae-inputs-v1",
+  "manifest_version": "natvqvae-inputs",
   "created": "2026-10-20",
   "source_root_default": "/home/yhshy/git_files/nad_qvae",
   "source_root_env_override": "NATV_SOURCE_ROOT",
@@ -10,14 +10,6 @@
     "population_reuse_rule": "The 2430-entry family_population FASTA is discovery-only; fitting requires a separately bound 1644-core-train roles split and held-out exclusions."
   },
   "entries": [
-    {
-      "name": "wt_target_contract",
-      "path": "config/natv/target_contract.yaml",
-      "sha256": "3607e893fbeb9f5bde4a914c640aad10f001423a75b3940ce870f18e7cc2f864",
-      "role": "canonical 341-aa WT sequence, numbering, construct metadata",
-      "link": "wt_target_contract.yaml",
-      "notes": "sequence inside must hash to 8804bca1... (checked by natvqvae.sequence)"
-    },
     {
       "name": "family_population",
       "path": "data/processed/releases/natv_vnext_family_v2/population.fasta",

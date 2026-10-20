@@ -1,5 +1,5 @@
 {
-  "schema_version": "natvqvae-regions-v1",
+  "schema_version": "natvqvae-regions",
   "target": {
     "name": "NatV_KVP40",
     "length": 341,
@@ -29,18 +29,6 @@
       "NTERM": [
         1,
         3
-      ]
-    },
-    "working_hypothesis": {
-      "status": "archived_not_used",
-      "source": "legacy target contract, unverified",
-      "NMNAT": [
-        1,
-        180
-      ],
-      "NUDIX": [
-        181,
-        341
       ]
     }
   },

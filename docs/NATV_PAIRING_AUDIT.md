@@ -96,18 +96,16 @@ MMseqs2 提供候选命中，所有会影响结论的命中都做了精确重比
 66/95 条中恢复（其中 22 条为 Ser 替换）。这些只能说明结构上可能相容，
 不是功能证据。
 
-结论是：这次工作只是序列层面的扩充，不是经过验证的功能家族扩充。95 条
+结论是：这些候选只是序列层面的扩充，不是经过验证的功能家族扩充。95 条
 候选都没有实验结构、活性测量或经过审核的注释。针对当前目标，数据扩充
 到此结束；正式序列集、划分和约定都没有改变，这 95 条仍是待研究序列。
 详见
 [`dataset_update_decision.md`](../discovery/natv_pairing_audit/dataset_update_decision.md)。
 
-## 在生成评价中的用途
+## 用途与限制
 
-12 个关键残基的对应关系是
-[`experiments/natv_candidate_sequences/REPORT.md`](../experiments/natv_candidate_sequences/REPORT.md)
-中结构注释的依据。该依据仍是核对阶段产生的文件
-（`formal_input_manifest=false`），没有进入训练、同源检索或候选挑选。
+`structural_interpretation_basis.json` 为候选序列中的关键残基位置提供解释
+依据，不是训练、检索或候选挑选的输入（`formal_input_manifest=false`）。
 落在关键残基上的替换只作为已定位的扰动报告，不给出催化方向。适用范围和
 限制记录在 `structure_analysis/interpretation.json`。
 
@@ -116,7 +114,7 @@ MMseqs2 提供候选命中，所有会影响结论的命中都做了精确重比
 - 2QJO/2QJT 是产物或金属口袋的参照，没有底物三元复合物几何。
 - 关键残基保留和配体邻近不能证明结合、kcat 或净 NAD⁺ 生成。
 - RCSB 检索限制在一致度 ≥30%；差异较大的结构同源物需要另行检索。
-- AlphaFold 模型只是预测，本次没有折叠或评分。
+- AlphaFold 模型只是预测，这份核对没有折叠或评分。
 
 ## 复现与来源
 
@@ -134,5 +132,3 @@ python build_structural_basis.py
 - `external/query_log.json`：每次外部请求、状态和响应校验值。
 - `hashes.json`：117 个已提交核对文件的 SHA256 清单（可重新生成的
   `external/homology/raw/*.m8` 原始输出未计入）。
-
-这份核对本身不包含模型训练、序列生成、折叠或湿实验。

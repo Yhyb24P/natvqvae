@@ -11,7 +11,16 @@ def test_manifest_structure():
     links = [e["link"] for e in manifest["entries"]]
     assert len(names) == len(set(names))
     assert len(links) == len(set(links))
-    assert len(names) >= 8
+    required = {
+        "family_population",
+        "domain_pocket_map",
+        "hmm_pf01467",
+        "hmm_pf00293",
+        "template_2qjo",
+        "template_2qjt",
+        "genome_ay283928",
+    }
+    assert required <= set(names)
     for entry in manifest["entries"]:
         assert len(entry["sha256"]) == 64
 

@@ -13,8 +13,6 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7"]
-# reserved for later phases; intentionally not installed by default
-science = ["numpy>=1.26", "pandas>=2.1", "biopython>=1.83"]
 
 [project.scripts]
 natvqvae = "natvqvae.cli:main"

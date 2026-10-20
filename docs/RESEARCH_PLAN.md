@@ -1,40 +1,154 @@
-# Current NatV research plan
+# NatV 研究计划
 
-**Research object.** KVP40 NatV, an NMNAT–Nudix double-domain enzyme, is the starting scaffold. The application objective is **greater NAD⁺ net accumulation** from NMN and ATP in a specified purified-enzyme system; decreased or absent Nudix NAD⁺ hydrolysis is acceptable. The enzyme must retain NMNAT catalytic competence. This objective supersedes earlier formulations that required preservation of natural dual catalytic function.
+## 研究对象与功能目标
 
-**Evidence boundary.** There is no sufficient NatV variant activity dataset to learn or verify `kcat`, `Km` or net production from sequence. Computation generates *rankable hypotheses* for later experiments. Performance labels must never be invented from pLDDT, ESM CE, docking or geometry. Net production reflects formation, hydrolysis, reverse reactions and assay conditions; improvement must be verified biochemically.
+研究对象是 KVP40 NatV，一个 341 个氨基酸的 NMNAT–Nudix 双结构域酶。野生型身份、结构域范围和关键残基以 `contracts/regions.json` 和 `docs/NATV_PAIRING_AUDIT.md` 为准。其他 NAD 代谢酶不算 NatV 家族成员。
 
-## The research, not a sequence of experiment numbers
+两个反应必须同时考虑：
 
-**Can we learn a useful NatV generative distribution?** Curate target-family sequence identity, ordered domains, homolog redundancy, alignments and held-out populations. Review whether the currently available 1,644 training records/47 redundancy components adequately represent family variation; 2,430 entries in the legacy population file are a discovery population, **not an automatically admissible training set**. External NAD-pathway proteins may help generic pretraining or provide functional comparison, never silently relabel them NatV. Do not treat 47 components as independent evolutionary lineages.
+$$
+\mathrm{NMN} + \mathrm{ATP} \rightleftharpoons \mathrm{NAD^+} + \mathrm{PP_i}
+$$
 
-Study QVAE and no-latent SE under matched source data, sampling effort and evaluation conditions. Distinguish **WT-relative masked editing** (what the old H2 run actually evaluated) from **prior-driven NatV family generation** (not yet shown by the repository). Before committing new fit budgets, verify that the proposed architecture, decoder and training objective can support the chosen generation task. If masked-recovery is the only implemented sampler, report its exact initial sequence and masking policy, or implement a genuinely supported family-sampling procedure rather than rename it de novo. No latent-dimension interpretability study is required to claim practical utility; ensure the prior is used and candidate benefits survive a fair non-latent comparison.
+$$
+\mathrm{NAD^+} + \mathrm{H_2O} \rightarrow \mathrm{NMN} + \mathrm{AMP}
+$$
 
-**Can we propose biochemically distinct designs?** Generate and retain three *design hypotheses*: A seeks stronger NMNAT synthesis while preserving essential catalytic organization; B seeks less Nudix-mediated NAD⁺ hydrolysis without destroying a productive NMNAT scaffold; C jointly explores both. These are analytic categories that can share one generator. For WT-directed substitutions the current 341-residue partition in `contracts/regions_v1.json` provides an initial controlled comparison; it is **not** an evolutionary fact that every useful design must be substitution-only or avoid linker residues. A candidate editing a mapped catalytic residue is a mechanistic hypothesis, not automatically an effective intervention.
+第一个反应是 NMNAT 的合成方向，第二个是 Nudix 的水解方向。单独提高合成速度不一定提高净积累；降低水解也不一定保留可用的合成催化。Nudix 结构域还影响两个结构域的相对组织和整体折叠，“催化减弱”不等于“可以安全删除结构域”。
 
-**Which candidates deserve further attention?** Use an interpretable evaluation sequence:
+功能目标分两层。
 
-- **Sequence evidence:** canonical residues, construct identity, ancestry/novelty, candidate duplicates, edit burden, double-domain annotations, comparison with natural family variation. Conservative-family scores should not automatically reject purposeful Nudix attenuation.
-- **Candidate-specific structures:** local full-length prediction with explicit MSA/template provenance; assess each domain, their relative arrangement and local disruption. WT confidence-based cutoffs cannot be transferred uncritically to altered sequences or across predictors. Record UNKNOWN when not run.
-- **Catalytic-site plausibility:** sequence/structural correspondence to experimental NMNAT/Nudix homolog structures; NMN, ATP and Mg²⁺ environments where a chemically consistent pose is available; perturbation of Nudix NAD⁺ hydrolysis environment. Simple docking energies or loss of hydrogen bonds do not establish a change in reaction rate. Functional directions A/B/C remain hypotheses.
-- **Panel selection:** balanced representation of A/B/C, structural diversity and plausible biochemical mechanisms, including appropriate WT/natural/simpler-generator comparisons. Preserve failed and unscored proposals in overall accounting. A model-derived total score must not be labelled predicted net synthesis.
+**主要终点：** 匹配实验条件下，候选的 NAD⁺ 净积累高于野生型。示例归一化定义：
 
-Each formal generation/evaluation study freezes its available asset identities, sample counts, information budgets, uncertainty reporting and selection method **before seeing comparative results**. Structural prediction tools reusing the same family MSA or homolog template provide correlated evidence, not independent functional ground truth.
+$$
+\Delta[\mathrm{NAD^+}]_{\mathrm{net}} = \frac{[\mathrm{NAD^+}]_T - [\mathrm{NAD^+}]_0}{[\mathrm{E}]_{\mathrm{total}}}
+$$
 
-## Prior evidence that constrains decisions
+实验必须写明浓度、时间和酶量单位，固定酶量、NMN、ATP、Mg²⁺、pH、温度、时间窗口和 PPi 处理方式。归一化净积累是特定条件下的表观量，不等于 $k_{\mathrm{cat}}/K_m$ 或单个催化步骤的速率常数。
 
-- H1: evolution-informed input improved masked recovery in the exposed development comparison; additional graph structure on top of SE showed no decisive gain. SE is an appropriate current comparator, not a proven optimum for net NAD synthesis.
-- H2: five-seed comparisons across no-latent, continuous and categorical architectures generated local KVP40 edits; the reported primary valid/novel/unique yield saturated at 100%. There was no defensible latent-generation advantage **under that task**; a genuinely different generative task remains untested.
-- H3/G0: experimental pocket coordinates and local evaluation experience are valuable; the chemical adapter's generation benefit was not identified and the current implementation remains PARK. No inferred chemistry-specific gain or `kcat` labels are imported.
-- G1-a: 576 zero-fit, 4/8-edit proposals distinguish site-selection policies only on partially self-referential scores; full-length structural evidence was not collected. It is optional baseline evidence, not the generative objective.
-- G1-b: the apparent bimodal linker classes were a domain-annotation artifact; credible transferable short InDels remain unresolved. Do not activate a length-changing generator merely to increase model complexity. Its existing eight flagged definitions are pipeline-dependent screening outputs, not eight proven events.
+**必要条件：** NMNAT 合成能力保留到具有实际应用意义的程度。“可测到活性”只是最低门槛；底物成本、酶投料、反应时间或最终净产量不满足应用要求的变体不算成功。具体阈值待野生型动力学数据确定。
 
-Old results and code stay in the source repository with their existing frozen identities. No blanket copying, blind refitting or reopening of rejected G0 variants.
+允许 Nudix 水解下降甚至丢失，前提是有应用价值的 NMNAT 合成保留。这个取舍是与“保留天然双功能”旧目标的分界。
 
-## Definition of a meaningful computational completion
+目前没有足够的 NatV 变体活性数据来学习或验证 $k_{\mathrm{cat}}$、$K_m$ 或净产量；计算只产生供实验检验的候选假设。pLDDT、ESM2 交叉熵、CDD 命中、对接能量、几何距离和由它们拼成的总分都不能当作活性标签；细胞 NAD⁺ 水平、生长表型等生理终点不能替代纯化体系的净积累。
 
-A completed study provides: the actual generator and matched baseline; reproducible train/validation population and independent source identities; real candidate sequences with sampling receipts; candidate-specific structural and biochemical-context **computational** evidence; uncertainty and negative results; and a diverse, reproducible candidate panel. A good model score or a large FASTA alone does not meet this bar.
+任何结果都要注明证据层级：实测测定、已存放的实验结构、预测结构、家族比对，还是生成模型分数。层级之间不得互相改写。不同工具若共用同一家族的多序列比对或同源模板，只是相关证据，不是独立功能真值。
 
-## Future biochemical validation (not currently authorised)
+## 当前进度定位
 
-Define assay conditions, enzyme normalisation and time window; use direct NAD⁺ quantification and suitable controls. Separately measure (i) NMNAT formation initial rates and, where supported, two-substrate kinetic parameters; (ii) Nudix NAD⁺ hydrolysis; (iii) net NAD⁺ accumulation and ATP consumption. A structurally intact Nudix-catalytic-dead reference can help isolate hydrolysis contributions once such a reference is experimentally verified; it is **not** an existing positive control. Validate distinct designs and independent biological replicates before declaring a net-production improvement or feeding activities back into model training.
+| 环节 | 实际进度 | 接下来的工作 |
+|---|---|---|
+| ① 高质量数据 | 基本完成。已有正式训练序列、家族演化信息、实验结构和残基映射。 | 整合为模型实际可用的训练、验证和检索数据；不再默认扩库。 |
+| ② 训练与比较生成模型 | 尚未充分完成。H2 有训练权重，但只支持以野生型为起点、固定 4/8 位点的掩码局部编辑。 | 当前重点：确定生成任务，完成 QVAE 与 SE 的有效训练和公平比较。 |
+| ③ 工程化候选生成 | 仅有探索性局部编辑。 | 利用正式比较后的生成模型，开展具有设计目的的序列生成。 |
+| ④ 多层次计算评价 | 有序列评分和结构注释；尚无候选自身的全长结构评价。 | 对正式生成的候选开展结构及催化环境分析。 |
+| ⑤ 优选候选库 | 尚未形成。 | 综合计算证据，选择具有不同设计假设的工程化 NatV。 |
+| ⑥ 未来酶学验证 | 尚未开展。 | 分别测量 NMNAT 合成、Nudix 水解和 NAD⁺ 净积累。 |
+
+H2 的权重在固定 4/8 位点掩码编辑任务上训练，训练成功不等于第②步完成；已有候选运行用的是 no_latent 与 continuous_mmd 两组权重，不是分类 QVAE 的优胜实验。
+
+## 研究问题
+
+**主问题：** 在条件固定的纯化酶体系中，KVP40 NatV 的哪些变体能在匹配条件下提高 NMN + ATP 生成 NAD⁺ 的净积累，同时保留有应用价值的 NMNAT 合成能力？
+
+主问题只能在实验中最终回答。计算阶段负责产生可追溯的候选、核对催化环境、提出可检验的机制假设，并准备好比较条件。
+
+**子问题一：局部编辑能提供什么候选，何时需要更广的序列采样？**
+
+局部编辑是当前正式设计路径；家族全长生成是后续探索更广序列空间的可选方法，是否开发由候选质量、设计空间覆盖和实际收益决定。变长生成只在出现可信的短插入缺失证据和明确收益时考虑。两种任务结论不能互用：局部编辑的结果不能证明家族生成能力，家族生成也不是局部编辑的前置条件。若做家族全长生成，必须先确认程序确实从家族分布采样，而不是把掩码恢复换个名字。
+
+**子问题二：候选是否保留可信的 NMNAT 催化环境，并给出可检验的 Nudix 扰动？**
+
+对每条候选检查其全长结构预测（写明多序列比对与模板来源）：两个结构域是否保留、相对组织是否合理、替换是否直接改变或紧邻 12 个关键残基、NMN/ATP/Mg²⁺/NAD⁺ 邻近环境是否明显破坏、Nudix 金属结合和水解网络的扰动能否描述成机制假设。
+
+结构相容性不足只降低优先级，不是功能丧失的证明；除非证据直接到明确不相容，单一静态结构指标不能排除候选，功能缺失由实验判定。
+
+**子问题三：实验如何把净积累变化归因于合成和水解？**
+
+见“未来生化验证”。
+
+## 设计假设与评价顺序
+
+数据与结构事实见 `docs/DATA_PROVENANCE.md`（序列集边界、冗余组分、来源）和 `docs/NATV_PAIRING_AUDIT.md`（模板、构建体偏移、关键残基对应、配体邻近），本计划不重复。
+
+比较模型时写明权重来源、采样方式和任务；先验必须真正被使用，候选优势要在公平的无潜在变量对照下仍然成立。
+
+A/B/C 是设计假设类别，不是三种必须训练的架构，可共用同一个生成方式：
+
+- **A**：改变 NMNAT 环境，尝试提高合成，保留基本催化组织；
+- **B**：改变 Nudix 底物或催化行为，尝试降低水解，保留可用的 NMNAT 骨架；
+- **C**：两者都改；机制不能从类别标签推断。
+
+`contracts/regions.json` 的 341 残基划分适用于当前的野生型相对替换试验，不是所有未来设计必须遵守的进化事实。候选改变已映射的催化残基只是机制假设，不自动等于有效干预。
+
+评价分四层，每层只回答本层的问题：
+
+1. **序列层。** 长度、替换数、逐字符新颖性、重复、双结构域有序性、关键残基是否被直接改变、ESM2 交叉熵等相容性指标。服务第②、③步。
+2. **候选自身结构层。** 每条候选的全长结构预测及其比对、模板来源；置信度不从野生型或其他预测器照搬。服务第④步。
+3. **催化环境层。** 与 2QJO、2QJT、2R5W 的残基对应和配体邻近；对接分数或氢键丢失不能写成反应速率变化。服务第④步。
+4. **候选面板层。** 选择代表不同设计假设、结构多样、机制可描述的候选，包含野生型、家族相近序列和更简单方式的对照；失败与重复保留在计数中。服务第⑤步。
+
+每层用通过 / 未通过 / 未知三种状态；不构造“预测催化效率”或“预测净产量”总分。评价口径、样本数、信息预算和候选选择方法在运行前固定，不随结果调整。
+
+## 历史证据
+
+H1、H2、H3/G0、G1 是历史方法比较，不是必须按顺序重跑的编号。
+
+- **H1：** 进化信息输入改善掩码恢复；图结构没有决定性增益。SE 是合适的对照，不是最优方法。
+- **H2：** 固定 4/8 位点任务上比较无潜在、连续和分类潜在架构；有效、新颖、唯一比例全部饱和到 100%，未显示潜在变量的生成优势。未测试家族全长生成，也不能据此否定 QVAE 在其他任务的价值。
+- **H3/G0：** 实验口袋坐标和局部评价有价值；化学条件适配器的生成收益未识别，无 $k_{\mathrm{cat}}$ 标签。
+- **G1-a：** 576 条不重新拟合的编辑提议；位点选择策略只能在部分由评分参与的指标上区分，无全长结构证据。可选对照，不是生成目标。
+- **G1-b：** 连接区双峰分组是结构域注释方式造成的，不是真实序列类别；可信短插入缺失未解决，不能据此启动变长生成。
+
+## 第②步：生成任务与公平比较（当前重点）
+
+任务在两者间明确，不能共用结论：
+
+- **野生型相对替换编辑：** 保留长度和结构域顺序，替换数预先固定；当前正式设计路径。
+- **家族全长生成：** 从家族分布采样完整序列；可选探索，仅当现有编辑候选的质量、覆盖或收益不足时考虑。
+
+数据使用正式训练集、验证集和既定检索集；发现群体和外部候选不自动进入训练。运行前把序列整理成模型可用的训练、验证、检索输入，绑定来源、冗余组分和校验值。
+
+比较对象至少包括 QVAE 与无潜在变量 SE 基线。公平比较固定：训练 / 验证 / 检索集、模型与参数版本、采样方式、随机种子、尝试次数、评价信息量；失败、重复、无效提议保留在分母；潜在变量效应与容量、遮罩策略、计算量分开报告；参与挑选的分数不作独立判断。指标只回答序列相容性、多样性和任务符合度；H2 式的 100% 饱和不算生成优势，训练损失和验证交叉熵只说明拟合。
+
+完成标准：任务定义明确，QVAE 与 SE 在同一任务上完成公平比较，记录可复现，并回答潜在变量是否带来可测优势。“没有优势”同样是完成，负结果原样保留。
+
+## 后续阶段
+
+**③** 在第②步给出可用生成方式后进行，保留采样记录和失败提议。
+
+**④** 对正式候选逐条建立全长结构，用实验模板对应关系做关键残基与配体邻近检查，按 NMNAT 环境基本保留、Nudix 关键区域受扰动、明显结构风险三类记录。
+
+**⑤** 综合序列、结构与机制证据选出候选面板；候选库包含野生型、家族相近序列和简单方式对照。
+
+**⑥** 见“未来生化验证”。
+
+各步开始前单独说明任务、数据范围、比较对象、评价方式、预算和负结果处理。
+
+## 未来生化验证
+
+分别测量：
+
+- NMNAT 的 NAD⁺ 生成初速度，条件允许时的 $k_{\mathrm{cat}}$ 和表观 $K_m$；
+- Nudix 对 NAD⁺ 的水解速度；
+- 固定时间窗口内的 NAD⁺ 净积累、ATP 消耗、底物转化和酶稳定性。
+
+使用直接的 NAD⁺ 定量。野生型是必需对照。Nudix 催化失活但结构完整的参考变体是待验证的假设对照，不是现成阳性对照；NMNAT 失活变体是预期阴性对照，也需先验证。只有在独立重复和匹配条件下净积累提高、且 NMNAT 合成保留到有应用价值的程度，才能说候选优于野生型。实验数据在验证之前不反馈到模型训练。
+
+## 文献依据
+
+Garavaglia, S., D'Angelo, I., Emanuelli, M., Carnevali, F., Pierella, F., Magni, G., & Rizzi, M. (2002). Structure of human NMN adenylyltransferase. A key nuclear enzyme for NAD homeostasis. *Journal of Biological Chemistry, 277*(10), 8524–8530. https://doi.org/10.1074/jbc.M111589200
+
+Huang, N., Sorci, L., Zhang, X., Brautigam, C. A., Li, X., Raffaelli, N., Magni, G., Grishin, N. V., Osterman, A. L., & Zhang, H. (2008). Bifunctional NMN adenylyltransferase/ADP-ribose pyrophosphatase: Structure and function in bacterial NAD metabolism. *Structure, 16*(2), 196–209. https://doi.org/10.1016/j.str.2007.11.017
+
+Lau, C., Niere, M., & Ziegler, M. (2009). The NMN/NaMN adenylyltransferase (NMNAT) protein family. *Frontiers in Bioscience (Landmark Edition), 14*(2), 410–431. https://doi.org/10.2741/3252
+
+Lee, J. Y., Li, Z., & Miller, E. S. (2017). Vibrio phage KVP40 encodes a functional NAD+ salvage pathway. *Journal of Bacteriology, 199*(9), e00855-16. https://doi.org/10.1128/JB.00855-16
+
+McLennan, A. G. (2006). The Nudix hydrolase superfamily. *Cellular and Molecular Life Sciences, 63*(2), 123–143. https://doi.org/10.1007/s00018-005-5386-7
+
+Mildvan, A. S., Xia, Z., Azurmendi, H. F., Saraswat, V., Legler, P. M., Massiah, M. A., Gabelli, S. B., Bianchet, M. A., Kang, L.-W., & Amzel, L. M. (2005). Structures and mechanisms of Nudix hydrolases. *Archives of Biochemistry and Biophysics, 433*(1), 129–143. https://doi.org/10.1016/j.abb.2004.08.017
+
+## 边界
+
+本计划不授权训练、生成、折叠、对接、分子动力学、远程下载或湿实验；正式训练与比较须另行给出范围与预算。不修改正式训练集、原有划分、野生型身份、核心约定，或只读的 `nad_qvae` 来源。

@@ -1,4 +1,4 @@
-schema_version: natvqvae-objective-v1
+schema_version: natvqvae-objective
 status: active_scientific_objective_not_a_run_authorization
 scope: in_vitro_purified_enzyme
 
@@ -32,7 +32,7 @@ design_hypotheses:
   note: "These labels classify generated candidates, not required models or guaranteed activity outcomes."
 
 current_WT_editing_pilot:
-  reference: contracts/regions_v1.json
+  reference: contracts/regions.json
   allowed_length: 341
   substitutions_only: true
   meaning: "Local controlled editing scope only; not a universal constraint on future NatV family generation."
