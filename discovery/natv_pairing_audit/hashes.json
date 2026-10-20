@@ -1,18 +1,26 @@
 {
- "generated_at_utc": "2026-10-20T05:24:50.977288+00:00",
+ "generated_at_utc": "2026-10-20T06:04:01.185112+00:00",
  "root": "/home/yhshy/git_files/natvqvae/discovery/natv_pairing_audit",
- "file_count": 104,
- "tree_sha256": "541cc39d502580a9d78dcd6c84ec6173491c66d09f927fae52f12a834ee2bdd7",
+ "file_count": 115,
+ "tree_sha256": "d5dfce211767c32a19adf7bd0b5d4dc75f9d01154eba53a89aef80a63d7a2a18",
+ "excluded": [
+  "external/homology/raw/*.m8 and MMseqs temp output (regenerable, not committed)"
+ ],
  "files": [
   {
    "path": "README.md",
-   "size_bytes": 12553,
-   "sha256": "d7490b02874841ca24758598d83621ae04f3d4e3a3b93beb5a2ad8c10bf37016"
+   "size_bytes": 16894,
+   "sha256": "a4bc4830bb43b2f21d3e63ec30d857dd8a685b2c0cb66b2cc090124d9c7e8e91"
   },
   {
    "path": "active_g_registry.csv",
    "size_bytes": 571391,
    "sha256": "7058e21990aafa7c34980fa55c873fb3b33f9835db58694aacdca73c865b4ed5"
+  },
+  {
+   "path": "analyze_incremental_homology.py",
+   "size_bytes": 32659,
+   "sha256": "bf4784ad7126f5e104c764e905e7673fadd6fbab5516d096cdac83022de41e0f"
   },
   {
    "path": "anchor_mapping_audit.csv",
@@ -36,8 +44,8 @@
   },
   {
    "path": "dataset_update_decision.md",
-   "size_bytes": 7897,
-   "sha256": "c7545bb27948978a486672d5c3cbe754188ee36fc47b11f9f78f8f24dc0cd5ba"
+   "size_bytes": 13649,
+   "sha256": "1e8b53b3b03a349bb693ffe9188ad1c257d7c5badf39acdeb19b5b7221afb913"
   },
   {
    "path": "dual_domain_scan.csv",
@@ -113,6 +121,56 @@
    "path": "external/external_summary.json",
    "size_bytes": 956,
    "sha256": "bd25db6e2f884ba3f8c2121eb8122698e63e01b35313437e2c91b94bcba7f953"
+  },
+  {
+   "path": "external/homology/anchor_conservation_by_position.csv",
+   "size_bytes": 852,
+   "sha256": "a603deba96f16c1fed1ce348de24daeeff253c2dbaabc38ee124182ebd301e93"
+  },
+  {
+   "path": "external/homology/candidate_candidate_edges.csv",
+   "size_bytes": 438462,
+   "sha256": "4d3464937eaabc5a6cc3199e7ef4e5f4bbc47c183dddc18b52d0f0194c76fc9d"
+  },
+  {
+   "path": "external/homology/candidate_family_hits_exact.csv.gz",
+   "size_bytes": 2259381,
+   "sha256": "c6163e793ca6f3a463330fa74d57487f01093062c38fcba888c3bef0cd792aa7"
+  },
+  {
+   "path": "external/homology/candidate_homology_assessment.csv",
+   "size_bytes": 43879,
+   "sha256": "278b49346e4f5bfe0c923f7abcc8018280f9d17d5693b748e95dd87fd6c46ee8"
+  },
+  {
+   "path": "external/homology/candidates.fasta",
+   "size_bytes": 34589,
+   "sha256": "096a62050b91c850aee5c6070ed191667978fd2dc5f18939d1e85b715f804543"
+  },
+  {
+   "path": "external/homology/component_expansion.csv",
+   "size_bytes": 3314,
+   "sha256": "491efe647e2d0e026f1c1427864d5a78a4268847b31869fab87f4c4673c93540"
+  },
+  {
+   "path": "external/homology/family.fasta",
+   "size_bytes": 1019415,
+   "sha256": "d8bbc6125e5efc94c73c2f2fb231344092ec06a63bbe9f8b398ba2fa88d726f5"
+  },
+  {
+   "path": "external/homology/homology_summary.json",
+   "size_bytes": 7319,
+   "sha256": "946f48aacfb8517935189050e406655f3b5f0fd61d89afd9c5b0e4247fc101db"
+  },
+  {
+   "path": "external/homology/raw/.gitignore",
+   "size_bytes": 14,
+   "sha256": "240a3e0d37d2e86b614063f5347eb02d4f99ca6c254de6b82871ff8d95532a7d"
+  },
+  {
+   "path": "external/homology/run.log",
+   "size_bytes": 1087,
+   "sha256": "7d66a76d6e78f36069772949e32abe60aaef39ac6c78d6b8ee4fcb2f4c026d6c"
   },
   {
    "path": "external/incremental_structures.csv",
@@ -461,8 +519,8 @@
   },
   {
    "path": "external/source_hashes.json",
-   "size_bytes": 14531,
-   "sha256": "910a92ae7bbd0c3f7e6e2fbf3fe457a21234b40eac99da516a543ae9c99dc462"
+   "size_bytes": 15578,
+   "sha256": "ad69c8bcd130a02e310bf06bf60ee461c9e2eb795daf7d870213de0a2b6f20f9"
   },
   {
    "path": "external/uniprot_candidates.csv",

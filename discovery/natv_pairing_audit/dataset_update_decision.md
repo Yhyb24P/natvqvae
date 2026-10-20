@@ -47,6 +47,69 @@ training-population change.
    sequence; 95 are exact-sequence novel, including 8 phage-associated
    sequences. These are sequence-only candidates without experimental
    structures or activity measurements.
+7. The 95 candidates were then analysed under the same 70/80 component
+   predicate used to build the frozen split (exact local identity ≥0.70 and
+   both alignment spans ≥0.80 of length). They do increase the operational
+   sequence graph from 142 to 175 components, but they do not provide a
+   validated functional family expansion; details below.
+
+## Incremental homology analysis of the 95 sequences
+
+All 95 are unique, unreviewed TrEMBL entries with no PDB cross-reference and
+no measured activity. Exact local re-alignment against the 2,430-sequence
+population gives:
+
+| Quantity | Value |
+|---|---:|
+| Candidates | 95 |
+| Nearest family identity: median | 69.4% |
+| Nearest family identity: IQR | 52.5–92.9% |
+| Nearest family identity: range | 21.6–100% |
+| Candidates ≥90% identity to a family sequence | 26 |
+| Candidates ≥70% identity | 47 |
+| Candidates <70% identity | 48 |
+| Candidates with a qualifying 70/80 component | 47 |
+
+For comparison, 2,359 of the 2,430 frozen sequences have a non-self ≥70%
+edge, with median nearest-neighbour identity 99.45%. The candidates are
+therefore mostly distant or redundant relative to the frozen population.
+
+Under the frozen 70/80 component predicate:
+
+- 45 candidate clusters form.
+- 12 clusters (47 candidates) join 12 existing components; 33 new components
+  (48 candidates) are added.
+- There are no bridges between existing components and no component merges.
+- Component count goes from 142 to 175 (+33).
+- The 33 new components contain two 6-member clusters, five pairs and 26
+  singletons; only 7 contain more than one candidate.
+
+Split integrity is the decisive constraint. Of the 47 candidates that join an
+existing component, 34 would join a **test** component, 8 a training
+component and 5 a validation component under the frozen assignments. Six
+candidates are 100% identical to a family sequence over the qualifying
+aligned span while differing elsewhere (usually outside that span), so
+exact-sequence novelty is not family-level novelty. Adding the 95 would
+require re-clustering and re-splitting the frozen population and would
+change test/validation membership, invalidating the current evaluation
+baseline.
+
+Anchor conservation was mapped through the WT and Q5NHR1 reference domains.
+Self-checks map 12/12 anchors for both references. Excluding the
+non-conserved anchor 6, 51 candidates retain 11/11 anchors, 24 retain 10/11,
+8 retain 9/11 and 12 retain fewer than 9/11; 26 anchor positions are
+unmapped. Per-position matches are high for R249 (95/95), E254 (93/95), H15
+(92/95) and G234 (91/95), lower for D307 (66/95, with 22 Ser substitutions)
+and E238 (49/95, expected because WT is H236 at this position). Anchor
+recovery degrades with sequence distance and is not functional evidence.
+
+**Conclusion for the data question:** the 95 expand the operational
+sequence-component graph, but not the *validated* family distribution:
+they add no experimental structure, no measured activity, no reviewed
+annotation, and no functionally characterised member; most new components
+are singletons, and a quarter of the candidates are near-duplicates. There is
+no clear gain for the net-NAD⁺ objective. **Data expansion is ended for the
+current objective.** The 95 remain a traceable discovery pool only.
 
 ## Trusted experimental proxy set
 
@@ -73,17 +136,20 @@ new training set:
 - No experimental structure and no measured activity for any of the 95.
 - Only 5 of the 95 were queried for AlphaFold metadata (3 models, 2 without a
   model); the other 90 were not queried. AlphaFold models are predictions.
-- Exact-sequence novelty is not redundancy-controlled. The 95 have not been
-  clustered at any identity threshold, so they must not be counted as 95
-  independent family additions.
+- Exact-sequence novelty is not independence. Under the 70/80 component
+  predicate the 95 form 45 clusters, 47 join existing components and 48 fall
+  into 33 mostly singleton new components. 26 are ≥90% identical to a
+  frozen sequence over the qualifying span and 6 are 100% locally identical.
+  They must not be counted as 95 independent family additions.
 - The 8 phage-associated sequences are the most relevant to the KVP40 phage
   context, but relevance is not evidence of NatV function or improved NAD⁺
-  yield.
+  yield; 4 join existing components and 4 form new components.
 
-Recommended handling: retain the CSV and its hashes as a discovery artifact;
-do not assign roles, do not merge into training/validation/test, and do not
-use the sequences as templates without an experimental or carefully
-qualified predicted-structure assessment.
+Recommended handling: retain the CSV, the homology assessment and their
+hashes as a discovery artifact; do not assign roles, do not merge into
+training/validation/test, and do not use the sequences as templates without
+an experimental or carefully qualified predicted-structure assessment.
+Further sequence-only expansion is not planned for the current objective.
 
 ## Conditions that would justify a future dataset update
 
@@ -102,10 +168,18 @@ scope and budget. At minimum it needs one of:
 Predicted structures may support prioritization, but they cannot satisfy
 condition 1 or 2 by themselves.
 
+The 95-sequence analysis does not satisfy condition 3 either. Provenance is
+present, but the redundancy and split-integrity checks show that a naive
+discovery-only merge would change test/validation membership (34 of the 47
+component-joining candidates would join test components) and would import 26
+near-duplicates. A future discovery release would need its own clustering and
+split policy before it could be used, and it would still carry no activity
+labels.
+
 ## Scientific gain and limits
 
-The gain is a corrected, reproducible correspondence audit and a bounded
-negative discovery result:
+The gain is a corrected, reproducible correspondence audit, a bounded
+negative discovery result and a quantified homology-increment result:
 
 - the 12-anchor table is now tied to the correct Q5NHR1/2QJT auth numbering,
   with an explicit cross-species route for 2QJO and an explicit E238/K236
@@ -115,19 +189,30 @@ negative discovery result:
 - external RCSB discovery finds no new qualifying full-length experimental
   structure at the declared search threshold;
 - 95 exact-sequence-novel UniProt candidates (8 phage-associated) are retained
-  as a traceable discovery pool.
+  as a traceable discovery pool;
+- under the frozen 70/80 predicate the 95 add 33 operational components
+  (142→175; 47 candidates join existing components, 48 form new ones), with
+  no bridges or merges; the added components are mostly singletons and the
+  set includes near-duplicates, so this is sequence-level rather than
+  validated functional expansion;
+- anchor conservation is quantified against both references, with self-checks
+  at 12/12 and a large drop at the non-conserved E238/H236 site, so anchor
+  loss can be separated from the known reference difference.
 
 The limits are equally important: no new catalytic measurement, no new
-experimental template, no redundancy clustering of the 95 candidates, and no
-structural assessment of their predicted models. These limits are why the
+experimental template, no reviewed functional annotation for any of the 95,
+no structural assessment of their predicted models, and no taxonomic table
+for the frozen population. Anchor mapping at ~35% identity is near the
+twilight zone; MMseqs search is not exhaustive. These limits are why the
 formal dataset is not updated.
 
 ## Recommended next actions (not executed)
 
-1. If a sequence-only expansion is useful, run a bounded structural
-   assessment of the 3 available AlphaFold models for the new candidates, and
-   optionally fetch models for the 90 unqueried candidates. Report confidence,
-   domain arrangement and anchor geometry as predictions.
+1. Sequence-only expansion is closed for the current objective. If a future
+   discovery release is considered, first run a bounded structural assessment
+   of the 3 available AlphaFold models and optionally fetch models for the 90
+   unqueried candidates. Report confidence, domain arrangement and anchor
+   geometry as predictions, with a separate clustering/split policy.
 2. For the 8 phage-associated new sequences, search experimental structures
    and literature explicitly; a phage context alone is not a functional
    annotation.
@@ -142,7 +227,10 @@ formal dataset is not updated.
 - No model training, sequence generation, folding or wet-lab execution.
 - No writes to `/home/yhshy/git_files/nad_qvae`; it remains read-only.
 - No change to `main`, the formal population, splits, contracts or WT hash.
-- No commit or push was made.
+- No new external query for the homology analysis; it uses the local frozen
+  family sequences and the 95 already-fetched candidate sequences.
+- The audit and homology outputs are committed only on
+  `research/natv-pairing-audit`; nothing is merged to `main`.
 
 ## Verification artifacts
 
@@ -152,8 +240,18 @@ formal dataset is not updated.
 - `external/external_summary.json` — external counts and `negative_result`.
 - `external/discovery_overlap.json` — population overlap and new-candidate
   counts.
+- `external/homology/homology_summary.json` — nearest-neighbour,
+  component-expansion and anchor-conservation results, with limitations.
+- `external/homology/candidate_homology_assessment.csv` — per-candidate
+  identity, component membership, split proximity and anchor recovery.
+- `external/homology/component_expansion.csv` — cluster membership and
+  existing-component joins.
+- `external/homology/anchor_conservation_by_position.csv` — per-anchor
+  substitution counts for both references.
 - `external/query_log.json` — HTTP status/size/hash for every external request.
-- `hashes.json` — SHA256 manifest of the complete discovery output tree.
+- `hashes.json` — SHA256 manifest of the committed discovery output tree;
+  regenerable MMseqs raw output under `external/homology/raw/` is excluded and
+  documented in the discovery README.
 
 All structural statements above are conditional coordinate/annotation
 evidence, not catalytic measurements.

@@ -66,9 +66,42 @@ already in the frozen population by exact sequence and 95 are exact-sequence
 novel, including 8 phage-associated sequences. These 95 are a discovery pool,
 not a validated training addition.
 
-The dataset decision is: **keep the formal population, splits and contracts
-unchanged** until new experimental structure/activity evidence or a separate,
-pre-registered discovery release exists. See
+## Incremental homology result
+
+The 95 exact-novel candidates were tested against the frozen population under
+the same 70/80 component predicate used by `vnext_family_split` (exact local
+identity ≥0.70; both spans ≥0.80 of length). MMseqs2 supplied candidates and
+every decision-relevant hit was re-aligned exactly.
+
+| Quantity | Value |
+|---|---:|
+| Nearest family identity: median (range) | 69.4% (21.6–100%) |
+| Candidates ≥90% / ≥70% / <70% | 26 / 47 / 48 |
+| Candidate-only clusters | 45 |
+| Clusters joining existing components | 12 (47 candidates) |
+| New components | 33 (48 candidates) |
+| Components before → after | 142 → 175 (+33) |
+| Bridges / merges | 0 / 0 |
+| New-component sizes | 6, 6, five pairs, 26 singletons |
+
+The 33 new components are mostly sparse, 26 candidates are ≥90% identical to
+a frozen sequence, and six are 100% identical over the qualifying aligned
+span. Of the 47 candidates joining an existing component, 34 would join a
+test component, 8 a training component and 5 a validation component. A naive
+merge would therefore change the frozen test/validation population and
+require re-clustering and re-splitting.
+
+Anchor recovery against the WT and Q5NHR1 domains (self-checks 12/12;
+anchor 6 excluded as the known H236/E238 difference): 51 candidates retain
+11/11, 24 retain 10/11, 8 retain 9/11 and 12 retain fewer than 9/11. R249 is
+recovered in 95/95, D307 in 66/95 (22 Ser substitutions). This is
+structural-plausibility evidence, not function.
+
+The result is a **sequence-level expansion, not a validated functional
+family expansion**. There is no experimental structure, measured activity or
+reviewed annotation for any of the 95. Data expansion is ended for the
+current objective; the formal population, splits and contracts remain
+unchanged and the 95 remain a discovery pool. See
 [`dataset_update_decision.md`](../discovery/natv_pairing_audit/dataset_update_decision.md).
 
 ## Evidence boundaries
@@ -87,12 +120,14 @@ cd discovery/natv_pairing_audit
 python build_local_audit.py
 python query_external.py
 python summarize_external.py
+python analyze_incremental_homology.py
 ```
 
 - `source_hashes.json`: 866 input files and corpus tree hash
   `ef61977a312de176cce875f6e7c2774a830d3b45a70eb2397db30b3b2eb1b8c6`.
 - `external/query_log.json`: every external request, status and response hash.
-- `hashes.json`: SHA256 manifest of the 104-file discovery output tree.
+- `hashes.json`: SHA256 manifest of the 115 committed discovery files
+  (regenerable `external/homology/raw/*.m8` output excluded).
 
 No model training, sequence generation, folding or wet-lab work is implied by
 this audit.

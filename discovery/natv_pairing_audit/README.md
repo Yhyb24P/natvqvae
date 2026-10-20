@@ -183,6 +183,60 @@ scored against the templates.
 structure was found outside the frozen corpus. This is a valid negative
 result, not a claim that no such structure exists anywhere.
 
+### 5. Incremental homology analysis of the 95 candidates
+
+The 95 were compared with the 2,430-sequence frozen population under the same
+70/80 component predicate used by `vnext_family_split` (exact local identity
+≥0.70; both alignment spans ≥0.80 of length). MMseqs2 supplied candidate
+hits; every hit used for a decision was re-aligned exactly with Biopython.
+
+| Quantity | Value |
+|---|---:|
+| Candidates / unique sequences | 95 / 95 |
+| Reviewed (Swiss-Prot) / with PDB | 0 / 0 |
+| Nearest family identity: median (IQR) | 69.4% (52.5–92.9%) |
+| Nearest family identity: range | 21.6–100% |
+| Candidates ≥90% / ≥70% / <70% identity | 26 / 47 / 48 |
+| Candidates with a qualifying 70/80 component | 47 |
+| Candidate-only clusters | 45 |
+| Clusters joining existing components | 12 (47 candidates) |
+| New components | 33 (48 candidates) |
+| Components before → after | 142 → 175 (+33) |
+| Bridges / existing-component merges | 0 / 0 |
+| New-component sizes | 6, 6, five pairs, 26 singletons |
+
+The frozen family's internal nearest-neighbour baseline is much tighter:
+2,359/2,430 sequences have a non-self ≥70% edge, with median 99.45%. The
+candidates are mostly distant or redundant. Six candidates are 100% identical
+over the qualifying aligned span while remaining exact-sequence novel.
+
+Split integrity is the main reason not to merge. Of the 47 candidates joining
+an existing component, 34 would join a test component, 8 a training component
+and 5 a validation component. A merge would therefore change the frozen
+test/validation population and require re-clustering and re-splitting.
+
+Anchor conservation against the WT and Q5NHR1 reference domains (self-checks
+12/12 for both; anchor 6 excluded as the known H236/E238 difference):
+
+| Non-variable anchors recovered | Candidates |
+|---|---:|
+| 11/11 | 51 |
+| 10/11 | 24 |
+| 9/11 | 8 |
+| <9/11 | 12 |
+
+Per-position recovery is highest for R249 (95/95), E254 (93/95), H15 (92/95)
+and G234 (91/95), and lowest for D307 (66/95, 22 Ser substitutions) and the
+non-conserved E238 site (49/95). Anchor recovery degrades with distance and
+is structural-plausibility evidence, not function.
+
+**Homology result:** the 95 expand the operational sequence-component graph
+but not the validated family distribution. They carry no experimental
+structure, measured activity or reviewed annotation; most new components are
+singletons and a quarter of the candidates are near-duplicates. Data
+expansion is therefore ended for the current objective. The 95 stay a
+discovery pool.
+
 ## Files
 
 | Path | Content |
@@ -190,6 +244,7 @@ result, not a claim that no such structure exists anywhere.
 | `build_local_audit.py` | local audit implementation / reproduction entry point |
 | `query_external.py` | bounded external query implementation |
 | `summarize_external.py` | overlap/new-candidate summarization |
+| `analyze_incremental_homology.py` | 70/80 component and anchor analysis of the 95 candidates |
 | `sequence_registry.csv` | WT, family, PDB-entity and template sequences with hashes/roles |
 | `structure_registry.csv` | 285-PDB corpus metadata and ligand inventory |
 | `dual_domain_scan.csv` | 308-entity dual-domain screen |
@@ -210,11 +265,23 @@ result, not a claim that no such structure exists anywhere.
 | `external/external_summary.json` | external query summary and negative-result flag |
 | `external/query_log.json` | all HTTP requests, status, bytes and SHA256 |
 | `external/source_hashes.json` | SHA256 of external raw responses and derived tables |
-| `hashes.json` | SHA256 manifest of this discovery output tree |
+| `external/homology/candidate_homology_assessment.csv` | per-candidate nearest identity, component membership, split proximity and anchor recovery |
+| `external/homology/component_expansion.csv` | 45 candidate clusters, existing-component joins and membership |
+| `external/homology/anchor_conservation_by_position.csv` | per-anchor substitution counts against WT and Q5NHR1 domains |
+| `external/homology/candidate_candidate_edges.csv` | qualifying candidate–candidate 70/80 edges |
+| `external/homology/candidate_family_hits_exact.csv.gz` | exact realignments of all candidate–family hits |
+| `external/homology/homology_summary.json` | machine-readable homology summary, decision and limitations |
+| `hashes.json` | SHA256 manifest of the committed discovery output tree |
 
 Raw caches: `external/rcsb_sequence_search/`, `external/rcsb_metadata/`,
 `external/rcsb_shortlisted_cif/`, `external/uniprot_raw/`,
 `external/alphafold_raw/`.
+
+The MMseqs raw output under `external/homology/raw/` (about 27 MB) is
+regenerable and is **not committed**; it is excluded from `hashes.json`, which
+still hashes every committed file and the derived homology tables. The
+committed `candidate_family_hits_exact.csv.gz` is the exact realignment
+evidence used for the reported identities.
 
 ## Reproduction
 
@@ -226,7 +293,13 @@ NO_PROXY=search.rcsb.org,data.rcsb.org,files.rcsb.org,rest.uniprot.org,alphafold
 no_proxy=search.rcsb.org,data.rcsb.org,files.rcsb.org,rest.uniprot.org,alphafold.ebi.ac.uk \
 /home/yhshy/miniconda3/envs/nad_data/bin/python query_external.py
 /home/yhshy/miniconda3/envs/nad_data/bin/python summarize_external.py
+/home/yhshy/miniconda3/envs/nad_data/bin/python analyze_incremental_homology.py
 ```
+
+The homology step requires MMseqs2 and Biopython in the same environment
+(`nad_data` here) and takes about 95 seconds. It reads only the frozen
+population and the 95 fetched candidate sequences; it performs no external
+requests and writes under `external/homology/`.
 
 The `NO_PROXY` setting is environment-specific; it avoids a local proxy that
 stalled large RCSB downloads. Cached metadata and CIFs make reruns idempotent
@@ -240,10 +313,14 @@ apart from refreshed database responses.
   evidence, not binding affinity, catalytic rate or net NAD⁺ production.
 - The external RCSB search is limited to ≥30% identity; divergent structural
   homologs would need a separate structural search.
-- The 95 new UniProt sequences are exact-sequence novel only. No
-  identity/redundancy clustering was performed, so they are not 95
-  independent additions.
+- The 95 new UniProt sequences are exact-sequence novel only. Under the
+  70/80 predicate they form 45 clusters and include 26 near-duplicates
+  (≥90%), so they are not 95 independent family additions. They are not
+  clustered at thresholds other than 70/80.
 - The 95 new candidates have no experimental structures or activity labels.
   Their AlphaFold coverage is incomplete by design (bounded query).
+- The homology analysis uses local sequence alignment, not structure-based
+  alignment. Low-identity anchor mapping is near the twilight zone; 12
+  candidates recover fewer than 9/11 non-variable anchors.
 - Database results reflect the 2026-10-20 snapshot; counts will drift.
 - Structural correspondence must not be reported as catalytic activity.
