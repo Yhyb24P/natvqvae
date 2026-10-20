@@ -1,9 +1,9 @@
 {
-  "schema": "natv-generation-structural-preflight",
-  "status": "PREFLIGHT_PASS",
-  "generated_at_utc": "2026-10-20T06:27:15Z",
-  "run_script_sha256": "aa8df70d89b076fa7212278c66305e23fb46162d1dc9e0c6857474b50b724f5c",
-  "runtime_environment": {
+  "record": "\u751f\u6210\u524d\u8f93\u5165\u68c0\u67e5",
+  "status": "INPUT_CHECKS_PASSED",
+  "written_at_utc": "2026-10-20T07:21:01Z",
+  "script_sha256": "fb260e655289056952c951064aba8975df4dedf7093dec97cfe4ee2fd1d8b2d6",
+  "runtime": {
     "deterministic_algorithms": true,
     "deterministic_warn_only": false,
     "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
@@ -19,27 +19,27 @@
   "device": "NVIDIA GeForce RTX 5090 D",
   "checks": [
     {
-      "check": "H2 frozen generation contract",
+      "check": "H2 \u4e0a\u6e38\u8bbe\u7f6e\u6587\u4ef6",
       "status": "PASS",
       "detail": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76"
     },
     {
-      "check": "H2 input manifest",
+      "check": "H2 \u8f93\u5165\u6587\u4ef6\u8bb0\u5f55",
       "status": "PASS",
       "detail": "input_plan, context_manifest, data_ready"
     },
     {
-      "check": "Formal F-train inputs",
+      "check": "\u6b63\u5f0f\u8bad\u7ec3\u8f93\u5165",
       "status": "PASS",
       "detail": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b"
     },
     {
-      "check": "Frozen family role metadata",
+      "check": "\u5bb6\u65cf\u89d2\u8272\u8868",
       "status": "PASS",
       "detail": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce"
     },
     {
-      "check": "Formal source drift",
+      "check": "\u4e0a\u6e38\u6e90\u7801\u5dee\u5f02",
       "status": "PASS",
       "detail": "only vnext_model.py; equals H2 historical basis"
     },
@@ -49,17 +49,17 @@
       "detail": "18.8cc5c at /home/yhshy/miniconda3/envs/nad_data/bin/mmseqs"
     },
     {
-      "check": "Frozen ESM2 and tokenizer",
+      "check": "ESM2 \u6a21\u578b\u4e0e\u8bcd\u8868",
       "status": "PASS",
       "detail": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0"
     },
     {
-      "check": "WT and T135A constraint",
+      "check": "\u91ce\u751f\u578b\u5e8f\u5217\u4e0e T135A \u9650\u5236",
       "status": "PASS",
       "detail": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
     },
     {
-      "check": "Frozen H2 checkpoints",
+      "check": "\u4e24\u7ec4\u5df2\u8bad\u7ec3\u6a21\u578b\u53c2\u6570",
       "status": "PASS",
       "detail": [
         "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
@@ -67,27 +67,27 @@
       ]
     },
     {
-      "check": "Structural interpretation basis",
+      "check": "\u7ed3\u6784\u6ce8\u91ca\u4f9d\u636e",
       "status": "PASS",
       "detail": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7"
     },
     {
-      "check": "Frozen WP5 retrospective candidates",
+      "check": "\u65e7 WP5 \u5019\u9009\u5e8f\u5217",
       "status": "PASS",
       "detail": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f"
     },
     {
-      "check": "CDD rpsblast/rpsbproc assets",
+      "check": "CDD \u7a0b\u5e8f\u4e0e\u6570\u636e\u5e93",
       "status": "PASS",
       "detail": "108 files"
     },
     {
-      "check": "Matched stream plan",
+      "check": "\u7f16\u8f91\u65b9\u6848",
       "status": "PASS",
       "detail": "16 streams, 8 batches"
     }
   ],
-  "source_drift": [
+  "source_changes": [
     {
       "path": "config/natv/formal_training_v1.json",
       "expected": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
@@ -155,41 +155,41 @@
       "match": true
     }
   ],
-  "h2_contract_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+  "h2_settings_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
   "data_ready_sha256": "494fcf88a984284fff34df05780ed94788410fa842ac4f81e01ef711fb04378a",
-  "formal_input_plan_sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
+  "training_plan_sha256": "32db3878d8d71c10f2d133fc54950be6c3883f17fe1bdf16c949bb7f9bd30f9b",
   "family_roles_sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
-  "structural_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
-  "formal_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
-  "checkpoints": [
+  "structure_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
+  "previous_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
+  "model_parameters": [
     {
-      "label": "H2_no_latent",
+      "name": "H2_no_latent",
       "architecture": "no_latent",
       "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
       "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
       "training_seed": 20261081,
       "epoch": 2,
       "steps": 822,
-      "validation_CE": 1.654838123953725,
+      "validation_ESM2_CE": 1.654838123953725,
       "parameter_tensors": 84,
       "parameters": 840405,
-      "finite_state_dict": true
+      "finite_parameters": true
     },
     {
-      "label": "H2_continuous_mmd",
+      "name": "H2_continuous_mmd",
       "architecture": "continuous_mmd",
       "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
       "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
       "training_seed": 20261081,
       "epoch": 2,
       "steps": 822,
-      "validation_CE": 1.6573922181489764,
+      "validation_ESM2_CE": 1.6573922181489764,
       "parameter_tensors": 88,
       "parameters": 852885,
-      "finite_state_dict": true
+      "finite_parameters": true
     }
   ],
-  "cdd_assets": {
+  "cdd_files": {
     "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.aux": "ba40150af2740f80830cf7ab3ecfff3c3584d892b0e80c466c71e4144fcfe27e",
     "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.freq": "f98725ac09765109a6cd8e853bc2bec1140eae029ae4e8462cae22f00e31c873",
     "data/reference/ncbi_cdd_3.21/database/Cdd_NCBI.00.loo": "e86d44d3d2e43b125192f00c56af921573be709cf64a224b7a1a9425aadd96fe",
@@ -299,20 +299,20 @@
     "data/reference/ncbi_cdd_3.21/blast/ncbi-blast-2.17.0+/bin/rpsblast": "b295bf5b13203f383b1dd30807f5e1c6e0f1a6c5b684d0d58aa2c7d8481ac05f",
     "data/reference/ncbi_cdd_3.21/rpsbproc/RpsbProc-x64-linux/rpsbproc": "32b2a1ad691359db4a5c1807e4e772cfdbbaefd40441f5ca4acab8d710399fd8"
   },
-  "population": {
+  "sequence_sets": {
     "training": 2177,
     "family_rows": 2430,
-    "retrieval_database_ids": 1644,
-    "test_payload_reads": 0
+    "homolog_search_ids": 1644,
+    "test_sequence_reads": 0
   },
-  "declared_scope": {
+  "work_declared": {
     "training_runs": 0,
     "folding_runs": 0,
     "docking_runs": 0,
     "md_runs": 0,
     "wet_lab": false,
     "remote_downloads": 0,
-    "test_payload_reads": 0,
-    "proposal_count": 32
+    "test_sequence_reads": 0,
+    "candidate_count": 32
   }
 }

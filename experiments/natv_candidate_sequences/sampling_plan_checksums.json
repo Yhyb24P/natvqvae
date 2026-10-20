@@ -1,17 +1,19 @@
 {
-  "schema": "natv-generation-structural-pre-sampling-freeze",
-  "status": "PRE_SAMPLING_FREEZE",
-  "generated_at_utc": "2026-10-20T06:27:15Z",
-  "run_script_sha256": "aa8df70d89b076fa7212278c66305e23fb46162d1dc9e0c6857474b50b724f5c",
+  "record": "NatV \u5019\u9009\u751f\u6210\u65b9\u6848\u7684\u6587\u4ef6\u6821\u9a8c\u8bb0\u5f55",
+  "status": "SAMPLING_PLAN_RECORDED",
+  "written_at_utc": "2026-10-20T07:21:01Z",
+  "script_sha256": "fb260e655289056952c951064aba8975df4dedf7093dec97cfe4ee2fd1d8b2d6",
   "source_root": "/home/yhshy/git_files/nad_qvae",
-  "sampling_manifest_sha256": "6f7cd87f53b62912d11220e86eb811bf02783619a3f4b6360f2f86ff547efccd",
-  "input_manifest_sha256": "f0761e05f53f88c60c15bfec96fad8524ae61637ba9264599ee3dc5716c97f7d",
-  "preflight_report_sha256": "ee92d96de7ff12835effd1d63c655e8f3e124ff87f4806891a6a5df7519b3609",
-  "h2_contract_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
-  "structural_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
-  "formal_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
+  "file_sha256": {
+    "sampling_plan.json": "742f9001fc135f4f0faeed2c1dc1d8116665e3498dfebcb2dfd4c40720aac557",
+    "input_files.json": "9a9132e44632b68a1daebf315f1dda8c70dafef62588b285277fe3f7f3ff378d",
+    "input_checks.json": "19619898f54ad4eb9249e26288b63066fdc93618b89c0e02f5d4d6b2be85e2a4"
+  },
+  "h2_settings_sha256": "01d9b47efa22a1c89b704effd5885c797287e23c432c2be93cc95c3b95e49a76",
+  "structure_basis_sha256": "8cc0577feb96bebeb44bf0eb19432f81485ce00320c3835f7f973f6a0902f7d7",
+  "previous_candidates_sha256": "180dbce3756374abd70db010dba1b9074da662ac1b25abb346dcb1472af94b8f",
   "constraints_sha256": "a40687112f15cc2322f81c09e7a0eae94916f795d0a7a2958926e8b8f95d1216",
-  "runtime_environment": {
+  "runtime": {
     "deterministic_algorithms": true,
     "deterministic_warn_only": false,
     "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
@@ -24,56 +26,56 @@
     "MHA_fastpath": true,
     "CPU_threads": 8
   },
-  "checkpoints": [
+  "model_parameters": [
     {
-      "label": "H2_no_latent",
+      "name": "H2_no_latent",
       "architecture": "no_latent",
       "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/no_latent/20261081/epoch02.pt",
       "sha256": "6bdecac9f55604a66a84fac0090626bff55b4bf0455e363d201de3cd5c784e06",
       "training_seed": 20261081,
       "epoch": 2,
       "steps": 822,
-      "validation_CE": 1.654838123953725,
+      "validation_ESM2_CE": 1.654838123953725,
       "parameter_tensors": 84,
       "parameters": 840405,
-      "finite_state_dict": true
+      "finite_parameters": true
     },
     {
-      "label": "H2_continuous_mmd",
+      "name": "H2_continuous_mmd",
       "architecture": "continuous_mmd",
       "path": "experiments/run_reports/natv_h2_architecture_generation_v1_attempt1/fits/continuous_mmd/20261081/epoch02.pt",
       "sha256": "ce12ef55b45dc38696a34776e35553044d19940db01a9cc1670af9422e8d2b6c",
       "training_seed": 20261081,
       "epoch": 2,
       "steps": 822,
-      "validation_CE": 1.6573922181489764,
+      "validation_ESM2_CE": 1.6573922181489764,
       "parameter_tensors": 88,
       "parameters": 852885,
-      "finite_state_dict": true
+      "finite_parameters": true
     }
   ],
-  "sampling": {
-    "streams_seed": 20261201,
+  "sampling_settings": {
+    "plan_seed": 20261201,
     "prior_seed_base": 20261202,
-    "edit_budgets": [
+    "edit_counts": [
       4,
       8
     ],
-    "streams_per_budget": 8,
+    "plans_per_edit_count": 8,
     "sweeps": 3,
-    "batch_size": 4,
-    "proposal_count": 32
+    "group_size": 4,
+    "candidate_count": 32
   },
-  "state_at_freeze": {
-    "proposals_written": 0,
+  "before_sampling": {
+    "candidates_written": 0,
     "evaluation_written": false,
     "training_runs": 0,
     "folding_runs": 0,
     "wet_lab": false,
     "remote_downloads": 0,
-    "test_payload_reads": 0
+    "test_sequence_reads": 0
   },
-  "source_drift": [
+  "source_changes": [
     {
       "path": "config/natv/formal_training_v1.json",
       "expected": "93cb9e40c70aa744e84e46d7bdaeba49c642843cfc06bcb5e418cf2a767fcdf5",
