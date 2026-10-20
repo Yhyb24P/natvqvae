@@ -1,0 +1,12 @@
+# Contributor instructions
+
+Work toward **KVP40 NatV-derived enzymes with higher experimentally measured net NAD⁺ production**. Treat QVAE, SE, structural models and evaluation metrics as competing tools, not mandatory features.
+
+1. **Evidence before implementation.** Read `README.md`, `docs/RESEARCH_PLAN.md`, `docs/DATA_PROVENANCE.md` and the files relevant to the task. Distinguish completed runs, published experiments, hypotheses and unexecuted proposals. No model-based score is catalytic activity.
+2. **Preserve source boundaries.** `nad_qvae` is an external, read-only source of research assets and history. Never modify it, write through linked inputs, silently broaden the NatV training population, or migrate its entire runner/archive tree. Verify source paths/hashes before use.
+3. **One current implementation, not a runner per experiment.** Add a reusable module only when a real experiment needs it; put run-specific inputs, logs, manifests, figures and negative results under its run directory. Avoid duplicate schemas, generic registries, compatibility shims, placeholder stages or mechanical testing gates.
+4. **Research comparators must be fair.** Bind split and retrieval population, model/checkpoint/source version, sampling mode, seed, attempt count and evaluation information budget. Keep failures and duplicates in denominators. Separate latent effects from capacity, mask policy and compute; do not use selector-derived scores as independent judges.
+5. **Do not turn hypotheses into bans.** `contracts/regions_v1.json` applies to the present **WT-relative substitution pilot**, not every future QVAE family sampler. A/B/C are proposal intents, not a requirement to train three architectures. Unmeasured constraints remain UNKNOWN, never PASS.
+6. **Execution boundary.** Discussion, review and code implementation do not authorise model training, remote downloads, sequence generation, folding, wet-lab work or irreversible asset changes. An execution request must specify scope and budget. Preserve historical negative evidence and work on a branch/PR; do not force-push, rewrite main or merge without approval.
+
+A deliverable is complete only when the actual code/data or scientific result is accessible, reproducible within its declared inputs, and its limitations are stated. Additional files and tests alone are not progress.

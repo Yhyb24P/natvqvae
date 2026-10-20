@@ -1,39 +1,46 @@
+"""Check actual scientific contract semantics; tests are not empirical validation."""
 import json
 from pathlib import Path
 
 import pytest
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-CONTRACTS = REPO_ROOT / "contracts"
+ROOT = Path(__file__).resolve().parents[1]
+CONTRACTS = ROOT / "contracts"
 
 
-def test_regions_contract_loads():
-    contract = json.loads((CONTRACTS / "regions_v1.json").read_text(encoding="utf-8"))
-    assert contract["target"]["length"] == 341
-    assert contract["boundary_conventions"]["cdd_derived"]["status"] == "adopted"
-    assert contract["boundary_conventions"]["working_hypothesis"]["status"] == "archived_not_used"
-    assert set(contract["mask_rules"]) >= {"A", "B", "C"}
-    assert contract["mask_rules"]["common"]["substitutions_only"] is True
+def test_regions_contract_is_a_pilot():
+    c = json.loads((CONTRACTS / "regions_v1.json").read_text(encoding="utf-8"))
+    assert c["target"]["length"] == 341
+    assert c["boundary_conventions"]["cdd_derived"]["status"] == "adopted"
+    assert c["boundary_conventions"]["working_hypothesis"]["status"] == "archived_not_used"
+    assert set(c["mask_rules"]) >= {"A", "B", "C"}
+    assert c["mask_rules"]["common"]["substitutions_only"] is True
+    assert c["scope"] == "WT_relative_substitution_pilot_not_universal_NatV_biology"
 
 
-def test_objective_contract():
+def test_objective_distinguishes_synthesis_and_net_accumulation():
     yaml = pytest.importorskip("yaml")
-    contract = yaml.safe_load((CONTRACTS / "objective_v1.yaml").read_text(encoding="utf-8"))
-    assert contract["scope"] == "in_vitro_purified_enzyme"
-    assert set(contract["design_classes"]) == {"A", "B", "C"}
-    assert any("no_domain_deletion" in c for c in contract["hard_constraints"])
-    assert contract["non_goals"]
-    assert contract["future_controls"]["status"] == "not_yet_measured"
+    c = yaml.safe_load((CONTRACTS / "objective_v1.yaml").read_text(encoding="utf-8"))
+    assert c["scope"] == "in_vitro_purified_enzyme"
+    assert c["application_endpoint"]["experiment_only"] is True
+    assert set(c["design_hypotheses"]) >= {"A", "B", "C"}
+    assert "kcat_if_identifiable" in c["separate_experimental_endpoints"]["synthesis"]
+    assert "NAD_hydrolysis_rate" in c["separate_experimental_endpoints"]["degradation"]
+    assert c["current_WT_editing_pilot"]["substitutions_only"] is True
 
 
-def test_evidence_ladder_contract():
+def test_unmeasured_evidence_does_not_pass():
     yaml = pytest.importorskip("yaml")
-    contract = yaml.safe_load((CONTRACTS / "evidence_ladder_v1.yaml").read_text(encoding="utf-8"))
-    assert contract["no_composite_score"] is True
-    gate_ids = [g["id"] for g in contract["gates"]]
-    assert gate_ids[0] == "G1_sequence"
-    assert "G5_descriptive" in gate_ids
-    assert contract["thresholds"]["status"] == "to_be_frozen_before_first_screening_run"
-    controls = contract["controls_required_before_any_candidate_panel"]["required"]
-    assert any("nudix_catalytic_dead" in c for c in controls)
-    assert any("deleted" in c for c in controls)
+    c = yaml.safe_load((CONTRACTS / "evidence_ladder_v1.yaml").read_text(encoding="utf-8"))
+    assert "UNKNOWN" in c["uncertainty"]["allowed_statuses"]
+    assert "FAIL" in c["uncertainty"]["allowed_statuses"]
+    assert "PASS" in c["uncertainty"]["allowed_statuses"]
+    assert "G" not in c["evaluation"]  # not an opaque mandatory ladder
+    assert "future_wet_lab_controls" in c["comparator_policy"]
+
+
+def test_discovery_population_is_not_declared_as_training():
+    manifest = json.loads((ROOT / "inputs/manifest.json").read_text(encoding="utf-8"))
+    population = next(x for x in manifest["entries"] if x["name"] == "family_population")
+    assert population["expected_records"] == 2430
+    assert population["training_admission"] == "discovery_only_not_core_train"

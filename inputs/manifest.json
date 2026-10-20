@@ -6,7 +6,8 @@
   "policy": {
     "read_only": true,
     "copy_large_files": false,
-    "fail_closed_on_hash_mismatch": true
+    "fail_closed_on_hash_mismatch": true,
+    "population_reuse_rule": "The 2430-entry family_population FASTA is discovery-only; fitting requires a separately bound 1644-core-train roles split and held-out exclusions."
   },
   "entries": [
     {
@@ -21,9 +22,11 @@
       "name": "family_population",
       "path": "data/processed/releases/natv_vnext_family_v2/population.fasta",
       "sha256": "d8bbc6125e5efc94c73c2f2fb231344092ec06a63bbe9f8b398ba2fa88d726f5",
-      "role": "NatV/NadM family sequences used for evolutionary evidence",
+      "role": "2430-sequence family discovery population, not a frozen NatV training partition",
       "link": "family_population.fasta",
-      "expected_records": 2430
+      "expected_records": 2430,
+      "training_admission": "discovery_only_not_core_train",
+      "notes": "core_train=1644 with 47 redundancy components under the prior study; training-role and validation split identities must be imported separately before fitting."
     },
     {
       "name": "domain_pocket_map",

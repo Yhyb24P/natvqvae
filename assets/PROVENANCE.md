@@ -1,26 +1,14 @@
-# Frozen weight provenance
+# Model weights and provenance
 
-No weights are imported in v0. When a generation arm is chosen, every checkpoint must
-be recorded here with:
+**No checkpoint has been imported into `natvqvae` yet.** Model names below designate potential *source experiments*, not loaded, tested or authorised generative capabilities.
 
-- absolute source path and SHA256
-- architecture class and its source file
-- the config/training contract that produced it
-- the data split it was trained on
-- known limitations
+| Evidence source in legacy `nad_qvae` | What is known | Decision |
+|---|---|---|
+| H2 categorical/continuous/no-latent, `results/natv_h2_architecture_generation_v1_attempt1/PHASE_SUMMARY.md` | Five-seed fixed-4/8-site KVP40 recovery sampling; latent primary yield not superior under that task | Candidate implementations to inspect; no weights imported |
+| H1/H2 SE/no-latent trained checkpoints | Reasonable evolutionary + pretrained PLM comparator for masked recovery | Potential baseline; verify exact checkpoint and effective split |
+| Earlier `qvae_v9_seed2028` files | Historic naming; effective configuration/provenance may be incomplete | Do not silently adopt as current trained QVAE |
+| H3/G0 chemical adapter | No qualified generation benefit established | PARK; no default import |
 
-## Admission rule
+Before any weight is used, bind its **physical SHA256, architecture and exact source revision, effective training/config source, train/validation role files, tokenizer/alphabet, sampling mode and known limitations**. Do not infer de novo generation from the presence of a latent encoder.
 
-A checkpoint may be used only if all four identity fields above are present. A
-checkpoint without a recoverable training contract is admissible **only** as a
-comparator arm, and must be labelled as such in every output.
-
-## Candidates on record (not yet imported)
-
-| arm | source | status | note |
-|---|---|---|---|
-| SE-no-latent (`PLMPreservingRecoveryModel`) | old repo `experiments/run_reports/natv_formal_training_v1_attempt1/checkpoints` | strongest documentation; H1 confirmation ADOPT for S/E | masked-recovery model, not a free generator |
-| QVAE (categorical latent) | old repo `data/foundry_outputs/checkpoints/qvae_v9_seed2028_ep*.pt` | provenance audit previously failed (missing effective config) | comparator only unless provenance is restored |
-| SE+3Di / SE+Graph | old repo `experiments/run_reports/natv_multimodal_modality_comparison_v2_attempt2/checkpoints` | modality interaction unresolved | comparator |
-
-Importing a weight does not authorize generation. Each run needs its own contract.
+The old repository remains read-only. Candidate generation/folding needs independent owner authorisation; a checkpoint's presence does not imply permission to run.

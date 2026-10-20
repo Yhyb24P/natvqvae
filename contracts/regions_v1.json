@@ -10,55 +10,129 @@
     "cdd_derived": {
       "status": "adopted",
       "source": "NCBI CDD 3.21 hits on the family (machine-checked)",
-      "NMNAT": [4, 181],
-      "LINKER": [182, 203],
-      "NUDIX": [204, 338],
-      "CTERM": [339, 341],
-      "NTERM": [1, 3]
+      "NMNAT": [
+        4,
+        181
+      ],
+      "LINKER": [
+        182,
+        203
+      ],
+      "NUDIX": [
+        204,
+        338
+      ],
+      "CTERM": [
+        339,
+        341
+      ],
+      "NTERM": [
+        1,
+        3
+      ]
     },
     "working_hypothesis": {
       "status": "archived_not_used",
       "source": "legacy target contract, unverified",
-      "NMNAT": [1, 180],
-      "NUDIX": [181, 341]
+      "NMNAT": [
+        1,
+        180
+      ],
+      "NUDIX": [
+        181,
+        341
+      ]
     }
   },
   "regions": {
-    "NTERM": {"start": 1, "end": 3, "note": "pre-NMNAT; not a design region"},
-    "NMNAT": {"start": 4, "end": 181},
-    "LINKER": {"start": 182, "end": 203, "note": "interdomain linker; edit only with explicit rationale"},
-    "NUDIX": {"start": 204, "end": 338},
-    "CTERM": {"start": 339, "end": 341}
+    "NTERM": {
+      "start": 1,
+      "end": 3,
+      "note": "pre-NMNAT; not a design region"
+    },
+    "NMNAT": {
+      "start": 4,
+      "end": 181
+    },
+    "LINKER": {
+      "start": 182,
+      "end": 203,
+      "note": "interdomain linker; edit only with explicit rationale"
+    },
+    "NUDIX": {
+      "start": 204,
+      "end": 338
+    },
+    "CTERM": {
+      "start": 339,
+      "end": 341
+    }
   },
   "anchors": {
     "NMNAT": {
-      "positions": [14, 17, 135, 138],
+      "positions": [
+        14,
+        17,
+        135,
+        138
+      ],
       "role": "ATP motif / binding proxy (template-anchored)",
-      "source": "2QJO-based anchor mapping"
+      "source": "2QJO-based anchor mapping",
+      "note": "Template-mapped proxy positions; check residue numbering and structural correspondence before invoking catalytic-geometry claims."
     },
     "NUDIX": {
-      "positions": [232, 236, 247, 248, 251, 252, 307, 308],
+      "positions": [
+        232,
+        236,
+        247,
+        248,
+        251,
+        252,
+        307,
+        308
+      ],
       "role": "Nudix motif / metal-water network proxy",
       "source": "2QJT-based anchor mapping",
-      "note": "first-shell positions are to be derived in P1, not assumed here"
+      "note": "Template-mapped proxy positions, not proved loss-of-hydrolysis mutation targets; first-shell mapping must be verified independently."
     }
   },
   "mask_rules": {
     "A": {
-      "editable": ["NMNAT"],
-      "forbidden": ["LINKER", "NUDIX", "CTERM", "NTERM"],
+      "editable": [
+        "NMNAT"
+      ],
+      "forbidden": [
+        "LINKER",
+        "NUDIX",
+        "CTERM",
+        "NTERM"
+      ],
       "protected_positions": "nudix_catalytic_anchors",
       "anchor_edits": "not_allowed"
     },
     "B": {
-      "editable": ["NUDIX"],
-      "forbidden": ["NMNAT", "LINKER", "CTERM", "NTERM"],
+      "editable": [
+        "NUDIX"
+      ],
+      "forbidden": [
+        "NMNAT",
+        "LINKER",
+        "CTERM",
+        "NTERM"
+      ],
       "protected_positions": "nmnat_all",
       "anchor_edits": "allowed_and_prioritized"
     },
     "C": {
-      "editable": ["NMNAT", "NUDIX"],
-      "forbidden": ["LINKER", "CTERM", "NTERM"],
+      "editable": [
+        "NMNAT",
+        "NUDIX"
+      ],
+      "forbidden": [
+        "LINKER",
+        "CTERM",
+        "NTERM"
+      ],
       "protected_positions": [],
       "anchor_edits": "allowed_with_geometry_gate"
     },
@@ -70,7 +144,10 @@
     }
   },
   "notes": [
-    "Region boundaries are the CDD-derived ones; the legacy 1-180/181-341 split is archived only.",
-    "LINKER editing is excluded from all classes because domain-geometry claims are weaker there."
-  ]
+    "CDD-derived boundaries are approximate alignment annotations, not an intrinsic no-mutation law.",
+    "A/B/C position masks apply only to the present KVP40 substitution pilot; future family-prior sampling requires a distinct, evidence-bound contract.",
+    "Twelve catalytic anchor positions are source-template mapping hypotheses, not a validated activity classifier.",
+    "LINKER and termini are excluded only from this pilot; this is not a general ban on future NatV variation."
+  ],
+  "scope": "WT_relative_substitution_pilot_not_universal_NatV_biology"
 }
