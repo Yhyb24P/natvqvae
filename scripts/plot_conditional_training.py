@@ -12,6 +12,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -76,6 +77,46 @@ def main():
         selections[key] = {'epoch': saved['epoch'], 'validation_CE': best['prior_CE'],
                            'sha256': entry['sha256']}
         del saved
+
+    validation_audit = None
+    if plan['task'] == 'target_conditioned_posterior_training':
+        raw = ROOT / 'data/results' / run.name / 'raw/validation_records.jsonl.gz'
+        frame = pd.read_json(raw, lines=True)
+        if frame.duplicated(['key', 'epoch', 'id']).any():
+            raise ValueError('逐输入验证记录重复')
+        expected_rows = plan['validation_population'] * len(fractions)
+        groups = frame.groupby(['key', 'epoch'])
+        if set(groups.groups) != set(indexed) or not groups.size().eq(expected_rows).all():
+            raise ValueError('逐输入验证记录不完整')
+        for (key, epoch), part in groups:
+            record = indexed[key, epoch]
+            for column, metric in [('CE', 'prior_CE'), ('posterior_CE', 'posterior_CE'),
+                                   ('posterior_sample_CE', 'posterior_sample_CE'), ('KL', 'validation_KL')]:
+                actual = part.groupby('component')[column].mean().mean()
+                if not np.isclose(actual, record[metric], atol=1e-10, rtol=0):
+                    raise ValueError(f'验证汇总不符：{key} {epoch} {metric}')
+            for panel, panel_rows in part.groupby('panel'):
+                actual = panel_rows.groupby('component').CE.mean().mean()
+                if not np.isclose(actual, record['panels'][str(panel)]['prior_CE'], atol=1e-10, rtol=0):
+                    raise ValueError('逐面板验证汇总不符')
+        fit_status = json.loads((run / 'fit_status.json').read_text())
+        for key, stop in fit_status['stopped'].items():
+            rows = sorted((r for r in history if r['key'] == key), key=lambda r: r['epoch'])
+            best_ce, stale = float('inf'), 0
+            for i, row in enumerate(rows):
+                if row['prior_CE'] < best_ce:
+                    best_ce, stale = row['prior_CE'], 0
+                else:
+                    stale += 1
+                if stale >= plan['training']['patience'] and i != len(rows) - 1:
+                    raise ValueError('达到早停条件后仍继续训练')
+            if stop['reason'] == 'early_stopping' and stale != plan['training']['patience']:
+                raise ValueError('早停计数不符')
+            if rows[-1]['epoch'] != stop['epoch']:
+                raise ValueError('停止轮次不符')
+        validation_audit = {'records': len(frame), 'groups': len(groups), 'raw_sha256': digest(raw),
+                            'component_and_panel_aggregation_verified': True,
+                            'early_stopping_verified': True}
 
     plt.rcParams.update({'font.family': 'sans-serif', 'font.sans-serif': ['Noto Sans CJK JP', 'DejaVu Sans'],
                          'axes.unicode_minus': False, 'font.size': 10})
@@ -145,6 +186,7 @@ def main():
         'plotting_versions': {'matplotlib': matplotlib.__version__, 'numpy': np.__version__,
                               'torch': torch.__version__},
         'records': len(history), 'verified_checkpoints': selections,
+        'validation_audit': validation_audit,
         'training_panel_fraction_by_epoch': {str(e): fractions[(e - 1) % 3] for e in epochs},
         'validation_per_panel': 'validation_by_mask.png' if len(figure_names)>2 else 'UNKNOWN：历史日志未保留逐输入或逐面板验证 CE',
         'seed_counts_by_epoch': {arm: np.isfinite(values['prior_CE']).sum(0).tolist() for arm, values in arrays.items()},
