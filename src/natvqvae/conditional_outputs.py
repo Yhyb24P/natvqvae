@@ -481,7 +481,7 @@ def select_representatives(run,plan,frame):
 def statistic_predictions(run,plan,data,formal_manifest,queries):
     raw=ROOT/'data/results'/run.name/'raw';destination=raw/'statistical_predictions';destination.mkdir(parents=True,exist_ok=True)
     sets=json.loads((raw/'statistical_sets.json').read_text());lookup={s['id']:s for s in sets['sets']}
-    decision=json.loads((run/'calibration_decision.json').read_text())
+    decision=json.loads((run/'evaluation_sample_decision.json').read_text())
     repeats=int(plan['calibration']['likelihood_repetitions'])
     if not queries:return {}
     n=len(queries);receipts={};batch_size=16
@@ -491,7 +491,7 @@ def statistic_predictions(run,plan,data,formal_manifest,queries):
         path=destination/f'{name}.npz';receipt_path=destination/f'{name}.json'
         if path.exists() and receipt_path.exists():
             receipt=json.loads(receipt_path.read_text())
-            if sha256_file(path)!=receipt['sha256'] or entry['sha256']!=receipt['checkpoint_sha256']:raise ValueError('Statistic prediction changed')
+            if sha256_file(path)!=receipt['sha256'] or entry['sha256']!=receipt['checkpoint_sha256'] or receipt['count']!=count or receipt['repeats']!=repeats:raise ValueError('Statistic prediction changed')
             receipts[key]=receipt;continue
         model=_load_model({**entry,'arm':arm},plan)
         shared=np.zeros((repeats,n,27),dtype=np.float32);independent=np.zeros_like(shared);sampled=np.zeros_like(shared)
@@ -557,7 +557,7 @@ def statistic_predictions(run,plan,data,formal_manifest,queries):
         np.savez_compressed(path,shared=shared,independent=independent,sampled=sampled,
             log_shared=log_shared,log_independent=log_ind,marginals=margins)
         receipt={'sha256':sha256_file(path),'checkpoint_sha256':entry['sha256'],'count':count,'repeats':repeats,
-            'queries_sha256':sha256_file(raw/'statistical_queries.json'),'seconds':time.monotonic()-started,
+            'queries_sha256':sha256_file(raw/'statistical_queries.json'),'evaluation_decision_sha256':sha256_file(run/'evaluation_sample_decision.json'),'seconds':time.monotonic()-started,
             'target_probabilities':'canonical_20_AA','frequency_alphabet':'two training-major AAs plus OTHER',
             'actual_sampled_tuples':count*repeats*n,'conditioning':'full_task_mask_M_remains_hidden; only_S_scored'}
         write_json(receipt_path,receipt);receipts[key]=receipt;del model;torch.cuda.empty_cache()
