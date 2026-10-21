@@ -7,6 +7,7 @@ conditional_outputs.finish_study 承担。
 from __future__ import annotations
 
 import gzip
+import gc
 import hashlib
 import json
 import math
@@ -573,6 +574,7 @@ def _calibrate(run, plan, data, root, device, attempts, failures, save_records):
                        {'summary': result['summary'], 'records': result['records']})
         likelihood[(arm, learning_rate)] = evaluations
         del model
+        gc.collect()
         if device.type == 'cuda':
             torch.cuda.empty_cache()
     base_lr = {}
@@ -655,6 +657,31 @@ def _calibrate(run, plan, data, root, device, attempts, failures, save_records):
         'formal_rule': 'run 5 paired seeds from scratch with the selected configuration',
     }
     write_json(raw / 'calibration_decision.json', decision)
+    interface = {
+        'task': decision['task'] if 'task' in decision else plan['task'],
+        'git_revision': _git_revision(root),
+        'full_decision': {'path': str((raw / 'calibration_decision.json').relative_to(root)),
+                          'sha256': sha256_file(raw / 'calibration_decision.json')},
+        'base_learning_rates': base_lr,
+        'max_steps_per_fit': int(B),
+        'arms': {},
+    }
+    for arm in plan['arms']:
+        values = likelihood_decision[arm]
+        interface['arms'][arm] = {
+            'base_learning_rate': float(base_lr[arm]),
+            'posterior_sample_count': int(K_choice[arm]) if arm == 'QVAE' else 0,
+            'selection_sample_count': int(values['selection_sample_count']),
+            'evaluation_sample_count': int(values['evaluation_sample_count']),
+            'validation_delta': float(values['selection_delta']),
+            'evaluation_delta': float(values['evaluation_delta']),
+            'max_steps_per_fit': int(B),
+            'selection_stable': bool(values['selection_stable']),
+            'evaluation_stable': bool(values.get('evaluation_stable', False)),
+            'exact': bool(values.get('exact', False)),
+            'selected_metric': decision['selection_metric'],
+        }
+    write_json(run / 'calibration_decision.json', interface)
     status(run, 'CALIBRATION_READY', base_learning_rate=base_lr, K=K_choice, T=int(T), B=int(B),
            likelihood={arm: {'selection_sample_count': likelihood_decision[arm]['selection_sample_count'],
                               'evaluation_sample_count': likelihood_decision[arm]['evaluation_sample_count'],
@@ -1223,17 +1250,34 @@ def run_study(run, plan, data=None, root=None, device=None):
                 'max_memory_mib': max([record.get('max_memory_mib', 0.) for record in fit_records] or [0.]),
                 'failures': failures}
         write_json(raw / 'cost.json', cost)
+        gc.collect()
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
         status(run, 'FINISHING', fits=len(formal))
         from .conditional_outputs import finish_study
         finish = finish_study(run, plan, data, formal)
+        artifacts = {}
+        for name, path in [('study_start', raw / 'study_start.json'),
+                           ('calibration_decision', raw / 'calibration_decision.json'),
+                           ('search_selection', raw / 'search_selection.json'),
+                           ('formal_manifest', raw / 'formal_manifest.json'),
+                           ('fit_status', raw / 'fit_status.json'),
+                           ('cost', raw / 'cost.json'),
+                           ('training_history', raw / 'training_history.json')]:
+            if path.exists():
+                artifacts[name] = {'path': str(path.relative_to(root)),
+                                   'sha256': sha256_file(path)}
+        interface_path = run / 'calibration_decision.json'
+        if interface_path.exists():
+            artifacts['calibration_interface'] = {
+                'path': str(interface_path.relative_to(root)),
+                'sha256': sha256_file(interface_path)}
         manifest = {
-            **identity, 'status': 'completed',
-            'calibration': calibration['decision'],
-            'search': search_selected,
-            'formal_manifest': formal,
-            'fit_records': {'calibration': list(calibration['fits'].values()),
-                            'search': search_records, 'formal': formal_records},
-            'cost': cost,
+            'task': plan['task'], 'status': 'completed',
+            'git_revision': identity['git_revision'],
+            'plan_sha256': identity['plan_sha256'],
+            'formal_entries': len(formal),
+            'artifacts': artifacts,
             'finish_returned': repr(finish)[:2000],
         }
         write_json(raw / 'study_manifest.json', manifest)

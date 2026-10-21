@@ -117,8 +117,18 @@ def test_run_study_tiny_end_to_end(tmp_path, monkeypatch):
                         SimpleNamespace(finish_study=lambda *args: {'ok': True}))
     manifest = run_study(run, plan, data=data, root=tmp_path, device='cpu')
     assert manifest['status'] == 'completed'
-    assert manifest['cost']['attempted_fits'] == 3
-    assert set(manifest['formal_manifest']) == {'deterministic/3'}
+    for name in ('calibration_decision', 'search_selection', 'formal_manifest',
+                 'fit_status', 'cost', 'training_history', 'calibration_interface'):
+        assert manifest['artifacts'][name]['sha256']
+        assert (tmp_path / manifest['artifacts'][name]['path']).exists()
+    interface = json.loads((run / 'calibration_decision.json').read_text())
+    assert interface['arms']['deterministic']['max_steps_per_fit'] == 4
+    assert interface['arms']['deterministic']['evaluation_sample_count'] == 0
+    assert interface['full_decision']['sha256']
+    cost = json.loads((tmp_path / manifest['artifacts']['cost']['path']).read_text())
+    formal = json.loads((tmp_path / manifest['artifacts']['formal_manifest']['path']).read_text())
+    assert cost['attempted_fits'] == 3
+    assert set(formal) == {'deterministic/3'}
     assert (tmp_path / 'data/results/toy/raw/calibration_decision.json').exists()
     assert (tmp_path / 'data/results/toy/raw/formal_manifest.json').exists()
     assert (tmp_path / 'data/results/toy/raw/study_manifest.json').exists()
