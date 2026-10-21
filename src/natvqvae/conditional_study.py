@@ -752,9 +752,11 @@ def _summarize_likelihood(values, plan, arm):
     selection_count = min(stable_counts) if stable_counts else max(counts)
     selection_stable = bool(stable_counts)
     selection_summary = summaries[selection_count]
-    evaluation_count = max(counts)
+    joint_stable = [count for count in counts
+                    if count in stable_counts and stable_panels_by_count[count] == all_panels]
+    evaluation_count = min(joint_stable) if joint_stable else max(counts)
+    evaluation_stable = evaluation_count in joint_stable
     evaluation_summary = summaries[evaluation_count]
-    evaluation_stable = evaluation_count in stable_counts
     selection_unstable = sorted(all_panels - stable_panels_by_count[selection_count])
     evaluation_unstable = sorted(all_panels - stable_panels_by_count[evaluation_count])
     all_scale_unstable = sorted(panel for panel in all_panels
@@ -784,6 +786,151 @@ def _summarize_likelihood(values, plan, arm):
                                     'input_mc_reliable': bool(summaries[count].get('input_mc_reliable'))}
                        for count in counts},
             'summary': _compact_summary(selection_summary)}
+
+
+def write_evaluation_sample_decision(run, plan, root=None):
+    """按冻结的聚合+逐面板稳定性规则确定正式评价样本数。
+
+    原始 calibration_decision.json 与校准记录保持只读；本函数另存
+    evaluation_sample_decision.json，供 finish 的正式全 M 评价读取。
+    """
+    root = Path(root or ROOT)
+    run = Path(run)
+    raw = root / 'data/results' / run.name / 'raw'
+    calibration_path = raw / 'calibration_decision.json'
+    if not calibration_path.exists():
+        raise FileNotFoundError('Missing calibration decision: ' + str(calibration_path))
+    calibration = json.loads(calibration_path.read_text())
+    tolerance = float(plan['calibration']['likelihood_tolerance_per_residue'])
+    start_path = raw / 'study_start.json'
+    initial_revision = None
+    if start_path.exists():
+        initial_revision = json.loads(start_path.read_text()).get('git_revision')
+    arms = {}
+    for arm in plan['arms']:
+        if arm != 'QVAE':
+            arms[arm] = {'exact': True, 'selection_sample_count': 0,
+                         'evaluation_sample_count': 0, 'selection_delta': 1e-4,
+                         'evaluation_delta': 1e-4, 'selection_stable': True,
+                         'evaluation_stable': True, 'unstable_panels': [],
+                         'unstable_at_all_scales': [], 'counts': {},
+                         'evidence': 'deterministic joint score is exact'}
+            continue
+        likelihood = calibration['likelihood'][arm]
+        counts = sorted(int(key) for key in likelihood['counts'])
+        learning_rate = float(calibration['base_learning_rate'][arm])
+        summaries = {}
+        for count in counts:
+            path = raw / 'calibration' / f'likelihood_{arm}_lr{learning_rate:g}_{count}.json'
+            if not path.exists():
+                raise FileNotFoundError('Missing likelihood calibration record: ' + str(path))
+            summaries[count] = json.loads(path.read_text())['summary']
+        reference = summaries[max(counts)]
+        all_panels = set(reference.get('panels', {}))
+        aggregate_stable = []
+        joint_stable = []
+        evidence = {}
+        panel_stable_by_count = {}
+        for count in counts:
+            summary = summaries[count]
+            se = summary.get('se')
+            score = summary.get('score')
+            difference = (None if score is None or reference.get('score') is None
+                          else score - reference['score'])
+            aggregate = (summary.get('finite') and se is not None and
+                         2 * se <= tolerance and difference is not None and
+                         abs(difference) <= tolerance)
+            unstable = []
+            stable_panels = set()
+            for panel in all_panels:
+                value = summary.get('panels', {}).get(panel, {})
+                ref_panel = reference.get('panels', {}).get(panel, {})
+                panel_se = value.get('se')
+                panel_difference = (None if value.get('score') is None or ref_panel.get('score') is None
+                                    else value['score'] - ref_panel['score'])
+                panel_ok = (panel_se is not None and 2 * panel_se <= tolerance and
+                            panel_difference is not None and abs(panel_difference) <= tolerance)
+                if panel_ok:
+                    stable_panels.add(panel)
+                else:
+                    unstable.append(panel)
+            panel_stable_by_count[count] = stable_panels
+            if aggregate:
+                aggregate_stable.append(count)
+            if aggregate and stable_panels == all_panels:
+                joint_stable.append(count)
+            evidence[str(count)] = {
+                'score': _json_float(score), 'se': _json_float(se),
+                'two_se': _json_float(2 * se if se is not None else None),
+                'difference_from_largest': _json_float(difference),
+                'aggregate_stable': bool(aggregate),
+                'all_panels_stable': bool(stable_panels == all_panels),
+                'unstable_panels': sorted(unstable),
+                'input_ess_mean': _json_float(summary.get('input_ess_mean')),
+                'input_low_ess_fraction': _json_float(summary.get('input_low_ess_fraction')),
+                'input_max_normalized_weight': _json_float(summary.get('input_max_normalized_weight')),
+            }
+        if not aggregate_stable:
+            raise FitFailed('No aggregate-stable likelihood sample count')
+        selection_count = min(aggregate_stable)
+        evaluation_count = min(joint_stable) if joint_stable else max(counts)
+        evaluation_stable = evaluation_count in joint_stable
+        selection_summary = summaries[selection_count]
+        evaluation_summary = summaries[evaluation_count]
+        unstable_at_evaluation = sorted(all_panels - panel_stable_by_count[evaluation_count])
+        all_scale_unstable = sorted(
+            panel for panel in all_panels
+            if all(panel not in panel_stable_by_count[count] for count in counts))
+        selection_delta = max(1e-4, 2 * (selection_summary.get('se') or 0.))
+        evaluation_delta = max(1e-4, 2 * (evaluation_summary.get('se') or 0.))
+        arms[arm] = {
+            'exact': False,
+            'selection_sample_count': int(selection_count),
+            'evaluation_sample_count': int(evaluation_count),
+            'selection_delta': float(selection_delta),
+            'evaluation_delta': float(evaluation_delta),
+            'selection_stable': True,
+            'evaluation_stable': bool(evaluation_stable),
+            'unstable_panels': unstable_at_evaluation,
+            'unstable_at_all_scales': all_scale_unstable,
+            'counts': evidence,
+            'criterion': ('aggregate: 2*SE<=tolerance and |score-score_4096|<=tolerance; '
+                          'panels: all 27 panels also satisfy 2*SE<=tolerance and '
+                          '|panel_score-panel_score_4096|<=tolerance'),
+            'tolerance_per_residue': tolerance,
+            'evidence': (f"smallest count meeting the frozen rule is {evaluation_count}; "
+                         f"at {evaluation_count} 2*SE={evidence[str(evaluation_count)]['two_se']}, "
+                         f"difference_from_4096={evidence[str(evaluation_count)]['difference_from_largest']}, "
+                         f"unstable_panels={len(unstable_at_evaluation)}. 4096 was a "
+                         "hardcoded maximum in the earlier calibration summary; this decision "
+                         "supersedes only the final evaluation sample count, not checkpoint selection."),
+        }
+    decision = {
+        'task': plan['task'], 'status': 'frozen',
+        'source_calibration': {'path': str(calibration_path.relative_to(root)),
+                               'sha256': sha256_file(calibration_path)},
+        'source_calibration_git_revision': initial_revision,
+        'written_by_git_revision': _git_revision(root),
+        'criterion': ('smallest sample count with aggregate 2*SE<=0.01 nats/residue, '
+                      '|score-score_4096|<=0.01, and every panel satisfying the same rule; '
+                      '0.01 nats/residue was the predetermined preliminary precision standard'),
+        'tolerance_per_residue': tolerance,
+        'checkpoint_selection': 'unchanged; uses selection_sample_count and selection_delta',
+        'importance_sampling_vs_generation': ('this count governs likelihood MC only; generation '
+                                              'draws per mask remain the plan values'),
+        'arms': arms,
+    }
+    write_json(raw / 'evaluation_sample_decision.json', decision)
+    compact = {key: value for key, value in decision.items() if key != 'arms'}
+    compact['arms'] = {
+        arm: {key: value for key, value in values.items()
+              if key in ('exact', 'selection_sample_count', 'evaluation_sample_count',
+                         'selection_delta', 'evaluation_delta', 'selection_stable',
+                         'evaluation_stable', 'unstable_panels', 'unstable_at_all_scales',
+                         'counts', 'criterion', 'tolerance_per_residue', 'evidence')}
+        for arm, values in arms.items()}
+    write_json(run / 'evaluation_sample_decision.json', compact)
+    return decision
 
 
 def _load_model_for_evaluation(record, plan, data, device):
@@ -1353,12 +1500,14 @@ def evaluate_formal_models(run, plan, data, formal_manifest, root=None, device=N
                   else plan.get('calibration', {}).get('likelihood_repetitions', 8))
     bootstrap_repeats = int(bootstrap_repeats if bootstrap_repeats is not None
                             else plan.get('statistics', {}).get('bootstrap_repeats', 2000))
-    interface_path = run / 'calibration_decision.json'
-    if not interface_path.exists():
-        raise FileNotFoundError('Missing output interface: ' + str(interface_path))
-    interface = json.loads(interface_path.read_text())
+    decision_path = run / 'evaluation_sample_decision.json'
+    if not decision_path.exists():
+        decision_path = run / 'calibration_decision.json'
+    if not decision_path.exists():
+        raise FileNotFoundError('Missing evaluation/calibration decision: ' + str(decision_path))
+    decision = json.loads(decision_path.read_text())
     sample_counts = {arm: int(values['evaluation_sample_count'])
-                     for arm, values in interface['arms'].items()}
+                     for arm, values in decision['arms'].items()}
     if 'QVAE' not in sample_counts or 'deterministic' not in sample_counts:
         raise ValueError('Calibration interface must contain both arms')
     groups = {}
