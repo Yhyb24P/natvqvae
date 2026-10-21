@@ -12,8 +12,6 @@ def test_regions_contract_is_a_pilot():
     c = json.loads((CONTRACTS / "regions.json").read_text(encoding="utf-8"))
     assert c["target"]["length"] == 341
     assert c["boundary_conventions"]["cdd_derived"]["status"] == "adopted"
-    assert set(c["mask_rules"]) >= {"A", "B", "C"}
-    assert c["mask_rules"]["common"]["substitutions_only"] is True
     assert c["scope"] == "WT_relative_substitution_pilot_not_universal_NatV_biology"
 
 

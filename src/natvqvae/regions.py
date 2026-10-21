@@ -8,7 +8,6 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REGIONS_PATH = REPO_ROOT / "contracts" / "regions.json"
-DESIGN_CLASSES = ("A", "B", "C")
 
 
 @dataclass(frozen=True)
@@ -51,20 +50,6 @@ def anchors() -> dict[str, tuple[int, ...]]:
 
 def catalytic_anchors() -> frozenset[int]:
     return frozenset(p for positions in anchors().values() for p in positions)
-
-
-def editable_positions(design_class: str) -> frozenset[int]:
-    if design_class not in DESIGN_CLASSES:
-        raise ValueError(f"unknown design class {design_class!r}")
-    rules = load_contract()["mask_rules"][design_class]
-    return frozenset(p for name in rules["editable"] for p in regions()[name].positions)
-
-
-def forbidden_positions(design_class: str) -> frozenset[int]:
-    if design_class not in DESIGN_CLASSES:
-        raise ValueError(f"unknown design class {design_class!r}")
-    rules = load_contract()["mask_rules"][design_class]
-    return frozenset(p for name in rules["forbidden"] for p in regions()[name].positions)
 
 
 def validate_partition() -> None:

@@ -16,9 +16,6 @@ def _doctor(args: argparse.Namespace) -> int:
     regions.validate_partition()
     print(f"  region partition 1..341           OK  ({len(regions.regions())} regions)")
     print(f"  anchors                           OK  {sorted(regions.catalytic_anchors())}")
-    for cls in regions.DESIGN_CLASSES:
-        editable = sorted(regions.editable_positions(cls))
-        print(f"  class {cls} editable positions       {len(editable):3d}  [{editable[0]}..{editable[-1]}]")
     print(f"  WT sequence                       OK  341 aa, sha256 {WT_SHA256[:12]}...")
 
     manifest = load_manifest()
@@ -31,7 +28,7 @@ def _doctor(args: argparse.Namespace) -> int:
     if failures:
         print(f"\nFAIL: {len(failures)} data entry/entries failed verification", file=sys.stderr)
         return 1
-    print(f"\nOK: {len(results)} data entries verified, {len(regions.DESIGN_CLASSES)} design classes loaded")
+    print(f"\nOK: {len(results)} data entries verified; regions and anchors validated")
     return 0
 
 

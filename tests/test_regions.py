@@ -34,28 +34,3 @@ def test_anchors_lie_in_their_domains():
         for p in positions:
             assert regions.region_of(p) == domain
 
-
-def test_class_sets():
-    a = regions.editable_positions("A")
-    b = regions.editable_positions("B")
-    c = regions.editable_positions("C")
-    assert a == frozenset(range(4, 182))
-    assert b == frozenset(range(204, 339))
-    assert c == a | b
-    assert not a & b
-    # linker and termini are never editable
-    for cls in regions.DESIGN_CLASSES:
-        editable = regions.editable_positions(cls)
-        assert not editable & frozenset(range(1, 4))
-        assert not editable & frozenset(range(182, 204))
-        assert not editable & frozenset(range(339, 342))
-
-
-def test_forbidden_and_editable_are_disjoint():
-    for cls in regions.DESIGN_CLASSES:
-        assert not regions.editable_positions(cls) & regions.forbidden_positions(cls)
-
-
-def test_unknown_class_rejected():
-    with pytest.raises(ValueError):
-        regions.editable_positions("D")
