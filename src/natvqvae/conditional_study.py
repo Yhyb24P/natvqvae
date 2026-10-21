@@ -216,12 +216,19 @@ def _train_step(model, data, batch, weights, beta, generator, sample_count, devi
             nll = _decode_nll(model, targets, labels_target, use, codes)
             kl = categorical_kl(posterior, prior)
             loss = rloo_objective(nll, logq, kl, beta, weights)
-            site_weight = (use.sum(1) * weights).sum().clamp_min(1.)
+            reconstruction_numerator = (nll.mean(0).detach() * weights).sum()
+            reconstruction_denominator = (use.sum(1) * weights).sum()
+            kl_numerator = (kl.detach() * weights).sum() / model.factors
+            kl_denominator = weights.sum()
             metrics = {
+                'reconstruction_numerator': float(reconstruction_numerator.item()),
+                'reconstruction_denominator': float(reconstruction_denominator.item()),
                 'reconstruction_per_residue': float(
-                    ((nll.mean(0).detach() * weights).sum() / site_weight).item()),
+                    (reconstruction_numerator / reconstruction_denominator.clamp_min(1.)).item()),
+                'kl_numerator': float(kl_numerator.item()),
+                'kl_denominator': float(kl_denominator.item()),
                 'kl_per_factor': float(
-                    ((kl.detach() * weights).sum() / (weights.sum() * model.factors)).item()),
+                    (kl_numerator / kl_denominator.clamp_min(1.)).item()),
                 'target_sites': int(use.sum().item()),
             }
         else:
@@ -229,11 +236,15 @@ def _train_step(model, data, batch, weights, beta, generator, sample_count, devi
             logits = model.decode(targets, latent.unsqueeze(0))
             nll = reconstruction_nll(logits, labels_target, use)[0]
             loss = (nll * weights).mean()
-            site_weight = (use.sum(1) * weights).sum().clamp_min(1.)
+            reconstruction_numerator = (nll.detach() * weights).sum()
+            reconstruction_denominator = (use.sum(1) * weights).sum()
             metrics = {
+                'reconstruction_numerator': float(reconstruction_numerator.item()),
+                'reconstruction_denominator': float(reconstruction_denominator.item()),
                 'reconstruction_per_residue': float(
-                    ((nll.detach() * weights).sum() / site_weight).item()),
-                'kl_per_factor': None, 'target_sites': int(use.sum().item()),
+                    (reconstruction_numerator / reconstruction_denominator.clamp_min(1.)).item()),
+                'kl_numerator': None, 'kl_denominator': None, 'kl_per_factor': None,
+                'target_sites': int(use.sum().item()),
             }
     return loss, metrics
 
@@ -889,8 +900,10 @@ def fit_model(run, plan, data, root, device, fit_key, phase, arm, seed, config,
                 raise ValueError('Training query count differs from weight population')
             epoch_loss = 0.
             epoch_samples = 0
-            reconstruction_values = []
-            kl_values = []
+            reconstruction_numerator = 0.
+            reconstruction_denominator = 0.
+            kl_numerator = 0.
+            kl_denominator = 0.
             train_started = time.monotonic()
             for start in range(0, len(queries), batch_size):
                 if step >= max_steps:
@@ -912,9 +925,11 @@ def fit_model(run, plan, data, root, device, fit_key, phase, arm, seed, config,
                 step += 1
                 epoch_loss += float(loss.detach().item()) * len(batch)
                 epoch_samples += len(batch)
-                reconstruction_values.append(metrics['reconstruction_per_residue'] * len(batch))
-                if metrics['kl_per_factor'] is not None:
-                    kl_values.append(metrics['kl_per_factor'] * len(batch))
+                reconstruction_numerator += metrics['reconstruction_numerator']
+                reconstruction_denominator += metrics['reconstruction_denominator']
+                if metrics['kl_numerator'] is not None:
+                    kl_numerator += metrics['kl_numerator']
+                    kl_denominator += metrics['kl_denominator']
                 if (diagnostics and 'midpoint' not in diagnostic_attempted
                         and step >= max_steps // 2):
                     diagnostics_at('midpoint')
@@ -958,8 +973,15 @@ def fit_model(run, plan, data, root, device, fit_key, phase, arm, seed, config,
                 'epoch': epoch_number, 'step': step,
                 'learning_rate': learning_rate, 'beta': beta,
                 'train_loss': epoch_loss / epoch_samples,
-                'train_reconstruction_per_residue': float(np.mean(reconstruction_values)) if reconstruction_values else None,
-                'train_kl_per_factor': float(np.mean(kl_values)) if kl_values else None,
+                'train_reconstruction_per_residue': (
+                    reconstruction_numerator / reconstruction_denominator
+                    if reconstruction_denominator else None),
+                'train_reconstruction_numerator': reconstruction_numerator,
+                'train_reconstruction_denominator': reconstruction_denominator,
+                'train_kl_per_factor': (kl_numerator / kl_denominator
+                                        if kl_denominator else None),
+                'train_kl_numerator': kl_numerator,
+                'train_kl_denominator': kl_denominator,
                 'validation': validation_summary,
                 'effective_delta': _json_float(effective_delta),
                 'best': _json_float(state['best']), 'best_step': state['best_step'],
@@ -1507,6 +1529,38 @@ def evaluate_formal_models(run, plan, data, formal_manifest, root=None, device=N
     return aggregate
 
 
+def _write_curve_scaling_note(raw, revision):
+    history_path = raw / 'calibration_history.json'
+    history = None
+    if history_path.exists():
+        try:
+            history = json.loads(history_path.read_text())
+        except Exception:
+            history = None
+    if history is None:
+        candidates = sorted((raw / 'curves').glob('calibration_*.json'))
+        if candidates:
+            try:
+                history = json.loads(candidates[0].read_text()).get('history')
+            except Exception:
+                history = None
+    corrected = None
+    if history:
+        corrected = bool('train_reconstruction_numerator' in history[0])
+    note = {
+        'fixed_in_git_revision': revision,
+        'calibration_curves_corrected': corrected,
+        'issue': ('earlier calibration curves stored per-epoch means of batch-level weighted '
+                  'per-residue reconstruction and KL without dividing by total sample counts'),
+        'impact': 'loss.backward, component weights and validation scores are unaffected',
+        'corrected_fields': ['train_reconstruction_numerator', 'train_reconstruction_denominator',
+                             'train_kl_numerator', 'train_kl_denominator'],
+        'calibration_raw_records_preserved': True,
+    }
+    write_json(raw / 'curve_scaling_note.json', note)
+    return note
+
+
 def _source_hashes(run, plan):
     paths = [Path(__file__), ROOT / 'src/natvqvae/conditional_evaluation.py',
              ROOT / 'src/natvqvae/conditional_generation.py',
@@ -1635,11 +1689,13 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
             failures = list(calibration_manifest.get('failures', []))
             if attempts['count'] != calibration_count:
                 raise FitFailed('Calibration manifest attempt count differs from schedule')
+            _write_curve_scaling_note(raw, identity_record['current_git_revision'])
         else:
             calibration = _calibrate(run, plan, data, root, device, attempts, failures,
                                      save_records)
             if attempts['count'] != calibration_count:
                 raise FitFailed('Calibration fit count differs from schedule')
+            _write_curve_scaling_note(raw, identity_record['current_git_revision'])
             if calibrate_only:
                 calibration_records = list(calibration['fits'].values())
                 write_json(raw / 'calibration_fits.json', calibration_records)
@@ -1647,6 +1703,7 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
                 for path in sorted((raw / 'curves').glob('*.json')):
                     combined_history.extend(json.loads(path.read_text())['history'])
                 write_json(raw / 'calibration_history.json', combined_history)
+                _write_curve_scaling_note(raw, identity_record['current_git_revision'])
                 wall_seconds = time.monotonic() - started
                 cost = {'attempted_fits': attempts['count'],
                         'authorized_fits': int(plan['budget']['max_fits']),
@@ -1669,6 +1726,10 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
                     'attempts': attempts['count'],
                     'failures': failures,
                 }
+                if (raw / 'curve_scaling_note.json').exists():
+                    manifest['curve_scaling_note'] = {
+                        'path': str((raw / 'curve_scaling_note.json').relative_to(root)),
+                        'sha256': sha256_file(raw / 'curve_scaling_note.json')}
                 write_json(raw / 'calibration_manifest.json', manifest)
                 status(run, 'CALIBRATION_READY', mode='calibration_only',
                        attempts=attempts['count'], wall_seconds=wall_seconds)
@@ -1711,6 +1772,7 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
         artifacts = {}
         for name, path in [('study_start', raw / 'study_start.json'),
                            ('calibration_decision', raw / 'calibration_decision.json'),
+                           ('curve_scaling_note', raw / 'curve_scaling_note.json'),
                            ('search_selection', raw / 'search_selection.json'),
                            ('formal_manifest', raw / 'formal_manifest.json'),
                            ('fit_status', raw / 'fit_status.json'),
