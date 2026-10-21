@@ -4,7 +4,7 @@ import os
 os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')
 os.environ['HF_HUB_OFFLINE']='1'
 from functools import lru_cache
-import argparse,gzip,hashlib,json,subprocess,sys,time,traceback
+import argparse,gzip,hashlib,json,subprocess,sys,time,traceback,signal
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -31,12 +31,16 @@ def setup(run):
     torch.backends.cuda.enable_flash_sdp(False);torch.backends.cuda.enable_mem_efficient_sdp(False)
     if not torch.cuda.is_available():raise RuntimeError('CUDA required')
     plan=json.loads((run/'plan.json').read_text());manifest=json.loads((ROOT/'data/manifest.json').read_text())
-    source=Path(manifest['source_root_default']);backbone=source/'nad_models/esm2'
+    source=Path(os.environ.get('NATV_SOURCE_ROOT',manifest['source_root_default']));backbone=source/'nad_models/esm2'
     files=[ROOT/'data/processed'/n for n in ['training.fasta','validation.fasta','samples.csv']]
     files += [backbone/n for n in ['config.json','model.safetensors','special_tokens_map.json','tokenizer_config.json','vocab.txt']]
     files += [Path(__file__),ROOT/'src/natvqvae/conditional_generation.py',run/'plan.json']
     status(run,'VERIFYING_INPUTS')
     hashes={str(p.resolve()):sha256_file(p) for p in files}
+    previous=json.loads((ROOT/plan['reuse_features_from']/'inputs/identity.json').read_text())
+    for path in files[:-3]:
+        if hashes[str(path.resolve())]!=previous['sha256'][str(path.resolve())]:
+            raise ValueError('Input differs from verified feature source: '+str(path))
     role_entry=next(e for e in manifest['entries'] if e['name']=='family_roles')
     if sha256_file(source/role_entry['path'])!=role_entry['sha256']:raise ValueError('Source roles changed')
     formal=pd.read_parquet(source/role_entry['path'],columns=['sequence_id','training_role_v2','component_v2'])
@@ -60,48 +64,34 @@ def setup(run):
     return plan,rows.sort_values('sequence_id').reset_index(drop=True),backbone
 
 
-def features(run,plan,rows,backbone):
-    cache=ROOT/'data/interim'/run.name/'features';cache.mkdir(parents=True,exist_ok=False)
-    specs=[];rng=np.random.default_rng(plan['features']['seed'])
+def reuse_features(run,plan,rows):
+    origin=ROOT/plan['reuse_features_from'];raw=ROOT/'data/results'/origin.name/'raw'
+    snapshot=json.loads((raw/'result_manifest.json').read_text())
+    specs=json.loads((raw/'masks.json').read_text())
+    receipts=json.loads((raw/'feature_manifest.json').read_text())
+    if sha256_file(raw/'feature_manifest.json')!=snapshot['inputs/feature_manifest.json'] or sha256_file(raw/'masks.json')!=snapshot['inputs/masks.json']:
+        raise ValueError('Historical feature manifest or masks changed')
+    if len(specs)!=len(rows)*3 or len({q['id'] for q in specs})!=len(specs):raise ValueError('Incomplete masks')
+    rng=np.random.default_rng(plan['features']['seed']);expected=[]
     for row in rows.itertuples():
         for panel,fraction in enumerate(plan['features']['mask_fractions']):
-            count=max(1,round(len(row.sequence)*fraction));pos=sorted(map(int,rng.choice(len(row.sequence),count,replace=False)))
-            specs.append({'id':f'{row.sequence_id}_p{panel}','sequence_id':row.sequence_id,'role':row.training_role_v2,
-                         'component':row.component_v2,'sequence':row.sequence,'panel':panel,'positions':pos})
-    write(run/'inputs/masks.json',specs)
-    encoder=FrozenEncoder(backbone);batch_size=plan['features']['batch_size'];receipts=[];started=time.monotonic()
-    status(run,'PREPARING_MASKED_FEATURES',completed=0,total=len(specs))
-    for begin in range(0,len(specs),batch_size):
-        batch=specs[begin:begin+batch_size];seqs=[q['sequence'] for q in batch]
-        h,b,v,m=encoder(seqs,[q['positions'] for q in batch])
-        if begin==0:
-            checks={}
-            for arm in plan['arms']:
-                torch.manual_seed(plan['seeds'][0]);probe=ConditionalModel(arm,**plan['model']).cuda()
-                optimizer=torch.optim.AdamW(probe.parameters(),lr=1e-4)
-                for step in range(2):
-                    optimizer.zero_grad()
-                    with torch.autocast('cuda',dtype=torch.bfloat16):
-                        logits,kl=probe(h[:2].clone(),b[:2].clone(),v[:2].clone(),m[:2].clone())
-                        loss=logits.square().mean()+.01*kl
-                    loss.backward();optimizer.step()
-                if probe.global_map.weight.grad.abs().sum()==0 or probe.global_projection.weight.grad.abs().sum()==0:raise ValueError('Disconnected global branch')
-                probe.eval();z=probe.sample_prior(2,torch.Generator(device='cuda').manual_seed(1),'cuda') if arm=='QVAE' else None
-                with torch.no_grad(),torch.autocast('cuda',dtype=torch.bfloat16):
-                    output,_=probe(h[:2],b[:2],v[:2],m[:2],z=z)
-                if not torch.isfinite(output).all():raise ValueError('Nonfinite GPU inference')
-                checks[arm]={'active_parameters':sum(p.numel() for p in probe.parameters()),'global_branch_gradient_nonzero':True,'actual_masked_backbone_forward_finite':True}
-                del probe,optimizer
-            write(run/'gpu_checks.json',checks)
-        for i,q in enumerate(batch):
-            n=len(q['sequence']);path=cache/(q['id']+'.pt')
-            labels=torch.tensor([AA.index(a) for a in q['sequence']],dtype=torch.long)
-            torch.save({'features':h[i,:n].cpu().clone(),'baseline':b[i,:n].cpu().clone(),'mask':m[i,:n].cpu().clone(),'labels':labels},path)
-            receipts.append({'id':q['id'],'path':str(path.relative_to(ROOT)),'sha256':sha256_file(path)})
-        if begin%128==0 or begin+batch_size>=len(specs):status(run,'PREPARING_MASKED_FEATURES',completed=min(begin+batch_size,len(specs)),total=len(specs),seconds=time.monotonic()-started)
-    write(run/'inputs/feature_manifest.json',receipts)
-    del encoder;torch.cuda.empty_cache()
-    return specs,{r['id']:ROOT/r['path'] for r in receipts}
+            positions=sorted(map(int,rng.choice(len(row.sequence),max(1,round(len(row.sequence)*fraction)),replace=False)))
+            expected.append({'id':f'{row.sequence_id}_p{panel}','sequence_id':row.sequence_id,'role':row.training_role_v2,
+                'component':row.component_v2,'sequence':row.sequence,'panel':panel,'positions':positions})
+    if expected!=specs:raise ValueError('Masks do not match current plan/population')
+    paths={r['id']:ROOT/r['path'] for r in receipts}
+    if set(paths)!={q['id'] for q in specs}:raise ValueError('Feature population differs')
+    for i,r in enumerate(receipts):
+        path=paths[r['id']]
+        if not path.resolve().is_relative_to((ROOT/'data/interim'/origin.name).resolve()) or sha256_file(path)!=r['sha256']:
+            raise ValueError('Feature identity differs: '+r['id'])
+        if i%1000==0:status(run,'VERIFYING_CACHED_FEATURES',completed=i,total=len(receipts))
+    destination=ROOT/'data/results'/run.name/'raw';destination.mkdir(parents=True,exist_ok=True)
+    write(destination/'masks.json',specs);write(destination/'feature_manifest.json',receipts)
+    write(run/'inputs/cache_identity.json',{'origin':str(origin.relative_to(ROOT)),
+        'masks_sha256':sha256_file(raw/'masks.json'),'feature_manifest_sha256':sha256_file(raw/'feature_manifest.json'),
+        'verified_feature_files':len(receipts),'cache_reused_without_copy':True})
+    return specs,paths
 
 
 @lru_cache(maxsize=6000)
@@ -134,70 +124,133 @@ def fixed_prior(specs,seed,model):
 
 @torch.no_grad()
 def validate(model,queries,paths,seed):
-    model.eval();records=[]
+    model.eval();records=[];probabilities=[]
     for begin in range(0,len(queries),64):
         batch=queries[begin:begin+64];h,b,v,m,labels=batch_features(batch,paths)
-        z=fixed_prior(batch,seed,model) if model.arm=='QVAE' else None
         with torch.autocast('cuda',dtype=torch.bfloat16):
-            logits,kl=model(h,b,v,m,z=z);ce=sequence_ce(logits,labels,m)
-        posterior=None
-        if model.arm=='QVAE':
-            with torch.autocast('cuda',dtype=torch.bfloat16):posterior=sequence_ce(model(h,b,v,m,z='posterior')[0],labels,m)
-        for i,q in enumerate(batch):records.append({'component':q['component'],'CE':float(ce[i]),'posterior_CE':float(posterior[i]) if posterior is not None else float(ce[i])})
+            context=model.encode_context(h,v)
+            if model.arm=='QVAE':
+                z=fixed_prior(batch,seed,model);prior=model.decode(context,b,v,z.flatten(1))
+                scores=model.posterior_scores(context,v,m,labels);prob=scores.float().softmax(-1)
+                mean_logits=model.decode(context,b,v,prob.to(context.dtype).flatten(1))
+                uniforms=[]
+                for query in batch:
+                    code=int(hashlib.sha256(f'posterior:{seed}:{query["id"]}'.encode()).hexdigest()[:16],16)
+                    uniforms.append(np.random.default_rng(code).random(model.factors))
+                u=torch.tensor(np.array(uniforms),device='cuda')
+                codes=(u[...,None]>=prob.cumsum(-1)).sum(-1).clamp_max(model.states-1)
+                sample_logits=model.decode(context,b,v,F.one_hot(codes,model.states).to(context.dtype).flatten(1))
+                ce=sequence_ce(prior,labels,m);mean_ce=sequence_ce(mean_logits,labels,m);sample_ce=sequence_ce(sample_logits,labels,m)
+                kl=(prob*(prob.clamp_min(1e-12).log()+np.log(model.states))).sum(-1).mean(-1)
+                probabilities.extend(prob.cpu().numpy())
+            else:
+                pooled=(context*v[...,None]).sum(1)/v.sum(1,keepdim=True)
+                prior=model.decode(context,b,v,F.gelu(model.global_map(pooled)))
+                ce=sequence_ce(prior,labels,m);mean_ce=sample_ce=ce;kl=torch.zeros_like(ce)
+        for i,q in enumerate(batch):
+            records.append({'id':q['id'],'component':q['component'],'panel':q['panel'],'CE':float(ce[i]),
+                'posterior_CE':float(mean_ce[i]),'posterior_sample_CE':float(sample_ce[i]),'KL':float(kl[i])})
     frame=pd.DataFrame(records)
-    return {'prior_CE':float(frame.groupby('component').CE.mean().mean()),'posterior_CE':float(frame.groupby('component').posterior_CE.mean().mean())}
+    def balanced(part,column):return float(part.groupby('component')[column].mean().mean())
+    metrics={'prior_CE':balanced(frame,'CE'),'posterior_CE':balanced(frame,'posterior_CE'),
+        'posterior_sample_CE':balanced(frame,'posterior_sample_CE'),'validation_KL':balanced(frame,'KL'),
+        'panels':{str(panel):{'prior_CE':balanced(part,'CE'),'posterior_CE':balanced(part,'posterior_CE'),
+            'posterior_sample_CE':balanced(part,'posterior_sample_CE')} for panel,part in frame.groupby('panel')}}
+    if probabilities:
+        probs=np.array(probabilities);aggregate=probs.mean(0)
+        entropy=lambda p:-(p*np.log(np.maximum(p,1e-12))).sum(-1)
+        conditional=entropy(probs).mean(0);marginal=entropy(aggregate)
+        metrics['posterior_factors']={'conditional_entropy':conditional.tolist(),'aggregate_entropy':marginal.tolist(),
+            'aggregate_minus_conditional_entropy':(marginal-conditional).tolist(),
+            'argmax_category_counts':[[int((probs.argmax(-1)[:,f]==k).sum()) for k in range(model.states)] for f in range(model.factors)],
+            'weighting':'unweighted_validation_inputs; descriptive_not_conditional_mutual_information'}
+    return metrics,records
+
+
+@torch.no_grad()
+def latent_sensitivity(model,queries,paths,seed):
+    model.eval();queries=queries[:24];h,b,v,m,labels=batch_features(queries,paths)
+    with torch.autocast('cuda',dtype=torch.bfloat16):
+        context=model.encode_context(h,v);outputs=[]
+        for draw in range(8):
+            generator=torch.Generator(device='cuda').manual_seed(seed+10000+draw)
+            z=model.sample_prior(len(queries),generator,'cuda')
+            outputs.append(model.decode(context,b,v,z.flatten(1)).float().softmax(-1)[m])
+    probabilities=torch.stack(outputs);reference=probabilities[0]
+    tv=(probabilities[1:]-reference).abs().sum(-1)/2
+    disagreement=(probabilities[1:].argmax(-1)!=reference.argmax(-1)).float()
+    return {'inputs':[q['id'] for q in queries],'prior_draws':8,'prior_seeds':[seed+10000+i for i in range(8)],
+        'masked_positions':int(m.sum()),'mean_TV_to_first_draw':float(tv.mean()),'max_TV_to_first_draw':float(tv.max()),
+        'argmax_disagreement_to_first_draw':float(disagreement.mean()),'sampling':'prediction_probabilities_only_no_sequence_generation'}
 
 
 def train(run,plan,specs,paths):
-    cfg=plan['training'];models={};optimizers={};initial={};best={};history=[]
+    cfg=plan['training'];models={};optimizers={};initial={};best={};history=[];stale={};stopped={};receipt={}
+    model_root=ROOT/'data/models'/run.name/'checkpoints';raw=ROOT/'data/results'/run.name/'raw'
     for seed in plan['seeds']:
         for arm in plan['arms']:
             torch.manual_seed(seed);model=ConditionalModel(arm,**plan['model']).cuda()
             key=f'{arm}/{seed}';models[key]=model;optimizers[key]=torch.optim.AdamW(model.parameters(),lr=cfg['learning_rate'],weight_decay=cfg['weight_decay'])
-            initial[key]=hashlib.sha256(b''.join(v.detach().cpu().numpy().tobytes() for v in model.state_dict().values())).hexdigest()
-            best[key]=float('inf')
-        if initial[f'QVAE/{seed}']!=initial[f'deterministic/{seed}']:raise ValueError('Unmatched initial state')
-    counts={k:sum(p.numel() for p in m.parameters()) for k,m in models.items()}
-    if len(set(counts.values()))!=1:raise ValueError('Unequal active parameter counts')
-    write(run/'initialization.json',{'state_hashes':initial,'parameters':counts,'legacy_NatV_checkpoint_loaded':False})
+            shared={k:v for k,v in model.state_dict().items() if not k.startswith(('target_embedding.','posterior_encoder.'))}
+            initial[key]=hashlib.sha256(b''.join(v.detach().cpu().numpy().tobytes() for v in shared.values())).hexdigest()
+            best[key]=float('inf');stale[key]=0
+        if initial[f'QVAE/{seed}']!=initial[f'deterministic/{seed}']:raise ValueError('Shared initialization differs')
+    write(run/'initialization.json',{'shared_state_hashes':initial,'parameters':{k:sum(p.numel() for p in m.parameters()) for k,m in models.items()},
+        'legacy_NatV_checkpoint_loaded':False,'posterior_only_parameters_in_QVAE':True})
     train_rows=[q for q in specs if q['role']=='training'];validation=[q for q in specs if q['role']=='validation']
-    components=pd.DataFrame(train_rows).drop_duplicates('sequence_id').component.value_counts().to_dict()
-    mean_weight=np.mean([1/components[q['component']] for q in train_rows])
-    steps=0;started=time.monotonic()
+    counts=pd.DataFrame(train_rows).drop_duplicates('sequence_id').component.value_counts().to_dict()
+    mean_weight=np.mean([1/counts[q['component']] for q in train_rows]);steps=0;started=time.monotonic()
     for epoch in range(cfg['epochs']):
+        active=[key for key in models if key not in stopped]
+        if not active:break
         panel=epoch%3;queries=[q for q in train_rows if q['panel']==panel]
         order=np.random.default_rng(plan['features']['seed']+epoch).permutation(len(queries));queries=[queries[i] for i in order]
-        losses={k:[] for k in models}
-        status(run,'TRAINING',epoch=epoch+1,total_epochs=cfg['epochs'],completed_batches=0)
+        losses={k:np.zeros(3) for k in active}
+        status(run,'TRAINING',epoch=epoch+1,total_epochs=cfg['epochs'],active_fits=active)
         for begin in range(0,len(queries),cfg['batch_size']):
             batch=queries[begin:begin+cfg['batch_size']];h,b,v,m,labels=batch_features(batch,paths)
-            weights=torch.tensor([1/components[q['component']]/mean_weight for q in batch],device='cuda')
-            for key,model in models.items():
-                model.train();optimizer=optimizers[key];optimizer.zero_grad(set_to_none=True)
+            weights=torch.tensor([1/counts[q['component']]/mean_weight for q in batch],device='cuda')
+            for key in active:
+                model=models[key];model.train();optimizer=optimizers[key];optimizer.zero_grad(set_to_none=True)
                 seed=int(key.split('/')[1]);torch.manual_seed(seed+steps)
                 with torch.autocast('cuda',dtype=torch.bfloat16):
-                    logits,kl=model(h,b,v,m);ce=(sequence_ce(logits,labels,m)*weights).mean()
-                coefficient=cfg['KL_coefficient']*min(1,(steps+1)/cfg['KL_warmup_steps'])
-                loss=ce+coefficient*kl
+                    logits,kl=model(h,b,v,m,labels=labels if model.arm=='QVAE' else None)
+                    ce=(sequence_ce(logits,labels,m)*weights).mean()
+                    coefficient=cfg['KL_coefficient']*min(1,(steps+1)/cfg['KL_warmup_steps'])
+                    loss=ce+coefficient*kl
                 if not torch.isfinite(loss):raise ValueError('Nonfinite objective: '+key)
                 loss.backward();norm=torch.nn.utils.clip_grad_norm_(model.parameters(),cfg['gradient_clip'])
                 if not torch.isfinite(norm):raise ValueError('Nonfinite gradient: '+key)
-                optimizer.step();losses[key].append([float(ce.detach()),float(kl.detach())])
+                optimizer.step();losses[key]+=np.array([float(ce.detach())*len(batch),float(kl.detach())*len(batch),len(batch)])
             steps+=1
-            if begin%(cfg['batch_size']*10)==0:status(run,'TRAINING',epoch=epoch+1,total_epochs=cfg['epochs'],completed_batches=begin//cfg['batch_size']+1,seconds=time.monotonic()-started)
-        for key,model in models.items():
-            seed=int(key.split('/')[1]);metrics=validate(model,validation,paths,seed)
-            record={'key':key,'epoch':epoch+1,'training_CE':float(np.mean(losses[key],axis=0)[0]),'training_KL':float(np.mean(losses[key],axis=0)[1]),**metrics};history.append(record)
+        for key in active:
+            model=models[key];seed=int(key.split('/')[1]);metrics,records=validate(model,validation,paths,seed)
+            if not np.isfinite([metrics['prior_CE'],metrics['posterior_CE'],metrics['posterior_sample_CE']]).all():
+                raise ValueError('Nonfinite validation: '+key)
+            with gzip.open(raw/'validation_records.jsonl.gz','at') as handle:
+                for record in records:handle.write(json.dumps({'key':key,'epoch':epoch+1,**record})+'\n')
+            record={'key':key,'epoch':epoch+1,'training_panel':panel,'training_CE':float(losses[key][0]/losses[key][2]),
+                'training_KL':float(losses[key][1]/losses[key][2]),'KL_coefficient':coefficient,**metrics};history.append(record)
             if metrics['prior_CE']<best[key]:
-                best[key]=metrics['prior_CE'];path=run/'checkpoints'/key/'best.pt';path.parent.mkdir(parents=True,exist_ok=True)
-                torch.save({'state_dict':model.state_dict(),'arm':model.arm,'seed':seed,'epoch':epoch+1,'validation':metrics,'model_config':plan['model']},path)
-        write(run/'training_history.json',history)
-        print(json.dumps({'epoch':epoch+1,'validation':{k:best[k] for k in models}}),flush=True)
-    receipt={}
-    for key in models:
-        path=run/'checkpoints'/key/'best.pt';receipt[key]={'path':str(path.relative_to(run)),'sha256':sha256_file(path),'selected_prior_CE':best[key]}
-    write(run/'checkpoint_manifest.json',receipt)
-    del models,optimizers;torch.cuda.empty_cache();return receipt
+                best[key]=metrics['prior_CE'];stale[key]=0;path=model_root/key/'best.pt';path.parent.mkdir(parents=True,exist_ok=True)
+                torch.save({'state_dict':model.state_dict(),'arm':model.arm,'seed':seed,'epoch':epoch+1,
+                    'validation':metrics,'model_config':plan['model']},path)
+                receipt[key]={'path':str(path.relative_to(ROOT)),'sha256':sha256_file(path),'selected_prior_CE':best[key],'epoch':epoch+1}
+                write(run/'checkpoint_manifest.json',receipt)
+            else:stale[key]+=1
+            if stale[key]>=cfg['patience']:stopped[key]={'epoch':epoch+1,'reason':'early_stopping'}
+            elif epoch+1==cfg['epochs']:stopped[key]={'epoch':epoch+1,'reason':'max_epochs'}
+            write(run/'training_history.json',history)
+        write(run/'fit_status.json',{'stopped':stopped,'best_CE':best,'stale_epochs':stale})
+        print(json.dumps({'epoch':epoch+1,'validation':{k:history[-len(active)+i]['prior_CE'] for i,k in enumerate(active)},'seconds':time.monotonic()-started}),flush=True)
+    diagnostics={}
+    for key,model in models.items():
+        if model.arm!='QVAE':continue
+        saved=torch.load(ROOT/receipt[key]['path'],map_location='cpu',weights_only=True);model.load_state_dict(saved['state_dict'])
+        diagnostics[key]={'checkpoint_sha256':receipt[key]['sha256'],**latent_sensitivity(model,validation,paths,int(key.split('/')[1]))}
+    write(run/'latent_sensitivity.json',diagnostics)
+    del models,optimizers;cached_feature.cache_clear();torch.cuda.empty_cache()
+    return receipt
 
 
 def generate(run,plan,backbone,checkpoints):
@@ -214,7 +267,7 @@ def generate(run,plan,backbone,checkpoints):
     with gzip.open(run/'trajectories.jsonl.gz','wt') as trace:
         for seed in plan['seeds']:
             for arm in plan['arms']:
-                key=f'{arm}/{seed}';entry=checkpoints[key];path=run/entry['path']
+                key=f'{arm}/{seed}';entry=checkpoints[key];path=ROOT/entry['path']
                 if sha256_file(path)!=entry['sha256']:raise ValueError('Checkpoint changed')
                 saved=torch.load(path,map_location='cpu',weights_only=True);model=ConditionalModel(arm,**plan['model']).cuda().eval();model.load_state_dict(saved['state_dict'],strict=True)
                 selected=[g for g in groups if g['seed']==seed]
@@ -289,14 +342,36 @@ def summarize(run,plan,frame):
     status(run,'COMPLETED',attempts=len(frame))
 
 
+class BudgetExpired(Exception):
+    pass
+
+
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--run',type=Path,required=True);args=parser.parse_args();run=args.run.resolve()
+    parser=argparse.ArgumentParser();parser.add_argument('--run',type=Path,required=True)
+    args=parser.parse_args();run=args.run.resolve()
     if not run.is_relative_to(ROOT/'experiments'):raise ValueError('Run directory must be inside experiments/')
     if (run/'status.json').exists():raise ValueError('Existing run must be inspected, not overwritten')
+    plan=json.loads((run/'plan.json').read_text())
+    if plan['task']!='target_conditioned_posterior_training':raise ValueError('Use the recorded Git revision for historical runs')
+    raw=ROOT/'data/results'/run.name/'raw';raw.mkdir(parents=True,exist_ok=True)
+    started=time.monotonic();outcome='FAILED'
+    def deadline(signum,frame):raise BudgetExpired('Authorized wall-clock budget reached')
+    signal.signal(signal.SIGALRM,deadline);signal.setitimer(signal.ITIMER_REAL,plan['budget']['wall_seconds'])
     try:
-        plan,rows,backbone=setup(run);specs,paths=features(run,plan,rows,backbone)
-        receipt=train(run,plan,specs,paths);generate(run,plan,backbone,receipt)
+        plan,rows,backbone=setup(run);specs,paths=reuse_features(run,plan,rows)
+        train(run,plan,specs,paths);outcome='COMPLETED'
+    except BudgetExpired as exc:
+        outcome='BUDGET_EXHAUSTED';write(raw/'termination.json',{'reason':str(exc)})
     except BaseException as exc:
-        status(run,'FAILED',error=repr(exc));raise
+        write(raw/'failure.json',{'error':repr(exc),'traceback':traceback.format_exc()});raise
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0)
+        elapsed=time.monotonic()-started
+        write(run/'cost.json',{'wall_seconds':elapsed,'wall_budget_seconds':plan['budget']['wall_seconds'],
+            'single_gpu_allocation_seconds_upper_bound':elapsed,'gpu':'NVIDIA GeForce RTX 5090 D',
+            'attempted_fits':6,'attempt':1,'outcome':outcome})
+        write(run/'result_manifest.json',{'raw_files':{str(p.relative_to(ROOT)):sha256_file(p) for p in raw.iterdir() if p.is_file()},
+            'source_files':{str(p.relative_to(ROOT)):sha256_file(p) for p in [Path(__file__),ROOT/'src/natvqvae/conditional_generation.py',run/'plan.json']}})
+        status(run,outcome,wall_seconds=elapsed)
 
 if __name__=='__main__':main()

@@ -30,21 +30,22 @@ def main():
     inputs = [run / name for name in (
         'training_history.json', 'plan.json', 'checkpoint_manifest.json', 'inputs/identity.json')]
     history, plan, manifest, identity = [json.loads(p.read_text()) for p in inputs]
-    epochs = list(range(1, plan['training']['epochs'] + 1))
+    epochs = list(range(1, max(r['epoch'] for r in history) + 1))
     seeds = plan['seeds']
     fractions = plan['features']['mask_fractions']
     if len(fractions) != 3:
         raise ValueError('此图对应三个轮换掩码面板')
     indexed = {(r['key'], r['epoch']): r for r in history}
     expected = {(f'{arm}/{seed}', epoch)
-                for arm in plan['arms'] for seed in seeds for epoch in epochs}
+                for arm in plan['arms'] for seed in seeds
+                for epoch in range(1, max(r['epoch'] for r in history if r['key']==f'{arm}/{seed}')+1)}
     if len(indexed) != len(history) or set(indexed) != expected:
         raise ValueError('训练记录重复或不完整')
     metrics = ['training_CE', 'training_KL', 'prior_CE', 'posterior_CE']
     arrays = {arm: {metric: np.array([
-        [indexed[f'{arm}/{seed}', epoch][metric] for epoch in epochs]
+        [indexed.get((f'{arm}/{seed}', epoch), {}).get(metric, np.nan) for epoch in epochs]
         for seed in seeds]) for metric in metrics} for arm in plan['arms']}
-    if not all(np.isfinite(a).all() for values in arrays.values() for a in values.values()):
+    if not all(np.isfinite(r[m]) for r in history for m in metrics):
         raise ValueError('存在非有限指标')
 
     # 对照运行时源码身份；不修改历史 identity 或哈希快照。
@@ -54,8 +55,10 @@ def main():
         recorded = identity['sha256'][str(path)]
         actual = digest(path)
         if actual != recorded:
-            raise ValueError(f'当前源码与运行快照不同，须重新审阅：{relative}')
-        reviewed[relative] = actual
+            snapshot = subprocess.check_output(['git', 'show', f"{identity['git_revision']}:{relative}"], cwd=ROOT)
+            if hashlib.sha256(snapshot).hexdigest() != recorded:
+                raise ValueError(f'Git 中无法恢复运行时源码：{relative}')
+        reviewed[relative] = recorded
     selections = {}
     for key in sorted(manifest):
         entry = manifest[key]
@@ -63,7 +66,7 @@ def main():
         if digest(path) != entry['sha256']:
             raise ValueError(f'权重校验失败：{key}')
         saved = torch.load(path, map_location='cpu', weights_only=True)
-        best = min((indexed[key, e] for e in epochs), key=lambda r: r['prior_CE'])
+        best = min((r for r in history if r['key']==key), key=lambda r: r['prior_CE'])
         if (saved['epoch'] != best['epoch']
                 or saved['validation']['prior_CE'] != best['prior_CE']
                 or entry['selected_prior_CE'] != best['prior_CE']
@@ -83,10 +86,11 @@ def main():
 
     def curve(ax, arm, values, selected=None):
         selected = np.ones(len(x), dtype=bool) if selected is None else selected
+        selected = selected & np.isfinite(values).any(0)
         data = values[:, selected]
-        ax.plot(x[selected], data.mean(0), color=colors[arm], label=labels[arm],
+        ax.plot(x[selected], np.nanmean(data, axis=0), color=colors[arm], label=labels[arm],
                 marker='o', markersize=3, linewidth=1.6)
-        ax.fill_between(x[selected], data.min(0), data.max(0), color=colors[arm], alpha=.18)
+        ax.fill_between(x[selected], np.nanmin(data, axis=0), np.nanmax(data, axis=0), color=colors[arm], alpha=.18)
 
     for arm, values in arrays.items():
         curve(axes[0, 0], arm, values['prior_CE'])
@@ -107,18 +111,31 @@ def main():
         ax.set_xlabel('训练轮次')
         ax.grid(alpha=.2)
         ax.legend(fontsize=9)
-    fig.suptitle('条件生成训练诊断｜线为三个种子均值，阴影为最小值–最大值（非置信区间）', fontsize=15)
+    fig.suptitle('条件生成训练诊断｜线为仍有记录的种子均值，阴影为最小值–最大值（非置信区间）', fontsize=15)
     fig.savefig(run / 'training_curves.png', dpi=180)
     fig.savefig(run / 'training_curves.pdf')
     plt.close(fig)
 
+    figure_names = ['training_curves.png', 'training_curves.pdf']
+    if all('panels' in r for r in history):
+        panel_fig, panel_axes = plt.subplots(1, 3, figsize=(15, 4), constrained_layout=True)
+        for panel, ax in enumerate(panel_axes):
+            for arm in plan['arms']:
+                values = np.array([[indexed.get((f'{arm}/{seed}', e), {}).get('panels', {}).get(str(panel), {}).get('prior_CE', np.nan)
+                                    for e in epochs] for seed in seeds])
+                curve(ax, arm, values)
+            ax.set(title=f'{fractions[panel]:.0%} 掩码验证 CE', xlabel='训练轮次', ylabel='组分平衡先验 CE')
+            ax.grid(alpha=.2);ax.legend()
+        panel_fig.suptitle('每轮覆盖全部面板｜线为有记录种子均值，阴影为极差；早停后种子数可减少')
+        panel_fig.savefig(run / 'validation_by_mask.png', dpi=180);plt.close(panel_fig)
+        figure_names.append('validation_by_mask.png')
     summary = {}
     summary_epochs = sorted({epochs[0], epochs[-1]} | {s['epoch'] for s in selections.values()})
     for arm, values in arrays.items():
         summary[arm] = {metric: {str(epoch): {
-            'mean': float(a[:, epoch - 1].mean()),
-            'min': float(a[:, epoch - 1].min()), 'max': float(a[:, epoch - 1].max())}
-            for epoch in summary_epochs} for metric, a in values.items()}
+            'mean': float(np.nanmean(a[:, epoch - 1])),
+            'min': float(np.nanmin(a[:, epoch - 1])), 'max': float(np.nanmax(a[:, epoch - 1]))}
+            for epoch in summary_epochs if np.isfinite(a[:, epoch-1]).any()} for metric, a in values.items()}
     result = {
         'analysis_git_revision': subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
@@ -129,14 +146,15 @@ def main():
                               'torch': torch.__version__},
         'records': len(history), 'verified_checkpoints': selections,
         'training_panel_fraction_by_epoch': {str(e): fractions[(e - 1) % 3] for e in epochs},
-        'validation_per_panel': 'UNKNOWN：历史日志未保留逐输入或逐面板验证 CE',
+        'validation_per_panel': 'validation_by_mask.png' if len(figure_names)>2 else 'UNKNOWN：历史日志未保留逐输入或逐面板验证 CE',
+        'seed_counts_by_epoch': {arm: np.isfinite(values['prior_CE']).sum(0).tolist() for arm, values in arrays.items()},
         'latent_usage': 'UNKNOWN：KL 与验证 CE 差不能独立确认 z 的实际使用程度',
         'summary': summary,
-        'figure_sha256': {name: digest(run / name) for name in ['training_curves.png', 'training_curves.pdf']},
+        'figure_sha256': {name: digest(run / name) for name in figure_names},
     }
     (run / 'training_diagnostics.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({'records': len(history), 'selected_epochs': {k: v['epoch'] for k, v in selections.items()},
-                      'figures': ['training_curves.png', 'training_curves.pdf']}, ensure_ascii=False))
+                      'figures': figure_names}, ensure_ascii=False))
 
 
 if __name__ == '__main__':

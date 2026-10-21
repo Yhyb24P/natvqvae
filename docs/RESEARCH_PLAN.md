@@ -65,7 +65,7 @@ BioEmu2 可在个别候选存在真实构象不确定性时研究 WT 与变体�
 
 ## 既有研究证据
 
-本轮从头训练的条件生成方法检查提供了覆盖摘要与代表序列；该检查不作为后续生成的前置条件。当前仍处于训练方法研究：先确认潜变量定义与实际作用，再确定有针对性的优化对照；训练诊断见[本轮报告](../experiments/kvp40_conditional_generation/REPORT.md)。代表序列保留供后续结构与催化环境评价。
+上一轮条件生成方法检查提供了覆盖摘要与代表序列，训练诊断见[历史报告](../experiments/kvp40_conditional_generation/REPORT.md)。当前进行目标条件后验训练，范围与预算见[方案](../experiments/kvp40_target_posterior_training/PLAN.md)；先确认目标输入修正后潜变量的实际作用，再决定优化对照。代表序列保留供后续结构与催化环境评价。
 
 四轮已退役生成实验的证据、负结果、限制与提交 SHA 见[退役生成实验证据](../discovery/natv_generation_evidence_decision.md)；模型来源与身份见 [DATA_PROVENANCE.md](DATA_PROVENANCE.md)。这些结果不支持把 H2 首轮候选作为下一阶段必须资产。
 

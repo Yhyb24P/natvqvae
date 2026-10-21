@@ -1,0 +1,67 @@
+{
+  "task": "target_conditioned_posterior_training",
+  "arms": [
+    "QVAE",
+    "deterministic"
+  ],
+  "seeds": [
+    20261021,
+    20261022,
+    20261023
+  ],
+  "training_population": 1644,
+  "validation_population": 227,
+  "initialization": "fresh_all_NatV_parameters; matched_initial_state_per_seed; no_legacy_checkpoint",
+  "backbone": "local_frozen_ESM2_t33_650M; shared_masked_features; no_remote_download",
+  "features": {
+    "mask_fractions": [
+      0.08,
+      0.15,
+      0.3
+    ],
+    "panels_per_sequence": 3,
+    "seed": 20261021,
+    "batch_size": 16
+  },
+  "model": {
+    "hidden": 128,
+    "factors": 32,
+    "states": 8
+  },
+  "comparator": "matched_shared_initialization_context_only_deterministic; QVAE_has_extra_target_embedding_and_posterior_encoder",
+  "training": {
+    "epochs": 100,
+    "batch_size": 32,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "KL_coefficient": 0.01,
+    "KL_warmup_steps": 100,
+    "panel_cycle": "epoch_mod_3_same_across_arms",
+    "objective": "component_balanced_masked_CE_plus_unweighted_factor_mean_KL",
+    "checkpoint_selection": "strict_min_component_balanced_validation_prior_CE; earliest_on_ties",
+    "generation_checkpoint": "each_arms_own_selected_checkpoint; prior_sampling_only_for_QVAE",
+    "validation_note": "historically_exposed_development_validation",
+    "patience": 10,
+    "posterior": "q(z|masked_context,masked_target_labels); one_extra_Transformer_layer; soft_Gumbel_tau_1",
+    "training_CE_aggregation": "sample_count_weighted_batch_CE"
+  },
+  "budget": {
+    "wall_seconds": 3600,
+    "fits": 6,
+    "epochs_per_fit_max": 100,
+    "early_stopping_patience": 10,
+    "gpu_count": 1,
+    "attempts": 1,
+    "authorization": "user accepted recommended scope and budget; training_and_validation_only"
+  },
+  "primary_outputs": [
+    "selected_checkpoints",
+    "training_curves",
+    "validation_per_panel",
+    "posterior_factors",
+    "fixed_context_prior_sensitivity"
+  ],
+  "function": "UNKNOWN",
+  "reuse_features_from": "experiments/kvp40_conditional_generation"
+}

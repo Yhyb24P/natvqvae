@@ -1,4 +1,4 @@
-"""Matched conditional categorical QVAE and deterministic global-context comparator."""
+"""Target-conditioned categorical QVAE and deterministic context comparator."""
 from __future__ import annotations
 import math
 import numpy as np
@@ -20,10 +20,10 @@ def sample_letters(logits, uniforms, temperature=1.):
 
 
 class ConditionalModel(nn.Module):
-    """Identical active parameters; categorical sampling vs deterministic context branch.
+    """Targets enter only the QVAE posterior; the decoder sees context and z.
 
-    Both receive only freshly masked frozen-ESM representations and logits.
-    The deterministic comparator has no random latent or latent regularizer.
+    Shared layers have matched initialization. Posterior-only parameters exist
+    only in QVAE, so total parameter counts are deliberately not matched.
     """
     def __init__(self,arm,hidden=128,factors=32,states=8):
         super().__init__()
@@ -38,26 +38,49 @@ class ConditionalModel(nn.Module):
         self.global_projection=nn.Linear(factors*states,hidden)
         self.output=nn.Linear(hidden,20)
         nn.init.zeros_(self.output.weight);nn.init.zeros_(self.output.bias)
+        if arm=='QVAE':
+            self.target_embedding=nn.Embedding(20,hidden)
+            self.posterior_encoder=transformer(1)
 
     def sample_prior(self,count,generator,device):
         if self.arm!='QVAE':raise ValueError('Deterministic model has no prior')
         codes=torch.randint(self.states,(count,self.factors),generator=generator,device=device)
         return F.one_hot(codes,self.states).float()
 
-    def forward(self,features,baseline,valid,mask,z=None):
-        if features.requires_grad or baseline.requires_grad:raise ValueError('Backbone must be frozen')
-        if mask.shape!=valid.shape or (mask & ~valid).any() or not mask.any(1).all():raise ValueError('Invalid target mask')
-        if z is not None and self.arm!='QVAE':raise ValueError('Comparator cannot read z')
+    def encode_context(self,features,valid):
+        if features.requires_grad:raise ValueError('Backbone must be frozen')
         length=features.shape[1];d=self.sequence.out_features
         phase=torch.arange(length,device=features.device)[:,None]*torch.exp(torch.arange(0,d,2,device=features.device)*(-math.log(10000)/d))
         position=torch.zeros(length,d,device=features.device);position[:,0::2]=phase.sin();position[:,1::2]=phase.cos()
         h=self.sequence(features.float().masked_fill(~valid[...,None],0))+position
-        h=self.encoder(h,src_key_padding_mask=~valid)
+        return self.encoder(h,src_key_padding_mask=~valid)
+
+    def posterior_scores(self,h,valid,mask,labels):
+        if self.arm!='QVAE':raise ValueError('Comparator has no posterior')
+        if labels is None or labels.shape!=valid.shape:raise ValueError('Posterior requires target labels')
+        if ((labels[mask]<0)|(labels[mask]>=20)).any():raise ValueError('Invalid target labels')
+        targets=self.target_embedding(labels.masked_fill(~mask,0))*mask[...,None]
+        encoded=self.posterior_encoder(h+targets,src_key_padding_mask=~valid)
+        pooled=(encoded*mask[...,None]).sum(1)/mask.sum(1,keepdim=True)
+        return self.global_map(pooled).reshape(-1,self.factors,self.states)
+
+    def decode(self,h,baseline,valid,context):
+        decoded=self.decoder(h+self.global_projection(context)[:,None],src_key_padding_mask=~valid)
+        return baseline.float()+self.output(decoded)
+
+    def forward(self,features,baseline,valid,mask,z=None,labels=None):
+        if baseline.requires_grad:raise ValueError('Backbone must be frozen')
+        if mask.shape!=valid.shape or (mask & ~valid).any() or not mask.any(1).all():raise ValueError('Invalid target mask')
+        if z is not None and self.arm!='QVAE':raise ValueError('Comparator cannot read z')
+        if labels is not None and (self.arm!='QVAE' or (z is not None and not isinstance(z,str))):
+            raise ValueError('Targets are allowed only for the posterior')
+        h=self.encode_context(features,valid)
         pooled=(h*valid[...,None]).sum(1)/valid.sum(1,keepdim=True)
-        global_scores=self.global_map(pooled);regularizer=h.sum()*0
+        regularizer=h.sum()*0
         if self.arm=='QVAE':
-            scores=global_scores.reshape(-1,self.factors,self.states);prob=scores.softmax(-1)
-            regularizer=(prob*(prob.clamp_min(1e-12).log()+math.log(self.states))).sum(-1).mean()
+            if z is None or isinstance(z,str):
+                scores=self.posterior_scores(h,valid,mask,labels);prob=scores.softmax(-1)
+                regularizer=(prob*(prob.clamp_min(1e-12).log()+math.log(self.states))).sum(-1).mean()
             if z is None:
                 if not self.training:raise ValueError('Generation/evaluation must declare prior or posterior')
                 latent=F.gumbel_softmax(scores,tau=1.,hard=False)
@@ -65,12 +88,11 @@ class ConditionalModel(nn.Module):
                 if z!='posterior':raise ValueError('Unknown evaluation mode')
                 latent=prob
             else:
-                if z.shape!=prob.shape or (z<0).any() or not torch.isfinite(z).all() or not torch.allclose(z.sum(-1),torch.ones_like(prob[...,0])):raise ValueError('Invalid prior')
+                if z.shape!=(len(h),self.factors,self.states) or (z<0).any() or not torch.isfinite(z).all() or not torch.allclose(z.sum(-1),torch.ones_like(z[...,0])):raise ValueError('Invalid prior')
                 latent=z
             context=latent.flatten(1)
-        else:context=F.gelu(global_scores)
-        decoded=self.decoder(h+self.global_projection(context)[:,None],src_key_padding_mask=~valid)
-        return baseline.float()+self.output(decoded),regularizer
+        else:context=F.gelu(self.global_map(pooled))
+        return self.decode(h,baseline,valid,context),regularizer
 
 
 class FrozenEncoder:
