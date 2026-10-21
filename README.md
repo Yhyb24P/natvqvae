@@ -14,7 +14,7 @@ NatV 的 NMNAT 结构域参与 NAD⁺ 合成，Nudix 结构域具有相关水解
 
 当前已建立经过核对的 NatV 家族数据、正式训练与验证划分、同源结构对应关系，并完成多轮 QVAE 相关生成研究。首轮 H2 条件采样已完成，但其候选不作为下一阶段的主要输入；原始实验结论及限制见[退役生成实验证据](discovery/natv_generation_evidence_decision.md)。
 
-**当前工作重点是重新明确 QVAE 的训练目标与生成机制。** 现役 `src/natvqvae/` 仅保留 WT 序列、区域约定、来源校验与 CLI，不含可运行的 QVAE 训练或生成实现；尚未形成新一轮正式生成模型与工程候选库。详细研究判断见[研究计划](docs/RESEARCH_PLAN.md)。
+**当前工作是从头训练 QVAE 与公平的无随机潜变量对照，再开展 KVP40 条件生成。** 实现与运行方案见[条件生成研究](experiments/kvp40_conditional_generation/PLAN.md)，研究判断见[研究计划](docs/RESEARCH_PLAN.md)。
 
 ## 项目结构
 
@@ -26,9 +26,9 @@ NatV 的 NMNAT 结构域参与 NAD⁺ 合成，Nudix 结构域具有相关水解
 | `data/raw/metadata/` | 对应 RCSB 模板元数据 |
 | `data/processed/` | 正式训练/验证数据、群体划分、序列—结构映射与核验记录 |
 | `data/interim/`、`data/models/`、`data/results/` | 中间产物、权重与运行结果，按需创建 |
-| `src/natvqvae/` | 现役序列、区域、来源校验与 CLI |
+| `src/natvqvae/` | 现役条件模型、序列、区域、来源校验与 CLI |
 | `scripts/` | 数据准备、来源核对与结构审计入口 |
-| `experiments/` | 正式研究建立时再创建 |
+| `experiments/` | 研究方案、训练与生成记录 |
 | `discovery/` | 数据发现、模型继承及历史裁决 |
 | `contracts/` | 科学目标和序列约定 |
 | `docs/` | 研究计划、数据来源和结构对应说明 |

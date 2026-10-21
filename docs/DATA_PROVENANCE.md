@@ -30,3 +30,5 @@ KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contr
 外部检索资产的保留、退役与校验快照见 `discovery/natv_pairing_audit/README.md` 与 `discovery/natv_pairing_audit/dataset_update_decision.md`。
 
 源文件通过 `data/manifest.json` 的 SHA256 定位，`NATV_SOURCE_ROOT` 或 `--root` 指向旧仓库。大文件及 checkpoint 位于研究主机；历史运行的文件与哈希由对应 decision 或提交追溯。数据准备和运行产生的文件应写入相应的 `data/` 子目录或 `experiments/`，不写回旧档案。
+
+`experiments/kvp40_conditional_generation/` 从随机 NatV 参数重新训练 QVAE 与等有效参数量的确定性对照，继承现役正式训练/验证角色。两者共用本地冻结 ESM-2 的遮蔽输入表示；不读取历史 NatV checkpoint。具体模型、掩码面板及新权重身份归该运行的方案与来源记录。
