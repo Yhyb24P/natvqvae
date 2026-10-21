@@ -1166,8 +1166,12 @@ def _source_hashes(run, plan):
     return output
 
 
-def run_study(run, plan, data=None, root=None, device=None):
-    """训练端入口；生成与最终交付由 conditional_outputs.finish_study 完成。"""
+def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False):
+    """训练端入口；生成与最终交付由 conditional_outputs.finish_study 完成。
+
+    calibrate_only=True 时只执行四次校准、写出冻结决策与校准清单后退出，便于
+    在长流程前核对 T/B、样本数与吞吐，不消耗 search/formal 拟合预算。
+    """
     root = Path(root or ROOT)
     run = Path(run)
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
@@ -1221,6 +1225,37 @@ def run_study(run, plan, data=None, root=None, device=None):
         calibration = _calibrate(run, plan, data, root, device, attempts, failures, save_records)
         if attempts['count'] != calibration_count:
             raise FitFailed('Calibration fit count differs from schedule')
+        if calibrate_only:
+            calibration_records = list(calibration['fits'].values())
+            write_json(raw / 'calibration_fits.json', calibration_records)
+            combined_history = []
+            for path in sorted((raw / 'curves').glob('*.json')):
+                combined_history.extend(json.loads(path.read_text())['history'])
+            write_json(raw / 'calibration_history.json', combined_history)
+            wall_seconds = time.monotonic() - started
+            cost = {'attempted_fits': attempts['count'],
+                    'authorized_fits': int(plan['budget']['max_fits']),
+                    'wall_seconds': wall_seconds,
+                    'fit_seconds': sum(record['total_seconds'] for record in calibration_records),
+                    'failures': failures}
+            write_json(raw / 'calibration_cost.json', cost)
+            decision_path = raw / 'calibration_decision.json'
+            manifest = {
+                'task': plan['task'], 'status': 'calibration_complete',
+                'git_revision': identity['git_revision'],
+                'plan_sha256': identity['plan_sha256'],
+                'decision': {'path': str(decision_path.relative_to(root)),
+                             'sha256': sha256_file(decision_path)},
+                'fit_status': {'path': str((raw / 'calibration_fits.json').relative_to(root)),
+                               'sha256': sha256_file(raw / 'calibration_fits.json')},
+                'cost': cost,
+                'attempts': attempts['count'],
+                'failures': failures,
+            }
+            write_json(raw / 'calibration_manifest.json', manifest)
+            status(run, 'CALIBRATION_READY', mode='calibration_only',
+                   attempts=attempts['count'], wall_seconds=wall_seconds)
+            return manifest
         search_selected, search_records = _search(
             run, plan, data, root, device, calibration, attempts, failures, save_records)
         if attempts['count'] != calibration_count + search_count:

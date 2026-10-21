@@ -97,6 +97,29 @@ def toy_plan(arm='deterministic'):
     }
 
 
+def test_run_study_calibration_only(tmp_path):
+    from natvqvae.conditional_study import run_study
+
+    torch.set_num_threads(1)
+    data = TinyData()
+    plan = toy_plan('deterministic')
+    plan.update({'training_population': 2, 'validation_population': 2})
+    plan['budget'] = {'max_fits': 38, 'calibration_steps_per_fit': 2,
+                      'absolute_steps_per_remaining_fit_max': 4}
+    plan['calibration']['max_steps'] = 2
+    plan['save_validation_records'] = False
+    run = tmp_path / 'experiments' / 'toy'
+    run.mkdir(parents=True)
+    (run / 'plan.json').write_text(json.dumps(plan))
+    manifest = run_study(run, plan, data=data, root=tmp_path, device='cpu',
+                         calibrate_only=True)
+    assert manifest['status'] == 'calibration_complete'
+    assert manifest['attempts'] == 1
+    assert manifest['decision']['sha256']
+    assert (run / 'calibration_decision.json').exists()
+    assert json.loads((run / 'status.json').read_text())['phase'] == 'CALIBRATION_READY'
+
+
 def test_run_study_tiny_end_to_end(tmp_path, monkeypatch):
     import sys
     from types import SimpleNamespace
