@@ -45,3 +45,10 @@ python -m pip install -e ".[dev]"
 pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
+
+条件 QVAE 的 GPU 环境版本见[运行环境](experiments/natv_conditional_qvae/environment.json)，方案及输入边界见本轮 `PLAN.md`。完整入口与已完成训练后的评价入口分别为：
+
+```bash
+python scripts/run_conditional_study.py --run experiments/natv_conditional_qvae
+python scripts/run_conditional_study.py --run experiments/natv_conditional_qvae --finish-only
+```

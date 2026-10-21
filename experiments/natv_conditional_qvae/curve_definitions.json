@@ -1,0 +1,14 @@
+{
+  "formal_seeds": [
+    8301,
+    8302,
+    8303,
+    8304,
+    8305
+  ],
+  "training": "component-weighted reconstruction; QVAE uses posterior, deterministic has no latent",
+  "validation": "component-balanced fixed panel mixture, QVAE conditional marginal NLL estimate; deterministic exact",
+  "bands": "min-max across formal seeds only at common observed epochs, not confidence intervals",
+  "training_panels": "training batches mix per-sequence panels; per-panel training history was not recorded",
+  "calibration": "excluded: original calibration scalar reconstruction and KL records have a known batch scaling error; weights and validation unaffected"
+}
