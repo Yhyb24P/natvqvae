@@ -7,23 +7,23 @@
 | 脚本 | 输出 |
 |---|---|
 | `build_local_audit.py` | `audit_summary.json`、序列与结构 registry、残基对应、排除与 Active-G 表 |
-| `query_external.py` | `external/rcsb_sequence_search/`、`rcsb_metadata/`、`rcsb_shortlisted_cif/`、`uniprot_raw/`、`alphafold_raw/` 原始缓存与请求记录 |
-| `summarize_external.py` | 外部检索汇总、群体重叠、UniProt 候选与 AlphaFold 元数据表 |
-| `analyze_incremental_homology.py` | `external/homology/` 同源关系与组分分析 |
 | `build_structural_basis.py` | `structural_interpretation_basis.json` |
 
 在本目录执行；执行范围与预算要求见 `../../AGENTS.md`：
 
 ```bash
 /home/yhshy/miniconda3/envs/nad_data/bin/python build_local_audit.py
-NO_PROXY=search.rcsb.org,data.rcsb.org,files.rcsb.org,rest.uniprot.org,alphafold.ebi.ac.uk \
-no_proxy=search.rcsb.org,data.rcsb.org,files.rcsb.org,rest.uniprot.org,alphafold.ebi.ac.uk \
-/home/yhshy/miniconda3/envs/nad_data/bin/python query_external.py
-/home/yhshy/miniconda3/envs/nad_data/bin/python summarize_external.py
-/home/yhshy/miniconda3/envs/nad_data/bin/python analyze_incremental_homology.py
 /home/yhshy/miniconda3/envs/nad_data/bin/python build_structural_basis.py
 ```
 
-同源分析依赖 MMseqs2 与 Biopython，历史运行约 95 秒；只读本地既有群体和候选，输出到 `external/homology/`。`NO_PROXY` 是原主机绕过本地代理的设置；重新请求数据库可能改变响应，复核历史结果应使用缓存与记录的校验值。
+`build_local_audit.py` 只读本地群体、只读 `nad_qvae` 结构与输入模板，不依赖已退出的外部原始缓存；`build_structural_basis.py` 读取保留下来的 registry、mapping 与结构对应表。依赖 gemmi、pyhmmer、Biopython 与 pandas。
 
-`source_hashes.json` 记录来源输入；`hashes.json` 记录本目录已提交核对文件的 SHA256。可再生成的 MMseqs 原始输出 `external/homology/raw/*.m8` 及临时文件约 27 MB，仅本地保留，不计入该清单；用于判断的精确重比对已保存在压缩 CSV 中。
+## 当前外部资产
+
+保留 21 项：
+
+- 3 个实验结构 CIF 与 2QJO/2QJT/2R5W 的 6 个模板元数据；
+- `external_summary.json`、`discovery_overlap.json`、`query_log.json`、`source_hashes.json`、`incremental_uniprot_candidates.csv`、`uniprot_candidates.csv`、`incremental_structures.csv`、`alphafold_metadata.csv`；
+- `homology/` 下的 `homology_summary.json`、`candidate_homology_assessment.csv`、`component_expansion.csv`、`anchor_conservation_by_position.csv`。
+
+退役载荷、退役脚本与校验快照语义见 [dataset_update_decision.md](dataset_update_decision.md)。

@@ -49,4 +49,6 @@ E238↔K236 是位置对应，残基本身不同。配体距离及几何检查�
 | `anchor_mapping_audit.csv` | 关键残基对应、残基身份和配体距离 |
 | `structural_interpretation_basis.json` | 汇总结构域、模板、构建体偏移、缺口、配体与关键残基对应 |
 
+外部检索资产的保留、退役与校验快照见[发现目录 README](../discovery/natv_pairing_audit/README.md)与[数据扩充判断](../discovery/natv_pairing_audit/dataset_update_decision.md)。
+
 文件索引与复现方法见 [发现目录 README](../discovery/natv_pairing_audit/README.md)。

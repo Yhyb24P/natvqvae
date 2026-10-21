@@ -10,16 +10,21 @@
 
 ## 模型与对齐资料
 
-`nad_qvae` 作为只读研究档案，源码、权重、配置与分割差异入口为 `discovery/natv_model_inheritance/model_reuse_decision.md` 和 `source_checks.json`。旧 `SequenceGenerator` 在 WT ESM-2 条件下直接解码 341 对齐列，输出 20 种氨基酸及 gap；不表示新插入残基。旧角色与现役划分不相容，历史 checkpoint 不可直接当成新划分的独立验证结果。
+`nad_qvae` 作为只读研究档案，源码、权重、配置与分割差异入口为 `discovery/natv_model_inheritance/model_reuse_decision.md` 和 `source_checks.json`。模型来源、权重身份与继承判断保留，但旧生成实验的现役目录与本仓库代码已退出。
 
-现役 `experiments/natv_wt_columns/` 重新按正式训练/验证人口训练了 categorical VAE 和确定性对照，其 `data/aligned_samples.jsonl` 保留每条天然序列到 WT 的列映射及插入位置；训练的对齐列丢失了插入残基的生成目标。已保存的模型身份、原始提案和完整负结果归该目录的 `REPORT.md`，不能把本次结果再解释为已训练的保守编辑模型。
+已退出的生成模型与输入：
 
-旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 提供冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索能力；旧 `vnext_edits.py` 支持带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本、准确复原及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于有一定演化证据的短事件筛选而非已训练插入/删除生成器。复用这些算法时须核验其实际源码身份和原数据角色；历史支持数不是 InDel 安全性、发生率或酶活标签。
+- WT 对齐列：六份 776,981 参数权重与派生列映射已删除；freeze SHA `5ce6e3b9…`。
+- H2 条件编辑与首轮保守生成：H2 freeze `a69e8470…`、旧 `SequenceGenerator` revision `4277b1d…` 与文件 SHA `8c30bba0…` 的身份保留在 `discovery/natv_model_inheritance/source_checks.json`。
 
-`experiments/natv_conservative_editing/inputs/` 固定实际 H2 源码、checkpoint 和 G1-b 事件身份；事件支持只从现役训练人口重算，插入载荷保留训练供体及组分。WT 锚点、构建后的当前坐标和最终全局编辑脚本分别保存在该次轨迹与脚本中；事件定义不构成新训练样本。运行结果归该目录的 `REPORT.md`。
+运行证据、提交 SHA 与限制见[退役生成实验证据](../discovery/natv_generation_evidence_decision.md)。
+
+旧 `design/g0_benchmark.py`、`formal_generation.py`、`se_full.py` 记录冻结 ESM-2/SE 当前序列掩码更新及 train-only 检索的实现；旧 `vnext_edits.py` 记录带 WT 锚点的 `KEEP/SUB/INSERT/DELETE` 编辑脚本及来自训练人口的 InDel 分布。对应的 G1-b 结果位于旧档案 `results/natv_g1_event_qualification_v1/event_qualification.json`，属于有一定演化证据的短事件筛选而非已训练插入/删除生成器。这些现在是历史实现来源，不再由本仓库直接调用；历史支持数不是 InDel 安全性、发生率或酶活标签。
 
 ## 结构和其他来源
 
 KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contracts/regions.json`；实验模板、构建体标签、观测残基和 12 个映射锚点见 [NATV_PAIRING_AUDIT.md](NATV_PAIRING_AUDIT.md)。家族同源模板不等于 KVP40 实验结构。预测结构与实验结构独立标记；结构数据输入先校验文件来源和实际残基对应。
 
-源文件通过 `inputs/manifest.json` 的 SHA256 定位，`NATV_SOURCE_ROOT` 或 `--root` 指向旧仓库。大文件及 checkpoint 位于研究主机，运行报告记录使用的文件及哈希；符号链接不使来源在系统层自动只读。数据准备和运行产生的文件应写入本仓库相应的运行目录，不写回旧档案。
+外部检索资产的保留、退役与校验快照见 `discovery/natv_pairing_audit/README.md` 与 `dataset_update_decision.md`；本文件不重复资产清单。
+
+源文件通过 `inputs/manifest.json` 的 SHA256 定位，`NATV_SOURCE_ROOT` 或 `--root` 指向旧仓库。大文件及 checkpoint 位于研究主机；历史运行的文件与哈希由对应 decision 或提交追溯，符号链接不使来源在系统层自动只读。数据准备和运行产生的文件应写入本仓库相应的运行目录，不写回旧档案。

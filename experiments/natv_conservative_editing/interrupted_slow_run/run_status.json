@@ -1,8 +1,0 @@
-{
-  "status": "INTERRUPTED_BY_USER_FOR_PERFORMANCE_FIX",
-  "completed_groups": 308,
-  "attempts": 2464,
-  "elapsed_seconds": 2600.466631614996,
-  "completed_group_files": 311,
-  "reason": "serial 8-sequence retrieval/encoding; unused retrieval in ESM2 baseline"
-}
