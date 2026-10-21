@@ -45,5 +45,3 @@ python -m pip install -e ".[dev]"
 pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
-
-研究实施与文件维护规则见 [AGENTS.md](AGENTS.md)。

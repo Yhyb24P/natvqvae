@@ -10,3 +10,18 @@ data/raw/source/
 data/interim/
 data/models/
 data/results/
+
+# local agent tooling and private configuration
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.qoder/
+.claude/
+.cursor/
+.codex/
+.windsurf/
+.continue/
+.gemini/
+.aider*
+.mcp.json
+.github/workflows/ci.yml
