@@ -1,0 +1,1442 @@
+[
+  {
+    "key": "QVAE/20261021",
+    "epoch": 1,
+    "training_CE": 1.7147438582698522,
+    "training_KL": 0.03195384954317258,
+    "prior_CE": 1.7402528885441937,
+    "posterior_CE": 1.7402263031157765
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 1,
+    "training_CE": 1.7148160873768643,
+    "training_KL": 0.0,
+    "prior_CE": 1.7402910969639895,
+    "posterior_CE": 1.7402910969639895
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 1,
+    "training_CE": 1.7145656450580833,
+    "training_KL": 0.028845603882263485,
+    "prior_CE": 1.7399954943513876,
+    "posterior_CE": 1.7399331068416721
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 1,
+    "training_CE": 1.7146952520940415,
+    "training_KL": 0.0,
+    "prior_CE": 1.7399977477144313,
+    "posterior_CE": 1.7399977477144313
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 1,
+    "training_CE": 1.714841108165598,
+    "training_KL": 0.03375075891828881,
+    "prior_CE": 1.7402196536674892,
+    "posterior_CE": 1.7402207689085494
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 1,
+    "training_CE": 1.7149491085340354,
+    "training_KL": 0.0,
+    "prior_CE": 1.7402428365098066,
+    "posterior_CE": 1.7402428365098066
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 2,
+    "training_CE": 1.6654701791012874,
+    "training_KL": 0.004981532325753226,
+    "prior_CE": 1.736502584567165,
+    "posterior_CE": 1.7364025680938804
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 2,
+    "training_CE": 1.6655421644977175,
+    "training_KL": 0.0,
+    "prior_CE": 1.7365019837724582,
+    "posterior_CE": 1.7365019837724582
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 2,
+    "training_CE": 1.6650807787433355,
+    "training_KL": 0.004666630326447865,
+    "prior_CE": 1.736295181346594,
+    "posterior_CE": 1.7361909824771538
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 2,
+    "training_CE": 1.6652425282175698,
+    "training_KL": 0.0,
+    "prior_CE": 1.736276748249356,
+    "posterior_CE": 1.736276748249356
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 2,
+    "training_CE": 1.6653354992905398,
+    "training_KL": 0.0036273080913815647,
+    "prior_CE": 1.7364689319002573,
+    "posterior_CE": 1.736436787696806
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 2,
+    "training_CE": 1.6653353400053632,
+    "training_KL": 0.0,
+    "prior_CE": 1.7363790612028984,
+    "posterior_CE": 1.7363790612028984
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 3,
+    "training_CE": 1.7101006312533602,
+    "training_KL": 0.002098697575722606,
+    "prior_CE": 1.7319014590531914,
+    "posterior_CE": 1.7317530535981638
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 3,
+    "training_CE": 1.7101598982524473,
+    "training_KL": 0.0,
+    "prior_CE": 1.7317314227495202,
+    "posterior_CE": 1.7317314227495202
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 3,
+    "training_CE": 1.70979992054139,
+    "training_KL": 0.0022187243515733057,
+    "prior_CE": 1.7321840397644601,
+    "posterior_CE": 1.7320166475461944
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 3,
+    "training_CE": 1.7097992748046846,
+    "training_KL": 0.0,
+    "prior_CE": 1.7320127582501592,
+    "posterior_CE": 1.7320127582501592
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 3,
+    "training_CE": 1.7099376190295854,
+    "training_KL": 0.0022706357502521803,
+    "prior_CE": 1.732442382466881,
+    "posterior_CE": 1.73239912898718
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 3,
+    "training_CE": 1.709846502658621,
+    "training_KL": 0.0,
+    "prior_CE": 1.7323462740195377,
+    "posterior_CE": 1.7323462740195377
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 4,
+    "training_CE": 1.6294874599163927,
+    "training_KL": 0.0022844165259112534,
+    "prior_CE": 1.7279634258170902,
+    "posterior_CE": 1.7277882219288023
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 4,
+    "training_CE": 1.6291322198862608,
+    "training_KL": 0.0,
+    "prior_CE": 1.7276386777747603,
+    "posterior_CE": 1.7276386777747603
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 4,
+    "training_CE": 1.6294606756754295,
+    "training_KL": 0.002201719894611205,
+    "prior_CE": 1.728450108647886,
+    "posterior_CE": 1.7282290455672114
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 4,
+    "training_CE": 1.6295841220045575,
+    "training_KL": 0.0,
+    "prior_CE": 1.7282237763098658,
+    "posterior_CE": 1.7282237763098658
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 4,
+    "training_CE": 1.6298060292637095,
+    "training_KL": 0.002422081772238016,
+    "prior_CE": 1.728636511536576,
+    "posterior_CE": 1.7286339765553556
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 4,
+    "training_CE": 1.6296353934783758,
+    "training_KL": 0.0,
+    "prior_CE": 1.7285373049005108,
+    "posterior_CE": 1.7285373049005108
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 5,
+    "training_CE": 1.6107659700210315,
+    "training_KL": 0.0022057330307479086,
+    "prior_CE": 1.7236958475563513,
+    "posterior_CE": 1.7235113692818445
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 5,
+    "training_CE": 1.6103529616253687,
+    "training_KL": 0.0,
+    "prior_CE": 1.7231799821028373,
+    "posterior_CE": 1.7231799821028373
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 5,
+    "training_CE": 1.611867050416957,
+    "training_KL": 0.002252009498009172,
+    "prior_CE": 1.7245246815224475,
+    "posterior_CE": 1.7243142739199742
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 5,
+    "training_CE": 1.6117830269125561,
+    "training_KL": 0.0,
+    "prior_CE": 1.7242312488394114,
+    "posterior_CE": 1.7242312488394114
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 5,
+    "training_CE": 1.6119066519412897,
+    "training_KL": 0.0023009300460286727,
+    "prior_CE": 1.724601056930704,
+    "posterior_CE": 1.7246236945075737
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 5,
+    "training_CE": 1.6115352713054585,
+    "training_KL": 0.0,
+    "prior_CE": 1.7243925275144434,
+    "posterior_CE": 1.7243925275144434
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 6,
+    "training_CE": 1.678002248998463,
+    "training_KL": 0.0027423871372145815,
+    "prior_CE": 1.7178083601536722,
+    "posterior_CE": 1.7176110359313874
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 6,
+    "training_CE": 1.6773222580054337,
+    "training_KL": 0.0,
+    "prior_CE": 1.7169380839072572,
+    "posterior_CE": 1.7169380839072572
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 6,
+    "training_CE": 1.678193065982885,
+    "training_KL": 0.002394265123607161,
+    "prior_CE": 1.719090518305044,
+    "posterior_CE": 1.7188028418988055
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 6,
+    "training_CE": 1.6777333717762077,
+    "training_KL": 0.0,
+    "prior_CE": 1.7187054783771436,
+    "posterior_CE": 1.7187054783771436
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 6,
+    "training_CE": 1.6784541278215277,
+    "training_KL": 0.0027001805406493638,
+    "prior_CE": 1.7176667347669563,
+    "posterior_CE": 1.7176361975634309
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 6,
+    "training_CE": 1.67788864099786,
+    "training_KL": 0.0,
+    "prior_CE": 1.7174613441516775,
+    "posterior_CE": 1.7174613441516775
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 7,
+    "training_CE": 1.5975159933158047,
+    "training_KL": 0.0027356174093886064,
+    "prior_CE": 1.7138334715945958,
+    "posterior_CE": 1.7136466963312196
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 7,
+    "training_CE": 1.5965110421954567,
+    "training_KL": 0.0,
+    "prior_CE": 1.7130738577218791,
+    "posterior_CE": 1.7130738577218791
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 7,
+    "training_CE": 1.5986239497982737,
+    "training_KL": 0.002061096537195576,
+    "prior_CE": 1.7158294930519367,
+    "posterior_CE": 1.7155822538454664
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 7,
+    "training_CE": 1.5980453677942732,
+    "training_KL": 0.0,
+    "prior_CE": 1.7155025577790803,
+    "posterior_CE": 1.7155025577790803
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 7,
+    "training_CE": 1.596574328382352,
+    "training_KL": 0.0029797205173123916,
+    "prior_CE": 1.7133629982164713,
+    "posterior_CE": 1.7134540329904404
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 7,
+    "training_CE": 1.5954775493401863,
+    "training_KL": 0.0,
+    "prior_CE": 1.713221393209426,
+    "posterior_CE": 1.713221393209426
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 8,
+    "training_CE": 1.6180948742110977,
+    "training_KL": 0.0028411847037764695,
+    "prior_CE": 1.7096745192898395,
+    "posterior_CE": 1.7095357463743504
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 8,
+    "training_CE": 1.6167216443240826,
+    "training_KL": 0.0,
+    "prior_CE": 1.7091025050210247,
+    "posterior_CE": 1.7091025050210247
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 8,
+    "training_CE": 1.6213812868229658,
+    "training_KL": 0.0024439912298336052,
+    "prior_CE": 1.7115707900840915,
+    "posterior_CE": 1.7114188518754043
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 8,
+    "training_CE": 1.6200570147514028,
+    "training_KL": 0.0,
+    "prior_CE": 1.7113194655619983,
+    "posterior_CE": 1.7113194655619983
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 8,
+    "training_CE": 1.6192435791306512,
+    "training_KL": 0.002729293321653341,
+    "prior_CE": 1.7091258901620618,
+    "posterior_CE": 1.709297854184689
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 8,
+    "training_CE": 1.6180422425639587,
+    "training_KL": 0.0,
+    "prior_CE": 1.709109967886228,
+    "posterior_CE": 1.709109967886228
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 9,
+    "training_CE": 1.6552792878802718,
+    "training_KL": 0.0020221420989121096,
+    "prior_CE": 1.7052309691226462,
+    "posterior_CE": 1.7050512865419067
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 9,
+    "training_CE": 1.6540550891249406,
+    "training_KL": 0.0,
+    "prior_CE": 1.7041987794444984,
+    "posterior_CE": 1.7041987794444984
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 9,
+    "training_CE": 1.6570026444146966,
+    "training_KL": 0.0020616462167638997,
+    "prior_CE": 1.706952031845958,
+    "posterior_CE": 1.7067946019293878
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 9,
+    "training_CE": 1.6555371952136966,
+    "training_KL": 0.0,
+    "prior_CE": 1.7063633697953884,
+    "posterior_CE": 1.7063633697953884
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 9,
+    "training_CE": 1.6535545928485673,
+    "training_KL": 0.0022161266265007164,
+    "prior_CE": 1.7037498703845138,
+    "posterior_CE": 1.7038197908208006
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 9,
+    "training_CE": 1.6523330655358184,
+    "training_KL": 0.0,
+    "prior_CE": 1.70354780728087,
+    "posterior_CE": 1.70354780728087
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 10,
+    "training_CE": 1.5231816488923604,
+    "training_KL": 0.0020604394018076933,
+    "prior_CE": 1.702757405728324,
+    "posterior_CE": 1.7027916269449022
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 10,
+    "training_CE": 1.5212858207529227,
+    "training_KL": 0.0,
+    "prior_CE": 1.7022137983620416,
+    "posterior_CE": 1.7022137983620416
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 10,
+    "training_CE": 1.5268421900788347,
+    "training_KL": 0.0025102971479869806,
+    "prior_CE": 1.7068469462829612,
+    "posterior_CE": 1.706771237095456
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 10,
+    "training_CE": 1.5248735854753024,
+    "training_KL": 0.0,
+    "prior_CE": 1.7059632326235261,
+    "posterior_CE": 1.7059632326235261
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 10,
+    "training_CE": 1.5182203171034416,
+    "training_KL": 0.0025884162191337403,
+    "prior_CE": 1.7032476511316725,
+    "posterior_CE": 1.7036330893439868
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 10,
+    "training_CE": 1.5161345516261844,
+    "training_KL": 0.0,
+    "prior_CE": 1.7030650860412537,
+    "posterior_CE": 1.7030650860412537
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 11,
+    "training_CE": 1.505943690533389,
+    "training_KL": 0.002803294404517286,
+    "prior_CE": 1.7026975054424454,
+    "posterior_CE": 1.702780487024951
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 11,
+    "training_CE": 1.5036827638894914,
+    "training_KL": 0.0,
+    "prior_CE": 1.7014798998052212,
+    "posterior_CE": 1.7014798998052212
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 11,
+    "training_CE": 1.5111627458857178,
+    "training_KL": 0.002493203286296473,
+    "prior_CE": 1.7055079883973046,
+    "posterior_CE": 1.705738336452375
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 11,
+    "training_CE": 1.508919777247723,
+    "training_KL": 0.0,
+    "prior_CE": 1.705660332493727,
+    "posterior_CE": 1.705660332493727
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 11,
+    "training_CE": 1.5041713159141923,
+    "training_KL": 0.0029848794242402967,
+    "prior_CE": 1.7023339821562573,
+    "posterior_CE": 1.7029249342211692
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 11,
+    "training_CE": 1.5022695957466903,
+    "training_KL": 0.0,
+    "prior_CE": 1.7023875144997875,
+    "posterior_CE": 1.7023875144997875
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 12,
+    "training_CE": 1.6022031270661397,
+    "training_KL": 0.002608124542838106,
+    "prior_CE": 1.6942810193676416,
+    "posterior_CE": 1.6942895182882838
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 12,
+    "training_CE": 1.6001289727848849,
+    "training_KL": 0.0,
+    "prior_CE": 1.6932628922325963,
+    "posterior_CE": 1.6932628922325963
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 12,
+    "training_CE": 1.604646821964503,
+    "training_KL": 0.0025449758843303872,
+    "prior_CE": 1.6950288150656818,
+    "posterior_CE": 1.6949860867120086
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 12,
+    "training_CE": 1.6025366005731803,
+    "training_KL": 0.0,
+    "prior_CE": 1.6946668692974405,
+    "posterior_CE": 1.6946668692974405
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 12,
+    "training_CE": 1.5981774976953547,
+    "training_KL": 0.0027581902193980147,
+    "prior_CE": 1.6931359290920858,
+    "posterior_CE": 1.6936615872466128
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 12,
+    "training_CE": 1.5962277176911226,
+    "training_KL": 0.0,
+    "prior_CE": 1.693492725381885,
+    "posterior_CE": 1.693492725381885
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 13,
+    "training_CE": 1.456357096651344,
+    "training_KL": 0.002047919504828035,
+    "prior_CE": 1.695796820118459,
+    "posterior_CE": 1.695974849510062
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 13,
+    "training_CE": 1.4529999626265047,
+    "training_KL": 0.0,
+    "prior_CE": 1.6960073423761086,
+    "posterior_CE": 1.6960073423761086
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 13,
+    "training_CE": 1.4577715903777186,
+    "training_KL": 0.0020980914078581217,
+    "prior_CE": 1.6987003819452904,
+    "posterior_CE": 1.6988623348701095
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 13,
+    "training_CE": 1.454129510646323,
+    "training_KL": 0.0,
+    "prior_CE": 1.6987032543452187,
+    "posterior_CE": 1.6987032543452187
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 13,
+    "training_CE": 1.4469852944224362,
+    "training_KL": 0.001949292271792029,
+    "prior_CE": 1.6970107477481333,
+    "posterior_CE": 1.697971755949123
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 13,
+    "training_CE": 1.4434545136861154,
+    "training_KL": 0.0,
+    "prior_CE": 1.697883156311594,
+    "posterior_CE": 1.697883156311594
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 14,
+    "training_CE": 1.4833265186147142,
+    "training_KL": 0.0019263034090937043,
+    "prior_CE": 1.7017715914269045,
+    "posterior_CE": 1.7020826360409507
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 14,
+    "training_CE": 1.4807320159735982,
+    "training_KL": 0.0,
+    "prior_CE": 1.7019875531388664,
+    "posterior_CE": 1.7019875531388664
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 14,
+    "training_CE": 1.4871740411116485,
+    "training_KL": 0.0020646606124221133,
+    "prior_CE": 1.7031956325096247,
+    "posterior_CE": 1.7036311440026781
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 14,
+    "training_CE": 1.4840544878511115,
+    "training_KL": 0.0,
+    "prior_CE": 1.7034349437953806,
+    "posterior_CE": 1.7034349437953806
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 14,
+    "training_CE": 1.4781182921486247,
+    "training_KL": 0.002209725415853497,
+    "prior_CE": 1.7015291324014887,
+    "posterior_CE": 1.7027479759426691
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 14,
+    "training_CE": 1.4753343445979117,
+    "training_KL": 0.0,
+    "prior_CE": 1.702717544307777,
+    "posterior_CE": 1.702717544307777
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 15,
+    "training_CE": 1.550273700051238,
+    "training_KL": 0.0024109296433520145,
+    "prior_CE": 1.6961281274776143,
+    "posterior_CE": 1.6962403859812911
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 15,
+    "training_CE": 1.5476294024072415,
+    "training_KL": 0.0,
+    "prior_CE": 1.695073649071482,
+    "posterior_CE": 1.695073649071482
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 15,
+    "training_CE": 1.5543520554961308,
+    "training_KL": 0.0029346791740793446,
+    "prior_CE": 1.6960110167553373,
+    "posterior_CE": 1.6964154644575624
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 15,
+    "training_CE": 1.550937092110021,
+    "training_KL": 0.0,
+    "prior_CE": 1.6967154810832759,
+    "posterior_CE": 1.6967154810832759
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 15,
+    "training_CE": 1.5459154999815423,
+    "training_KL": 0.003079740308189335,
+    "prior_CE": 1.6956758224965087,
+    "posterior_CE": 1.6969394496101342
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 15,
+    "training_CE": 1.5434862470314725,
+    "training_KL": 0.0,
+    "prior_CE": 1.6968187943140671,
+    "posterior_CE": 1.6968187943140671
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 16,
+    "training_CE": 1.4758016344056568,
+    "training_KL": 0.002004332847158926,
+    "prior_CE": 1.6992602374534587,
+    "posterior_CE": 1.6995351018065525
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 16,
+    "training_CE": 1.4724791075625618,
+    "training_KL": 0.0,
+    "prior_CE": 1.699251561311848,
+    "posterior_CE": 1.699251561311848
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 16,
+    "training_CE": 1.4771641459092568,
+    "training_KL": 0.0023117189188129627,
+    "prior_CE": 1.7018035012723933,
+    "posterior_CE": 1.7024992754041277
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 16,
+    "training_CE": 1.472726454822025,
+    "training_KL": 0.0,
+    "prior_CE": 1.7019260976060442,
+    "posterior_CE": 1.7019260976060442
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 16,
+    "training_CE": 1.4627214407690394,
+    "training_KL": 0.002415088345654882,
+    "prior_CE": 1.7016677237966442,
+    "posterior_CE": 1.7034046948950683
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 16,
+    "training_CE": 1.4589027898840876,
+    "training_KL": 0.0,
+    "prior_CE": 1.7039786222639437,
+    "posterior_CE": 1.7039786222639437
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 17,
+    "training_CE": 1.4007538895519327,
+    "training_KL": 0.002336216770345345,
+    "prior_CE": 1.7043065716691976,
+    "posterior_CE": 1.7050747449659498
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 17,
+    "training_CE": 1.3969912392435062,
+    "training_KL": 0.0,
+    "prior_CE": 1.7033631468845594,
+    "posterior_CE": 1.7033631468845594
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 17,
+    "training_CE": 1.4054391381249176,
+    "training_KL": 0.0025000217205020958,
+    "prior_CE": 1.705691260733159,
+    "posterior_CE": 1.7065211382211032
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 17,
+    "training_CE": 1.4006253346245474,
+    "training_KL": 0.0,
+    "prior_CE": 1.704158813402871,
+    "posterior_CE": 1.704158813402871
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 17,
+    "training_CE": 1.3970224672558553,
+    "training_KL": 0.0023887114456066717,
+    "prior_CE": 1.705767638561194,
+    "posterior_CE": 1.7077679726012482
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 17,
+    "training_CE": 1.3936825672414943,
+    "training_KL": 0.0,
+    "prior_CE": 1.707520203092294,
+    "posterior_CE": 1.707520203092294
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 18,
+    "training_CE": 1.5150895752313538,
+    "training_KL": 0.0022131525956165907,
+    "prior_CE": 1.696234082489746,
+    "posterior_CE": 1.696716643612213
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 18,
+    "training_CE": 1.5118993158007998,
+    "training_KL": 0.0,
+    "prior_CE": 1.6953092478636698,
+    "posterior_CE": 1.6953092478636698
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 18,
+    "training_CE": 1.5208161303541312,
+    "training_KL": 0.0026210863859607624,
+    "prior_CE": 1.695946009146467,
+    "posterior_CE": 1.696557126872763
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 18,
+    "training_CE": 1.5161006035476992,
+    "training_KL": 0.0,
+    "prior_CE": 1.696466146572024,
+    "posterior_CE": 1.696466146572024
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 18,
+    "training_CE": 1.5142555679823648,
+    "training_KL": 0.0026216555225591245,
+    "prior_CE": 1.699529371071511,
+    "posterior_CE": 1.7012101278143665
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 18,
+    "training_CE": 1.5107136342651821,
+    "training_KL": 0.0,
+    "prior_CE": 1.6996902961956055,
+    "posterior_CE": 1.6996902961956055
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 19,
+    "training_CE": 1.3395035790385956,
+    "training_KL": 0.0023410569477933818,
+    "prior_CE": 1.7030005452543733,
+    "posterior_CE": 1.7035424943205606
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 19,
+    "training_CE": 1.33594093684995,
+    "training_KL": 0.0,
+    "prior_CE": 1.7042081113500822,
+    "posterior_CE": 1.7042081113500822
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 19,
+    "training_CE": 1.3421054637016605,
+    "training_KL": 0.002121636896985225,
+    "prior_CE": 1.7067995752908351,
+    "posterior_CE": 1.7077120432755784
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 19,
+    "training_CE": 1.3358719605605556,
+    "training_KL": 0.0,
+    "prior_CE": 1.7074151798018478,
+    "posterior_CE": 1.7074151798018478
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 19,
+    "training_CE": 1.3301976744262245,
+    "training_KL": 0.0023292606212915136,
+    "prior_CE": 1.7080325057839536,
+    "posterior_CE": 1.7102744215329237
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 19,
+    "training_CE": 1.3258103523837372,
+    "training_KL": 0.0,
+    "prior_CE": 1.7106103801014654,
+    "posterior_CE": 1.7106103801014654
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 20,
+    "training_CE": 1.3729738711097457,
+    "training_KL": 0.0019563244803486248,
+    "prior_CE": 1.7065145804127342,
+    "posterior_CE": 1.7072406589120845
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 20,
+    "training_CE": 1.368389671407491,
+    "training_KL": 0.0,
+    "prior_CE": 1.7059531788332594,
+    "posterior_CE": 1.7059531788332594
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 20,
+    "training_CE": 1.3779213546748252,
+    "training_KL": 0.002212084086540227,
+    "prior_CE": 1.7085961156831813,
+    "posterior_CE": 1.7100990799065536
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 20,
+    "training_CE": 1.3715451002491483,
+    "training_KL": 0.0,
+    "prior_CE": 1.7104293784502347,
+    "posterior_CE": 1.7104293784502347
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 20,
+    "training_CE": 1.3717828068344733,
+    "training_KL": 0.0021015957888896363,
+    "prior_CE": 1.7116042190933172,
+    "posterior_CE": 1.7139705115288395
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 20,
+    "training_CE": 1.3675427297834952,
+    "training_KL": 0.0,
+    "prior_CE": 1.7144138979163748,
+    "posterior_CE": 1.7144138979163748
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 21,
+    "training_CE": 1.4863926023044605,
+    "training_KL": 0.002471324036238142,
+    "prior_CE": 1.6995710658729417,
+    "posterior_CE": 1.7001700280021055
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 21,
+    "training_CE": 1.48275572424995,
+    "training_KL": 0.0,
+    "prior_CE": 1.6999222408040902,
+    "posterior_CE": 1.6999222408040902
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 21,
+    "training_CE": 1.4914851387178534,
+    "training_KL": 0.0027581204149800423,
+    "prior_CE": 1.6976456099199444,
+    "posterior_CE": 1.6987199470795096
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 21,
+    "training_CE": 1.4852786217573877,
+    "training_KL": 0.0,
+    "prior_CE": 1.7001376661413823,
+    "posterior_CE": 1.7001376661413823
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 21,
+    "training_CE": 1.4867588570788153,
+    "training_KL": 0.002482450412711702,
+    "prior_CE": 1.7027981127498508,
+    "posterior_CE": 1.7049900561990254
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 21,
+    "training_CE": 1.4817673204625357,
+    "training_KL": 0.0,
+    "prior_CE": 1.7052220843658865,
+    "posterior_CE": 1.7052220843658865
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 22,
+    "training_CE": 1.2959921028447035,
+    "training_KL": 0.002478976095937049,
+    "prior_CE": 1.7097152866448895,
+    "posterior_CE": 1.7105941045920965
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 22,
+    "training_CE": 1.2909837077797048,
+    "training_KL": 0.0,
+    "prior_CE": 1.7100980105945107,
+    "posterior_CE": 1.7100980105945107
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 22,
+    "training_CE": 1.2986995614290773,
+    "training_KL": 0.0021903656530552185,
+    "prior_CE": 1.7131251276872919,
+    "posterior_CE": 1.7146226345398738
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 22,
+    "training_CE": 1.2913480387611864,
+    "training_KL": 0.0,
+    "prior_CE": 1.7152784382381,
+    "posterior_CE": 1.7152784382381
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 22,
+    "training_CE": 1.288048612697693,
+    "training_KL": 0.002281661913282453,
+    "prior_CE": 1.7170555954499491,
+    "posterior_CE": 1.719682681259345
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 22,
+    "training_CE": 1.2824136432047746,
+    "training_KL": 0.0,
+    "prior_CE": 1.7204101262683686,
+    "posterior_CE": 1.7204101262683686
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 23,
+    "training_CE": 1.328232034786416,
+    "training_KL": 0.0026058854956108215,
+    "prior_CE": 1.7182678678280185,
+    "posterior_CE": 1.719163427453593
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 23,
+    "training_CE": 1.323873562804431,
+    "training_KL": 0.0,
+    "prior_CE": 1.7180992556464758,
+    "posterior_CE": 1.7180992556464758
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 23,
+    "training_CE": 1.331707431335012,
+    "training_KL": 0.0022020773859157297,
+    "prior_CE": 1.71821137061657,
+    "posterior_CE": 1.7199761179292608
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 23,
+    "training_CE": 1.3245517937621238,
+    "training_KL": 0.0,
+    "prior_CE": 1.721709730990135,
+    "posterior_CE": 1.721709730990135
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 23,
+    "training_CE": 1.3273606415312131,
+    "training_KL": 0.002216693407927568,
+    "prior_CE": 1.7225868316029855,
+    "posterior_CE": 1.7253618076387236
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 23,
+    "training_CE": 1.3221248177419702,
+    "training_KL": 0.0,
+    "prior_CE": 1.7267177914813758,
+    "posterior_CE": 1.7267177914813758
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 24,
+    "training_CE": 1.459697936895529,
+    "training_KL": 0.0019924824345462886,
+    "prior_CE": 1.7066504872911956,
+    "posterior_CE": 1.707287563744497
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 24,
+    "training_CE": 1.4551825529669726,
+    "training_KL": 0.0,
+    "prior_CE": 1.7059847458096973,
+    "posterior_CE": 1.7059847458096973
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 24,
+    "training_CE": 1.4643033004279205,
+    "training_KL": 0.0021155277790967375,
+    "prior_CE": 1.7053622444908265,
+    "posterior_CE": 1.7067202681356923
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 24,
+    "training_CE": 1.4578923574974212,
+    "training_KL": 0.0,
+    "prior_CE": 1.7084932495804834,
+    "posterior_CE": 1.7084932495804834
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 24,
+    "training_CE": 1.4616713147417246,
+    "training_KL": 0.0021601129242648873,
+    "prior_CE": 1.7104500217781309,
+    "posterior_CE": 1.7130881965417528
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 24,
+    "training_CE": 1.4554855671943783,
+    "training_KL": 0.0,
+    "prior_CE": 1.7137148833740568,
+    "posterior_CE": 1.7137148833740568
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 25,
+    "training_CE": 1.2479398522527387,
+    "training_KL": 0.0022383146547676567,
+    "prior_CE": 1.7207401236169966,
+    "posterior_CE": 1.721593604715285
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 25,
+    "training_CE": 1.2431008305178195,
+    "training_KL": 0.0,
+    "prior_CE": 1.720468864107672,
+    "posterior_CE": 1.720468864107672
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 25,
+    "training_CE": 1.253106557184711,
+    "training_KL": 0.002217064569077383,
+    "prior_CE": 1.724735464259117,
+    "posterior_CE": 1.726333898084968
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 25,
+    "training_CE": 1.2431005606179548,
+    "training_KL": 0.0,
+    "prior_CE": 1.7280752369685373,
+    "posterior_CE": 1.7280752369685373
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 25,
+    "training_CE": 1.2444735671321028,
+    "training_KL": 0.002218628282067724,
+    "prior_CE": 1.727492160471411,
+    "posterior_CE": 1.730848535133248
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 25,
+    "training_CE": 1.2367714203317002,
+    "training_KL": 0.0,
+    "prior_CE": 1.7313681306952768,
+    "posterior_CE": 1.7313681306952768
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 26,
+    "training_CE": 1.2899577213785614,
+    "training_KL": 0.00218225805572449,
+    "prior_CE": 1.725283337171043,
+    "posterior_CE": 1.7261791044948434
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 26,
+    "training_CE": 1.283884428324003,
+    "training_KL": 0.0,
+    "prior_CE": 1.7272264491655491,
+    "posterior_CE": 1.7272264491655491
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 26,
+    "training_CE": 1.2875157826519452,
+    "training_KL": 0.0019956640899181366,
+    "prior_CE": 1.7253504966539082,
+    "posterior_CE": 1.7271418998701014
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 26,
+    "training_CE": 1.2810407465141262,
+    "training_KL": 0.0,
+    "prior_CE": 1.7307415960484052,
+    "posterior_CE": 1.7307415960484052
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 26,
+    "training_CE": 1.2886349666728805,
+    "training_KL": 0.0019160888354795484,
+    "prior_CE": 1.7277457312136406,
+    "posterior_CE": 1.7309753164900874
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 26,
+    "training_CE": 1.28284560127527,
+    "training_KL": 0.0,
+    "prior_CE": 1.7320456345259052,
+    "posterior_CE": 1.7320456345259052
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 27,
+    "training_CE": 1.4237512072595362,
+    "training_KL": 0.002162862403425746,
+    "prior_CE": 1.714760619533034,
+    "posterior_CE": 1.7155814126286466
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 27,
+    "training_CE": 1.4187276743625965,
+    "training_KL": 0.0,
+    "prior_CE": 1.7155262331208763,
+    "posterior_CE": 1.7155262331208763
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 27,
+    "training_CE": 1.4273126534213607,
+    "training_KL": 0.0028067711794462344,
+    "prior_CE": 1.7148269399533353,
+    "posterior_CE": 1.7163194527989263
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 27,
+    "training_CE": 1.4193130369777978,
+    "training_KL": 0.0,
+    "prior_CE": 1.7182904981592402,
+    "posterior_CE": 1.7182904981592402
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 27,
+    "training_CE": 1.4269132234564041,
+    "training_KL": 0.002484542752007166,
+    "prior_CE": 1.7177313732718658,
+    "posterior_CE": 1.7206657654392084
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 27,
+    "training_CE": 1.4189422061512087,
+    "training_KL": 0.0,
+    "prior_CE": 1.7228098844748323,
+    "posterior_CE": 1.7228098844748323
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 28,
+    "training_CE": 1.197419607106122,
+    "training_KL": 0.0021000010288284663,
+    "prior_CE": 1.7320166898984566,
+    "posterior_CE": 1.732967264703175
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 28,
+    "training_CE": 1.1901948515553302,
+    "training_KL": 0.0,
+    "prior_CE": 1.7341329840736408,
+    "posterior_CE": 1.7341329840736408
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 28,
+    "training_CE": 1.2001876656567823,
+    "training_KL": 0.00217277313528869,
+    "prior_CE": 1.732044630956099,
+    "posterior_CE": 1.7339677068611392
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 28,
+    "training_CE": 1.1890546848340144,
+    "training_KL": 0.0,
+    "prior_CE": 1.7371036234921347,
+    "posterior_CE": 1.7371036234921347
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 28,
+    "training_CE": 1.1945910317360602,
+    "training_KL": 0.0022197299784658332,
+    "prior_CE": 1.7402079114955882,
+    "posterior_CE": 1.7435300418307988
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 28,
+    "training_CE": 1.1863028504218853,
+    "training_KL": 0.0,
+    "prior_CE": 1.7469251714991456,
+    "posterior_CE": 1.7469251714991456
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 29,
+    "training_CE": 1.2512671370220665,
+    "training_KL": 0.002142388850468426,
+    "prior_CE": 1.7345151834932673,
+    "posterior_CE": 1.7355362328190664
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 29,
+    "training_CE": 1.2446258309816507,
+    "training_KL": 0.0,
+    "prior_CE": 1.7358503769388014,
+    "posterior_CE": 1.7358503769388014
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 29,
+    "training_CE": 1.2510670186279378,
+    "training_KL": 0.002098238339665561,
+    "prior_CE": 1.7353461093733467,
+    "posterior_CE": 1.7372852021226812
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 29,
+    "training_CE": 1.242434551520861,
+    "training_KL": 0.0,
+    "prior_CE": 1.741371103758125,
+    "posterior_CE": 1.741371103758125
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 29,
+    "training_CE": 1.2532558018730258,
+    "training_KL": 0.002163745406925535,
+    "prior_CE": 1.7393376123192672,
+    "posterior_CE": 1.7430894292972696
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 29,
+    "training_CE": 1.2463813174580927,
+    "training_KL": 0.0,
+    "prior_CE": 1.7467055974992407,
+    "posterior_CE": 1.7467055974992407
+  },
+  {
+    "key": "QVAE/20261021",
+    "epoch": 30,
+    "training_CE": 1.4084257756685736,
+    "training_KL": 0.0022540340500059896,
+    "prior_CE": 1.7241725526534635,
+    "posterior_CE": 1.7251904527798467
+  },
+  {
+    "key": "deterministic/20261021",
+    "epoch": 30,
+    "training_CE": 1.4018453066814465,
+    "training_KL": 0.0,
+    "prior_CE": 1.7258232528119744,
+    "posterior_CE": 1.7258232528119744
+  },
+  {
+    "key": "QVAE/20261022",
+    "epoch": 30,
+    "training_CE": 1.4092257253601195,
+    "training_KL": 0.0025357885953361313,
+    "prior_CE": 1.725001744683408,
+    "posterior_CE": 1.726983903176891
+  },
+  {
+    "key": "deterministic/20261022",
+    "epoch": 30,
+    "training_CE": 1.4009180352560795,
+    "training_KL": 0.0,
+    "prior_CE": 1.729788862771626,
+    "posterior_CE": 1.729788862771626
+  },
+  {
+    "key": "QVAE/20261023",
+    "epoch": 30,
+    "training_CE": 1.41368081232282,
+    "training_KL": 0.002423692237173852,
+    "prior_CE": 1.7263842636948132,
+    "posterior_CE": 1.729570240186263
+  },
+  {
+    "key": "deterministic/20261023",
+    "epoch": 30,
+    "training_CE": 1.4052347695102005,
+    "training_KL": 0.0,
+    "prior_CE": 1.732269135860095,
+    "posterior_CE": 1.732269135860095
+  }
+]

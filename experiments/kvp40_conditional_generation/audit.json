@@ -1,0 +1,17 @@
+{
+  "attempts": 4608,
+  "verified_trajectory_steps": 23040,
+  "exact_sequence_reconstructions": 4608,
+  "WT_reversion_events": 15550,
+  "fresh_initialization_and_checkpoint_hashes_verified": true,
+  "same_parameters": {
+    "QVAE/20261021": 629908,
+    "deterministic/20261021": 629908,
+    "QVAE/20261022": 629908,
+    "deterministic/20261022": 629908,
+    "QVAE/20261023": 629908,
+    "deterministic/20261023": 629908
+  },
+  "training_records": 180,
+  "analysis_code_sha256": "e7e12b85a964320b566cb26f0a806bb49f848b2d7c1fb807247e7139b638da56"
+}

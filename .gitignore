@@ -25,3 +25,14 @@ GEMINI.md
 .aider*
 .mcp.json
 .github/workflows/ci.yml
+
+# experiment raw artifacts stay under data/models or data/results
+experiments/*/checkpoints/
+experiments/*/inputs/masks.json
+experiments/*/inputs/feature_manifest.json
+experiments/*/generation_groups.json
+experiments/*/prior_samples.json
+experiments/*/trajectories.jsonl.gz
+experiments/*/candidates.csv
+experiments/*/candidates.fasta
+experiments/*/*.log

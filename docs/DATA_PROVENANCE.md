@@ -31,4 +31,8 @@ KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contr
 
 源文件通过 `data/manifest.json` 的 SHA256 定位，`NATV_SOURCE_ROOT` 或 `--root` 指向旧仓库。大文件及 checkpoint 位于研究主机；历史运行的文件与哈希由对应 decision 或提交追溯。数据准备和运行产生的文件应写入相应的 `data/` 子目录或 `experiments/`，不写回旧档案。
 
-`experiments/kvp40_conditional_generation/` 从随机 NatV 参数重新训练 QVAE 与等有效参数量的确定性对照，继承现役正式训练/验证角色。两者共用本地冻结 ESM-2 的遮蔽输入表示；不读取历史 NatV checkpoint。具体模型、掩码面板及新权重身份归该运行的方案与来源记录。
+## 数据与运行入库边界
+
+`experiments/<研究>/` 只保留方案、报告、覆盖摘要、代表序列与校验清单。完整候选、轨迹、掩码、特征缓存与模型权重存放在 `data/interim/`、`data/models/`、`data/results/` 或外部可校验存储，不纳入 Git。支持正式结论的数据必须能从这些位置或再生成流程恢复。运行证据与限制由运行报告承担，研究计划只保留判断与下一步。
+
+`experiments/kvp40_conditional_generation/` 从随机 NatV 参数训练条件模型与确定性对照，继承正式训练/验证角色，共用本地冻结 ESM-2；不读取历史 NatV checkpoint。模型、掩码面板与权重身份见该运行的方案、`inputs/identity.json` 与 `checkpoint_manifest.json`。权重保存在 `data/models/kvp40_conditional_generation/`，完整候选、轨迹、掩码与特征清单保存在 `data/results/kvp40_conditional_generation/raw/`。
