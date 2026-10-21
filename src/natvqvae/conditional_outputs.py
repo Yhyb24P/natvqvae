@@ -748,7 +748,7 @@ def _write_report(run,plan,statistics,supply,representatives):
         '|---|---|---|---|']
     def formatted(item):
         ci=item['CI95']
-        return f'{item["estimate"]:.5f} [{ci[0]:.5f}, {ci[1]:.5f}]' if ci else f'{item["estimate"]:.5f} [UNKNOWN]'
+        return f'{item["estimate"]:.6g} [{ci[0]:.6g}, {ci[1]:.6g}]' if ci else f'{item["estimate"]:.6g} [UNKNOWN]'
     for kind,arms in statistics['aggregate'].items():
         for baseline,values in arms.items():lines.append(f'| {kind} | {baseline} | {formatted(values["mean_log_probability_gain_per_residue"])} | {formatted(values["mean_TV_improvement"])} |')
     weak=sum(not item['support']['minimum_joint_event_support_met'] for item in statistics['sets'])
@@ -760,6 +760,24 @@ def _write_report(run,plan,statistics,supply,representatives):
     lines.extend(['','原始生成效率与同种子、同掩码、同Hamming替换数匹配后的比较分别见 `candidate_supply_summary.json`；匹配损失见 `matching_coverage.csv`。WT作为单独参照，不计入非WT产出；本轮最大掩码32，不能生成34次替换。','',
         '代表序列、真实替换及后续研究问题见 `CANDIDATES.md`、`representative_candidates.csv` 和 `.fasta`。家族HMM相容性只作为序列证据；Nudix探索候选允许较弱天然支持。结构、催化环境、合成与水解活性以及NAD⁺净积累仍为UNKNOWN。','',
         '联合概率改善与可靠共变统计改善同时成立才支持联合建模收益；候选数量、KL非零或改变z产生差异均不能单独支持该结论。该计算研究提供后续可检验序列，不证明工程性能改善。',''])
+    full=json.loads((run/'formal_evaluation_summary.json').read_text())
+    scores=full['bootstrap']['arms']['QVAE']
+    block=['全目标M的开发验证结果如下（nats/目标残基，越低越好）。重要性采样和条件先验直接采样估计同一个模型联合概率；确定性对照可精确求值。','',
+        '| 方法 | NLL | 重复估计MC SE（种子均值） |','|---|---:|---:|']
+    names={'posterior_is_joint':'QVAE 后验重要性采样','shared_joint':'QVAE 共享z条件先验采样','marginal_product':'QVAE 自身边缘独立乘积','deterministic':'独立训练确定性模型'}
+    for key,label in names.items():
+        value=scores[key];block.append(f'| {label} | {value["point"]:.9f} | {value["mc_se_mean"]:.2e} |')
+    block.extend(['','| 配对NLL差值（正值支持QVAE联合） | 差值 | 95%组分/种子bootstrap区间 | MC SE |','|---|---:|---|---:|'])
+    for key,label,sign in [('posterior_minus_deterministic','确定性 − QVAE重要性采样',-1),('posterior_minus_marginal','自身边缘独立 − QVAE重要性采样',-1),('marginal_minus_shared','自身边缘独立 − QVAE先验共享',1)]:
+        value=scores[key];ci=sorted(sign*x for x in value['ci95'])
+        block.append(f'| {label} | {sign*value["point"]:.9f} | [{ci[0]:.9f}, {ci[1]:.9f}] | {value["mc_se_mean"]:.2e} |')
+    block.extend(['','完整目标上QVAE相对确定性模型有很小的开发集预测改善；其边缘独立版本同样优于确定性模型，因此不能把全部差异归因于共享z。自身边缘与共享z之差仅约0.00006–0.00007 nats/残基。重复SE和bootstrap不包含有限样本对数估计的共同偏差，微小差值应谨慎解释。','',
+        '主结论：尚未取得有意义的联合建模优势或候选供给优势的充分证据。成对/三位点的家族混合背景TV改善区间均包含零，许多联合事件支持不足；候选唯一数量与家族HMM证据也基本相当。这不等于证明所有离散潜变量模型均无效。','',
+        '全部评分来自参与选参的227条开发验证序列，区间以本轮已选配置为条件，不是经过选参校正的独立测试结论；231条测试目标继续封存。训练群体1644条/47组分，开发验证227条/44组分，正式比较5个配对种子；每方法64样本、8次重复，确定性概率精确。逐输入ESS、权重集中及MC误差保存在完整记录中。',''])
+    direction=[entry['methods']['deterministic_minus_shared']['score'] for key,entry in full['seed_summaries'].items() if key.startswith('QVAE/')]
+    block.extend([f'配对种子中，共享先验联合NLL在{sum(x>0 for x in direction)}/{len(direction)}个种子上低于确定性对照，另有{sum(x<0 for x in direction)}个种子反向。条件先验分布接近均匀、上下文间差异很小，见 `conditional_prior_diagnostics.json`；这只作诊断，不独立证明潜变量是否学习了天然联合规律。',''])
+    lines[8:8]=block
+    lines.extend(['','供给比较的匹配样本严格同种子、同掩码、同替换数，差异与匹配损失见摘要。代表清单中的匹配参照只优先相同生成条件，允许同区域/规模、相近替换数的跨种子参照，不能称全部完全同条件。HMM有序双域命中只属于序列profile证据。'])
     (run/'REPORT.md').write_text('\n'.join(lines))
 
 

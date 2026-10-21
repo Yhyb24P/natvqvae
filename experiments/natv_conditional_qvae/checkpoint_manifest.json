@@ -1,0 +1,282 @@
+{
+  "QVAE/8301": {
+    "path": "data/models/natv_conditional_qvae/formal/QVAE/seed8301/best.pt",
+    "sha256": "dc8506217919aa69855134a2b2d06df47c36fe7e032f3b006d8b580a961ac235",
+    "arm": "QVAE",
+    "seed": 8301,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7295790946881904,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 64,
+    "selection_delta": 0.0001,
+    "step": 1144,
+    "epoch": 22,
+    "last_path": "data/models/natv_conditional_qvae/formal/QVAE/seed8301/last.pt",
+    "last_sha256": "8ab98f5cf65075f2cac76134f4c648f090921317ed7e607c547b48dc6421a512",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 8,
+      "multiplier": 0.5
+    },
+    "steps": 2704,
+    "stop_reason": "early_stopping"
+  },
+  "QVAE/8302": {
+    "path": "data/models/natv_conditional_qvae/formal/QVAE/seed8302/best.pt",
+    "sha256": "ac89bb6792f742dc34262d4a1ba9e7d6acd3607e5dc895c13c0e1eb4c27bd022",
+    "arm": "QVAE",
+    "seed": 8302,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7479311007935199,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 64,
+    "selection_delta": 0.0001,
+    "step": 1196,
+    "epoch": 23,
+    "last_path": "data/models/natv_conditional_qvae/formal/QVAE/seed8302/last.pt",
+    "last_sha256": "4beeea4c85ee24b4078c708042d62485b591093247069b66eb696b24a92762b2",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 8,
+      "multiplier": 0.5
+    },
+    "steps": 2756,
+    "stop_reason": "early_stopping"
+  },
+  "QVAE/8303": {
+    "path": "data/models/natv_conditional_qvae/formal/QVAE/seed8303/best.pt",
+    "sha256": "e712d4c5937016399650e2094bde7a91b5c88867d2f6adf10dfc4f5d0b039498",
+    "arm": "QVAE",
+    "seed": 8303,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7281665733429301,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 64,
+    "selection_delta": 0.0001,
+    "step": 1092,
+    "epoch": 21,
+    "last_path": "data/models/natv_conditional_qvae/formal/QVAE/seed8303/last.pt",
+    "last_sha256": "682bf4a62db3eaa373fd72ed6f6a12c6c6304e3bed14a653d256a369f76b2f6a",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 8,
+      "multiplier": 0.5
+    },
+    "steps": 2652,
+    "stop_reason": "early_stopping"
+  },
+  "QVAE/8304": {
+    "path": "data/models/natv_conditional_qvae/formal/QVAE/seed8304/best.pt",
+    "sha256": "91ca3a54c237edbe59a9e98bb57936e55d580b465ca515bda404b1f4afb6ebb5",
+    "arm": "QVAE",
+    "seed": 8304,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7464344255754378,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 64,
+    "selection_delta": 0.0001,
+    "step": 936,
+    "epoch": 18,
+    "last_path": "data/models/natv_conditional_qvae/formal/QVAE/seed8304/last.pt",
+    "last_sha256": "fc5add4b47649a497b84b1f656dea49d6e949fc93fc9d13e996e4671bf522b89",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 8,
+      "multiplier": 0.5
+    },
+    "steps": 2496,
+    "stop_reason": "early_stopping"
+  },
+  "QVAE/8305": {
+    "path": "data/models/natv_conditional_qvae/formal/QVAE/seed8305/best.pt",
+    "sha256": "96f8924bb161cf916e2bdeaee2843a3b102db94b3f5be2999384177a3dcafea6",
+    "arm": "QVAE",
+    "seed": 8305,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7344260089755035,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 64,
+    "selection_delta": 0.0001,
+    "step": 936,
+    "epoch": 18,
+    "last_path": "data/models/natv_conditional_qvae/formal/QVAE/seed8305/last.pt",
+    "last_sha256": "3050c2652bf16ec3f69dfb30c73ec6e6990b88f73f547e6e935179bcae17f2f2",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 8,
+      "multiplier": 0.5
+    },
+    "steps": 2496,
+    "stop_reason": "early_stopping"
+  },
+  "deterministic/8301": {
+    "path": "data/models/natv_conditional_qvae/formal/deterministic/seed8301/best.pt",
+    "sha256": "c9d9961e11a8fa964a5f11587a791df0512b0430b8e8297f81a93753aafac23a",
+    "arm": "deterministic",
+    "seed": 8301,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7307639365087546,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 0,
+    "selection_delta": 0.0001,
+    "step": 1144,
+    "epoch": 22,
+    "last_path": "data/models/natv_conditional_qvae/formal/deterministic/seed8301/last.pt",
+    "last_sha256": "7d17f5f8b66179cf703a49a930fae9bd5deabf949b127928daf9612f08a2878d",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 4,
+      "multiplier": 0.5
+    },
+    "steps": 2704,
+    "stop_reason": "early_stopping"
+  },
+  "deterministic/8302": {
+    "path": "data/models/natv_conditional_qvae/formal/deterministic/seed8302/best.pt",
+    "sha256": "4fcbf0cb06e2371233f5a3ee63b55bb07dfbdfac3474fbd70558670e56de433a",
+    "arm": "deterministic",
+    "seed": 8302,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7486097506866365,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 0,
+    "selection_delta": 0.0001,
+    "step": 1196,
+    "epoch": 23,
+    "last_path": "data/models/natv_conditional_qvae/formal/deterministic/seed8302/last.pt",
+    "last_sha256": "c039814a93d0783ea17fb5089592039883e7666c76e4a76c5714ae2269febfc8",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 4,
+      "multiplier": 0.5
+    },
+    "steps": 2756,
+    "stop_reason": "early_stopping"
+  },
+  "deterministic/8303": {
+    "path": "data/models/natv_conditional_qvae/formal/deterministic/seed8303/best.pt",
+    "sha256": "1a0539edeab4bfee5a35bc2eda7872750defa953142f83fc6b06b029ac4bd7cb",
+    "arm": "deterministic",
+    "seed": 8303,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7293037074247408,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 0,
+    "selection_delta": 0.0001,
+    "step": 1092,
+    "epoch": 21,
+    "last_path": "data/models/natv_conditional_qvae/formal/deterministic/seed8303/last.pt",
+    "last_sha256": "2f82f51cc2f64c127a4cbb0ba41e9a87fd2777bff5da867d94e08bbef90769d0",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 4,
+      "multiplier": 0.5
+    },
+    "steps": 2652,
+    "stop_reason": "early_stopping"
+  },
+  "deterministic/8304": {
+    "path": "data/models/natv_conditional_qvae/formal/deterministic/seed8304/best.pt",
+    "sha256": "2babfd4f62a4056669a2a22a56a152742d0111fc3dfd0eb59635b5543566e4f0",
+    "arm": "deterministic",
+    "seed": 8304,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.7478760662967923,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 0,
+    "selection_delta": 0.0001,
+    "step": 936,
+    "epoch": 18,
+    "last_path": "data/models/natv_conditional_qvae/formal/deterministic/seed8304/last.pt",
+    "last_sha256": "0e3beb83292ae28a3f8756efad0d7484262982b8eaffde07164a25d69fd8c9df",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 4,
+      "multiplier": 0.5
+    },
+    "steps": 2496,
+    "stop_reason": "early_stopping"
+  },
+  "deterministic/8305": {
+    "path": "data/models/natv_conditional_qvae/formal/deterministic/seed8305/best.pt",
+    "sha256": "3da2640a251572a6d0efc8239c61f5c09dfb770c6d033d72e374b058eccc8dff",
+    "arm": "deterministic",
+    "seed": 8305,
+    "model_config": {
+      "hidden": 256,
+      "factors": 16,
+      "states": 8,
+      "feature_dim": 1280
+    },
+    "selected_metric": 1.734204963448904,
+    "selected_metric_name": "panel_q_weighted_component_balanced_nll_per_residue",
+    "selection_sample_count": 0,
+    "selection_delta": 0.0001,
+    "step": 936,
+    "epoch": 18,
+    "last_path": "data/models/natv_conditional_qvae/formal/deterministic/seed8305/last.pt",
+    "last_sha256": "2f99d853c83a364999e9665f42a6b2698c28abcf3317534009e719461a162a0d",
+    "config": {
+      "learning_rate": 0.00015,
+      "weight_decay": 0.01,
+      "K": 4,
+      "multiplier": 0.5
+    },
+    "steps": 2496,
+    "stop_reason": "early_stopping"
+  }
+}

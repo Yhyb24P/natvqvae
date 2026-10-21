@@ -65,7 +65,7 @@ BioEmu2 可在个别候选存在真实构象不确定性时研究 WT 与变体�
 
 ## 既有研究证据
 
-上一轮条件生成方法检查提供了覆盖摘要与代表序列，见[历史报告](../experiments/kvp40_conditional_generation/REPORT.md)。目标条件后验重训的六次拟合均在第 22 轮早停并保留第 12 轮权重；改变 z 有非零输出影响，但先验验证 CE 未优于确定性对照，证据见[训练报告](../experiments/kvp40_target_posterior_training/REPORT.md)。当前采用完整序列后验、学习型条件先验、真实Categorical采样和REINFORCE-LOO开展[联合建模与候选序列供给研究](../experiments/natv_conditional_qvae/PLAN.md)。以固定上下文真实联合概率为主要证据，同背景共变统计为补充；训练条件覆盖正式生成掩码。天然家族相容性与Nudix工程改造问题分开判断，不把z敏感性或序列数量视为成功；允许正结果、负结果及证据不足。
+上一轮条件生成方法检查提供了覆盖摘要与代表序列，见[历史报告](../experiments/kvp40_conditional_generation/REPORT.md)。目标条件后验重训的六次拟合均在第 22 轮早停并保留第 12 轮权重；改变 z 有非零输出影响，但先验验证 CE 未优于确定性对照，证据见[训练报告](../experiments/kvp40_target_posterior_training/REPORT.md)。条件Categorical QVAE已采用完整序列后验、学习型条件先验及REINFORCE-LOO完成训练、联合评价和候选生成，见[本轮报告](../experiments/natv_conditional_qvae/REPORT.md)。开发验证联合NLL略有改善，但预选成对/三位点共变统计及候选供给优势证据不足；不能将小幅概率改善或生成数量升级为工程收益。48条代表序列已按Nudix探索、匹配参照及家族组合问题遴选，结构与酶学性质仍待后续研究。
 
 四轮已退役生成实验的证据、负结果、限制与提交 SHA 见[退役生成实验证据](../discovery/natv_generation_evidence_decision.md)；模型来源与身份见 [DATA_PROVENANCE.md](DATA_PROVENANCE.md)。这些结果不支持把 H2 首轮候选作为下一阶段必须资产。
 

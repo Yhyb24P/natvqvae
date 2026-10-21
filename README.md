@@ -14,7 +14,7 @@ NatV 的 NMNAT 结构域参与 NAD⁺ 合成，Nudix 结构域具有相关水解
 
 当前已建立经过核对的 NatV 家族数据、正式训练与验证划分、同源结构对应关系，并完成多轮 QVAE 相关生成研究。首轮 H2 条件采样已完成，但其候选不作为下一阶段的主要输入；原始实验结论及限制见[退役生成实验证据](discovery/natv_generation_evidence_decision.md)。
 
-**正在执行条件 Categorical QVAE 研究。** 完整序列后验、学习型条件先验与共享离散潜变量用于检验多位点联合建模及候选序列供给，范围与预算见[本轮方案](experiments/natv_conditional_qvae/PLAN.md)。[此前重训](experiments/kvp40_target_posterior_training/REPORT.md)和[历史生成](experiments/kvp40_conditional_generation/REPORT.md)保留为研究证据。
+**已完成条件 Categorical QVAE 的训练、联合评价与候选生成。** 38次拟合和两模型各61,440次单轮采样提供48条代表序列。QVAE开发集联合NLL小幅改善，但共变统计与候选供给优势尚无充分证据；[报告](experiments/natv_conditional_qvae/REPORT.md)、[训练曲线](experiments/natv_conditional_qvae/training_curves.png)和[候选清单](experiments/natv_conditional_qvae/CANDIDATES.md)保留完整判断。此前重训与生成证据由[研究计划](docs/RESEARCH_PLAN.md)追溯。
 
 ## 项目结构
 

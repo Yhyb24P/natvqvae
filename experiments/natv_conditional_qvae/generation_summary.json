@@ -1,0 +1,31 @@
+{
+  "attempts": 122880,
+  "by_arm": {
+    "QVAE": {
+      "attempts": 61440,
+      "nonWT_in_space": 61440,
+      "unique_nonWT_in_space": 59645,
+      "duplicate_attempts": 1795,
+      "reasons": {
+        "": 61440
+      },
+      "Hamming_min": 1,
+      "Hamming_max": 31
+    },
+    "deterministic": {
+      "attempts": 61440,
+      "nonWT_in_space": 61440,
+      "unique_nonWT_in_space": 59614,
+      "duplicate_attempts": 1826,
+      "reasons": {
+        "": 61440
+      },
+      "Hamming_min": 1,
+      "Hamming_max": 31
+    }
+  },
+  "seconds": 27.933642336000048,
+  "failures": [],
+  "max_realizable_Hamming": 32,
+  "supplementary_distance": "Levenshtein_not_substitution_count"
+}
