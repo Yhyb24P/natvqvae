@@ -5,5 +5,8 @@ __pycache__/
 *.egg-info/
 build/
 dist/
-# read-only symlinks into the source repository are generated, not tracked
-inputs/data/
+# generated read-only source links and working data
+data/raw/source/
+data/interim/
+data/models/
+data/results/

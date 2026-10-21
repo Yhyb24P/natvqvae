@@ -39,16 +39,16 @@ E238↔K236 是位置对应，残基本身不同。配体距离及几何检查�
 
 ## 对应文件
 
-文件均位于 `discovery/natv_pairing_audit/`：
+数据表位于 `data/processed/`；原始结构和模板元数据位于 `data/raw/structures/` 与 `data/raw/metadata/`；复现脚本位于 `scripts/`；决策与历史快照位于 `discovery/natv_pairing_audit/`。
 
 | 文件 | 核对内容 |
 |---|---|
-| `sequence_registry.csv` | WT、家族、PDB 实体与模板序列的校验值和角色 |
-| `structure_registry.csv`、`dual_domain_scan.csv` | 实验结构群体、配体与双结构域筛选 |
-| `construct_observed_audit.csv`、`residue_mapping.csv` | 构建体、标签、逐链未解析缺口及坐标对应 |
-| `anchor_mapping_audit.csv` | 关键残基对应、残基身份和配体距离 |
-| `structural_interpretation_basis.json` | 汇总结构域、模板、构建体偏移、缺口、配体与关键残基对应 |
+| `data/processed/sequence_registry.csv` | WT、家族、PDB 实体与模板序列的校验值和角色 |
+| `data/processed/structure_registry.csv`、`data/processed/dual_domain_scan.csv` | 实验结构群体、配体与双结构域筛选 |
+| `data/processed/construct_observed_audit.csv`、`data/processed/residue_mapping.csv` | 构建体、标签、逐链未解析缺口及坐标对应 |
+| `data/processed/anchor_mapping_audit.csv` | 关键残基对应、残基身份和配体距离 |
+| `data/processed/structural_interpretation_basis.json` | 汇总结构域、模板、构建体偏移、缺口、配体与关键残基对应 |
 
-外部检索资产的保留、退役与校验快照见[发现目录 README](../discovery/natv_pairing_audit/README.md)与[数据扩充判断](../discovery/natv_pairing_audit/dataset_update_decision.md)。
+外部检索资产的保留、退役与校验快照见[发现目录 README](../discovery/natv_pairing_audit/README.md)与[数据扩充判断](../discovery/natv_pairing_audit/dataset_update_decision.md)；原始 CIF 与模板元数据在 `data/raw/`。
 
-文件索引与复现方法见 [发现目录 README](../discovery/natv_pairing_audit/README.md)。
+数据与脚本索引见[发现目录 README](../discovery/natv_pairing_audit/README.md)。

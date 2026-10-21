@@ -2,7 +2,7 @@
 
 ## 判断
 
-现有正式训练与验证序列可用于下一步生成任务设计；旧掩码任务的表示和演化特征可按原任务复用。实际文件、角色、派生输入与 SHA256 见 `data_checks.json`。输入含义和使用入口见 `../../docs/DATA_PROVENANCE.md`。
+现有正式训练与验证序列可用于下一步生成任务设计；旧掩码任务的表示和演化特征可按原任务复用。实际文件、角色、派生输入与 SHA256 见 `data/processed/data_checks.json`。输入含义和使用入口见 `../../docs/DATA_PROVENANCE.md`。
 
 | 对象 | 核查结果 |
 |---|---|
@@ -23,7 +23,7 @@ KVP40 WT、Q5NHR1、Q55928 均属于旧封存组分，不能因为它们是参�
 
 ## 可直接读取的文件
 
-`training.fasta` 和 `validation.fasta` 按原角色分开导出；检索使用 `training.fasta`。`samples.csv` 包含这两组序列、角色、组分、长度及原 CDD 坐标；`roles.csv` 保留全部群体的角色与组分，不含序列。四份导出文件的校验值保存在 `data_checks.json`。大型特征通过 `inputs/manifest.json` 定位只读来源，未另建一份缓存。
+`data/processed/training.fasta` 和 `data/processed/validation.fasta` 按原角色分开导出；检索使用 `training.fasta`。`data/processed/samples.csv` 包含这两组序列、角色、组分、长度及原 CDD 坐标；`data/processed/roles.csv` 保留全部群体的角色与组分，不含序列。四份导出文件的校验值保存在 `data/processed/data_checks.json`。大型特征通过 `data/manifest.json` 定位只读来源，未另建一份缓存。
 
 ## 适用范围
 
@@ -36,7 +36,7 @@ KVP40 WT、Q5NHR1、Q55928 均属于旧封存组分，不能因为它们是参�
 在项目根目录执行：
 
 ```bash
-/home/yhshy/miniconda3/envs/nad_data/bin/python discovery/natv_data_readiness/check_data.py
+/home/yhshy/miniconda3/envs/nad_data/bin/python scripts/check_data.py --out data/interim/data_readiness
 ```
 
-脚本依赖 pandas、Parquet 引擎、NumPy 与 PyTorch；本次环境版本、Git revision、脚本及输入校验值见 `data_checks.json`。只读取本地来源并校验约 25 GB 文件；可用 `--root` 指定来源，用 `--out` 输出到其他目录后比较四份导出文件的校验值。
+脚本依赖 pandas、Parquet 引擎、NumPy 与 PyTorch；本次环境版本、Git revision、脚本及输入校验值见 `data/processed/data_checks.json`。只读取本地来源并校验约 25 GB 文件；可用 `--root` 指定来源，用 `--out` 输出到其他目录后比较四份导出文件的校验值。

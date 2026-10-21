@@ -1,6 +1,6 @@
 # 退役生成实验的证据与限制
 
-范围：四轮已退出文件树的 NatV 生成实验。报告、候选与轨迹由下列提交追溯（`git show <sha>:<path>`），现役树不保留可执行目录。模型来源与身份见 [DATA_PROVENANCE.md](../docs/DATA_PROVENANCE.md) 与 `natv_model_inheritance/source_checks.json`。
+范围：四轮已退出文件树的 NatV 生成实验。报告、候选与轨迹由下列提交追溯（`git show <sha>:<path>`）。模型来源与身份见 [DATA_PROVENANCE.md](../docs/DATA_PROVENANCE.md) 与 `natv_model_inheritance/source_checks.json`。
 
 ## 首轮 H2 保守生成（`0ea7264`）
 
@@ -10,7 +10,7 @@ checkpoint 来自旧 4/8 掩码恢复任务，34 位掩码属于分布外使用�
 
 ## 保守条件编辑（`bfdc360`、`3e6d22e`、`5651f07`）
 
-2,976 次给定位置生成，全部满足约束，最低 WT identity 90.03%；高预算唯一组合比例饱和；无 QVAE 优于 SE 的清晰证据。该轮强制所选位置为非 WT，不代表允许保留 WT 的生成；无独立确认、活性或候选结构评价。
+2,976 次给定位置生成，全部满足约束，最低 WT identity 90.03%；高预算唯一组合比例饱和；无 QVAE 优于 SE 的清晰证据。该轮使用强制非 WT 替换，未评价活性或候选结构；开发比较无独立确认。
 
 ## WT 对齐列（`700f68a`，执行 `2eeac91`）
 

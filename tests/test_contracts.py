@@ -40,7 +40,7 @@ def test_unmeasured_evidence_does_not_pass():
 
 
 def test_discovery_population_is_not_declared_as_training():
-    manifest = json.loads((ROOT / "inputs/manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((ROOT / "data/manifest.json").read_text(encoding="utf-8"))
     population = next(x for x in manifest["entries"] if x["name"] == "family_population")
     assert population["expected_records"] == 2430
     assert population["training_admission"] == "discovery_only_not_core_train"

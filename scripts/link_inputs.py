@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\nAll {len(results)} inputs verified (check-only, nothing created).")
         return 0
 
-    data_dir = REPO_ROOT / "inputs" / "data"
+    data_dir = REPO_ROOT / "data" / "raw" / "source"
     data_dir.mkdir(parents=True, exist_ok=True)
     for entry in manifest["entries"]:
         target = (root / entry["path"]).resolve()
@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
             link.unlink()
         os.symlink(target, link)
         print(f"linked {entry['link']} -> {target}")
-    print(f"\n{len(manifest['entries'])} inputs linked under {data_dir}")
+    print(f"\n{len(manifest['entries'])} source inputs linked under {data_dir}")
     return 0
 
 

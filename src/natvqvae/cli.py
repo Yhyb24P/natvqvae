@@ -23,15 +23,15 @@ def _doctor(args: argparse.Namespace) -> int:
 
     manifest = load_manifest()
     root = Path(args.root) if args.root else source_root(manifest)
-    print(f"\n[inputs] source root: {root}")
+    print(f"\n[data] source root: {root}")
     results = verify_all(manifest, root)
     for r in results:
         print(f"  [{'OK  ' if r.ok else 'FAIL'}] {r.name:22} {r.detail}")
     failures = [r for r in results if not r.ok]
     if failures:
-        print(f"\nFAIL: {len(failures)} input(s) failed verification", file=sys.stderr)
+        print(f"\nFAIL: {len(failures)} data entry/entries failed verification", file=sys.stderr)
         return 1
-    print(f"\nOK: {len(results)} inputs verified, {len(regions.DESIGN_CLASSES)} design classes loaded")
+    print(f"\nOK: {len(results)} data entries verified, {len(regions.DESIGN_CLASSES)} design classes loaded")
     return 0
 
 

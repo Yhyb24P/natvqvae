@@ -9,6 +9,7 @@ formal population, splits, contracts or input manifest.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -16,7 +17,9 @@ from pathlib import Path
 
 import pandas as pd
 
-OUT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "data" / "processed"
+OUT = ROOT / "data" / "interim" / "structural_basis"
 BASIS = OUT / "structural_interpretation_basis.json"
 
 WT_ACCESSION = "AAQ64231.1"
@@ -79,10 +82,17 @@ def sha256_file(path: Path) -> str:
 
 
 def main() -> None:
-    registry = pd.read_csv(OUT / "sequence_registry.csv", low_memory=False)
-    anchors = pd.read_csv(OUT / "anchor_mapping_audit.csv")
-    constructs = pd.read_csv(OUT / "construct_observed_audit.csv")
-    structures = pd.read_csv(OUT / "structure_registry.csv")
+    global OUT, BASIS
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=OUT)
+    OUT = parser.parse_args().out.resolve()
+    OUT.mkdir(parents=True, exist_ok=True)
+    BASIS = OUT / "structural_interpretation_basis.json"
+
+    registry = pd.read_csv(SOURCE / "sequence_registry.csv", low_memory=False)
+    anchors = pd.read_csv(SOURCE / "anchor_mapping_audit.csv")
+    constructs = pd.read_csv(SOURCE / "construct_observed_audit.csv")
+    structures = pd.read_csv(SOURCE / "structure_registry.csv")
 
     wt = registry[registry.record_type == "query_native"].iloc[0]
     q5 = registry[
@@ -338,12 +348,12 @@ def main() -> None:
             "The basis contains no catalytic measurement and no candidate sequence.",
         ],
         "sources": {
-            "sequence_registry.csv": sha256_file(OUT / "sequence_registry.csv"),
-            "anchor_mapping_audit.csv": sha256_file(OUT / "anchor_mapping_audit.csv"),
+            "sequence_registry.csv": sha256_file(SOURCE / "sequence_registry.csv"),
+            "anchor_mapping_audit.csv": sha256_file(SOURCE / "anchor_mapping_audit.csv"),
             "construct_observed_audit.csv": sha256_file(
-                OUT / "construct_observed_audit.csv"
+                SOURCE / "construct_observed_audit.csv"
             ),
-            "structure_registry.csv": sha256_file(OUT / "structure_registry.csv"),
+            "structure_registry.csv": sha256_file(SOURCE / "structure_registry.csv"),
         },
     }
     BASIS.write_text(json.dumps(basis, indent=1) + "\n")

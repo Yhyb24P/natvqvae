@@ -1,34 +1,49 @@
-# NatV-QVAE｜KVP40 保守序列生成研究
+# NatV｜KVP40 双结构域蛋白的计算生成与保守工程化设计
 
-以噬菌体 KVP40 NatV（341 aa，NMNAT–Nudix 双结构域）为研究对象，通过计算生成可检验的保守变体，面向纯化酶体系中的 NAD⁺ 净积累改善；最终需要保留有应用价值的 NMNAT 合成能力。
+本项目研究噬菌体 KVP40 的 NatV 蛋白（341 aa，NMNAT–Nudix 双结构域），探索利用家族演化信息、蛋白质生成模型和结构证据设计保守变体，为改善 NAD⁺ 净积累提供可检验的候选序列。
+
+## 科学问题
+
+NatV 的 NMNAT 结构域参与 NAD⁺ 合成，Nudix 结构域具有相关水解功能。工程目标是在保留具有应用价值的 NMNAT 合成能力的前提下，提高纯化酶体系中的 NAD⁺ 净积累。
+
+当前主要研究 KVP40 WT 邻域内的序列生成，允许 90%–100% 全局编辑相似性和有依据的少量短 InDel。
 
 ## 研究路线
 
-**研究对象与功能目标 → 高质量数据 → 训练与模型 → 生成候选 → 初步计算评价 → 遴选工程化 NatV 候选 → 优选候选序列库 → 未来酶学验证与反馈。**
+研究对象与功能目标 → 高质量数据 → 训练与模型 → 生成候选 → 初步计算评价 → 遴选工程化 NatV 候选 → 优选候选序列库 → 未来酶学验证与反馈。
 
-当前阶段与首轮 H2 采样的研究判断见[研究计划](docs/RESEARCH_PLAN.md)；该轮证据与限制见[退役生成实验证据](discovery/natv_generation_evidence_decision.md)。
+当前已建立经过核对的 NatV 家族数据、正式训练与验证划分、同源结构对应关系，并完成多轮 QVAE 相关生成研究。首轮 H2 条件采样已完成，但其候选不作为下一阶段的主要输入；原始实验结论及限制见[退役生成实验证据](discovery/natv_generation_evidence_decision.md)。
 
-## 资料与目录
+**当前工作重点是重新明确 QVAE 的训练目标与生成机制。** 现役 `src/natvqvae/` 仅保留 WT 序列、区域约定、来源校验与 CLI，不含可运行的 QVAE 训练或生成实现；尚未形成新一轮正式生成模型与工程候选库。详细研究判断见[研究计划](docs/RESEARCH_PLAN.md)。
 
-| 位置 | 用途 |
+## 项目结构
+
+| 目录 | 内容 |
 |---|---|
-| [研究计划](docs/RESEARCH_PLAN.md) | 八环节科学问题、当前生成任务与评价标准、文献 |
-| [数据与模型来源](docs/DATA_PROVENANCE.md) | 序列角色、划分、权重继承、数据边界 |
-| [序列与结构对应](docs/NATV_PAIRING_AUDIT.md) | WT、同源构建体、残基坐标及配体状态 |
-| `contracts/` | 科学目标和历史设计约定 |
-| `inputs/manifest.json` | 只读来源路径与校验值 |
-| `discovery/` | 来源核对、数据裁决与退役运行证据 |
-| `src/natvqvae/` | 现役序列、区域、来源校验与 CLI 接口 |
-| `tests/` | 代码和数据约定的核对 |
+| `data/manifest.json` | 外部来源定位与 SHA256 |
+| `data/raw/source/` | 指向只读来源的本地符号链接 |
+| `data/raw/structures/` | 2QJO/2QJT/2R5W 实验结构 |
+| `data/raw/metadata/` | 对应 RCSB 模板元数据 |
+| `data/processed/` | 正式训练/验证数据、群体划分、序列—结构映射与核验记录 |
+| `data/interim/`、`data/models/`、`data/results/` | 中间产物、权重与运行结果，按需创建 |
+| `src/natvqvae/` | 现役序列、区域、来源校验与 CLI |
+| `scripts/` | 数据准备、来源核对与结构审计入口 |
+| `experiments/` | 正式研究建立时再创建 |
+| `discovery/` | 数据发现、模型继承及历史裁决 |
+| `contracts/` | 科学目标和序列约定 |
+| `docs/` | 研究计划、数据来源和结构对应说明 |
 
-## 安装与检查
+数据群体及来源见 [DATA_PROVENANCE.md](docs/DATA_PROVENANCE.md)，实验同源结构与残基编号见 [NATV_PAIRING_AUDIT.md](docs/NATV_PAIRING_AUDIT.md)。
+
+## 环境与数据检查
 
 ```bash
 python -m venv .venv
 . .venv/bin/activate
 python -m pip install -e ".[dev]"
+
 pytest -q
 python -m natvqvae doctor --root /path/to/nad_qvae
 ```
 
-`doctor` 核对 `inputs/manifest.json` 指向的本地来源；大型数据与权重保存在研究主机。现役只保留契约、数据身份与检查接口；贡献与执行边界见 [AGENTS.md](AGENTS.md)。
+研究实施与文件维护规则见 [AGENTS.md](AGENTS.md)。

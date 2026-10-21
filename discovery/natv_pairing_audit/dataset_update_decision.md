@@ -4,7 +4,7 @@
 
 ## 判断
 
-当前目标下结束这轮序列扩充，正式 NatV 群体及角色划分保持原状。95 条精确序列新颖的 UniProt 记录保留为待研究群体，见 `external/incremental_uniprot_candidates.csv`。它们扩大了序列组分图，但没有增加经验证的功能成员；直接并入还会影响现有验证与测试比较。输入群体含义见 `../../docs/DATA_PROVENANCE.md`，模板和残基对应见 `../../docs/NATV_PAIRING_AUDIT.md`。
+当前目标下结束这轮序列扩充，正式 NatV 群体及角色划分保持原状。95 条精确序列新颖的 UniProt 记录保留为待研究群体，见 `data/processed/incremental_uniprot_candidates.csv`。它们扩大了序列组分图，但没有增加经验证的功能成员；直接并入还会影响现有验证与测试比较。输入群体含义见 `../../docs/DATA_PROVENANCE.md`，模板和残基对应见 `../../docs/NATV_PAIRING_AUDIT.md`。
 
 ## 本地核对
 
@@ -59,19 +59,19 @@ AlphaFold 元数据查询覆盖 10 个 accession，7 个有模型、3 个返回 
 
 ## 证据文件
 
-外部原始检索载荷与检索、汇总、增量分析脚本（`query_external.py`、`summarize_external.py`、`analyze_incremental_homology.py`）已退出；本决策保留汇总、评估、组分与残基映射表。`hashes.json` 与 `source_hashes.json` 是 `0ea7264` 前的核对快照，包含已退出载荷的 SHA256；精确重比对（47,275 行，`c6163e79…`）、候选边表（4,069 行，`4d346493…`）与重复 FASTA 可由该提交追溯。重跑外部检索需从该提交取回脚本并重新获取数据库快照，结果可能不同；结论不因载荷退出而改变。
+外部原始检索载荷与检索、汇总、增量分析脚本（`query_external.py`、`summarize_external.py`、`analyze_incremental_homology.py`）已退出；本决策保留汇总、评估、组分与残基映射表。`hashes.json`、`source_hashes.json` 与 `external_source_hashes.json` 是 `0ea7264` 前的核对快照，包含已退出载荷的 SHA256；精确重比对（47,275 行，`c6163e79…`）、候选边表（4,069 行，`4d346493…`）与重复 FASTA 可由该提交追溯。重跑外部检索需从该提交取回脚本并重新获取数据库快照。
 
 | 路径 | 内容 |
 |---|---|
-| `audit_summary.json`、`source_hashes.json` | 本地核对、866 个输入文件及语料目录树校验值 |
-| `external/external_summary.json`、`external/discovery_overlap.json` | 外部检索结果与群体重叠 |
-| `external/query_log.json`、`external/source_hashes.json` | 请求状态与响应、派生文件校验值的快照 |
-| `external/incremental_uniprot_candidates.csv`、`external/uniprot_candidates.csv` | 95 条新增候选与 361 条筛后候选 |
-| `external/incremental_structures.csv`、`external/alphafold_metadata.csv` | 结构增量与 AlphaFold 元数据 |
-| `external/homology/homology_summary.json` | 同源分析汇总及限制 |
-| `external/homology/candidate_homology_assessment.csv` | 逐候选 identity、组分、划分邻近与关键残基恢复 |
-| `external/homology/component_expansion.csv` | 组分成员扩展与新增/并入结果 |
-| `external/homology/anchor_conservation_by_position.csv` | 两个参考的逐位点恢复与替换计数 |
-| `external/rcsb_shortlisted_cif/`、`external/rcsb_metadata/` | 2QJO/2QJT/2R5W 实验结构与模板元数据 |
+| `data/processed/audit_summary.json`、`source_hashes.json` | 本地核对、866 个输入文件及语料目录树校验值 |
+| `data/processed/external_summary.json`、`data/processed/discovery_overlap.json` | 外部检索结果与群体重叠 |
+| `query_log.json`、`external_source_hashes.json` | 请求状态与响应、派生文件校验值的快照 |
+| `data/processed/incremental_uniprot_candidates.csv`、`data/processed/uniprot_candidates.csv` | 95 条新增候选与 361 条筛后候选 |
+| `data/processed/incremental_structures.csv`、`data/processed/alphafold_metadata.csv` | 结构增量与 AlphaFold 元数据 |
+| `data/processed/homology_summary.json` | 同源分析汇总及限制 |
+| `data/processed/candidate_homology_assessment.csv` | 逐候选 identity、组分、划分邻近与关键残基恢复 |
+| `data/processed/component_expansion.csv` | 组分成员扩展与新增/并入结果 |
+| `data/processed/anchor_conservation_by_position.csv` | 两个参考的逐位点恢复与替换计数 |
+| `data/raw/structures/`、`data/raw/metadata/` | 2QJO/2QJT/2R5W 实验结构与模板元数据 |
 
 复现方法与保留文件入口见 `README.md`。

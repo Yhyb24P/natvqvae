@@ -2,16 +2,18 @@
 """Build the NatV sequence-construct-coordinate-homology audit.
 
 Reads only the pinned inputs and the read-only nad_qvae release. Writes new
-tables under discovery/natv_pairing_audit/. Does not modify the source tree,
-the formal population, or the core contracts.
+tables under data/interim/pairing_audit/ by default. Does not modify the source
+tree, the formal population, or the core contracts.
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
 import json
 import re
+import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,9 +24,13 @@ import pyhmmer
 from Bio import Align
 from Bio.Align import substitution_matrices
 
-ROOT = Path(__file__).resolve().parents[2]
-SRC = Path("/home/yhshy/git_files/nad_qvae")
-OUT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from natvqvae.intake import load_manifest, source_root  # noqa: E402
+
+SRC = source_root(load_manifest()).resolve()
+OUT = ROOT / "data" / "interim" / "pairing_audit"
 
 FAMILY_DIR = SRC / "data/processed/releases/natv_vnext_family_v2"
 CORPUS_DIR = (
@@ -36,14 +42,14 @@ ACTIVE_G = (
     / "data/processed/releases/natv_biohub_atlas_descriptors_v1/active_G_v3_manifest.jsonl"
 )
 HMM_PATHS = {
-    "PF01467": ROOT / "inputs/data/PF01467.hmm",
-    "PF00293": ROOT / "inputs/data/PF00293.hmm",
+    "PF01467": ROOT / "data/raw/source/PF01467.hmm",
+    "PF00293": ROOT / "data/raw/source/PF00293.hmm",
 }
-GENBANK = ROOT / "inputs/data/AY283928.2.gb"
-POCKET_MAP = ROOT / "inputs/data/domain_pocket_map.json"
+GENBANK = ROOT / "data/raw/source/AY283928.2.gb"
+POCKET_MAP = ROOT / "data/raw/source/domain_pocket_map.json"
 TEMPLATE_PDBS = {
-    "2QJO": ROOT / "inputs/data/2QJO.pdb",
-    "2QJT": ROOT / "inputs/data/2qjt.pdb",
+    "2QJO": ROOT / "data/raw/source/2QJO.pdb",
+    "2QJT": ROOT / "data/raw/source/2qjt.pdb",
     "2R5W": CORPUS_DIR / "2R5W.cif",
 }
 TEMPLATE_IDS = ("2QJO", "2QJT", "2R5W")
@@ -372,6 +378,10 @@ def template_context(template: str) -> dict:
 
 
 def main() -> None:
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=OUT)
+    OUT = parser.parse_args().out.resolve()
     OUT.mkdir(parents=True, exist_ok=True)
     generated = datetime.now(timezone.utc).isoformat()
     hmms = {name: pyhmmer.plan7.HMMFile(str(path)).read() for name, path in HMM_PATHS.items()}
@@ -387,7 +397,7 @@ def main() -> None:
     anchors = pocket["2QJT_reference_anchor_mapping"]
 
     # ---------- family population ----------
-    fasta = parse_fasta(ROOT / "inputs/data/family_population.fasta")
+    fasta = parse_fasta(ROOT / "data/raw/source/family_population.fasta")
     roles = pd.read_parquet(FAMILY_DIR / "family_training_roles_v2.parquet")
     split_manifest = json.load(open(FAMILY_DIR / "core_split_manifest_v2.json"))
     fasta_by_id = {name: seq for name, seq in fasta}
@@ -1025,13 +1035,13 @@ def main() -> None:
     # ---------- source hashes ----------
     source_paths = []
     for p in [
-        ROOT / "inputs/manifest.json",
-        ROOT / "inputs/data/domain_pocket_map.json",
-        ROOT / "inputs/data/AY283928.2.gb",
-        ROOT / "inputs/data/PF01467.hmm",
-        ROOT / "inputs/data/PF00293.hmm",
-        ROOT / "inputs/data/2QJO.pdb",
-        ROOT / "inputs/data/2qjt.pdb",
+        ROOT / "data/manifest.json",
+        ROOT / "data/raw/source/domain_pocket_map.json",
+        ROOT / "data/raw/source/AY283928.2.gb",
+        ROOT / "data/raw/source/PF01467.hmm",
+        ROOT / "data/raw/source/PF00293.hmm",
+        ROOT / "data/raw/source/2QJO.pdb",
+        ROOT / "data/raw/source/2qjt.pdb",
         FAMILY_DIR / "population.fasta",
         FAMILY_DIR / "family_training_roles_v2.parquet",
         FAMILY_DIR / "core_split_manifest_v2.json",

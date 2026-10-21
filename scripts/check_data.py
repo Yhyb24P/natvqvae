@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 from natvqvae.intake import load_manifest, source_root, verify_all, sha256_file
 
@@ -41,7 +41,7 @@ def read_fasta(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path)
-    parser.add_argument('--out', type=Path, default=Path(__file__).parent)
+    parser.add_argument('--out', type=Path, default=ROOT / 'data' / 'interim' / 'data_readiness')
     args = parser.parse_args()
     torch.set_num_threads(1)
     manifest = load_manifest()
@@ -157,7 +157,7 @@ def main():
                 print(f'{name}: {i+1}/{len(entries)} verified', flush=True)
         feature_stats[name] = {'files': len(entries), 'bytes': total_bytes, 'status': 'PASS'}
     # Verify existing structural annotation sources without treating them as training features.
-    basis_path = ROOT / 'discovery/natv_pairing_audit/structural_interpretation_basis.json'
+    basis_path = ROOT / 'data/processed/structural_interpretation_basis.json'
     basis = json.loads(basis_path.read_text())
     for relative, expected in basis['sources'].items():
         require(sha256_file(basis_path.parent / relative) == expected, f'Structural source: {relative}')
@@ -184,7 +184,7 @@ def main():
         'checked_at_utc': datetime.now(timezone.utc).isoformat(),
         'git_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         'script_sha256': sha256_file(Path(__file__)),
-        'input_manifest_sha256': sha256_file(ROOT / 'inputs/manifest.json'),
+        'input_manifest_sha256': sha256_file(ROOT / 'data/manifest.json'),
         'source_root': str(source),
         'inputs': [{'name': r.name, 'path': str(r.path), 'sha256': sha256_file(r.path)} for r in results],
         'roles': dict(Counter(roles.training_role_v2)),

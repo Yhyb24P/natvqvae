@@ -11,7 +11,7 @@ sys.dont_write_bytecode = True
 import pandas as pd
 import torch
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 from natvqvae.intake import load_manifest, source_root, verify_entry
 
@@ -27,7 +27,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path)
-    parser.add_argument('--out', type=Path, default=Path(__file__).parent)
+    parser.add_argument('--out', type=Path, default=ROOT / 'data' / 'interim' / 'model_inheritance')
     args = parser.parse_args()
     manifest = load_manifest()
     source = (args.root or source_root(manifest)).resolve()

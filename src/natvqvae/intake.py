@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-MANIFEST_PATH = REPO_ROOT / "inputs" / "manifest.json"
+MANIFEST_PATH = REPO_ROOT / "data" / "manifest.json"
 
 
 @dataclass(frozen=True)

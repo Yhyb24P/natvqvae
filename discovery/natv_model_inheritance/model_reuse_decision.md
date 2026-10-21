@@ -4,9 +4,9 @@
 
 当时的决定是：WT 条件下的对齐列先验生成优先复用旧 `design/sequence_generator.py` 中的 `SequenceGenerator`，不另建一套 Categorical QVAE。H2 `H2RecoveryModel` 保留为条件编辑的已训练比较资产；Continuous MMD-VAE 按研究问题决定是否纳入，不默认重训。原始 `core/model.py` 的能量模型、结构与属性模块不随类名整体继承。
 
-退役运行的证据与提交见[退役生成实验证据](../natv_generation_evidence_decision.md)；模型身份见 [DATA_PROVENANCE.md](../../docs/DATA_PROVENANCE.md) 与 `source_checks.json`。本记录只保留继承判断。
+退役运行的证据与提交见[退役生成实验证据](../natv_generation_evidence_decision.md)；模型身份见 [DATA_PROVENANCE.md](../../docs/DATA_PROVENANCE.md) 与 `source_checks.json`。
 
-源码、报告、配置、权重及其校验值见 `source_checks.json`；角色交叉表见 `split_overlap.csv`。来源为本机只读 `nad_qvae`，以文件 SHA256 和记录的 Git revision 确定身份。所给 GitHub 页面在本次网页读取中返回 404，远端可访问性与本地文件可用性分别判断。
+源码、报告、配置、权重及其校验值见 `source_checks.json`；角色交叉表见 `split_overlap.csv`。来源为本机只读 `nad_qvae`，以文件 SHA256 和记录的 Git revision 确定身份。
 
 ## 实现与已有结果
 
@@ -33,7 +33,7 @@ H2 的 `h2_model_v1.py` 本机存在、受 Git 跟踪，其 SHA256 与 `formal_s
 ## 复现本地核对
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 /home/yhshy/miniconda3/envs/nad_data/bin/python discovery/natv_model_inheritance/audit_sources.py
+PYTHONDONTWRITEBYTECODE=1 /home/yhshy/miniconda3/envs/nad_data/bin/python scripts/audit_model_sources.py --out data/interim/model_inheritance
 ```
 
-在项目根目录执行，依赖现有 pandas、Parquet 引擎、PyTorch、NumPy、PyYAML 与 Biopython。脚本校验历史冻结来源、在 CPU 严格加载权重并交叉统计角色；不调用模型 forward。`--root` 指定只读来源，`--out` 指定核对输出目录。
+在项目根目录执行，依赖现有 pandas、Parquet 引擎、PyTorch、NumPy、PyYAML 与 Biopython。脚本校验历史冻结来源、在 CPU 严格加载权重并交叉统计角色；不调用模型 forward。`--root` 指定只读来源，`--out` 指定核对输出目录；本目录的 `source_checks.json` 与 `split_overlap.csv` 是原始核验快照，不覆写。
