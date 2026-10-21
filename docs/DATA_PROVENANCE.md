@@ -38,3 +38,5 @@ KVP40 序列身份、CDD 划分及当前历史替换位置约定分别见 `contr
 `experiments/kvp40_conditional_generation/` 从随机 NatV 参数训练条件模型与确定性对照，继承正式训练/验证角色，共用本地冻结 ESM-2；不读取历史 NatV checkpoint。模型、掩码面板与权重身份见该运行的方案、`inputs/identity.json` 与 `checkpoint_manifest.json`。权重保存在 `data/models/kvp40_conditional_generation/`，完整候选、轨迹、掩码与特征清单保存在 `data/results/kvp40_conditional_generation/raw/`。
 
 `experiments/kvp40_target_posterior_training/` 沿用上述正式角色与固定掩码，逐文件核验后复用遮蔽特征，NatV 参数重新随机初始化；真实目标标签仅进入 QVAE 后验。缓存来源与核验见该运行的 `inputs/cache_identity.json`，输入及源码身份见 `inputs/identity.json`；权重与逐输入验证记录分别进入同名 `data/models/`、`data/results/` 目录。
+
+`experiments/natv_conditional_qvae/` 从上述1,644条训练与227条验证序列重新训练条件Categorical模型及确定性对照，冻结本地ESM-2，不继承NatV权重。完整序列特征仅供QVAE后验使用；解码器与条件先验读取对应掩码输入。主缓存每条序列包含完整输入及27种混合掩码。统计缓存由训练群体预选同源位置，在验证背景的任务掩码M内保留目标子集S；`subset_positions`只限定计分位置，M中其他位点仍遮蔽。输入与缓存SHA见本轮`inputs/`，统计定义及结果分别见`PLAN.md`和`REPORT.md`；231条测试目标不进入该流程。

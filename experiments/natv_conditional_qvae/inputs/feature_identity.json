@@ -1,0 +1,10 @@
+{
+  "git_revision": "5fdd44fdb72807f2a8915e9810988dc397b77c26",
+  "sha256": {
+    "src/natvqvae/conditional_data.py": "55712a885cedcb23203b3e4653109efd70213feff8f024c3eb72a1590aeadf47",
+    "src/natvqvae/conditional_generation.py": "69fd932d517e428896fefd494ee3d5cbb613e9913e348babdeee34b4e1c9d5cc",
+    "experiments/natv_conditional_qvae/plan.json": "19d4cb37418057bce0f0df1b9302eeea0ef8befc44b8bb9f665b8067e58dbf4f"
+  },
+  "feature_dtype": "bfloat16_stored_as_uint16",
+  "inherited_NatV_features": false
+}
