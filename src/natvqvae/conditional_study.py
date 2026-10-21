@@ -23,7 +23,8 @@ import torch
 from torch.nn.utils import clip_grad_norm_
 
 from .conditional_data import FeatureData, stable_seed, status, write_json
-from .conditional_evaluation import (aggregate_panel_records, posterior_joint_probability,
+from .conditional_evaluation import (aggregate_panel_records, compare_joint_scores,
+                                     deterministic_joint_probability, posterior_joint_probability,
                                      validation_score)
 from .conditional_generation import (ConditionalModel, categorical_kl, categorical_log_prob,
                                      categorical_samples, reconstruction_nll, rloo_objective,
@@ -1146,6 +1147,364 @@ def _formal(run, plan, data, root, device, calibration, selected, attempts, fail
         raise FitFailed('Formal fits missing: ' + ', '.join(missing))
     status(run, 'FORMAL_READY', checkpoints=len(formal))
     return formal, formal_records
+
+
+_FORMAL_METHODS = ('shared_joint', 'marginal_product', 'deterministic',
+                   'marginal_minus_shared', 'deterministic_minus_shared',
+                   'marginal_minus_deterministic')
+_POSTERIOR_METHODS = ('posterior_is_joint', 'posterior_minus_shared',
+                      'posterior_minus_marginal', 'posterior_minus_deterministic')
+_QVAE_METHODS = _FORMAL_METHODS + _POSTERIOR_METHODS
+
+
+def _formal_difference(left, right):
+    output = []
+    for a, b in zip(left, right):
+        output.append(None if a is None or b is None else float(a) - float(b))
+    return output
+
+
+def _summary_for_values(records, data, value_key, ess_key='posterior_ess',
+                        max_key='posterior_max_normalized_weight', low_key='posterior_low_ess'):
+    values = [{'row': record['row'], 'component': record['component'],
+               'panel': record['panel'], 'weight': record['weight'],
+               'nats_per_residue': record[value_key],
+               'ess': record.get(ess_key), 'max_normalized_weight': record.get(max_key),
+               'low_ess': record.get(low_key)}
+              for record in records]
+    return aggregate_panel_records(values, data)
+
+
+def _formal_eval_paths(root, run_name, key):
+    safe = key.replace('/', '_')
+    base = root / 'data/results' / run_name / 'raw'
+    return (base / 'formal_evaluation' / f'{safe}.jsonl.gz',
+            base / 'formal_evaluation' / f'{safe}_summary.json',
+            base / 'formal_evaluation_receipts' / f'{safe}.json')
+
+
+def _load_formal_model(entry, plan, root, device):
+    path = root / entry['path']
+    if sha256_file(path) != entry['sha256']:
+        raise ValueError('Formal checkpoint identity differs: ' + str(path))
+    saved = torch.load(path, map_location='cpu', weights_only=True)
+    arm = saved.get('arm', entry['arm'])
+    if arm != entry['arm']:
+        raise ValueError('Formal checkpoint arm differs')
+    model_config = saved.get('model_config', entry.get('model_config', plan['model']))
+    model = ConditionalModel(arm, **model_config).to(device).eval()
+    model.load_state_dict(saved['state_dict'], strict=True)
+    return model
+
+
+def _compact_formal_summary(summary):
+    return {'score': _json_float(summary.get('score')), 'se': _json_float(summary.get('se')),
+            'finite': bool(summary.get('finite')),
+            'components': {component: _json_float(value)
+                           for component, value in summary.get('components', {}).items()},
+            'panels': {panel: {'score': _json_float(value.get('score')),
+                               'se': _json_float(value.get('se'))}
+                       for panel, value in summary.get('panels', {}).items()},
+            'input_ess_mean': _json_float(summary.get('input_ess_mean')),
+            'input_ess_min': _json_float(summary.get('input_ess_min')),
+            'input_max_normalized_weight': _json_float(summary.get('input_max_normalized_weight')),
+            'input_low_ess_fraction': _json_float(summary.get('input_low_ess_fraction')),
+            'input_mc_reliable': bool(summary.get('input_mc_reliable')),
+            'aggregate_score_defined': bool(summary.get('aggregate_score_defined'))}
+
+
+def _write_formal_records(path, key, records):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(path, 'wt') as handle:
+        for record in records:
+            handle.write(json.dumps({'fit': key, **record}, ensure_ascii=False,
+                                    allow_nan=False) + '\n')
+
+
+def _formal_receipt(root, receipt_path, checkpoint_sha, paired_sha, sample_count,
+                    repeats, query_hash):
+    if not receipt_path.exists():
+        return None
+    receipt = json.loads(receipt_path.read_text())
+    expected = {'checkpoint_sha256': checkpoint_sha, 'paired_deterministic_sha256': paired_sha,
+                'sample_count': int(sample_count), 'repeats': int(repeats),
+                'query_hash': query_hash}
+    if any(receipt.get(key) != value for key, value in expected.items()):
+        return None
+    for kind in ('records', 'summary'):
+        path = root / receipt[f'{kind}_path']
+        if not path.exists() or sha256_file(path) != receipt[f'{kind}_sha256']:
+            return None
+    return receipt
+
+
+def _write_formal_receipt(path, root, key, checkpoint_sha, paired_sha, sample_count,
+                          repeats, query_hash, records_path, summary_path):
+    write_json(path, {'fit': key, 'checkpoint_sha256': checkpoint_sha,
+                      'paired_deterministic_sha256': paired_sha,
+                      'sample_count': int(sample_count), 'repeats': int(repeats),
+                      'query_hash': query_hash,
+                      'records_path': str(records_path.relative_to(root)),
+                      'records_sha256': sha256_file(records_path),
+                      'summary_path': str(summary_path.relative_to(root)),
+                      'summary_sha256': sha256_file(summary_path)})
+
+
+def _paired_component_bootstrap(component_scores, mc_se, seeds_by_arm, methods_by_arm,
+                                repeats, seed):
+    """按同源组分重采样、正式种子配对；QVAE/deterministic 使用同一组分抽样。"""
+    component_sets = []
+    for arm, seeds in seeds_by_arm.items():
+        for model_seed in seeds:
+            for method in methods_by_arm[arm]:
+                scores = component_scores.get((arm, model_seed), {}).get(method)
+                if scores:
+                    component_sets.append(set(scores))
+    components = sorted(set.intersection(*component_sets)) if component_sets else []
+    if not components:
+        return {'method': 'component_seed_paired_bootstrap', 'components': [],
+                'bootstrap_repeats': repeats, 'arms': {},
+                'unknown': 'no common components for paired bootstrap'}
+    generator = np.random.default_rng(stable_seed(seed, 'formal_bootstrap') % (2 ** 63 - 1))
+    draws = {arm: {method: [] for method in methods} for arm, methods in methods_by_arm.items()}
+    for _ in range(int(repeats)):
+        indices = generator.integers(0, len(components), len(components))
+        sampled = [components[index] for index in indices]
+        for arm, seeds in seeds_by_arm.items():
+            for method in methods_by_arm[arm]:
+                per_seed = []
+                for model_seed in seeds:
+                    scores = component_scores[(arm, model_seed)].get(method)
+                    if scores is not None:
+                        per_seed.append(float(np.mean([scores[component] for component in sampled])))
+                if per_seed:
+                    draws[arm][method].append(float(np.mean(per_seed)))
+    arms = {}
+    for arm, methods in methods_by_arm.items():
+        arms[arm] = {}
+        for method in methods:
+            values = np.asarray(draws[arm][method], dtype=float)
+            values = values[np.isfinite(values)]
+            points = []
+            for model_seed in seeds_by_arm[arm]:
+                scores = component_scores[(arm, model_seed)].get(method)
+                if scores is not None:
+                    points.append(float(np.mean([scores[component] for component in components])))
+            mc_values = []
+            for model_seed in seeds_by_arm[arm]:
+                value = mc_se.get((arm, model_seed), {}).get(method)
+                if value is not None and math.isfinite(float(value)):
+                    mc_values.append(float(value))
+            deterministic = method == 'deterministic'
+            arms[arm][method] = {
+                'point': float(np.mean(points)) if points else None,
+                'bootstrap_mean': float(np.mean(values)) if len(values) else None,
+                'bootstrap_sd': float(np.std(values, ddof=1)) if len(values) > 1 else None,
+                'ci95': [float(np.percentile(values, 2.5)), float(np.percentile(values, 97.5))]
+                        if len(values) else None,
+                'mc_se_mean': float(np.mean(mc_values)) if mc_values else (0. if deterministic else None),
+                'mc_se_range': [float(np.min(mc_values)), float(np.max(mc_values))]
+                               if mc_values else ([0., 0.] if deterministic else None),
+                'unknown': bool(not points or not len(values)),
+            }
+    return {'method': 'component_seed_paired_bootstrap', 'components': components,
+            'component_count': len(components), 'bootstrap_repeats': int(repeats),
+            'seeds': {arm: list(seeds) for arm, seeds in seeds_by_arm.items()},
+            'paired_seed_policy': 'same component resample across arms; QVAE seed paired with deterministic seed',
+            'arms': arms, 'draws': draws}
+
+
+def evaluate_formal_models(run, plan, data, formal_manifest, root=None, device=None,
+                           repeats=None, bootstrap_repeats=None, force=False):
+    """正式种子的全 M 联合概率评价，供 finish_study 调用。
+
+    QVAE 每个正式种子与同 seed 的确定性权重配对，调用 compare_joint_scores；
+    评价样本数取校准接口的 evaluation_sample_count，重复 8 次。逐输入记录保留
+    shared/own-marginal/deterministic 的 nats/residue、ESS 与低 ESS 标记。汇总用
+    同源组分重采样、正式种子配对 bootstrap 2000 次，并单独报告 MC SE。已有
+    checkpoint/输入/记录 SHA receipt 匹配时跳过重算。
+    """
+    root = Path(root or ROOT)
+    run = Path(run)
+    device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
+    repeats = int(repeats if repeats is not None
+                  else plan.get('calibration', {}).get('likelihood_repetitions', 8))
+    bootstrap_repeats = int(bootstrap_repeats if bootstrap_repeats is not None
+                            else plan.get('statistics', {}).get('bootstrap_repeats', 2000))
+    interface_path = run / 'calibration_decision.json'
+    if not interface_path.exists():
+        raise FileNotFoundError('Missing output interface: ' + str(interface_path))
+    interface = json.loads(interface_path.read_text())
+    sample_counts = {arm: int(values['evaluation_sample_count'])
+                     for arm, values in interface['arms'].items()}
+    if 'QVAE' not in sample_counts or 'deterministic' not in sample_counts:
+        raise ValueError('Calibration interface must contain both arms')
+    groups = {}
+    for key, entry in formal_manifest.items():
+        arm = entry['arm']
+        groups.setdefault(arm, {})[int(entry['seed'])] = entry
+    if 'QVAE' not in groups or 'deterministic' not in groups:
+        raise ValueError('Formal manifest must contain both arms')
+    paired_seeds = sorted(set(groups['QVAE']) & set(groups['deterministic']))
+    if not paired_seeds:
+        raise ValueError('No paired formal seeds')
+    query_hash = _query_hash(data.validation, data)
+    raw = root / 'data/results' / run.name / 'raw'
+    component_scores = {}
+    mc_se = {}
+    records_paths = {}
+    summary_paths = {}
+    receipt_paths = {}
+    seed_summaries = {}
+    evaluated = []
+    skipped = []
+
+    def store(key, arm, model_seed, summary, records_path, summary_path, receipt_path):
+        component_scores[(arm, model_seed)] = summary['components_by_method']
+        mc_se[(arm, model_seed)] = summary['mc_se']
+        records_paths[key] = str(records_path.relative_to(root))
+        summary_paths[key] = str(summary_path.relative_to(root))
+        receipt_paths[key] = str(receipt_path.relative_to(root))
+        seed_summaries[key] = {'path': summary_paths[key],
+                               'methods': {method: {'score': value.get('score'),
+                                                    'se': value.get('se')}
+                                           for method, value in summary['methods'].items()}}
+
+    for model_seed in paired_seeds:
+        key = f'QVAE/{model_seed}'
+        entry = groups['QVAE'][model_seed]
+        deterministic_entry = groups['deterministic'][model_seed]
+        records_path, summary_path, receipt_path = _formal_eval_paths(root, run.name, key)
+        receipt = None if force else _formal_receipt(
+            root, receipt_path, entry['sha256'], deterministic_entry['sha256'],
+            sample_counts['QVAE'], repeats, query_hash)
+        if receipt is not None:
+            summary = json.loads((root / receipt['summary_path']).read_text())
+            summary_paths[key] = receipt['summary_path']
+            skipped.append(key)
+            store(key, 'QVAE', model_seed, summary, records_path, summary_path, receipt_path)
+            continue
+        qvae = _load_formal_model(entry, plan, root, device)
+        deterministic = _load_formal_model(deterministic_entry, plan, root, device)
+        comparison = compare_joint_scores(
+            qvae, deterministic, data, data.validation,
+            sample_count=sample_counts['QVAE'], repeats=repeats,
+            seed=stable_seed(plan.get('statistics', {}).get('seed', 0),
+                             'formal_evaluation', 'QVAE', model_seed),
+            batch_size=16, sample_chunk=32)
+        posterior = posterior_joint_probability(
+            qvae, data, data.validation, sample_count=sample_counts['QVAE'],
+            repeats=repeats,
+            seed=stable_seed(plan.get('statistics', {}).get('seed', 0),
+                             'formal_evaluation', 'posterior', model_seed),
+            batch_size=16, sample_chunk=32)
+        combined = []
+        for base, post in zip(comparison['records'], posterior['records']):
+            if (base['row'], base['panel']) != (post['row'], post['panel']):
+                raise ValueError('Posterior and comparison query order differ')
+            posterior_values = post['nats_per_residue']
+            deterministic_values = [base['deterministic'][0]] * len(posterior_values)
+            combined.append({
+                **base,
+                'posterior_is_joint': posterior_values,
+                'posterior_ess': post.get('ess'),
+                'posterior_max_normalized_weight': post.get('max_normalized_weight'),
+                'posterior_low_ess': post.get('low_ess'),
+                'posterior_minus_shared': _formal_difference(posterior_values, base['shared_joint']),
+                'posterior_minus_marginal': _formal_difference(posterior_values, base['marginal_product']),
+                'posterior_minus_deterministic': _formal_difference(
+                    posterior_values, deterministic_values),
+            })
+        _write_formal_records(records_path, key, combined)
+        methods = {method: _compact_formal_summary(comparison['summary'][method])
+                   for method in _FORMAL_METHODS}
+        methods['posterior_is_joint'] = _compact_formal_summary(posterior['summary'])
+        for method in ('posterior_minus_shared', 'posterior_minus_marginal',
+                       'posterior_minus_deterministic'):
+            methods[method] = _compact_formal_summary(
+                _summary_for_values(combined, data, method))
+        summary = {'fit': key, 'arm': 'QVAE', 'seed': int(model_seed),
+                   'checkpoint_sha256': entry['sha256'],
+                   'paired_deterministic_sha256': deterministic_entry['sha256'],
+                   'sample_count': int(sample_counts['QVAE']), 'repeats': int(repeats),
+                   'query_hash': query_hash, 'methods': methods,
+                   'components_by_method': {method: methods[method]['components']
+                                            for method in methods},
+                   'mc_se': {method: methods[method]['se'] for method in methods},
+                   'records_path': str(records_path.relative_to(root))}
+        write_json(summary_path, summary)
+        _write_formal_receipt(receipt_path, root, key, entry['sha256'],
+                              deterministic_entry['sha256'], sample_counts['QVAE'],
+                              repeats, query_hash, records_path, summary_path)
+        del qvae, deterministic
+        gc.collect()
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
+        evaluated.append(key)
+        store(key, 'QVAE', model_seed, summary, records_path, summary_path, receipt_path)
+
+    for model_seed in sorted(groups['deterministic']):
+        key = f'deterministic/{model_seed}'
+        entry = groups['deterministic'][model_seed]
+        records_path, summary_path, receipt_path = _formal_eval_paths(root, run.name, key)
+        receipt = None if force else _formal_receipt(
+            root, receipt_path, entry['sha256'], None, 0, 1, query_hash)
+        if receipt is not None:
+            summary = json.loads((root / receipt['summary_path']).read_text())
+            summary_paths[key] = receipt['summary_path']
+            skipped.append(key)
+            store(key, 'deterministic', model_seed, summary, records_path, summary_path,
+                  receipt_path)
+            continue
+        deterministic = _load_formal_model(entry, plan, root, device)
+        result = deterministic_joint_probability(deterministic, data, data.validation)
+        _write_formal_records(records_path, key, result['records'])
+        methods = {'deterministic': _compact_formal_summary(result['summary'])}
+        summary = {'fit': key, 'arm': 'deterministic', 'seed': int(model_seed),
+                   'checkpoint_sha256': entry['sha256'], 'paired_deterministic_sha256': None,
+                   'sample_count': 0, 'repeats': 1, 'query_hash': query_hash,
+                   'methods': methods,
+                   'components_by_method': {'deterministic': methods['deterministic']['components']},
+                   'mc_se': {'deterministic': 0.},
+                   'records_path': str(records_path.relative_to(root))}
+        write_json(summary_path, summary)
+        _write_formal_receipt(receipt_path, root, key, entry['sha256'], None, 0, 1,
+                              query_hash, records_path, summary_path)
+        del deterministic
+        gc.collect()
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
+        evaluated.append(key)
+        store(key, 'deterministic', model_seed, summary, records_path, summary_path,
+              receipt_path)
+
+    bootstrap = _paired_component_bootstrap(
+        component_scores, mc_se,
+        {'QVAE': paired_seeds, 'deterministic': sorted(groups['deterministic'])},
+        {'QVAE': list(_QVAE_METHODS), 'deterministic': ['deterministic']},
+        bootstrap_repeats, plan.get('statistics', {}).get('seed', 0))
+    draws = bootstrap.pop('draws', None)
+    draws_path = raw / 'formal_evaluation' / 'bootstrap_draws.json'
+    if draws is not None:
+        write_json(draws_path, {'components': bootstrap['components'],
+                                'bootstrap_repeats': bootstrap['bootstrap_repeats'],
+                                'draws': draws})
+    aggregate = {
+        'method': 'formal_full_M_paired_joint_evaluation',
+        'validation_queries': len(data.validation), 'repeats': repeats,
+        'bootstrap_repeats': bootstrap_repeats,
+        'evaluation_sample_count': sample_counts,
+        'records': records_paths, 'summary_paths': summary_paths,
+        'receipts': receipt_paths, 'seed_summaries': seed_summaries,
+        'bootstrap': bootstrap, 'query_hash': query_hash,
+        'evaluated': evaluated, 'skipped': skipped,
+        'bootstrap_draws_path': str(draws_path.relative_to(root)) if draws is not None else None,
+    }
+    aggregate_path = raw / 'formal_evaluation' / 'summary.json'
+    write_json(aggregate_path, aggregate)
+    aggregate['path'] = str(aggregate_path.relative_to(root))
+    aggregate['sha256'] = sha256_file(aggregate_path)
+    return aggregate
 
 
 def _source_hashes(run, plan):

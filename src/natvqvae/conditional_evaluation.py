@@ -317,6 +317,11 @@ def compare_joint_scores(qvae, deterministic, data, queries, sample_count=256, r
             'marginal_minus_shared': _float_list(marginal_values - shared_values),
             'deterministic_minus_shared': _float_list(deterministic_values - shared_values),
             'marginal_minus_deterministic': _float_list(marginal_values - deterministic_values),
+            'shared_ess': a.get('ess'), 'shared_max_normalized_weight': a.get('max_normalized_weight'),
+            'shared_low_ess': a.get('low_ess'),
+            'marginal_ess': b.get('ess'), 'marginal_max_normalized_weight': b.get('max_normalized_weight'),
+            'marginal_low_ess': b.get('low_ess'),
+            'deterministic_exact': c['nats_per_residue'][0],
         })
     def aggregate(key):
         records = [{'row': item['row'], 'component': item['component'], 'panel': item['panel'],

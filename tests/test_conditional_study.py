@@ -7,9 +7,10 @@ import pytest
 
 torch = pytest.importorskip('torch')
 from natvqvae.conditional_generation import AA, ConditionalModel
-from natvqvae.conditional_study import (budget_steps, checkpoint_payload, expected_fit_count,
-    fit_model, initial_selection_state, learning_rate_at_epoch, load_checkpoint, rng_state,
-    set_rng_state, update_selection, _run_gradient_diagnostics, _torch_save)
+from natvqvae.conditional_study import (budget_steps, checkpoint_payload, evaluate_formal_models,
+    expected_fit_count, fit_model, initial_selection_state, learning_rate_at_epoch,
+    load_checkpoint, rng_state, set_rng_state, update_selection, _run_gradient_diagnostics,
+    _torch_save)
 
 
 class TinyData:
@@ -95,6 +96,50 @@ def toy_plan(arm='deterministic'):
         'budget': {'max_fits': 38, 'calibration_steps_per_fit': 5200,
                    'absolute_steps_per_remaining_fit_max': 20800},
     }
+
+
+def test_evaluate_formal_models_records_bootstrap_and_receipt_skip(tmp_path):
+    import hashlib
+    from natvqvae import conditional_study
+
+    torch.set_num_threads(1)
+    data = TinyData()
+    plan = toy_plan('QVAE')
+    plan['statistics'] = {'seed': 3, 'bootstrap_repeats': 10}
+    run = tmp_path / 'experiments' / 'toy'
+    run.mkdir(parents=True)
+    interface = {'arms': {'QVAE': {'evaluation_sample_count': 2},
+                          'deterministic': {'evaluation_sample_count': 0}}}
+    (run / 'calibration_decision.json').write_text(json.dumps(interface))
+    manifest = {}
+    for arm in ('QVAE', 'deterministic'):
+        torch.manual_seed(5)
+        model = ConditionalModel(arm, hidden=8, factors=2, states=3, feature_dim=6)
+        config = {'hidden': 8, 'factors': 2, 'states': 3, 'feature_dim': 6}
+        path = tmp_path / 'data/models/toy/formal' / arm / 'seed1.pt'
+        conditional_study._torch_save(path, {'state_dict': model.state_dict(), 'arm': arm,
+                                             'seed': 1, 'model_config': config})
+        manifest[f'{arm}/1'] = {'path': str(path.relative_to(tmp_path)),
+                                'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                                'arm': arm, 'seed': 1, 'model_config': config,
+                                'selected_metric': 1., 'step': 1}
+    result = evaluate_formal_models(run, plan, data, manifest, root=tmp_path,
+                                    device='cpu', repeats=1, bootstrap_repeats=10)
+    assert result['method'] == 'formal_full_M_paired_joint_evaluation'
+    assert result['validation_queries'] == len(data.validation)
+    assert set(result['records']) == {'QVAE/1', 'deterministic/1'}
+    assert result['evaluation_sample_count']['QVAE'] == 2
+    assert set(result['bootstrap']['arms']['QVAE']) == set(conditional_study._QVAE_METHODS)
+    assert result['bootstrap']['arms']['QVAE']['shared_joint']['point'] is not None
+    assert result['bootstrap']['arms']['QVAE']['posterior_is_joint']['point'] is not None
+    assert result['bootstrap']['arms']['QVAE']['posterior_minus_shared']['ci95'] is not None
+    assert result['bootstrap']['arms']['QVAE']['marginal_minus_shared']['ci95'] is not None
+    assert result['bootstrap']['arms']['deterministic']['deterministic']['point'] is not None
+    assert (tmp_path / result['path']).exists()
+    second = evaluate_formal_models(run, plan, data, manifest, root=tmp_path,
+                                    device='cpu', repeats=1, bootstrap_repeats=10)
+    assert set(second['skipped']) == {'QVAE/1', 'deterministic/1'}
+    assert not second['evaluated']
 
 
 def test_run_study_calibration_only(tmp_path):
