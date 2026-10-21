@@ -1,0 +1,7 @@
+{
+  "origin": "experiments/kvp40_conditional_generation",
+  "masks_sha256": "6643a41f908e3b66bbe86058e0b4856f91d451c90c75e8377c630e64ee0a3099",
+  "feature_manifest_sha256": "89509b85b25e6a2d9578e1ab567c0a6819456e75a385f62c828f6706344f8a4c",
+  "verified_feature_files": 5613,
+  "cache_reused_without_copy": true
+}

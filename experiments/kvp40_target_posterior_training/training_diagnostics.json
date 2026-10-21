@@ -1,0 +1,283 @@
+{
+  "analysis_git_revision": "7084ee2c9bafbfc4b6a6b5e84d65dc06ae8298ea",
+  "training_git_revision": "961dee9644f2a6426cffd48b1eb51871dc0c617e",
+  "inputs_sha256": {
+    "experiments/kvp40_target_posterior_training/training_history.json": "b601881c00495395c319d36710645960a99cab380c001a65b55e8294bae99bc4",
+    "experiments/kvp40_target_posterior_training/plan.json": "c6f79daefbf3f2eb8a33c6337262662e9cb6008b4f72ec80943582b7c2e1a54c",
+    "experiments/kvp40_target_posterior_training/checkpoint_manifest.json": "3cb15f69e937c700da80346da3c958fbdc17f33d4cf1c7e5a1d632685e2cf2b9",
+    "experiments/kvp40_target_posterior_training/inputs/identity.json": "25aa4055750793ab6a0dfa84fd11a4ebe10439c7468576cb99b998e19c36aeca"
+  },
+  "analysis_code_sha256": "0d95b6f792dfdb91ea357eaaab66d7c380d44eafe70bc843425ee02b9b2adfbd",
+  "reviewed_source_sha256": {
+    "scripts/run_conditional_study.py": "90263ffd27d361d3828bcb2ff44d2030552f5f61b13155c6358f7d28b543cb14",
+    "src/natvqvae/conditional_generation.py": "cab9e4c81023b9394e1bc92818afc6ecdc99d386af92e56bb08437c8177324ba"
+  },
+  "plotting_versions": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "torch": "2.11.0+cu128"
+  },
+  "records": 132,
+  "verified_checkpoints": {
+    "QVAE/20261021": {
+      "epoch": 12,
+      "validation_CE": 1.6943200833938006,
+      "sha256": "e36150d89ded65a633a77cf7d227d2cc4718c271ee8b5394d045fb50472b833f"
+    },
+    "QVAE/20261022": {
+      "epoch": 12,
+      "validation_CE": 1.6951522218227433,
+      "sha256": "dc4b5bff445d2b0d78398c9542bae28200c1dd7aa21c73e65537cb45ffc10746"
+    },
+    "QVAE/20261023": {
+      "epoch": 12,
+      "validation_CE": 1.693391790008583,
+      "sha256": "cf6f1a09bd40bac550aa4acf05877432de8fdb654f30a79a671ad4e77a0f3760"
+    },
+    "deterministic/20261021": {
+      "epoch": 12,
+      "validation_CE": 1.6932628922325963,
+      "sha256": "4a6a265f0a0e6fc2e21f195023f9ee8862e63e69904d4336cb816904f751abf9"
+    },
+    "deterministic/20261022": {
+      "epoch": 12,
+      "validation_CE": 1.6946668692974405,
+      "sha256": "cc356817e9297192c9833595a078e895dd2205e718623048a575f5f6c45bc42a"
+    },
+    "deterministic/20261023": {
+      "epoch": 12,
+      "validation_CE": 1.693492725381885,
+      "sha256": "17e6b6d854b62191b9fcb5e585fdebdb72c8467f606fcbcfa0dd324dffd4a7eb"
+    }
+  },
+  "validation_audit": {
+    "records": 89892,
+    "groups": 132,
+    "raw_sha256": "59c1beaa1d6d035f4df727e693df65c8f1b66fcc33fca7ece02d6119a71564de",
+    "component_and_panel_aggregation_verified": true,
+    "early_stopping_verified": true
+  },
+  "training_panel_fraction_by_epoch": {
+    "1": 0.08,
+    "2": 0.15,
+    "3": 0.3,
+    "4": 0.08,
+    "5": 0.15,
+    "6": 0.3,
+    "7": 0.08,
+    "8": 0.15,
+    "9": 0.3,
+    "10": 0.08,
+    "11": 0.15,
+    "12": 0.3,
+    "13": 0.08,
+    "14": 0.15,
+    "15": 0.3,
+    "16": 0.08,
+    "17": 0.15,
+    "18": 0.3,
+    "19": 0.08,
+    "20": 0.15,
+    "21": 0.3,
+    "22": 0.08
+  },
+  "validation_per_panel": "validation_by_mask.png",
+  "seed_counts_by_epoch": {
+    "QVAE": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "deterministic": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "latent_usage": "UNKNOWN：KL 与验证 CE 差不能独立确认 z 的实际使用程度",
+  "summary": {
+    "QVAE": {
+      "training_CE": {
+        "1": {
+          "mean": 1.673533746693436,
+          "min": 1.673397350578182,
+          "max": 1.6736355155820652
+        },
+        "12": {
+          "mean": 1.6075733458537247,
+          "min": 1.604148307303592,
+          "max": 1.610663204199282
+        },
+        "22": {
+          "mean": 1.3018788833346677,
+          "min": 1.2960105537060231,
+          "max": 1.305820043737236
+        }
+      },
+      "training_KL": {
+        "1": {
+          "mean": 0.01951557715345606,
+          "min": 0.018523443110713196,
+          "max": 0.02107642557009728
+        },
+        "12": {
+          "mean": 0.0036525805284392276,
+          "min": 0.003403771383157612,
+          "max": 0.0038777112540473975
+        },
+        "22": {
+          "mean": 0.02514256973541663,
+          "min": 0.022020543424679996,
+          "max": 0.028190749749505025
+        }
+      },
+      "prior_CE": {
+        "1": {
+          "mean": 1.7401801731156958,
+          "min": 1.7400229474967275,
+          "max": 1.740280809332574
+        },
+        "12": {
+          "mean": 1.694288031741709,
+          "min": 1.693391790008583,
+          "max": 1.6951522218227433
+        },
+        "22": {
+          "mean": 1.7138339017603152,
+          "min": 1.7101591475034583,
+          "max": 1.7173443247759297
+        }
+      },
+      "posterior_CE": {
+        "1": {
+          "mean": 1.7401482172898144,
+          "min": 1.7399567933635525,
+          "max": 1.7402552728293657
+        },
+        "12": {
+          "mean": 1.693897774706216,
+          "min": 1.6933276514049551,
+          "max": 1.694569337566155
+        },
+        "22": {
+          "mean": 1.7115624625022032,
+          "min": 1.7075389891309924,
+          "max": 1.716194906058032
+        }
+      }
+    },
+    "deterministic": {
+      "training_CE": {
+        "1": {
+          "mean": 1.6735961685182916,
+          "min": 1.6734933900656355,
+          "max": 1.673699554118331
+        },
+        "12": {
+          "mean": 1.605694146735538,
+          "min": 1.602311411551993,
+          "max": 1.608561927835989
+        },
+        "22": {
+          "mean": 1.299918892868839,
+          "min": 1.2940951795602815,
+          "max": 1.303020733511672
+        }
+      },
+      "training_KL": {
+        "1": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "12": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "22": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "prior_CE": {
+        "1": {
+          "mean": 1.7401772270627422,
+          "min": 1.7399977477144313,
+          "max": 1.7402910969639895
+        },
+        "12": {
+          "mean": 1.6938074956373075,
+          "min": 1.6932628922325963,
+          "max": 1.6946668692974405
+        },
+        "22": {
+          "mean": 1.7152621917003266,
+          "min": 1.7100980105945107,
+          "max": 1.7204101262683686
+        }
+      },
+      "posterior_CE": {
+        "1": {
+          "mean": 1.7401772270627422,
+          "min": 1.7399977477144313,
+          "max": 1.7402910969639895
+        },
+        "12": {
+          "mean": 1.6938074956373075,
+          "min": 1.6932628922325963,
+          "max": 1.6946668692974405
+        },
+        "22": {
+          "mean": 1.7152621917003266,
+          "min": 1.7100980105945107,
+          "max": 1.7204101262683686
+        }
+      }
+    }
+  },
+  "figure_sha256": {
+    "training_curves.png": "1addd93e7947d91d80d5a735af75b127d83f1ac2e7e3e35bbd2fb9ad447df6bc",
+    "training_curves.pdf": "af91b6553c05f3dbe873df85a044b8642d7e8f0c999d63d37e9e6bcf4c7c3a8b",
+    "validation_by_mask.png": "07f0e5f175a2f6d8515497bc2eb9df2050f4effe908cb7bbf56f5d38cdace9d1"
+  }
+}
