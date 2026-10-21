@@ -185,7 +185,14 @@ class FeatureData:
         self.validation.sort(key=lambda q:(q['panel'], q['length'], q['row']))
 
     def array(self, q):
-        bits = np.array(self.features[q['offset']:q['offset']+q['length']], copy=True)
+        source = self.features
+        if q.get('feature_file'):
+            if not hasattr(self, 'extra_features'):
+                self.extra_features = {}
+            if q['feature_file'] not in self.extra_features:
+                self.extra_features[q['feature_file']] = np.load(ROOT/q['feature_file'], mmap_mode='r')
+            source = self.extra_features[q['feature_file']]
+        bits = np.array(source[q['offset']:q['offset']+q['length']], copy=True)
         return torch.from_numpy(bits).view(torch.bfloat16)
 
     def batch(self, queries, device='cuda', need_full=True):
