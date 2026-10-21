@@ -1728,8 +1728,76 @@ def _source_hashes(run, plan):
     return output
 
 
+def finish_only_run(run, plan, data=None, root=None, device=None):
+    """只读既有正式清单并调用 finish_study；不重跑训练/校准或覆盖训练记录。"""
+    root = Path(root or ROOT)
+    run = Path(run)
+    device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
+    if plan.get('task') != 'NatV_conditional_categorical_joint_generation':
+        raise ValueError('Plan task differs from this study')
+    raw = root / 'data/results' / run.name / 'raw'
+    formal_path = raw / 'formal_manifest.json'
+    training_path = raw / 'training_manifest.json'
+    if not formal_path.exists() or not training_path.exists():
+        raise FileNotFoundError('finish-only requires formal_manifest.json and training_manifest.json')
+    formal_sha = sha256_file(formal_path)
+    training = json.loads(training_path.read_text())
+    expected = training.get('artifacts', {}).get('formal_manifest', {}).get('sha256')
+    if expected != formal_sha:
+        raise ValueError('formal_manifest differs from training manifest')
+    formal = json.loads(formal_path.read_text())
+    for key, entry in formal.items():
+        for field in ('path', 'last_path'):
+            path = root / entry[field]
+            if not path.exists() or sha256_file(path) != entry[field.replace('path', 'sha256')]:
+                raise ValueError(f'Formal checkpoint differs: {key} {field}')
+        if entry.get('model_config', {}).get('feature_dim') is None:
+            raise ValueError(f'Formal checkpoint lacks feature_dim: {key}')
+    if data is None:
+        data = FeatureData(run)
+    evaluation_path = run / 'evaluation_sample_decision.json'
+    training_sha = sha256_file(training_path)
+    started = time.monotonic()
+    started_utc = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+    try:
+        from .conditional_outputs import finish_study
+        result = finish_study(run, plan, data, formal)
+    except Exception as exc:
+        failure = {'task': plan['task'], 'status': 'failed', 'reason': repr(exc),
+                   'traceback': traceback.format_exc(), 'formal_manifest_sha256': formal_sha,
+                   'training_manifest_sha256': training_sha, 'started_utc': started_utc,
+                   'wall_seconds': time.monotonic() - started}
+        write_json(raw / 'finish_only_failure.json', failure)
+        status(run, 'FAILED', mode='finish_only', reason=repr(exc))
+        raise
+    manifest = {
+        'task': plan['task'], 'status': 'completed', 'mode': 'finish_only',
+        'formal_manifest': {'path': str(formal_path.relative_to(root)),
+                            'sha256': formal_sha, 'entries': len(formal)},
+        'training_manifest': {'path': str(training_path.relative_to(root)),
+                              'sha256': training_sha},
+        'evaluation_sample_decision': (
+            {'path': str(evaluation_path.relative_to(root)),
+             'sha256': sha256_file(evaluation_path)}
+            if evaluation_path.exists() else None),
+        'training_identity': training.get('identity'),
+        'finish_identity': {
+            'git_revision': _git_revision(root),
+            'source_sha256': _source_hashes(run, plan),
+            'started_utc': started_utc,
+            'wall_seconds': time.monotonic() - started,
+            'training_rerun': False, 'calibration_rerun': False,
+        },
+        'finish_returned': repr(result)[:2000],
+    }
+    write_json(raw / 'finish_only_manifest.json', manifest)
+    status(run, 'COMPLETED', mode='finish_only',
+           wall_seconds=manifest['finish_identity']['wall_seconds'])
+    return manifest
+
+
 def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False,
-              from_calibration=False, train_only=False):
+              from_calibration=False, train_only=False, finish_only=False):
     """训练端入口；生成与最终交付由 conditional_outputs.finish_study 完成。
 
     calibrate_only=True 时只执行四次校准、写出冻结决策与校准清单后退出，便于
@@ -1740,6 +1808,10 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
     root = Path(root or ROOT)
     run = Path(run)
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
+    if finish_only:
+        if calibrate_only or from_calibration or train_only:
+            raise ValueError('finish_only cannot be combined with training/calibration flags')
+        return finish_only_run(run, plan, data=data, root=root, device=device)
     if plan.get('task') != 'NatV_conditional_categorical_joint_generation':
         raise ValueError('Plan task differs from this study')
     if calibrate_only and (from_calibration or train_only):
