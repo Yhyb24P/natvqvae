@@ -710,7 +710,8 @@ def finish_study(run,plan,data,formal_manifest):
     """正式训练之后完成真实联合评价、单轮候选及可校验研究交付。"""
     from .conditional_evaluation import evaluate_formal_models
     raw=ROOT/'data/results'/run.name/'raw'
-    started=time.monotonic();queries=prepare_statistic_features(run,plan,data)
+    started=time.monotonic();export_training_curves(run,plan)
+    queries=prepare_statistic_features(run,plan,data)
     full=evaluate_formal_models(run,plan,data,formal_manifest)
     statistic_predictions(run,plan,data,formal_manifest,queries)
     statistical=summarize_statistical_predictions(run,plan,data,formal_manifest,queries)
@@ -741,6 +742,7 @@ def _write_report(run,plan,statistics,supply,representatives):
     lines=['# NatV 条件 QVAE：联合建模与候选序列供给','',
         '采用完整序列后验、学习型条件先验和共享16×8 Categorical潜变量；正式生成仅从条件先验采样。研究定义与预算见 `PLAN.md`，输入身份见 `inputs/`，完整产物身份见 `result_checksums.json`。','',
         f'完成 {cost["attempted_fits"]} 次拟合，拟合计算累计 {cost["fit_seconds"]/3600:.2f} 小时。原始逐输入记录、失败、权重与完整候选位于 `data/results/natv_conditional_qvae/raw/` 和 `data/models/natv_conditional_qvae/`。','',
+        '训练与验证曲线见 `training_curves.png`，27种验证条件分图见 `validation_panel_curves.png`，计量口径见 `curve_definitions.json`。QVAE训练后验重构CE与验证条件边缘NLL不是同一概率量。','',
         '全目标条件联合概率、重要性采样ESS及估计不确定性见 `formal_evaluation_summary.json`。以下统计在保持完整任务掩码M的条件下，仅计分训练预选位置S。正差值表示QVAE改善；区间包含零或差异与MC误差相当时，判为证据不足。','',
         '| 位置集合 | 对照 | 联合log概率增益（nats/残基，95%区间） | 混合背景TV改善（95%区间） |',
         '|---|---|---|---|']
@@ -759,3 +761,60 @@ def _write_report(run,plan,statistics,supply,representatives):
         '代表序列、真实替换及后续研究问题见 `CANDIDATES.md`、`representative_candidates.csv` 和 `.fasta`。家族HMM相容性只作为序列证据；Nudix探索候选允许较弱天然支持。结构、催化环境、合成与水解活性以及NAD⁺净积累仍为UNKNOWN。','',
         '联合概率改善与可靠共变统计改善同时成立才支持联合建模收益；候选数量、KL非零或改变z产生差异均不能单独支持该结论。该计算研究提供后续可检验序列，不证明工程性能改善。',''])
     (run/'REPORT.md').write_text('\n'.join(lines))
+
+
+def export_training_curves(run,plan):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    raw=ROOT/'data/results'/run.name/'raw';histories=[]
+    for path in sorted((raw/'curves').glob('formal_*.json')):
+        histories.extend(json.loads(path.read_text())['history'])
+    if not histories:return {}
+    colors={'QVAE':'#2465b0','deterministic':'#d37420'}
+    fig,axes=plt.subplots(1,3,figsize=(14,4))
+    metrics=['validation','train_reconstruction_per_residue','train_kl_per_factor']
+    titles=['Validation conditional joint NLL','Training reconstruction CE (mixed tasks)','Training categorical KL per factor']
+    for axis,metric,title in zip(axes,metrics,titles):
+        for arm in plan['arms']:
+            if metric=='train_kl_per_factor' and arm!='QVAE':continue
+            groups=[]
+            for seed in plan['formal_seeds']:
+                group=[h for h in histories if h['arm']==arm and h['seed']==seed]
+                xs=[];ys=[]
+                for h in group:
+                    value=h.get(metric)
+                    if metric=='validation':value=value.get('score') if value else None
+                    if value is not None and np.isfinite(value):xs.append(h['epoch']);ys.append(value)
+                if xs:
+                    axis.plot(xs,ys,color=colors[arm],alpha=.22,linewidth=.8)
+                    groups.append(dict(zip(xs,ys)))
+            if groups:
+                common=sorted(set.intersection(*(set(g) for g in groups)))
+                if common:
+                    values=np.array([[g[x] for x in common] for g in groups])
+                    axis.plot(common,values.mean(0),color=colors[arm],label=arm)
+                    axis.fill_between(common,values.min(0),values.max(0),color=colors[arm],alpha=.12)
+        axis.set(title=title,xlabel='Epoch',ylabel='nats / residue' if metric!='train_kl_per_factor' else 'nats / factor')
+        axis.grid(alpha=.2);axis.legend()
+    fig.suptitle('Thin lines: individual seeds; thick line / range: common observed epochs',fontsize=10)
+    fig.tight_layout();fig.savefig(run/'training_curves.png',dpi=180);fig.savefig(run/'training_curves.svg');plt.close(fig)
+    panels=sorted({p for h in histories if h.get('validation') for p in h['validation'].get('panels',{})})
+    fig,axes=plt.subplots(7,4,figsize=(16,21));flat=axes.ravel()
+    for axis,panel in zip(flat,panels):
+        for arm in plan['arms']:
+            for seed in plan['formal_seeds']:
+                points=[(h['epoch'],h['validation']['panels'][panel]['score']) for h in histories
+                    if h['arm']==arm and h['seed']==seed and h.get('validation')
+                    and panel in h['validation'].get('panels',{}) and h['validation']['panels'][panel]['score'] is not None]
+                if points:axis.plot(*zip(*points),color=colors[arm],alpha=.5,linewidth=.8)
+        axis.set(title=panel,xlabel='Epoch',ylabel='nats / residue');axis.grid(alpha=.2)
+    for axis in flat[len(panels):]:axis.set_visible(False)
+    fig.tight_layout();fig.savefig(run/'validation_panel_curves.png',dpi=130);plt.close(fig)
+    note={'formal_seeds':plan['formal_seeds'],'training':'component-weighted reconstruction; QVAE uses posterior, deterministic has no latent',
+        'validation':'component-balanced fixed panel mixture, QVAE conditional marginal NLL estimate; deterministic exact',
+        'bands':'min-max across formal seeds only at common observed epochs, not confidence intervals',
+        'training_panels':'training batches mix per-sequence panels; per-panel training history was not recorded',
+        'calibration':'excluded: original calibration scalar reconstruction and KL records have a known batch scaling error; weights and validation unaffected'}
+    write_json(run/'curve_definitions.json',note)
+    return note
