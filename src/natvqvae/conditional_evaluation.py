@@ -6,15 +6,20 @@ component_v2 做同源组分平衡，不对面板等权平均。
 """
 from __future__ import annotations
 
+import gc
+import gzip
+import json
 import math
+from pathlib import Path
 from typing import Iterable, Sequence
 
 import numpy as np
 import torch
 
-from .conditional_data import stable_seed
-from .conditional_generation import (AA, categorical_log_prob, categorical_samples,
-                                     reconstruction_nll, target_tensors)
+from .conditional_data import ROOT, stable_seed, write_json
+from .conditional_generation import (AA, ConditionalModel, categorical_log_prob,
+                                     categorical_samples, reconstruction_nll, target_tensors)
+from .intake import sha256_file
 
 EPS = 1e-12
 
@@ -506,3 +511,9 @@ def target_aa_distribution(data, queries, weights=None, panel_weighted=False):
             'positions': int(sum(len(_scored_positions(query)) for query in queries)),
             'effective_positions': float(effective_positions),
             'per_query': per_query}
+
+
+def evaluate_formal_models(run, plan, data, formal_manifest, **kwargs):
+    """输出端正式评价入口；实现位于 conditional_study，保持单一实现。"""
+    from .conditional_study import evaluate_formal_models as implementation
+    return implementation(run, plan, data, formal_manifest, **kwargs)

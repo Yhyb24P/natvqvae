@@ -1500,7 +1500,7 @@ def evaluate_formal_models(run, plan, data, formal_manifest, root=None, device=N
         'evaluated': evaluated, 'skipped': skipped,
         'bootstrap_draws_path': str(draws_path.relative_to(root)) if draws is not None else None,
     }
-    aggregate_path = raw / 'formal_evaluation' / 'summary.json'
+    aggregate_path = raw / 'formal_evaluation_summary.json'
     write_json(aggregate_path, aggregate)
     aggregate['path'] = str(aggregate_path.relative_to(root))
     aggregate['sha256'] = sha256_file(aggregate_path)
@@ -1525,17 +1525,22 @@ def _source_hashes(run, plan):
     return output
 
 
-def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False):
+def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False,
+              from_calibration=False, train_only=False):
     """训练端入口；生成与最终交付由 conditional_outputs.finish_study 完成。
 
     calibrate_only=True 时只执行四次校准、写出冻结决策与校准清单后退出，便于
     在长流程前核对 T/B、样本数与吞吐，不消耗 search/formal 拟合预算。
+    from_calibration=True 时复用已完成校准，只运行 search/formal；train_only=True
+    在正式权重与清单落盘后退出，不调用 finish_study。
     """
     root = Path(root or ROOT)
     run = Path(run)
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
     if plan.get('task') != 'NatV_conditional_categorical_joint_generation':
         raise ValueError('Plan task differs from this study')
+    if calibrate_only and (from_calibration or train_only):
+        raise ValueError('calibrate_only cannot be combined with continuation flags')
     calibration_count, search_count, formal_count, total = expected_fit_count(plan)
     if total > int(plan['budget']['max_fits']):
         raise ValueError(f'Scheduled fits {total} exceed authorized {plan["budget"]["max_fits"]}')
@@ -1581,40 +1586,54 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
     }
     write_json(raw / 'study_start.json', identity)
     try:
-        calibration = _calibrate(run, plan, data, root, device, attempts, failures, save_records)
-        if attempts['count'] != calibration_count:
-            raise FitFailed('Calibration fit count differs from schedule')
-        if calibrate_only:
-            calibration_records = list(calibration['fits'].values())
-            write_json(raw / 'calibration_fits.json', calibration_records)
-            combined_history = []
-            for path in sorted((raw / 'curves').glob('*.json')):
-                combined_history.extend(json.loads(path.read_text())['history'])
-            write_json(raw / 'calibration_history.json', combined_history)
-            wall_seconds = time.monotonic() - started
-            cost = {'attempted_fits': attempts['count'],
-                    'authorized_fits': int(plan['budget']['max_fits']),
-                    'wall_seconds': wall_seconds,
-                    'fit_seconds': sum(record['total_seconds'] for record in calibration_records),
-                    'failures': failures}
-            write_json(raw / 'calibration_cost.json', cost)
-            decision_path = raw / 'calibration_decision.json'
-            manifest = {
-                'task': plan['task'], 'status': 'calibration_complete',
-                'git_revision': identity['git_revision'],
-                'plan_sha256': identity['plan_sha256'],
-                'decision': {'path': str(decision_path.relative_to(root)),
-                             'sha256': sha256_file(decision_path)},
-                'fit_status': {'path': str((raw / 'calibration_fits.json').relative_to(root)),
-                               'sha256': sha256_file(raw / 'calibration_fits.json')},
-                'cost': cost,
-                'attempts': attempts['count'],
-                'failures': failures,
-            }
-            write_json(raw / 'calibration_manifest.json', manifest)
-            status(run, 'CALIBRATION_READY', mode='calibration_only',
-                   attempts=attempts['count'], wall_seconds=wall_seconds)
-            return manifest
+        if from_calibration:
+            interface = json.loads((run / 'calibration_decision.json').read_text())
+            full_decision_path = root / interface['full_decision']['path']
+            if sha256_file(full_decision_path) != interface['full_decision']['sha256']:
+                raise ValueError('Full calibration decision changed')
+            decision = json.loads(full_decision_path.read_text())
+            calibration = {'decision': decision}
+            calibration_manifest = json.loads((raw / 'calibration_manifest.json').read_text())
+            attempts = {'count': int(calibration_manifest['attempts'])}
+            failures = list(calibration_manifest.get('failures', []))
+            if attempts['count'] != calibration_count:
+                raise FitFailed('Calibration manifest attempt count differs from schedule')
+        else:
+            calibration = _calibrate(run, plan, data, root, device, attempts, failures,
+                                     save_records)
+            if attempts['count'] != calibration_count:
+                raise FitFailed('Calibration fit count differs from schedule')
+            if calibrate_only:
+                calibration_records = list(calibration['fits'].values())
+                write_json(raw / 'calibration_fits.json', calibration_records)
+                combined_history = []
+                for path in sorted((raw / 'curves').glob('*.json')):
+                    combined_history.extend(json.loads(path.read_text())['history'])
+                write_json(raw / 'calibration_history.json', combined_history)
+                wall_seconds = time.monotonic() - started
+                cost = {'attempted_fits': attempts['count'],
+                        'authorized_fits': int(plan['budget']['max_fits']),
+                        'wall_seconds': wall_seconds,
+                        'fit_seconds': sum(record['total_seconds'] for record in calibration_records),
+                        'failures': failures}
+                write_json(raw / 'calibration_cost.json', cost)
+                decision_path = raw / 'calibration_decision.json'
+                manifest = {
+                    'task': plan['task'], 'status': 'calibration_complete',
+                    'git_revision': identity['git_revision'],
+                    'plan_sha256': identity['plan_sha256'],
+                    'decision': {'path': str(decision_path.relative_to(root)),
+                                 'sha256': sha256_file(decision_path)},
+                    'fit_status': {'path': str((raw / 'calibration_fits.json').relative_to(root)),
+                                   'sha256': sha256_file(raw / 'calibration_fits.json')},
+                    'cost': cost,
+                    'attempts': attempts['count'],
+                    'failures': failures,
+                }
+                write_json(raw / 'calibration_manifest.json', manifest)
+                status(run, 'CALIBRATION_READY', mode='calibration_only',
+                       attempts=attempts['count'], wall_seconds=wall_seconds)
+                return manifest
         search_selected, search_records = _search(
             run, plan, data, root, device, calibration, attempts, failures, save_records)
         if attempts['count'] != calibration_count + search_count:
@@ -1624,7 +1643,13 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
             attempts, failures, save_records)
         if attempts['count'] != total:
             raise FitFailed('Total fit count differs from schedule')
-        fit_records = list(calibration['fits'].values()) + search_records + formal_records
+        if calibration.get('fits'):
+            calibration_records = list(calibration['fits'].values())
+        else:
+            calibration_fits_path = raw / 'calibration_fits.json'
+            calibration_records = (json.loads(calibration_fits_path.read_text())
+                                   if calibration_fits_path.exists() else [])
+        fit_records = calibration_records + search_records + formal_records
         combined_history = []
         for path in sorted((raw / 'curves').glob('*.json')):
             combined_history.extend(json.loads(path.read_text())['history'])
@@ -1644,12 +1669,6 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
                 'max_memory_mib': max([record.get('max_memory_mib', 0.) for record in fit_records] or [0.]),
                 'failures': failures}
         write_json(raw / 'cost.json', cost)
-        gc.collect()
-        if device.type == 'cuda':
-            torch.cuda.empty_cache()
-        status(run, 'FINISHING', fits=len(formal))
-        from .conditional_outputs import finish_study
-        finish = finish_study(run, plan, data, formal)
         artifacts = {}
         for name, path in [('study_start', raw / 'study_start.json'),
                            ('calibration_decision', raw / 'calibration_decision.json'),
@@ -1666,6 +1685,23 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
             artifacts['calibration_interface'] = {
                 'path': str(interface_path.relative_to(root)),
                 'sha256': sha256_file(interface_path)}
+        if train_only:
+            training_manifest = {
+                'task': plan['task'], 'status': 'training_complete',
+                'git_revision': identity['git_revision'],
+                'plan_sha256': identity['plan_sha256'],
+                'formal_entries': len(formal), 'attempts': attempts['count'],
+                'failures': failures, 'artifacts': artifacts,
+            }
+            write_json(raw / 'training_manifest.json', training_manifest)
+            status(run, 'TRAIN_READY', fits=attempts['count'], wall_seconds=wall_seconds)
+            return training_manifest
+        gc.collect()
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
+        status(run, 'FINISHING', fits=len(formal))
+        from .conditional_outputs import finish_study
+        finish = finish_study(run, plan, data, formal)
         manifest = {
             'task': plan['task'], 'status': 'completed',
             'git_revision': identity['git_revision'],

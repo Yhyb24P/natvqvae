@@ -20,6 +20,8 @@ def main():
     parser.add_argument('--run', type=Path, required=True)
     parser.add_argument('--prepare-only', action='store_true')
     parser.add_argument('--calibrate-only', action='store_true')
+    parser.add_argument('--from-calibration', action='store_true')
+    parser.add_argument('--train-only', action='store_true')
     args=parser.parse_args();run=args.run.resolve()
     if not run.is_relative_to(ROOT/'experiments'):
         raise ValueError('Run must be inside experiments/')
@@ -34,6 +36,7 @@ def main():
     if args.prepare_only:
         status(run,'FROZEN_FEATURES_READY');return
     from natvqvae.conditional_study import run_study
-    run_study(run,plan,calibrate_only=args.calibrate_only)
+    run_study(run,plan,calibrate_only=args.calibrate_only,
+              from_calibration=args.from_calibration,train_only=args.train_only)
 
 if __name__=='__main__':main()
