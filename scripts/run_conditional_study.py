@@ -370,7 +370,7 @@ def main():
         write(run/'cost.json',{'wall_seconds':elapsed,'wall_budget_seconds':plan['budget']['wall_seconds'],
             'single_gpu_allocation_seconds_upper_bound':elapsed,'gpu':'NVIDIA GeForce RTX 5090 D',
             'attempted_fits':6,'attempt':1,'outcome':outcome})
-        write(run/'result_manifest.json',{'raw_files':{str(p.relative_to(ROOT)):sha256_file(p) for p in raw.iterdir() if p.is_file()},
+        write(run/'result_manifest.json',{'raw_files':{str(p.relative_to(ROOT)):sha256_file(p) for p in raw.iterdir() if p.is_file() and p.name!='output.log'},
             'source_files':{str(p.relative_to(ROOT)):sha256_file(p) for p in [Path(__file__),ROOT/'src/natvqvae/conditional_generation.py',run/'plan.json']}})
         status(run,outcome,wall_seconds=elapsed)
 
