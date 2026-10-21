@@ -1,0 +1,6 @@
+region,positions,positions_masked,positions_changed,masked_events,changed_events,reverted_events
+CTERM,3,2,2,160,116,33
+LINKER,22,17,17,2800,2449,322
+NMNAT,178,155,151,25200,17745,4533
+NTERM,3,2,2,160,127,26
+NUDIX,135,108,99,18720,11154,2886

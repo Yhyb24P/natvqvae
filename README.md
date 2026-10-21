@@ -8,7 +8,7 @@
 
 当前重点是**④生成候选**：基于现有 Categorical QVAE，在 KVP40 WT 的 **90%–100% 全局编辑相似性**范围内充分生成完整序列。让模型在可变位置上选择残基，包括保留 WT；不预先要求每条提案符合 NMNAT/Nudix 功能假设。冻结 ESM-2 仅作为必要参照。⑤评价序列、结构和催化环境，⑥根据证据遴选候选，必要时返回⑤做针对性分析。研究判断见[研究计划](docs/RESEARCH_PLAN.md)。
 
-已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)和[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)的真实运行记录；它们不等于已完成本轮自由保守生成或候选遴选。
+已完成一轮 2,400 次不强制突变的正式生成，实际覆盖 91.79%–100% identity，31–34 编辑层尚无样本；见[保守候选生成报告](experiments/natv_conservative_generation/REPORT.md)。已有[WT 对齐列先验生成](experiments/natv_wt_columns/REPORT.md)和[保守条件编辑](experiments/natv_conservative_editing/REPORT.md)的真实运行记录；它们不等于已完成候选遴选。
 
 ## 资料与目录
 
@@ -23,6 +23,7 @@
 | `experiments/natv_candidate_sequences/` | 历史局部编辑 |
 | `experiments/natv_wt_columns/` | WT 对齐列先验生成比较 |
 | `experiments/natv_conservative_editing/` | 2,976 次保守编辑生成及真实轨迹 |
+| `experiments/natv_conservative_generation/` | 2,400 次 QVAE 保守候选生成、覆盖统计及审计 |
 | `src/natvqvae/` | 现役序列工具、条件生成与评价接口 |
 | `tests/` | 代码和数据约定的核对 |
 

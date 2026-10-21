@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "checks": {
+    "identity:experiments/natv_conservative_generation/run.py": true,
+    "identity:src/natvqvae/conservative_generation.py": true,
+    "identity:src/natvqvae/conservative_editing.py": true,
+    "identity:src/natvqvae/conditional_backend.py": true,
+    "identity:src/natvqvae/sequence.py": true,
+    "identity:src/natvqvae/intake.py": true,
+    "identity:experiments/natv_conservative_generation/plan.json": true,
+    "identity:experiments/natv_conservative_generation/inputs/source_checks.json": true,
+    "identity:experiments/natv_conservative_generation/sampling_groups.json": true,
+    "identity:contracts/objective.yaml": true,
+    "identity:inputs/manifest.json": true,
+    "identity:discovery/natv_data_readiness/training.fasta": true,
+    "identity:discovery/natv_data_readiness/validation.fasta": true,
+    "group_count": true,
+    "attempt_denominator": true,
+    "attempts_per_checkpoint": true,
+    "unique_candidate_ids": true,
+    "all_constraints_pass": true,
+    "all_scripts_reconstruct": true,
+    "all_protected_intact": true,
+    "candidate_status_consistent": true,
+    "row_level": true,
+    "trajectory_integrity": true,
+    "edit_script_reconstruction": true,
+    "latent_record_integrity": true,
+    "step_denominator": true,
+    "script_denominator": true,
+    "historical_module:src/natvqvae/conservative_editing.py": true,
+    "historical_module:src/natvqvae/conditional_backend.py": true
+  },
+  "counts": {
+    "attempts": 2400,
+    "steps": 12000,
+    "scripts": 2400,
+    "group_runs": 150,
+    "new_unique": 2205,
+    "duplicates": 188,
+    "wt_reference": 7
+  }
+}

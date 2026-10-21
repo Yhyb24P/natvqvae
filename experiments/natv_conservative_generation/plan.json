@@ -1,0 +1,90 @@
+{
+  "task": "KVP40_WT_QVAE_conservative_generation",
+  "authorization": {
+    "generation": true,
+    "scope": "QVAE_only",
+    "indels": false,
+    "training": "none",
+    "attempt_budget": 2400
+  },
+  "generator": {
+    "arm": "QVAE",
+    "architecture": "categorical",
+    "hidden_dim": 128,
+    "latent_dim": 32,
+    "latent_states": 8
+  },
+  "seeds": [
+    20261081,
+    20261082,
+    20261083,
+    20261084,
+    20261085
+  ],
+  "mask_budgets": [
+    4,
+    12,
+    20,
+    28,
+    34
+  ],
+  "shared_masks_per_budget": 6,
+  "draws_per_shared_mask": 16,
+  "update_sweeps": 2,
+  "temperature": 1.0,
+  "protected_WT_positions_1based": [
+    1,
+    14,
+    17,
+    135,
+    138
+  ],
+  "protection_scope": "this_run_design_policy_not_universal_mutation_ban",
+  "candidate_identity_min": 0.9,
+  "identity_definition": "1-unit_cost_Levenshtein_distance/max(candidate_length,341)",
+  "mask_budget_definition": "stage0_editable_site_count_not_required_edit_count",
+  "replace_WT_policy": "reference_residue_allowed; no forced substitution",
+  "mask_sampling": "uniform_without_replacement_over_336_unprotected_WT_positions; independent per budget/group; shared across checkpoints",
+  "latent": "16 independent prior draws per checkpoint/group; one z per trajectory fixed across 5 stages; categorical one-hot prior sampled on CPU",
+  "uniforms": "shared across checkpoints",
+  "seed_derivation": {
+    "sites": "SeedSequence([20261021,budget,group])",
+    "uniforms": "SeedSequence([20261022,budget,group])",
+    "prior": "SeedSequence([20261023,budget,group,checkpoint])"
+  },
+  "stage_schedule": "all_sites_then_first_half_second_half_for_two_sweeps",
+  "denominators": "all_attempts_including_WT_reference_duplicates_invalid_and_model_failures",
+  "candidate_status": {
+    "NEW_UNIQUE": "first occurrence of the ungapped sequence",
+    "DUPLICATE": "later occurrence retained with duplicate_of",
+    "WT_REFERENCE": "zero edits retained but not counted as a new candidate"
+  },
+  "coverage": {
+    "strata": [
+      "0",
+      "1-5",
+      "6-10",
+      "11-15",
+      "16-20",
+      "21-25",
+      "26-30",
+      "31-34"
+    ],
+    "mask_retention": true,
+    "reversion": true,
+    "z_diagnostics": true
+  },
+  "evaluation": {
+    "HMM": "deferred_to_stage_5",
+    "structure": "deferred_to_stage_5"
+  },
+  "evaluation_scope": "generation_coverage; no_function_or_model_ranking_claim",
+  "test_payload_use": false,
+  "execution": {
+    "groups": 30,
+    "checkpoints_per_group": 5,
+    "group_runs": 150,
+    "attempts": 2400,
+    "max_sequences_per_batch": 80
+  }
+}

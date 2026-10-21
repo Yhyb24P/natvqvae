@@ -1,0 +1,12 @@
+{
+  "status": "GENERATION_COMPLETED",
+  "attempts": 2400,
+  "constraint_counts": {
+    "PASS": 2400
+  },
+  "candidate_counts": {
+    "NEW_UNIQUE": 2205,
+    "DUPLICATE": 188,
+    "WT_REFERENCE": 7
+  }
+}
