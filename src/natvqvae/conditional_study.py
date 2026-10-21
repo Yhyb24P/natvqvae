@@ -1584,7 +1584,44 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
         'environment': {'python': sys.version, 'torch': torch.__version__,
                         'numpy': np.__version__, 'cuda': torch.version.cuda},
     }
-    write_json(raw / 'study_start.json', identity)
+    mode = ('calibrate_only' if calibrate_only else
+            ('from_calibration' if from_calibration else 'full'))
+    if train_only:
+        mode += '+train_only'
+    start_path = raw / 'study_start.json'
+    if start_path.exists():
+        initial_sha = sha256_file(start_path)
+        initial = json.loads(start_path.read_text())
+        stamp = time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())
+        continuation_path = raw / 'study_continuations' / f'study_start_{stamp}.json'
+        index = 1
+        while continuation_path.exists():
+            continuation_path = raw / 'study_continuations' / f'study_start_{stamp}_{index}.json'
+            index += 1
+        write_json(continuation_path, {**identity, 'mode': mode,
+                                       'initial_identity_sha256': initial_sha})
+        identity_record = {
+            'initial_identity': {'path': str(start_path.relative_to(root)),
+                                 'sha256': initial_sha,
+                                 'git_revision': initial.get('git_revision')},
+            'continuation_identity': {'path': str(continuation_path.relative_to(root)),
+                                      'sha256': sha256_file(continuation_path),
+                                      'git_revision': identity.get('git_revision')},
+            'initial_git_revision': initial.get('git_revision'),
+            'current_git_revision': identity.get('git_revision'),
+        }
+    else:
+        identity['mode'] = mode
+        write_json(start_path, identity)
+        initial_sha = sha256_file(start_path)
+        identity_record = {
+            'initial_identity': {'path': str(start_path.relative_to(root)),
+                                 'sha256': initial_sha,
+                                 'git_revision': identity.get('git_revision')},
+            'continuation_identity': None,
+            'initial_git_revision': identity.get('git_revision'),
+            'current_git_revision': identity.get('git_revision'),
+        }
     try:
         if from_calibration:
             interface = json.loads((run / 'calibration_decision.json').read_text())
@@ -1620,7 +1657,9 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
                 decision_path = raw / 'calibration_decision.json'
                 manifest = {
                     'task': plan['task'], 'status': 'calibration_complete',
-                    'git_revision': identity['git_revision'],
+                    'git_revision': identity_record['current_git_revision'],
+                    'initial_git_revision': identity_record['initial_git_revision'],
+                    'identity': identity_record,
                     'plan_sha256': identity['plan_sha256'],
                     'decision': {'path': str(decision_path.relative_to(root)),
                                  'sha256': sha256_file(decision_path)},
@@ -1685,10 +1724,14 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
             artifacts['calibration_interface'] = {
                 'path': str(interface_path.relative_to(root)),
                 'sha256': sha256_file(interface_path)}
+        if identity_record['continuation_identity'] is not None:
+            artifacts['study_continuation'] = identity_record['continuation_identity']
         if train_only:
             training_manifest = {
                 'task': plan['task'], 'status': 'training_complete',
-                'git_revision': identity['git_revision'],
+                'git_revision': identity_record['current_git_revision'],
+                'initial_git_revision': identity_record['initial_git_revision'],
+                'identity': identity_record,
                 'plan_sha256': identity['plan_sha256'],
                 'formal_entries': len(formal), 'attempts': attempts['count'],
                 'failures': failures, 'artifacts': artifacts,
@@ -1704,7 +1747,9 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
         finish = finish_study(run, plan, data, formal)
         manifest = {
             'task': plan['task'], 'status': 'completed',
-            'git_revision': identity['git_revision'],
+            'git_revision': identity_record['current_git_revision'],
+            'initial_git_revision': identity_record['initial_git_revision'],
+            'identity': identity_record,
             'plan_sha256': identity['plan_sha256'],
             'formal_entries': len(formal),
             'artifacts': artifacts,
