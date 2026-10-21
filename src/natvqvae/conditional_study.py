@@ -1689,12 +1689,29 @@ def run_study(run, plan, data=None, root=None, device=None, calibrate_only=False
             failures = list(calibration_manifest.get('failures', []))
             if attempts['count'] != calibration_count:
                 raise FitFailed('Calibration manifest attempt count differs from schedule')
+            start_snapshot = raw / 'study_start.json'
+            if start_snapshot.exists():
+                initial = json.loads(start_snapshot.read_text())
+                if interface.get('git_revision') != initial.get('git_revision'):
+                    write_json(raw / 'calibration_identity_correction.json', {
+                        'interface_git_revision': interface.get('git_revision'),
+                        'initial_git_revision': initial.get('git_revision'),
+                        'calibration_manifest_git_revision': calibration_manifest.get('git_revision'),
+                        'note': ('interface git_revision was evaluated when the interface was written; '
+                                 'calibration provenance is the initial study_start and calibration manifest'),
+                    })
             _write_curve_scaling_note(raw, identity_record['current_git_revision'])
         else:
             calibration = _calibrate(run, plan, data, root, device, attempts, failures,
                                      save_records)
             if attempts['count'] != calibration_count:
                 raise FitFailed('Calibration fit count differs from schedule')
+            interface_path = run / 'calibration_decision.json'
+            if interface_path.exists():
+                interface = json.loads(interface_path.read_text())
+                if interface.get('git_revision') != identity.get('git_revision'):
+                    interface['git_revision'] = identity.get('git_revision')
+                    write_json(interface_path, interface)
             _write_curve_scaling_note(raw, identity_record['current_git_revision'])
             if calibrate_only:
                 calibration_records = list(calibration['fits'].values())
