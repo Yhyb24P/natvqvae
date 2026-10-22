@@ -67,10 +67,12 @@ def parse_best(path, domain_length):
     if frame.empty:
         return frame
     frame['query_coverage'] = (frame.qend - frame.qstart + 1) / frame.old_id.map(domain_length)
-    frame['target_coverage'] = frame.alnlen / WT_LENGTH
+    frame['target_span'] = frame.tend - frame.tstart + 1
+    frame['target_coverage'] = frame.target_span / WT_LENGTH
+    frame['target_coverage_alignment'] = frame.alnlen / WT_LENGTH
     frame['missing_n'] = frame.tstart - 1
     frame['missing_c'] = WT_LENGTH - frame.tend
-    frame = frame.sort_values(['fident', 'query_coverage', 'target_coverage'],
+    frame = frame.sort_values(['fident', 'query_coverage', 'target_coverage_alignment'],
                               ascending=False).drop_duplicates('old_id')
     return frame
 
@@ -147,6 +149,8 @@ def main():
         mapped = anchor_mapping(old_sequence, wt_domain, [14, 17, 135, 138])
         anchor_rows.append({'seq_hash': row.seq_hash, 'cluster': row['0.7_mode1_cluster'],
                             'fident': row.fident, 'target_coverage': row.target_coverage,
+                            'target_coverage_alignment': row.target_coverage_alignment,
+                            'target_span': row.target_span,
                             **{f'wt_{position}': value for position, value in mapped.items()}})
     anchor_frame = pd.DataFrame(anchor_rows)
     anchor_frame.to_csv(RAW / 'wt_hit_anchor_mapping.csv', index=False)
@@ -183,9 +187,16 @@ def main():
             'ge70': int((strict.fident >= 0.7).sum()),
         },
         'target_coverage': {
+            'definition': 'target span (tend-tstart+1) / 178',
             'median': float(strict.target_coverage.median()),
             'max': float(strict.target_coverage.max()),
             'ge0_8': int((strict.target_coverage >= 0.8).sum()),
+        },
+        'target_coverage_alignment_fraction': {
+            'definition': 'alignment length (alnlen) / 178; differs from target span when gaps are present',
+            'median': float(strict.target_coverage_alignment.median()),
+            'max': float(strict.target_coverage_alignment.max()),
+            'ge0_8': int((strict.target_coverage_alignment >= 0.8).sum()),
         },
         'clusters_70_mode1': int(strict['0.7_mode1_cluster'].nunique()),
         'cluster_composition': {
@@ -197,6 +208,7 @@ def main():
         'complete_ec_clusters': int(complete_ec_clusters),
         'complete_ec_identity_median': float(complete_ec.fident.median()) if len(complete_ec) else None,
         'complete_ec_target_coverage_median': float(complete_ec.target_coverage.median()) if len(complete_ec) else None,
+        'complete_ec_target_coverage_alignment_median': float(complete_ec.target_coverage_alignment.median()) if len(complete_ec) else None,
         'complete_ec_missing_c_median': float(complete_ec.missing_c.median()) if len(complete_ec) else None,
         'anchor_mapping': {
             f'wt_{anchor}': {
@@ -210,7 +222,9 @@ def main():
         'functional_overlaps': overlaps,
         'note': ('Reads only the derived old-only PF01467 domain FASTA; no Stage3 or current test '
                  'sequence is read. PF01467 HMM length is 133 aa; WT NatV NMNAT CDD domain is 178 aa, '
-                 'so complete PF01467 domains are not complete NatV CDD domains.'),
+                 'so complete PF01467 domains are not complete NatV CDD domains. target_coverage uses '
+                 'the target span; target_coverage_alignment uses alignment columns and can differ '
+                 'when gaps are present.'),
     }
     (RAW / 'wt_reference_summary.json').write_text(
         json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + '\n')

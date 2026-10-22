@@ -102,8 +102,10 @@ def main():
         if hits.empty:
             summary[name] = {'hits': 0}
             continue
-        hits['target_coverage'] = hits.alnlen / WT_LENGTH
-        hits = hits.sort_values(['fident', 'target_coverage'],
+        hits['target_span'] = hits.tend - hits.tstart + 1
+        hits['target_coverage'] = hits.target_span / WT_LENGTH
+        hits['target_coverage_alignment'] = hits.alnlen / WT_LENGTH
+        hits = hits.sort_values(['fident', 'target_coverage_alignment', 'target_coverage'],
                                 ascending=False).drop_duplicates('seq_hash')
         hits = hits.merge(audit[['seq_hash', 'primary_layer', 'profile_coverage', 'domain_length',
                                  'domain_start', 'domain_end', 'length', 'partial',
@@ -122,6 +124,8 @@ def main():
             'identity_median': float(hits.fident.median()),
             'target_coverage_median': float(hits.target_coverage.median()),
             'target_coverage_ge_0_8': int((hits.target_coverage >= 0.8).sum()),
+            'target_coverage_alignment_fraction_median': float(hits.target_coverage_alignment.median()),
+            'target_coverage_ge_0_8_alignment_fraction': int((hits.target_coverage_alignment >= 0.8).sum()),
             'outside_right': int(hits.outside_right.sum()),
             'outside_left': int(hits.outside_left.sum()),
             'extension_right_median': float(hits.extension_right.median()),

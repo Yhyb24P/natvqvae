@@ -57,11 +57,11 @@ Stage3 接受 13,972 条：PF01467-only 8,849；双域 2,397（有序 2,391，�
 
 因此不能把“EC 层”当成没有 NadR 背景的纯功能层，也不能把互斥层计数相加成独立类别。`experimental_evidence` 对所有 8,849 条都是 `UNKNOWN`；EC 是 UniProt 注释，不是实验确认。本报告中的 “EC 支持” 只表示注释候选，不表示实验验证、审校可靠或已证明 NMNAT 活性。
 
-318 条 complete EC-dual 记录带旧 `annotation_conflict`，这是旧双 EC 规则造成的，不应机械当作错误剔除；它们应作为远缘、同反应但功能证据需要另查的候选层，单独处理。
+318 条 complete EC-dual 记录带旧 `annotation_conflict`，这是旧双 EC 规则造成的，不应机械当作错误剔除；它们是注释提示可能具相关/相同反应的远缘候选层，功能仍需核查，应单独处理。
 
 ## 5. 域边界：PF01467 profile 不等于 NatV CDD 域
 
-PF01467 HMM LENG=133；8,849 条 old-only 的 PF01467 切片长度中位 130、profile coverage 中位 0.985。它们是**覆盖 PF01467 profile 核心**的完整切片，不是天然完整 NatV CDD 域。
+PF01467 HMM LENG=133；8,849 条 old-only 的 PF01467 切片长度中位 130、profile coverage 中位 0.985。高覆盖记录支持**覆盖该 PF01467 profile 核心**，但不是所有记录都完整，更不是天然完整 NatV CDD 域或生物学完整域。
 
 - 8,849 条中 profile coverage ≥0.8 有 5,537；切片长度 ≥124 有 5,690；两者同时满足 5,436。124 是执行脚本中的探索性长度阈值（约为 HMM LENG 133 的 93%），没有生物学验证。
 - 5,436 条中仍有 85 条 `partial=true`、1 条多命中；因此“profile+长度筛选”不能一概称为完整域。
@@ -99,7 +99,7 @@ PF01467 HMM LENG=133；8,849 条 old-only 的 PF01467 切片长度中位 130、p
 固定 WT 域 4–181（178 aa）为目标，单独运行 `min-seq-id 0.3`、`cov-mode 2 -c 0.8`。输入只有 8,849 条 old-only 域，不读 Stage3/test：
 
 - 496 条有命中；≥50% 仅 1 条；≥70% 0 条；115 个 70% mode1 簇。
-- target coverage 中位 0.702、最大 0.775，**没有一条达到 0.8**。这是局部切片窗口与 WT CDD 域不等价的表现，不是源蛋白天然缺失。
+- target coverage 按 target 跨度 `(tend-tstart+1)/178` 计，中位 0.702、最大 0.758，**没有一条达到 0.8**。若按 alignment 列数 `alnlen/178` 计，最大 0.775；496 条中有 20 条两种口径不同，但都不改变“无一条达到 0.8”的结论。这是局部切片窗口与 WT CDD 域不等价的表现，不是源蛋白天然缺失。
 - 层分布：EC NMNAT-only 51 条/18 簇；NadR 75 条/3 簇（target coverage 中位仅 0.20，多为局部匹配）；text-only 363 条/106 簇；unknown 7 条/5 簇。115 个簇中 18 个含 EC、90 个仅 text、16 个含多个 primary_layer（类别可重叠）。
 - PF01467-complete + EC 的 35 条命中落在 8 个簇，全部 EC NMNAT-only；identity 中位 31.3%，target coverage 中位 75.3%，缺 C 端中位 43 aa。35 条中 H14 35/35、H17 35/35、T135 29/32（另 3 条 S）、R138 32/32 与 WT 对应；T135 与 R138 各有 3 条未落在单最优局部比对块内。该锚点结果只是候选对应线索，未处理并列最优/低同源不确定性，不验证反应功能或迁移价值。
 
@@ -107,21 +107,21 @@ PF01467 HMM LENG=133；8,849 条 old-only 的 PF01467 切片长度中位 130、p
 
 ### 7.3 补充分析：全长蛋白上下文
 
-局部 PF01467 切片会漏掉 C 端延伸。以 8,849 条 old-only 全长蛋白为目标，对 WT 域做 target coverage 搜索（`cov-mode 1`，`min-seq-id 0.3`）：
+局部 PF01467 切片会漏掉 C 端延伸。以 8,849 条 old-only 全长蛋白为 query、WT 178 aa 域为 target，要求覆盖的是 WT 域而不是完整旧蛋白（`cov-mode 1`，`min-seq-id 0.3`）：
 
-| 目标覆盖 | 命中 | 70% 簇 | identity 中位 | target coverage 中位 | 右侧延伸中位 | EC 支持 | complete+EC |
+| 目标覆盖 | 命中 | 70% 簇 | identity 中位 | target coverage 中位（target span） | 右侧延伸中位 | EC 支持 | complete+EC |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | ≥50% | 401 | 71 | 31.3% | 0.753 | 0 aa | 49 | 45 / 9 簇 |
 | ≥80% | 63 | 19 | 30.8% | 0.904 | 22 aa | 7 | 6 / 3 簇 |
 
-≥80% 的 63 条全部为 30.0–33.5% identity；层分布 text-only 54 条/16 簇、EC NMNAT-only 7 条/4 簇、unknown 2 条/2 簇；19 个簇中 13 个纯 text、2 个 EC+text、2 个纯 EC、1 个 unknown、1 个 unknown+text。也就是说，完整上下文能把“局部切片 C 端未覆盖”部分补回来，但得到的主要是远缘、以 text-only 为主的候选；EC 支持的全长命中只有 7 条/4 簇（complete+EC 6 条/3 簇）。
+≥80% 的 63 条全部为 30.0–33.5% identity；层分布 text-only 54 条/16 簇、EC NMNAT-only 7 条/4 簇、unknown 2 条/2 簇；19 个簇中 13 个纯 text、2 个 EC+text、2 个纯 EC、1 个 unknown、1 个 unknown+text。target coverage 同样按 target 跨度计；若按 alignment 列数，t50 的 ≥0.8 计数从 63 变为 65（401 条中 21 条两种口径不同），t80 的 63 条不变（2 条两种口径不同但都 ≥0.8）。也就是说，完整上下文能把“局部切片 C 端未覆盖”部分补回来，但得到的主要是远缘、以 text-only 为主的候选；EC 支持的全长命中只有 7 条/4 簇（complete+EC 6 条/3 簇）。
 
 这组全长分析是新增探索性分析，不能替代原始 30%/0.8 的 556/44 注释候选集合，也不能当作独立验证；它只说明局部切片会低估域覆盖，后续应做目标感知的完整域边界重审。
 
 ## 8. 结论与下一步
 
 1. **不整体加入。** 8,849 条 PF01467-only 不能整体加入 NatV 训练，也不能按本次 PF01467 局部切片整体做域级预训练；现有结果没有验证迁移收益。13,972 与 2,430 不能相加。
-2. **保留候选层。** 556 条/44 簇的 profile+长度+EC 注释候选，以及全长复核后的 63 条/19 簇（EC 7/4，complete+EC 6/3），值得做来源功能证据与完整域边界审阅；它们不是现成训练库。318 条 EC dual（主要 metazoan NMNAT1/2/3）是远缘、同反应但本次序列搜索无命中的独立层，不能与 NatV-like 数据混合，也不能判为功能不相关。
+2. **保留候选层。** 556 条/44 簇的 profile+长度+EC 注释候选，以及全长复核后的 63 条/19 簇（EC 7/4，complete+EC 6/3），值得做来源功能证据与完整域边界审阅；它们不是现成训练库。318 条 EC dual（主要 metazoan NMNAT1/2/3）的注释提示可能具相关/相同反应的远缘候选，功能仍需核查；本次固定 WT 序列搜索无命中，不能据此判为功能不相关，也不能与 NatV-like 数据混合。
 3. **边界任务独立。** 下一步应先做目标感知的完整域边界重审：以 NatV CDD/WT 域为参照，在完整原蛋白上下文重新定义候选域，而不是继续使用 PF01467 best-alignment 切片；重审前不做阈值扫描或模型诊断。
 4. **功能证据独立。** 旧 `nmnat_specificity_reference_v1` 的 61 正域/1,027 负域（7 正簇/10 负簇）历史线索可先核查可靠实验/审校证据；`pretraining_validation_status` 标为 `REFERENCE_DIVERSITY_AUDITED_CLASSIFIER_UNVALIDATED`、`classifier_training_eligible=false`，不能把其输出当真值。不因此下载或新训。
 5. **数据角色实验仍单列。** 1,644 vs 1,871 的验证并入实验、最终 2,102 条部署训练、以及任何 test 开启，都需要另立预注册与预算；本审计不授权。249/75/4 继续隔离。
@@ -133,3 +133,4 @@ PF01467 HMM LENG=133；8,849 条 old-only 的 PF01467 切片长度中位 130、p
 - `scripts/audit_wt_full_context.py`：白名单全长上下文补充分析，只物化 8,849 条 stage3-only；断言 protected roles 交集为 0。
 - 原始摘要：`data/results/natv_evolution_data_audit/raw/audit_summary.json`、`wt_reference_summary.json`、`wt_full_context_summary.json`。
 - 范围更正：`scope_correction.json`；保留原执行源码 `audit_evolution_data_executed.py` 及其 SHA256；产物校验值见 `OUTPUTS.sha256`。
+- coverage 口径：`target_coverage` 为 target 跨度 `(tend-tstart+1)/178`；`target_coverage_alignment` 为原始 `alnlen/178`，有 gap 时两者不同。该派生列由既有 MMseqs 输出重算，未重跑搜索。
