@@ -81,8 +81,11 @@ def build_parser():
     trainer.add_argument('--target', **common['target'])
     trainer.add_argument('--device', **common['device'])
     trainer.add_argument('--output', required=True)
-    trainer.set_defaults(func=lambda args: train(args.config, args.sources, args.target,
-                                                _result_output(args.output, 'training'), args.device))
+    trainer.add_argument('--init-checkpoint', default=None)
+    trainer.add_argument('--seed', type=int, default=None)
+    trainer.set_defaults(func=lambda args: train(
+        args.config, args.sources, args.target, _result_output(args.output, 'training'),
+        args.device, args.init_checkpoint, args.seed))
 
     generator = sub.add_parser('generate', help='sample full NatV variants from a checkpoint')
     generator.add_argument('--config', **common['config'])

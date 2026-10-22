@@ -11,7 +11,8 @@ from torch.nn.utils import clip_grad_norm_
 
 from .data import PopulationData, sha256_file, stable_seed, write_json
 from .model import (ConditionalModel, FrozenEncoder, categorical_kl, categorical_log_prob,
-                    categorical_samples, reconstruction_nll, rloo_objective, target_tensors)
+                    categorical_samples, load_checkpoint, reconstruction_nll, rloo_objective,
+                    target_tensors)
 
 
 def _learning_rate_at_epoch(base_lr, epoch_number, warmup_epochs):
@@ -58,20 +59,96 @@ def _train_step(model, data, batch, weights, beta, generator, sample_count, enco
     }
 
 
-def train(config_path, sources_path, target_path, output, device=None):
+def _state_cpu(model):
+    return {name: value.detach().cpu() for name, value in model.state_dict().items()}
+
+
+def _save_checkpoint(path, model, config, study, step, epoch, initialization, selection):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save({'state_dict': _state_cpu(model), 'arm': 'QVAE',
+                'seed': int(config['seed']), 'model_config': dict(study['model']),
+                'step': int(step), 'epoch': int(epoch), 'config': dict(config),
+                'initialization': initialization, 'selection': selection}, path)
+
+
+def _score_validation(model, data, encoder, queries, device, sample_count, seed):
+    from .evaluate import conditional_scores
+    model.eval()
+    rows = []
+    with torch.no_grad(), torch.autocast(device_type=device.type, dtype=torch.bfloat16,
+                                         enabled=device.type == 'cuda'):
+        for start in range(0, len(queries), 8):
+            batch = queries[start:start + 8]
+            context, full, valid, mask, labels = data.batch(
+                batch, encoder, device, need_full=model.arm == 'QVAE')
+            generator = torch.Generator(device=device.type)
+            generator.manual_seed(stable_seed(seed, 'selection', start))
+            scores = conditional_scores(model, context, full, valid, mask, labels,
+                                        sample_count, generator)
+            sites = scores['sites']
+            for index, query in enumerate(batch):
+                site = int(sites[index].item())
+                if site < 1:
+                    continue
+                row = {'sequence_id': query['record'].sequence_id,
+                       'component': query['record'].component,
+                       'panel': query['panel']['panel'], 'sites': site}
+                for name in ('prior_joint_nll', 'posterior_joint_nll', 'marginal_nll',
+                             'prior_expected_reconstruction_nll',
+                             'posterior_expected_reconstruction_nll'):
+                    row[name + '_per_residue'] = float(scores[name][index].item()) / site
+                row['kl'] = float(scores['kl'][index].item())
+                if scores['ess'] is not None:
+                    row['ess'] = float(scores['ess'][index].item())
+                    row['max_weight'] = float(scores['max_weight'][index].item())
+                rows.append(row)
+    model.train()
+    total_sites = sum(row['sites'] for row in rows)
+    if not rows or total_sites < 1:
+        raise ValueError('Validation selection produced no scored sites')
+    summary = {'queries': len(rows), 'sites': total_sites,
+               'selection_metric': 'prior_joint_nll_per_residue'}
+    for name in ('prior_joint_nll', 'posterior_joint_nll', 'marginal_nll',
+                 'prior_expected_reconstruction_nll',
+                 'posterior_expected_reconstruction_nll'):
+        summary[name + '_per_residue'] = sum(
+            row[name + '_per_residue'] * row['sites'] for row in rows) / total_sites
+    summary['kl_mean'] = sum(row['kl'] for row in rows) / len(rows)
+    if rows[0].get('ess') is not None:
+        summary['ess_mean'] = sum(row['ess'] for row in rows) / len(rows)
+        summary['max_weight_mean'] = sum(row['max_weight'] for row in rows) / len(rows)
+    return summary, rows
+
+
+def train(config_path, sources_path, target_path, output, device=None,
+          init_checkpoint=None, seed=None):
     data = PopulationData(sources_path, config_path, target_path)
     study = data.study
-    config = study['training']
+    config = dict(study['training'])
+    if seed is not None:
+        config['seed'] = int(seed)
+    selection_config = config.get('selection')
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
     output = Path(output)
-    checkpoint = Path(data.sources['checkpoint_dir']) / output.name / 'checkpoint.pt'
+    checkpoint_root = Path(data.sources['checkpoint_dir']) / output.name
     if (output.exists() and any(output.iterdir())) or (
-            checkpoint.parent.exists() and any(checkpoint.parent.iterdir())):
+            checkpoint_root.exists() and any(checkpoint_root.iterdir())):
         raise FileExistsError(f'Run output or weights already exist: {output.name}')
     output.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(int(config['seed']))
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
     model = ConditionalModel('QVAE', **study['model']).to(device).train()
+    if init_checkpoint:
+        init_payload = load_checkpoint(init_checkpoint, device='cpu')
+        if init_payload.get('arm') != 'QVAE':
+            raise ValueError('Initialization checkpoint must be QVAE')
+        model.load_state_dict(init_payload['state_dict'], strict=True)
+        initialization = {'mode': 'checkpoint', 'path': str(init_checkpoint),
+                          'sha256': sha256_file(init_checkpoint),
+                          'checkpoint_seed': int(init_payload['seed']),
+                          'checkpoint_step': int(init_payload['step'])}
+    else:
+        initialization = {'mode': 'random'}
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(config['learning_rate']),
                                   weight_decay=float(config['weight_decay']))
     steps_per_epoch = math.ceil(len(data.train) / int(config['batch_size']))
@@ -79,7 +156,39 @@ def train(config_path, sources_path, target_path, output, device=None):
     metrics_path = output / 'metrics.jsonl'
     started = time.monotonic()
     step = 0
-    with metrics_path.open('w') as metrics:
+    curve = []
+    paths = ({kind: checkpoint_root / f'{kind}.pt' for kind in ('initial', 'best', 'last')}
+             if selection_config else {'last': checkpoint_root / 'checkpoint.pt'})
+    selection_queries = []
+    if selection_config:
+        selected, selection_queries = data.validation_selection(
+            int(selection_config['records']), selection_config['panel'])
+        write_json(output / 'validation_selection.json', {
+            'rule': 'component-balanced fixed selection', 'panel': selection_config['panel'],
+            'records': len(selected),
+            'items': [{'sequence_id': record.sequence_id, 'component': record.component,
+                       'panel': query['panel']['panel'],
+                       'positions': query['panel']['positions']}
+                      for record, query in zip(selected, selection_queries)],
+        })
+        initial_scores, _ = _score_validation(
+            model, data, encoder, selection_queries, device,
+            int(selection_config['sample_count']),
+            stable_seed(config['seed'], 'selection', 0))
+        _save_checkpoint(paths['initial'], model, config, study, 0, 0, initialization, initial_scores)
+        _save_checkpoint(paths['best'], model, config, study, 0, 0, initialization, initial_scores)
+        curve.append({'stage': 'initial', 'epoch': 0, 'step': 0, **initial_scores})
+        best_scores, best_epoch = initial_scores, 0
+        last_scores = initial_scores
+        evaluated_epochs = {0}
+    else:
+        best_scores = best_epoch = last_scores = None
+        evaluated_epochs = set()
+    curve_path = output / 'validation_curve.jsonl'
+    with metrics_path.open('w') as metrics, curve_path.open('w') as curve_file:
+        if curve:
+            curve_file.write(json.dumps(curve[0], ensure_ascii=False) + '\n')
+            curve_file.flush()
         for epoch in range(1, max_epochs + 1):
             beta = _beta_at_epoch(epoch, int(config['beta_warmup_epochs']))
             lr = _learning_rate_at_epoch(float(config['learning_rate']), epoch,
@@ -87,8 +196,6 @@ def train(config_path, sources_path, target_path, output, device=None):
             for group in optimizer.param_groups:
                 group['lr'] = lr
             queries = data.training_queries(epoch - 1, int(config['seed']))
-            epoch_loss = 0.0
-            epoch_count = 0
             for start in range(0, len(queries), int(config['batch_size'])):
                 if step >= int(config['max_steps']):
                     break
@@ -110,32 +217,69 @@ def train(config_path, sources_path, target_path, output, device=None):
                     raise FloatingPointError(f'Nonfinite gradient at step {step + 1}')
                 optimizer.step()
                 step += 1
-                epoch_loss += float(loss.detach().item())
-                epoch_count += 1
-                metrics.write(json.dumps({'epoch': epoch, 'step': step, 'loss': float(loss.detach().item()),
-                                          'beta': beta, 'learning_rate': lr, **values},
+                metrics.write(json.dumps({'epoch': epoch, 'step': step,
+                                          'loss': float(loss.detach().item()), 'beta': beta,
+                                          'learning_rate': lr, **values},
                                          ensure_ascii=False) + '\n')
                 metrics.flush()
                 print(json.dumps({'step': step, 'loss': float(loss.detach().item()),
                                   'beta': beta, 'seconds': time.monotonic() - started}), flush=True)
+            if selection_config:
+                interval = int(selection_config['interval_epochs'])
+                if interval > 0 and epoch % interval == 0:
+                    scores, _ = _score_validation(
+                        model, data, encoder, selection_queries, device,
+                        int(selection_config['sample_count']),
+                        stable_seed(config['seed'], 'selection', epoch))
+                    entry = {'stage': 'epoch', 'epoch': epoch, 'step': step, **scores}
+                    curve.append(entry)
+                    curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
+                    curve_file.flush()
+                    last_scores = scores
+                    evaluated_epochs.add(epoch)
+                    if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
+                        best_scores, best_epoch = scores, epoch
+                        _save_checkpoint(paths['best'], model, config, study, step, epoch,
+                                         initialization, best_scores)
             if step >= int(config['max_steps']):
                 break
-    payload = {
-        'state_dict': model.state_dict(),
-        'arm': 'QVAE',
-        'seed': int(config['seed']),
-        'model_config': dict(study['model']),
-        'step': step,
-        'epoch': max_epochs,
-        'config': dict(config),
-    }
-    checkpoint.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(payload, checkpoint)
-    write_json(output / 'training_summary.json', {
-        'status': 'COMPLETED', 'steps': step, 'checkpoint': str(checkpoint),
-        'checkpoint_sha256': sha256_file(checkpoint),
+        if selection_config and epoch not in evaluated_epochs:
+            scores, _ = _score_validation(
+                model, data, encoder, selection_queries, device,
+                int(selection_config['sample_count']),
+                stable_seed(config['seed'], 'selection', epoch))
+            entry = {'stage': 'last', 'epoch': epoch, 'step': step, **scores}
+            curve.append(entry)
+            curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
+            curve_file.flush()
+            last_scores = scores
+            if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
+                best_scores, best_epoch = scores, epoch
+                _save_checkpoint(paths['best'], model, config, study, step, epoch,
+                                 initialization, best_scores)
+    _save_checkpoint(paths['last'], model, config, study, step, epoch,
+                     initialization, last_scores)
+    returned = paths['best'] if selection_config else paths['last']
+    summary = {
+        'status': 'COMPLETED', 'steps': step, 'seed': int(config['seed']),
+        'initialization': initialization, 'checkpoint': str(returned),
+        'checkpoint_sha256': sha256_file(returned),
+        'checkpoints': {kind: {'path': str(path), 'sha256': sha256_file(path)}
+                        for kind, path in paths.items()},
         'population': str(sources_path), 'target': str(target_path),
-        'train_sequences': len(data.train), 'seconds': time.monotonic() - started,
-        'esm_model': data.sources['esm_model'],
-    })
-    return checkpoint
+        'train_sequences': len(data.train), 'validation_sequences': len(data.validation),
+        'seconds': time.monotonic() - started, 'esm_model': data.sources['esm_model'],
+    }
+    if selection_config:
+        summary.update({
+            'selection': {'records': len(selection_queries),
+                          'panel': selection_config['panel'],
+                          'sample_count': int(selection_config['sample_count']),
+                          'interval_epochs': int(selection_config['interval_epochs']),
+                          'balance_key': 'component'},
+            'initial_validation': curve[0], 'best_validation': best_scores,
+            'best_epoch': best_epoch, 'last_validation': last_scores,
+            'validation_curve': curve,
+        })
+    write_json(output / 'training_summary.json', summary)
+    return returned

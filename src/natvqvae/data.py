@@ -4,6 +4,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -217,6 +218,40 @@ class PopulationData:
             for panel in mask_panels(record, self.study['training']['mask_seed']):
                 queries.append({'record': record, 'panel': panel})
         return queries
+
+    def validation_selection(self, limit, panel_name):
+        groups = defaultdict(list)
+        for record in self.validation:
+            groups[record.component].append(record)
+        ordered = [groups[name] for name in sorted(groups)]
+        limit = min(int(limit), sum(len(group) for group in ordered))
+        base, extra = divmod(limit, len(ordered))
+        pointers = [0] * len(ordered)
+        selected = []
+        for index, group in enumerate(ordered):
+            take = min(len(group), base + (1 if index < extra else 0))
+            selected.extend(group[:take])
+            pointers[index] = take
+        while len(selected) < limit:
+            added = False
+            for index, group in enumerate(ordered):
+                if pointers[index] < len(group):
+                    selected.append(group[pointers[index]])
+                    pointers[index] += 1
+                    added = True
+                    if len(selected) >= limit:
+                        break
+            if not added:
+                break
+        selected = selected[:limit]
+        queries = []
+        for record in selected:
+            panels = mask_panels(record, self.study['training']['mask_seed'])
+            panel = next((item for item in panels if item['panel'] == panel_name), None)
+            if panel is None:
+                raise ValueError(f'Unknown selection panel: {panel_name}')
+            queries.append({'record': record, 'panel': panel})
+        return selected, queries
 
     def batch(self, queries, encoder, device, need_full):
         sequences = [q['record'].sequence for q in queries]
