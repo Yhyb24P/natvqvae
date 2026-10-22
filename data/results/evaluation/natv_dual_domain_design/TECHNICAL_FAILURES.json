@@ -1,0 +1,31 @@
+{
+  "case_loss_batch": {
+    "reason": "A3M read via data.load_fasta uppercase-transformed lowercase insertions; aligned lengths became inconsistent; 36 predictions invalid for structural conclusions",
+    "original_generation_path": "data/results/generation/natv_dual_domain_design.msa_case_loss",
+    "original_evaluation_path": "data/results/evaluation/natv_dual_domain_design.msa_case_loss",
+    "old_attempts": 36,
+    "old_cost_seconds": 574.7,
+    "parameters": {
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "seed": 20261022,
+      "msa_rows": 512
+    },
+    "old_msa_WT_path": "data/results/generation/natv_dual_domain_design.msa_case_loss/msa/WT.a3m",
+    "old_msa_WT_sha256": "b47463e44d1a1ff066378dd6e9240a07ba476cd39f22f54a126bfd939f61584a",
+    "old_design_sha256": "757fd169eaa4a0dc6447eeb96e5bfe017f31ea67855759be6f51c271839fadf2",
+    "old_boltz_run_summary_sha256": "bb17d67c81cad816daf9e2c819d88f185b1185d83fce2f549e3d53a2757b114a",
+    "old_boltz_runs_sha256": "ec3ca7b58b88c928cffc0a92b060f994b0ee74a4e8a3d18656ea16dc294437e5",
+    "old_report_sha256": "7b7ea53c6d1e5786b72684072d75a2bb925cf928744688c19116595ee7458335",
+    "status": "discarded as technical failure; not used"
+  },
+  "build_failed_1": {
+    "reason": "initial build aborted because MSA first-record WT check compared candidate sequence with source; no valid predictions were produced",
+    "path": "data/results/generation/natv_dual_domain_design.build_failed_1",
+    "files": 4,
+    "old_msa_WT_sha256": "b47463e44d1a1ff066378dd6e9240a07ba476cd39f22f54a126bfd939f61584a",
+    "status": "discarded as technical failure; not used"
+  },
+  "retained_formal_batch": "data/results/evaluation/natv_dual_domain_design/"
+}

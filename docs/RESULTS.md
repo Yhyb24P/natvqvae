@@ -35,6 +35,13 @@
 - 18,432 次共同 mask/uniform 生成（每臂 9,216）中，两臂 unique、口袋/锚点编辑没有显示辅助初始化优势；原始 Hamming 和锚点变化在 auxinit 略低，Hamming 匹配后口袋行比例接近。说明条件概率迁移没有同步转化为更多或更口袋定向的候选供给。
 - 结构：辅助域 9 条唯一候选 + WT、迁移 3 对 Hamming 匹配代表 + WT 均完成 8 帧 BioEmu2 prediction，全部 8/8 physicality 通过。迁移配对 median full RMSD 0.54–0.62 Å、NMNAT 0.28–0.46 Å；H15 的 I145 邻域较大，配对间无一致方向。结构仅作条件性证据；2QJO 是 NAD⁺ 产物参照，2QJT/2R5W 不作为 NMNAT 锚点模板；无配体、无 pLDDT/PAE、无活性结论。完整报告与复现路径见[迁移报告](../data/results/evaluation/natv_transfer/REPORT.md)。
 
+
+## NatV 双域 A/B 设计
+
+- 已完成 WT + 3A + 2B + 6A+B 共 12 条设计的 12×3 Boltz-2 单体预测；12/12 成功、0 失败、约 543 s。pLDDT 中位约 0.914–0.925、pTM 0.902–0.913。
+- A+B 对同一 A/B/WT 的全长中位 RMSD 0.73–0.99 Å、NMNAT 0.78–1.14 Å、Nudix 0.22–0.35 Å，落在父本自身样本离散附近；未观察到稳定结构优势或新增界面风险。B1 E248Q/B2 D308N 仍是同源位点上的去电荷假说，未证明水解下降。
+- 同源 2QJO 为 Synechocystis hexamer、2QJT/2R5W 为 Francisella dimer，均不是 KVP40；B 位点本身不在同源二聚体界面，但 Nudix 口袋整体涉及另一亚基，KVP40 组装未知。结构只作条件性证据，不称活性、稳定性或 NAD⁺ 产量。
+- 技术失败：早期 A3M 大写化导致 36 个预测作废（约 575 s），已按最小记录清理，不沿用其结论。完整报告见[设计报告](../data/results/evaluation/natv_dual_domain_design/REPORT.md)。
 ## 证据边界
 
 - 30–35% identity 处于 twilight zone；局部比对、域边界和锚点对应仍可能不确定。

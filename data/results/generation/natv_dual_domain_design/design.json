@@ -1,0 +1,188 @@
+{
+  "task": "natv_dual_domain_design",
+  "config": "config/design.yaml",
+  "config_sha256": "26105d9ecbb2e40e9e5b38b7a89c84fa397ee21584b25f5092661360764afd1e",
+  "target": "config/target.yaml",
+  "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+  "msa_source": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_auxiliary_structures/WT/input.a3m",
+  "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "msa_rows": 512,
+  "candidates": 12,
+  "candidate_names": [
+    "WT",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "A1B1",
+    "A1B2",
+    "A2B1",
+    "A2B2",
+    "A3B1",
+    "A3B2"
+  ],
+  "boltz": {
+    "executable": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+    "cache": "/mnt/e/models/boltz2",
+    "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "diffusion_samples": 3,
+    "sampling_steps": 200,
+    "recycling_steps": 3,
+    "seed": 20261022,
+    "output_format": "mmcif",
+    "num_workers": 2,
+    "timeout_seconds": 7200
+  },
+  "implementation_sha256": "4143735aef0eaf625b57d9940603fc92eb1c1543da0aec4dce2524b3932d1490",
+  "source_structures": {
+    "2QJO": {
+      "path": "data/raw/structures/2QJO.cif",
+      "ref_chain": "A",
+      "other_chains": [
+        "B",
+        "C"
+      ],
+      "ligands": [
+        "APR",
+        "NAD",
+        "POP",
+        "SO4"
+      ]
+    },
+    "2QJT": {
+      "path": "data/raw/structures/2QJT.cif",
+      "ref_chain": "B",
+      "other_chains": [
+        "A"
+      ],
+      "ligands": [
+        "AMP",
+        "MN",
+        "MG"
+      ]
+    },
+    "2R5W": {
+      "path": "data/raw/structures/2R5W.cif",
+      "ref_chain": "B",
+      "other_chains": [
+        "A"
+      ],
+      "ligands": [
+        "AMP",
+        "MN",
+        "MG"
+      ]
+    }
+  },
+  "msa_validation": [
+    {
+      "name": "A1",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A1B1",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A1B2",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A2",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A2B1",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A2B2",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A3",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A3B1",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "A3B2",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "B1",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "B2",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    },
+    {
+      "name": "WT",
+      "records": 512,
+      "query_length": 341,
+      "aligned_lengths": [
+        341
+      ],
+      "lowercase_chars": 6488
+    }
+  ]
+}

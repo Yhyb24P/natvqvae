@@ -8,6 +8,7 @@ from pathlib import Path
 from . import __version__
 from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
+from .design import build_design, run_boltz, summarize_design
 from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summarize_transfer
 from .generate import generate
 from .preprocessing import preprocess
@@ -157,6 +158,27 @@ def build_parser():
     structures.add_argument('--config', default='config/candidate_structures.yaml')
     structures.add_argument('--output', required=True)
     structures.set_defaults(func=lambda args: _candidate_structures(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    design_build = sub.add_parser('design-build',
+                                  help='build the bounded NatV A/B/A+B design inputs')
+    design_build.add_argument('--config', default='config/design.yaml')
+    design_build.add_argument('--output', required=True)
+    design_build.set_defaults(func=lambda args: build_design(
+        args.config, _result_output(args.output, 'generation')))
+
+    design_boltz = sub.add_parser('design-boltz',
+                                  help='run formal Boltz-2 predictions for the design')
+    design_boltz.add_argument('--config', default='config/design.yaml')
+    design_boltz.add_argument('--output', required=True)
+    design_boltz.set_defaults(func=lambda args: run_boltz(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    design_summary = sub.add_parser('design-summarize',
+                                    help='compare design structures with parent designs and templates')
+    design_summary.add_argument('--config', default='config/design.yaml')
+    design_summary.add_argument('--output', required=True)
+    design_summary.set_defaults(func=lambda args: summarize_design(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 
