@@ -16,7 +16,7 @@ NatV 的 NMNAT 结构域参与 NAD⁺ 合成，Nudix 结构域具有相关水解
 
 **已完成条件 Categorical QVAE 的训练、联合评价与候选生成。** 38次拟合和两模型各61,440次单轮采样提供48条代表序列。QVAE开发集联合NLL小幅改善，但共变统计与候选供给优势尚无充分证据；[报告](experiments/natv_conditional_qvae/REPORT.md)、[训练曲线](experiments/natv_conditional_qvae/training_curves.png)和[候选清单](experiments/natv_conditional_qvae/CANDIDATES.md)保留完整判断。此前重训与生成证据由[研究计划](docs/RESEARCH_PLAN.md)追溯。
 
-**已完成 NMNAT 演化设计证据 Phase A/B1。** 从审计后的有界来源得到 7 条待检验设计假设；B1 只重排现有候选池，配对 F13Y+A134G 缺失，未判 Gate B1 通过，B2 未启动。[实验报告](experiments/natv_evolution_informed_nmnat/REPORT.md)保留方法、负结果与限制；这些来源不是训练人口。
+**已完成 NMNAT 演化设计证据分析。** 从审计后的有界来源得到 7 条待检验设计假设；现有候选池只含多数单点替换、不含 F13Y+A134G 配对，重排结果只能作描述性富集，不能作为独立验证。[实验报告](experiments/natv_evolution_informed_nmnat/REPORT.md)保留方法、负结果与限制；这些来源不是训练人口。
 
 ## 项目结构
 

@@ -1,6 +1,6 @@
-# NatV NMNAT 演化设计证据：Phase A
+# NatV NMNAT 演化设计证据
 
-状态：Gate A PASS；7 条假设；CPU-only，6.0 s；未训练、未下载、未折叠、未读 test。所有活性、底物特异性、kcat/Km 与 NAD⁺ 净积累仍为 UNKNOWN。
+结果：7 条假设；CPU-only 6.0 s。未训练、未下载、未折叠、未读 test。所有活性、底物特异性、kcat/Km 与 NAD⁺ 净积累仍为 UNKNOWN。
 
 方案见 [PLAN.md](PLAN.md)，总结论见 [REPORT.md](REPORT.md)，输入与 SHA 见 [inputs.json](inputs.json)，运行身份见 [RUN_PROVENANCE.json](RUN_PROVENANCE.json)，原始表在 `data/results/natv_evolution_informed_nmnat/raw/phase_a/`。
 
@@ -18,12 +18,12 @@
 
 `cluster_representatives.csv` 共 61 行：T1 3、T2 25、T3 10、T4 16、T5 7。这里的行数是跨来源的簇代表，不是 556、63、318、61 相加的样本量；S1/S2 重叠、T4 与其它层共享簇均已去重。所有 70% 簇是不同序列簇，不称独立进化事件；T5 的 `ref:` 前缀也不证明它与 old 序列独立。
 
-## Gate A
+## 结果与筛选
 
-- 7 条假设均通过 **稳定映射** 后仍有 ≥2 个不同 old-only 70% 序列簇支持，且每条至少有 T1/T2/T5 之一；`gate_A.json` 为 PASS。
-- 保守性分类修正后 Y141I 被排除，L140M 因此进入候选；随后 T22Q+K130R 在稳定映射后不足 2 个 old-only 簇，已删除。最终 7 条，不是从原 8 条简单删 1 条，也不补位。
-- 32 个位置/替换通过探索性筛选（≥2 个 old-only 簇、锚点 ±6、S5 频率 ≤5%、保守替换）；T5 reviewed-domain 簇单独记录，不计入 old-only 簇数。
-- 这是序列/注释证据的 Gate，不是功能、迁移或活性验证。
+- 7 条假设在稳定映射后仍有 ≥2 个不同 old-only 70% 序列簇支持，且每条至少有 T1/T2/T5 之一。
+- 保守性分类修正后 Y141I 被排除，L140M 因此进入候选；T22Q+K130R 在稳定映射后不足 2 个 old-only 簇，未提出。最终 7 条。
+- 32 个位置/替换符合探索性条件（≥2 个 old-only 簇、锚点 ±6、S5 频率 ≤5%、保守替换）；T5 reviewed-domain 簇单独记录，不计入 old-only 簇数。
+- 这些只是序列/注释证据，不是功能、迁移或活性验证。
 
 ## 假设表
 
@@ -66,8 +66,8 @@ H03/H05/H07 的多最优数较高；稳定映射已剔除不稳定记录，但�
 - `nearest_anchor_template_distance_A` 是**最近锚点**的 2QJO 配体距离，不是候选替换残基的距离；±6 是线性序列邻域，不是空间第二壳层。没有逐残基口袋几何、ATP/NMN 三元结构或对接证据；未使用 `domain_pocket_map.json` 作为候选几何真值。
 - 2QJO 是 NAD⁺ 产物结合参照；H14/H17 为 ≤4.5 Å 第一壳层、T135/R138 为 ≤8 Å 第二壳层；距离不是底物几何或催化机制。
 - S5 频率来自 1,871 条 training+validation 的稳定位置计数，不是物种群体频率；S1/S2 的 70% 序列簇不是独立家族或独立进化事件，T5 的 reviewed-domain 证据也未验证分类器。
-- 假设是序列/注释 + 锚点邻近的候选，不是活性、稳定性、底物特异性或净积累的预测；Phase C 前不做结构预测。
+- 假设是序列/注释 + 锚点邻近的候选，不是活性、稳定性、底物特异性或净积累的预测；本分析不做结构预测。
 
-## 下一步
+## 候选池诊断
 
-Phase B1 已完成，但只是现有池的描述性 supply/rank 诊断：单点假设可在池中找到，`F13Y+A134G` 配对在两个 NMNAT 池中均为 0；同一 7 条假设既用于重排又用于命中统计，且无 held-out 证据，因此 `gate_b1=not_evaluable`，不判通过（见 [B1_RERANK.md](B1_RERANK.md)）。B2 的推理时证据先验需要单独 GPU 授权，本阶段不启动；B3 也不自动启动。test 继续封存。
+现有 NMNAT 候选池只含多数单点替换，不含 `F13Y+A134G` 配对；同一 7 条假设既用于重排又用于命中统计，且无 held-out 证据，因此只能作描述性富集/供给判断（见 [B1_RERANK.md](B1_RERANK.md)）。没有据此启动新的生成、训练或模型比较。test 继续封存。

@@ -18,7 +18,7 @@
 - S4：旧 `nmnat_specificity_reference_v1` 的 reviewed positives 61 条/7 簇，仅交叉核对，分类器未验证；
 - S5：正式 training 1,644 + validation 227 的 NMNAT CDD 域，仅作频率/组分基线。
 
-这些集合不是新的训练、验证或测试人口，不改变 1,644/227/231；249/75/4 继续隔离，test 未读。Phase B1 只使用 QVAE 现有候选池，不生成新序列。方法与负结果见[实验报告](../experiments/natv_evolution_informed_nmnat/REPORT.md)，输入身份见同目录 `inputs.json` 与 `RUN_PROVENANCE.json`。
+这些集合不是新的训练、验证或测试人口，不改变 1,644/227/231；249/75/4 继续隔离，test 未读。候选池重排只使用 QVAE 现有候选，不生成新序列。方法与负结果见[实验报告](../experiments/natv_evolution_informed_nmnat/REPORT.md)，输入身份见同目录 `inputs.json` 与 `RUN_PROVENANCE.json`。
 
 ## 模型与对齐资料
 
