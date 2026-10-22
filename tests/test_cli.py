@@ -8,7 +8,7 @@ from natvqvae.cli import _result_output, build_parser
 def test_cli_has_formal_commands():
     parser = build_parser()
     for command in ('doctor', 'preprocess', 'train', 'generate', 'evaluate',
-                    'aux-train', 'aux-generate', 'aux-evaluate'):
+                    'aux-train', 'aux-generate', 'aux-evaluate', 'candidate-structures'):
         with pytest.raises(SystemExit):
             parser.parse_args([command, '--help'])
 

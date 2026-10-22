@@ -18,9 +18,10 @@ training:
   mask_seed: 7401
   selection:
     records: 128
-    panel: NMNAT_16_count
+    panels: [NMNAT_8_count, NMNAT_16_count, NMNAT_32_count]
     sample_count: 16
     interval_epochs: 5
+    min_improvement: 0.0001
 
 generation:
   seed: 8401

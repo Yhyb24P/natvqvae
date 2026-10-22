@@ -92,7 +92,8 @@ def _score_validation(model, data, encoder, queries, device, sample_count, seed)
                     continue
                 row = {'sequence_id': query['record'].sequence_id,
                        'component': query['record'].component,
-                       'panel': query['panel']['panel'], 'sites': site}
+                       'panel': query['panel']['panel'], 'sites': site,
+                       'weight': float(query.get('weight', 1.0))}
                 for name in ('prior_joint_nll', 'posterior_joint_nll', 'marginal_nll',
                              'prior_expected_reconstruction_nll',
                              'posterior_expected_reconstruction_nll'):
@@ -104,19 +105,25 @@ def _score_validation(model, data, encoder, queries, device, sample_count, seed)
                 rows.append(row)
     model.train()
     total_sites = sum(row['sites'] for row in rows)
-    if not rows or total_sites < 1:
+    denominator = sum(row['weight'] * row['sites'] for row in rows)
+    if not rows or total_sites < 1 or denominator <= 0:
         raise ValueError('Validation selection produced no scored sites')
     summary = {'queries': len(rows), 'sites': total_sites,
+               'weighted_sites': denominator,
                'selection_metric': 'prior_joint_nll_per_residue'}
     for name in ('prior_joint_nll', 'posterior_joint_nll', 'marginal_nll',
                  'prior_expected_reconstruction_nll',
                  'posterior_expected_reconstruction_nll'):
         summary[name + '_per_residue'] = sum(
-            row[name + '_per_residue'] * row['sites'] for row in rows) / total_sites
-    summary['kl_mean'] = sum(row['kl'] for row in rows) / len(rows)
+            row[name + '_per_residue'] * row['sites'] * row['weight']
+            for row in rows) / denominator
+    summary['kl_mean'] = sum(row['kl'] * row['sites'] * row['weight']
+                             for row in rows) / denominator
     if rows[0].get('ess') is not None:
-        summary['ess_mean'] = sum(row['ess'] for row in rows) / len(rows)
-        summary['max_weight_mean'] = sum(row['max_weight'] for row in rows) / len(rows)
+        summary['ess_mean'] = sum(row['ess'] * row['sites'] * row['weight']
+                                  for row in rows) / denominator
+        summary['max_weight_mean'] = sum(row['max_weight'] * row['sites'] * row['weight']
+                                         for row in rows) / denominator
     return summary, rows
 
 
@@ -160,16 +167,23 @@ def train(config_path, sources_path, target_path, output, device=None,
     paths = ({kind: checkpoint_root / f'{kind}.pt' for kind in ('initial', 'best', 'last')}
              if selection_config else {'last': checkpoint_root / 'checkpoint.pt'})
     selection_queries = []
+    selected_records = []
+    min_improvement = 0.0
     if selection_config:
-        selected, selection_queries = data.validation_selection(
-            int(selection_config['records']), selection_config['panel'])
+        panel_names = list(selection_config.get('panels') or [selection_config['panel']])
+        min_improvement = float(selection_config.get('min_improvement', 0.0))
+        selected_records, selection_queries = data.validation_selection(
+            int(selection_config['records']), panel_names)
         write_json(output / 'validation_selection.json', {
-            'rule': 'component-balanced fixed selection', 'panel': selection_config['panel'],
-            'records': len(selected),
-            'items': [{'sequence_id': record.sequence_id, 'component': record.component,
+            'rule': 'component-balanced fixed selection; three NMNAT mask tasks equal; '
+                    'each selected component equal; subset recomputed',
+            'panels': panel_names, 'records': len(selected_records),
+            'items': [{'sequence_id': query['record'].sequence_id,
+                       'component': query['record'].component,
                        'panel': query['panel']['panel'],
-                       'positions': query['panel']['positions']}
-                      for record, query in zip(selected, selection_queries)],
+                       'positions': query['panel']['positions'],
+                       'weight': query['weight']}
+                      for query in selection_queries],
         })
         initial_scores, _ = _score_validation(
             model, data, encoder, selection_queries, device,
@@ -237,7 +251,8 @@ def train(config_path, sources_path, target_path, output, device=None,
                     curve_file.flush()
                     last_scores = scores
                     evaluated_epochs.add(epoch)
-                    if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
+                    if (scores['prior_joint_nll_per_residue']
+                            < best_scores['prior_joint_nll_per_residue'] - min_improvement):
                         best_scores, best_epoch = scores, epoch
                         _save_checkpoint(paths['best'], model, config, study, step, epoch,
                                          initialization, best_scores)
@@ -253,7 +268,8 @@ def train(config_path, sources_path, target_path, output, device=None,
             curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
             curve_file.flush()
             last_scores = scores
-            if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
+            if (scores['prior_joint_nll_per_residue']
+                    < best_scores['prior_joint_nll_per_residue'] - min_improvement):
                 best_scores, best_epoch = scores, epoch
                 _save_checkpoint(paths['best'], model, config, study, step, epoch,
                                  initialization, best_scores)
@@ -272,11 +288,13 @@ def train(config_path, sources_path, target_path, output, device=None,
     }
     if selection_config:
         summary.update({
-            'selection': {'records': len(selection_queries),
-                          'panel': selection_config['panel'],
+            'selection': {'records': len(selected_records),
+                          'queries': len(selection_queries),
+                          'panels': panel_names,
                           'sample_count': int(selection_config['sample_count']),
                           'interval_epochs': int(selection_config['interval_epochs']),
-                          'balance_key': 'component'},
+                          'min_improvement': min_improvement,
+                          'balance_key': 'component; three mask tasks equal'},
             'initial_validation': curve[0], 'best_validation': best_scores,
             'best_epoch': best_epoch, 'last_validation': last_scores,
             'validation_curve': curve,

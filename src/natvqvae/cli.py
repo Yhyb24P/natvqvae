@@ -14,6 +14,11 @@ from .preprocessing import preprocess
 from .train import train
 
 
+def _candidate_structures(config, output):
+    from .structure import sample_candidate_structures
+    return sample_candidate_structures(config, output)
+
+
 def _result_output(value, category):
     path = Path(value).resolve()
     root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
@@ -139,6 +144,13 @@ def build_parser():
     aux_evaluator.add_argument('--output', required=True)
     aux_evaluator.set_defaults(func=lambda args: evaluate_auxiliary(
         args.config, args.checkpoint, _result_output(args.output, 'evaluation'), args.device))
+
+    structures = sub.add_parser('candidate-structures',
+                                help='sample full-length structures for selected candidates')
+    structures.add_argument('--config', default='config/candidate_structures.yaml')
+    structures.add_argument('--output', required=True)
+    structures.set_defaults(func=lambda args: _candidate_structures(
+        args.config, _result_output(args.output, 'evaluation')))
     return parser
 
 

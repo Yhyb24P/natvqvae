@@ -219,7 +219,8 @@ class PopulationData:
                 queries.append({'record': record, 'panel': panel})
         return queries
 
-    def validation_selection(self, limit, panel_name):
+    def validation_selection(self, limit, panel_names):
+        panel_names = list(panel_names)
         groups = defaultdict(list)
         for record in self.validation:
             groups[record.component].append(record)
@@ -244,13 +245,20 @@ class PopulationData:
             if not added:
                 break
         selected = selected[:limit]
+        component_sizes = defaultdict(int)
+        for record in selected:
+            component_sizes[record.component] += 1
         queries = []
         for record in selected:
-            panels = mask_panels(record, self.study['training']['mask_seed'])
-            panel = next((item for item in panels if item['panel'] == panel_name), None)
-            if panel is None:
-                raise ValueError(f'Unknown selection panel: {panel_name}')
-            queries.append({'record': record, 'panel': panel})
+            panels = {item['panel']: item for item in
+                      mask_panels(record, self.study['training']['mask_seed'])}
+            weight = 1.0 / (component_sizes[record.component] * len(panel_names)
+                            * len(component_sizes))
+            for panel_name in panel_names:
+                if panel_name not in panels:
+                    raise ValueError(f'Unknown selection panel: {panel_name}')
+                queries.append({'record': record, 'panel': panels[panel_name],
+                                'weight': weight})
         return selected, queries
 
     def batch(self, queries, encoder, device, need_full):
