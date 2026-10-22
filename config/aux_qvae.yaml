@@ -1,0 +1,50 @@
+task: auxiliary_nmnat
+paths:
+  domains: data/results/preprocessing/pf01467_8849/aux_domains.fasta
+  masks: data/results/preprocessing/pf01467_8849/aux_masks.json
+  split: data/results/preprocessing/pf01467_8849/aux_split.csv
+  target: config/target.yaml
+  esm_model: data/weights/esm2
+  checkpoint_dir: data/weights/aux_qvae
+
+model:
+  hidden: 256
+  factors: 16
+  states: 8
+  feature_dim: 1280
+
+training:
+  seed: 8601
+  arms: [QVAE, deterministic]
+  batch_size: 32
+  max_steps: 3000
+  K: 8
+  learning_rate: 0.00015
+  weight_decay: 0.01
+  beta_warmup_epochs: 10
+  learning_rate_warmup_epochs: 5
+  gradient_clip: 1.0
+  mask_seed: 8601
+  mask_sizes: [8, 16, 32]
+  selection:
+    interval_epochs: 5
+    records: 128
+    panel: mask_16
+    sample_count: 16
+
+generation:
+  seed: 8701
+  limit: 128
+  balance_key: domain_cluster50
+  draws_per_mask: 16
+  temperature: 1.0
+  wt_draws_per_mask: 64
+  wt_mask_sets: 16
+  wt_domain_start: 4
+  wt_domain_end: 181
+
+evaluation:
+  seed: 8801
+  sample_count: 64
+  repeats: 4
+  batch_size: 8

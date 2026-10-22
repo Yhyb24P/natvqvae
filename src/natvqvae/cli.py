@@ -6,8 +6,9 @@ import json
 from pathlib import Path
 
 from . import __version__
+from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
-from .evaluate import evaluate
+from .evaluate import evaluate, evaluate_auxiliary
 from .generate import generate
 from .preprocessing import preprocess
 from .train import train
@@ -99,6 +100,33 @@ def build_parser():
     evaluator.set_defaults(func=lambda args: evaluate(
         args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'evaluation'),
         args.device, args.split, args.limit))
+
+    aux_trainer = sub.add_parser('aux-train', help='train QVAE and deterministic arms on auxiliary domains')
+    aux_trainer.add_argument('--config', default='config/aux_qvae.yaml')
+    aux_trainer.add_argument('--device', default=None)
+    aux_trainer.add_argument('--output', required=True)
+    aux_trainer.set_defaults(func=lambda args: train_aux(
+        args.config, _result_output(args.output, 'training'), args.device))
+
+    aux_generator = sub.add_parser('aux-generate', help='sample auxiliary-domain variants from a QVAE checkpoint')
+    aux_generator.add_argument('--config', default='config/aux_qvae.yaml')
+    aux_generator.add_argument('--device', default=None)
+    aux_generator.add_argument('--checkpoint', required=True)
+    aux_generator.add_argument('--output', required=True)
+    aux_generator.add_argument('--limit', type=int, default=None)
+    aux_generator.add_argument('--draws', type=int, default=None)
+    aux_generator.add_argument('--source', choices=('aux', 'wt_kvp40'), default='aux')
+    aux_generator.set_defaults(func=lambda args: generate_aux(
+        args.config, args.checkpoint, _result_output(args.output, 'generation'),
+        args.device, args.limit, args.draws, args.source))
+
+    aux_evaluator = sub.add_parser('aux-evaluate', help='evaluate an auxiliary checkpoint on held-out domains')
+    aux_evaluator.add_argument('--config', default='config/aux_qvae.yaml')
+    aux_evaluator.add_argument('--device', default=None)
+    aux_evaluator.add_argument('--checkpoint', required=True)
+    aux_evaluator.add_argument('--output', required=True)
+    aux_evaluator.set_defaults(func=lambda args: evaluate_auxiliary(
+        args.config, args.checkpoint, _result_output(args.output, 'evaluation'), args.device))
     return parser
 
 
@@ -107,6 +135,9 @@ def main(argv=None):
     result = args.func(args)
     if isinstance(result, Path):
         print(json.dumps({'status': 'COMPLETED', 'output': str(result)}, ensure_ascii=False))
+        return 0
+    if isinstance(result, dict):
+        print(json.dumps(result, ensure_ascii=False))
         return 0
     if isinstance(result, int):
         return result
