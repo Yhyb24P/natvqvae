@@ -1,0 +1,48 @@
+{
+  "arm": "QVAE",
+  "seed": 8601,
+  "checkpoint": "data/weights/aux_qvae/QVAE_seed8601_best.pt",
+  "checkpoint_sha256": "54f629d0fcbc948fa3069562a3c54f232b58adf1cf4102212fba1fa0c0707af8",
+  "validation_sequences": 1684,
+  "queries": 5052,
+  "components": 38,
+  "sample_count": 64,
+  "repeats": 4,
+  "aggregation": "equal domain groups; mean per-target-residue score over fixed masks",
+  "estimator": "posterior IS and direct-prior Monte Carlo; finite-sample log bias remains",
+  "inputs": {
+    "config": {
+      "path": "config/aux_qvae.yaml",
+      "sha256": "69d4954e07d9c98116f64640c2dd7d6b841d14d1414c235df9f8695d32ebcc47"
+    },
+    "domains": {
+      "path": "data/results/preprocessing/pf01467_8849/aux_domains.fasta",
+      "sha256": "18a59ebe26bf797fd8f64e06a98d9eb8b3cec9e9b76f02a03343c6125ffebd55"
+    },
+    "masks": {
+      "path": "data/results/preprocessing/pf01467_8849/aux_masks.json",
+      "sha256": "b1d1eb8d43257f8e92511830db39676f3b3d9e94cd3e36ff01702f4b20de247c"
+    },
+    "split": {
+      "path": "data/results/preprocessing/pf01467_8849/aux_split.csv",
+      "sha256": "5cba23475e42209c618251e38df26920701629d6b3f1efeb688bdb471df25061"
+    }
+  },
+  "seconds": 58.66209075199731,
+  "prior_joint_nll_per_residue": 1.8741605636198637,
+  "posterior_joint_nll_per_residue": 1.874311307147302,
+  "marginal_nll_per_residue": 1.8741889116856016,
+  "prior_expected_reconstruction_nll_per_residue": 1.8750647823628601,
+  "posterior_expected_reconstruction_nll_per_residue": 1.8751889832051833,
+  "kl": 0.004298755836819267,
+  "ess": 61.45885379641625,
+  "max_weight": 0.02437576009902256,
+  "posterior_joint_nll_repeats": [
+    1.8742045123681172,
+    1.874537524564662,
+    1.8743727518299893,
+    1.8741304398250358
+  ],
+  "posterior_joint_nll_mc_se": 9.086064516264279e-05,
+  "ess_below_10_percent_fraction": 0.0
+}

@@ -44,4 +44,6 @@ natvqvae preprocess --config config/pf01467.yaml
 
 `train`、`generate`、`evaluate` 的 `--output` 分别位于 `data/results/training/`、`generation/`、`evaluation/` 下的独立运行目录；新训练的权重另存 `data/weights/qvae/<run>/checkpoint.pt`。`preprocess` 将旧 PF01467-only 8,849 条恢复到 `data/results/preprocessing/pf01467_8849/`。更多参数见 `natvqvae <command> --help`。
 
+NMNAT 辅助域任务使用 `config/aux_qvae.yaml`，入口为 `aux-train`、`aux-generate`、`aux-evaluate`；`aux-summary` 汇总现有两臂结果并选择代表序列。
+
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。

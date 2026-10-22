@@ -4,9 +4,11 @@ from __future__ import annotations
 import json
 import math
 import time
+import csv
 from collections import Counter
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from .data import PopulationData, sha256_file, stable_seed, write_json
@@ -235,3 +237,155 @@ def evaluate_auxiliary(config_path, checkpoint, output, device=None):
             sum(item['weight'] for item in totals if item['ess'] < 0.1 * sample_count) / weight_sum)
     write_json(output / 'evaluation.json', summary)
     return summary
+
+
+def summarize_auxiliary(config_path, training_dir, generation_dir, evaluation_dir):
+    """Summarize the completed paired study without new sampling or training."""
+    from .data import Target, load_yaml
+
+    config = load_yaml(config_path)
+    wt = Target.load(config['paths']['target']).sequence
+    training_dir, generation_dir, evaluation_dir = map(
+        Path, (training_dir, generation_dir, evaluation_dir))
+    destination = evaluation_dir / 'comparison.json'
+    if destination.exists():
+        raise FileExistsError(destination)
+    inputs = [Path(config_path), training_dir / 'training_summary.json']
+    grouped = {}
+    metrics = ('posterior_joint_nll_per_residue', 'prior_joint_nll_per_residue',
+               'marginal_nll_per_residue')
+    for arm in ('QVAE', 'deterministic'):
+        path = evaluation_dir / arm / 'per_query.jsonl'
+        inputs.append(path)
+        queries = {}
+        for line in path.read_text().splitlines():
+            row = json.loads(line)
+            key = (row['sequence_id'], row['component'], row['panel'])
+            item = queries.setdefault(key, {'weight': row['weight'], 'values': []})
+            item['values'].append([row[name] for name in metrics])
+        grouped[arm] = {key: {'weight': item['weight'],
+                             'scores': np.mean(item['values'], axis=0)}
+                        for key, item in queries.items()}
+    if grouped['QVAE'].keys() != grouped['deterministic'].keys():
+        raise ValueError('The two arms do not score identical validation queries')
+    components = sorted({key[1] for key in grouped['QVAE']})
+    differences = {name: [] for name in ('det_minus_posterior_is', 'det_minus_prior_mc',
+                                        'own_marginal_minus_shared_prior')}
+    for component in components:
+        keys = [key for key in grouped['QVAE'] if key[1] == component]
+        weights = np.array([grouped['QVAE'][key]['weight'] for key in keys])
+        q = np.array([grouped['QVAE'][key]['scores'] for key in keys])
+        d = np.array([grouped['deterministic'][key]['scores'][1] for key in keys])
+        for name, values in zip(differences, (d - q[:, 0], d - q[:, 1], q[:, 2] - q[:, 1])):
+            differences[name].append(float(np.average(values, weights=weights)))
+    rng = np.random.default_rng(8802)
+    resamples = rng.integers(len(components), size=(2000, len(components)))
+    comparisons = {}
+    for name, values in differences.items():
+        values = np.asarray(values)
+        comparisons[name] = {'mean': float(values.mean()),
+                             'paired_group_bootstrap_95ci':
+                                 np.quantile(values[resamples].mean(1), [.025, .975]).tolist(),
+                             'groups_positive': int((values > 0).sum()),
+                             'group_differences': values.tolist()}
+    generation_metrics, datasets = {}, {}
+    for source in ('aux', 'wt_kvp40'):
+        for arm in ('QVAE', 'deterministic'):
+            name = f'{source}_{arm}'
+            path = generation_dir / name / 'candidates.csv'
+            inputs.append(path)
+            with path.open(newline='') as handle:
+                rows = list(csv.DictReader(handle))
+            datasets[name] = rows
+            hammings, anchor_changes = [], 0
+            event_counts = Counter()
+            for row in rows:
+                sequence = row['kvp40_sequence']
+                if len(sequence) != len(wt) or not set(sequence) <= set('ACDEFGHIKLMNPQRSTVWY'):
+                    raise ValueError(f'Invalid full-length candidate: {row["candidate_id"]}')
+                import hashlib
+                if hashlib.sha256(sequence.encode()).hexdigest() != row['kvp40_sequence_sha256']:
+                    raise ValueError(f'Candidate SHA differs: {row["candidate_id"]}')
+                allowed = set(json.loads(row['wt_positions']))
+                changed = {i + 1 for i, (a, b) in enumerate(zip(wt, sequence)) if a != b}
+                if not changed <= allowed:
+                    raise ValueError('A generated full sequence changed an unmasked WT position')
+                domain_mask = set(json.loads(row['mask_positions']))
+                if any(a != b and i not in domain_mask for i, (a, b) in
+                       enumerate(zip(row['source_sequence'], row['sequence']))):
+                    raise ValueError('A generated domain changed an unmasked source position')
+                if source == 'wt_kvp40' and sequence[3:181] != row['sequence']:
+                    raise ValueError('The WT-domain generation was embedded incorrectly')
+                hammings.append(len(changed))
+                anchor_changes += bool(changed & {14, 17, 135, 138})
+                for position, alt in ((18, 'I'), (13, 'Y'), (22, 'Q'), (134, 'G'),
+                                      (130, 'R'), (140, 'M')):
+                    if position in changed and sequence[position - 1] == alt:
+                        event_counts[f'{wt[position - 1]}{position}{alt}'] += 1
+                event_counts['F13Y+A134G'] += sequence[12] == 'Y' and sequence[133] == 'G'
+            unique = len({row['kvp40_sequence_sha256'] for row in rows})
+            generation_metrics[name] = {
+                'attempts': len(rows), 'unique_full_sequences': unique,
+                'duplicate_attempts_beyond_first': len(rows) - unique,
+                'wt_returns': hammings.count(0), 'mean_Hamming': float(np.mean(hammings)),
+                'Hamming_range': [min(hammings), max(hammings)],
+                'anchor_changed_sequences': anchor_changes, 'event_counts': dict(event_counts)}
+        q, d = datasets[f'{source}_QVAE'], datasets[f'{source}_deterministic']
+        fields = ('background_id', 'panel', 'draw', 'mask_positions', 'uniform_seed')
+        if len(q) != len(d) or any(tuple(a[k] for k in fields) != tuple(b[k] for k in fields)
+                                   for a, b in zip(q, d)):
+            raise ValueError('The two arms did not use identical generation conditions')
+    # Representative questions select existing WT-conditioned sequences only.
+    anchors = (14, 17, 135, 138)
+    unchanged = lambda seq: all(seq[i - 1] == wt[i - 1] for i in anchors)
+    questions = (
+        ('低编辑参照', unchanged),
+        ('L18I 邻域变化', lambda seq: unchanged(seq) and seq[17] == 'I'),
+        ('K130R 邻域变化', lambda seq: unchanged(seq) and seq[129] == 'R'),
+        ('F13Y+A134G 组合', lambda seq: seq[12] == 'Y' and seq[133] == 'G'),
+        ('T135S 锚点变化', lambda seq: seq[134] == 'S' and
+         all(seq[i - 1] == wt[i - 1] for i in (14, 17, 138))),
+    )
+    representatives, fasta = [], {}
+    for arm in ('QVAE', 'deterministic'):
+        selected = {}
+        pool = datasets[f'wt_kvp40_{arm}']
+        for question, predicate in questions:
+            eligible = [row for row in pool if predicate(row['kvp40_sequence'])]
+            if not eligible:
+                continue
+            row = min(eligible, key=lambda r: (sum(a != b for a, b in
+                       zip(wt, r['kvp40_sequence'])), r['candidate_id']))
+            selected.setdefault(row['candidate_id'], {'row': row, 'questions': []})['questions'].append(question)
+        for number, item in enumerate(selected.values(), 1):
+            row = item['row']
+            rid = f'{arm}_R{number:02d}'
+            sequence = row['kvp40_sequence']
+            digest = row['kvp40_sequence_sha256']
+            duplicate_of = fasta.get(digest, {}).get('id', '')
+            fasta.setdefault(digest, {'id': rid, 'sequence': sequence})
+            edits = [f'{a}{i + 1}{b}' for i, (a, b) in enumerate(zip(wt, sequence)) if a != b]
+            representatives.append({'representative_id': rid, 'arm': arm,
+                                    'candidate_id': row['candidate_id'],
+                                    'research_question': ';'.join(item['questions']),
+                                    'Hamming': len(edits), 'edits': ';'.join(edits),
+                                    'duplicate_of': duplicate_of, 'panel': row['panel'],
+                                    'draw': row['draw'], 'uniform_seed': row['uniform_seed'],
+                                    'sequence_sha256': digest, 'sequence': sequence})
+    with (generation_dir / 'representative_candidates.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(representatives[0]), lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(representatives)
+    with (generation_dir / 'representative_candidates.fasta').open('w') as handle:
+        for item in fasta.values():
+            handle.write(f'>{item["id"]}\n{item["sequence"]}\n')
+    result = {'seed': int(config['training']['seed']), 'queries': len(grouped['QVAE']),
+              'components': components, 'comparisons': comparisons,
+              'bootstrap': {'unit': 'paired 50% domain group', 'replicates': 2000, 'seed': 8802,
+                            'limits': 'conditional on the trained seed and averaged MC scores; excludes training-seed variance and common finite-K log bias'},
+              'generation': generation_metrics, 'representative_records': len(representatives),
+              'representative_unique_sequences': len(fasta),
+              'inputs': {str(path): sha256_file(path) for path in inputs},
+              'implementation_sha256': sha256_file(__file__)}
+    write_json(destination, result)
+    return result

@@ -1,0 +1,36 @@
+{
+  "attempt": 1,
+  "status": "FAILED",
+  "failed_at_step": 22,
+  "completed_steps": 21,
+  "error_type": "ValueError",
+  "error": "substring not found",
+  "cause": "non-standard residue X reached the masked target label lookup (AA.index('X'))",
+  "input": {
+    "domains": "data/results/preprocessing/pf01467_8849/aux_domains.fasta",
+    "masks": "data/results/preprocessing/pf01467_8849/aux_masks.json",
+    "split": "data/results/preprocessing/pf01467_8849/aux_split.csv",
+    "nonstandard_domains": 10,
+    "excluded_masked_positions": 4
+  },
+  "timing": {
+    "start_local": "2026-10-22T13:51:10+08:00",
+    "end_local": "2026-10-22T13:51:19+08:00",
+    "seconds": 9
+  },
+  "gpu_cost": "about 0.003 GPU-hours (21 QVAE steps; no checkpoint)",
+  "checkpoint_written": false,
+  "artifact": "failed_attempt_metrics.jsonl (21 lines copied from /tmp/aux_qvae_failed_run1/QVAE_metrics.jsonl)",
+  "code_state_at_failure": "git HEAD b4bc28d; auxiliary.py was an uncommitted draft and the codex commit landed during the failed run",
+  "fix": "exclude non-standard residues from mask panels; use a placeholder label only at unmasked sites; restart from a clean output directory",
+  "restart": "single process PID 972529; initial/best/last checkpoints retained",
+  "input_sha256": {
+    "domains": "18a59ebe26bf797fd8f64e06a98d9eb8b3cec9e9b76f02a03343c6125ffebd55",
+    "masks": "b1d1eb8d43257f8e92511830db39676f3b3d9e94cd3e36ff01702f4b20de247c",
+    "split": "5cba23475e42209c618251e38df26920701629d6b3f1efeb688bdb471df25061",
+    "target": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "config": "69d4954e07d9c98116f64640c2dd7d6b841d14d1414c235df9f8695d32ebcc47"
+  },
+  "nonstandard_domains": 10,
+  "excluded_masked_positions": 4
+}

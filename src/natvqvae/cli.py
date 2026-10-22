@@ -8,7 +8,7 @@ from pathlib import Path
 from . import __version__
 from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
-from .evaluate import evaluate, evaluate_auxiliary
+from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary
 from .generate import generate
 from .preprocessing import preprocess
 from .train import train
@@ -65,6 +65,15 @@ def build_parser():
     prep = sub.add_parser('preprocess', help='recover and stratify the old PF01467-only corpus')
     prep.add_argument('--config', default='config/pf01467.yaml')
     prep.set_defaults(func=lambda args: preprocess(args.config))
+
+    summary = sub.add_parser('aux-summary', help='compare completed auxiliary runs and select WT candidates')
+    summary.add_argument('--config', default='config/aux_qvae.yaml')
+    summary.add_argument('--training', required=True)
+    summary.add_argument('--generation', required=True)
+    summary.add_argument('--evaluation', required=True)
+    summary.set_defaults(func=lambda args: summarize_auxiliary(
+        args.config, _result_output(args.training, 'training'),
+        _result_output(args.generation, 'generation'), _result_output(args.evaluation, 'evaluation')))
 
     trainer = sub.add_parser('train', help='train a QVAE from raw population and split config')
     trainer.add_argument('--config', **common['config'])
