@@ -113,23 +113,23 @@ def main():
     supply_frame.to_csv(RAW / 'supply.csv', index=False)
 
     rng = random.Random(SEED)
-    permuted_weights = [rng.choice([weight for _triple, weight in singles]) for _triple, _weight in singles]
+    resampled_weights = [rng.choice([weight for _triple, weight in singles]) for _triple, _weight in singles]
     arms = {}
     selected_rows = []
     for arm in ('QVAE', 'deterministic'):
         arm_frame = frame[frame.arm == arm]
         current = arm_frame[arm_frame.candidate_id.isin(reps[reps.arm == arm].candidate_id)]
         top_evidence, scored = select_top(arm_frame, singles, pairs)
-        top_permuted, _ = select_top(arm_frame, singles, pairs, permuted_weights)
+        top_resampled, _ = select_top(arm_frame, singles, pairs, resampled_weights)
         top_hmm = arm_frame.sort_values(['NMNAT_HMM_score', 'Hamming', 'candidate_id'],
                                         ascending=[False, True, True]).drop_duplicates('sequence_sha256').head(K)
         if arm == 'QVAE':
-            arms['A_current'] = metrics(current, singles, pairs)
+            arms['A_qvae_current'] = metrics(current, singles, pairs)
             arms['B_qvae_evidence'] = metrics(top_evidence, singles, pairs)
-            arms['D_qvae_weight_permuted'] = metrics(top_permuted, singles, pairs)
+            arms['D_qvae_weight_resampled'] = metrics(top_resampled, singles, pairs)
             arms['A2_qvae_hmm_proxy'] = metrics(top_hmm, singles, pairs)
-            selected = {'A_current': current, 'B_qvae_evidence': top_evidence,
-                        'D_qvae_weight_permuted': top_permuted, 'A2_qvae_hmm_proxy': top_hmm}
+            selected = {'A_qvae_current': current, 'B_qvae_evidence': top_evidence,
+                        'D_qvae_weight_resampled': top_resampled, 'A2_qvae_hmm_proxy': top_hmm}
         else:
             arms['C_deterministic_evidence'] = metrics(top_evidence, singles, pairs)
             selected = {'C_deterministic_evidence': top_evidence}
@@ -174,9 +174,9 @@ def main():
         'pair_supply_absent': pair_supply_absent,
         'arms': arms,
         'notes': [
-            'A is the historical NMNAT representative selection (3 per arm) with a different selection objective; it is not a matched no-information baseline.',
+            'A is the historical QVAE NMNAT representative selection (3 QVAE records); deterministic historical representatives are not included in the summary/selected output. It is not a matched no-information baseline.',
             'B/C/D select 3 per arm from the same existing NMNAT pool; A/B/C/D all use the same 7 Phase A hypotheses, so match rate is descriptive enrichment, not held-out precision.',
-            'D permutes weights among the same 7 events; it tests weight ordering, not an uninformative control over unrelated substitutions.',
+            'D resamples the six single-event weights with replacement (seed=20261022); the pair weight is fixed. It is a weight-resampling reference, not an uninformative control.',
             'B/C/D do not change the generative distribution or retrain; selected-candidate joint probability is not a model-likelihood gain.',
             'Raw supply counts are reported separately from selected-candidate match rates.',
             'Pair absence in the existing pool is a supply limitation, not evidence that the model cannot generate it under other masks; B2 is not started.',
