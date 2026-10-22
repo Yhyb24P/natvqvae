@@ -27,6 +27,8 @@ pocket_contacts: [232, 233, 248, 252, 307, 308]
 mutations:
   B1: {position: 248, wt: E, mut: Q}
   B2: {position: 308, wt: D, mut: N}
+reference_models:
+  D4: WT_D4/boltz_results_WT_D4/predictions/WT_D4/WT_D4_model_0.cif
 runs:
   - {state: D2, kind: constrained, seed: 20261023, pattern: "{sequence}"}
   - {state: D2, kind: constrained, seed: 20261024, pattern: "{sequence}_seed2"}

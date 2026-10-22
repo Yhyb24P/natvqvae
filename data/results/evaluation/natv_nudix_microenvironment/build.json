@@ -1,6 +1,6 @@
 {
   "config": "config/microenvironment.yaml",
-  "config_sha256": "902c6fbc884bd9815993c5b8f7ab7cef78bccbade948b1bd01dc8fa0d8d3d63d",
+  "config_sha256": "240df5c8634ce189e86edf2fc87702d4a05cd6c08822e1a696c0b18375e14ecc",
   "candidates_sha256": "38950bddb3e470509655d7e1fe2f90fddf06bc1121f108f229402e825f8384a2",
   "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
   "source_structure": "data/raw/structures/2QJT.cif",
