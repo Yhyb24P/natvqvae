@@ -1,0 +1,205 @@
+{
+  "status": "COMPLETED",
+  "inputs": {
+    "stage3_fasta": {
+      "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/stage3_accepted_sequences.fasta",
+      "sha256": "2277e217904f8ecba748527e673c0f12ce3ff49dfc8ab9528769faac49a46e29"
+    },
+    "profile_manifest": {
+      "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/domain_profile_manifest_v4.csv",
+      "sha256": "b8961fb95a3c51de887ab433bbc86c66195a73ea3701b50439d6139a98ce4e80"
+    },
+    "corpus_manifest": {
+      "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/corpus_boundary_manifest.jsonl",
+      "sha256": "b4c05d8e8e2d77a13a4c70e5e3d66244e7df9666b82d7d3d102425191bbcdc33"
+    },
+    "population": {
+      "path": "data/raw/sequences/natv_population.fasta",
+      "sha256": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a"
+    },
+    "training_split": {
+      "path": "data/results/preprocessing/natv_family/train.csv",
+      "sha256": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167"
+    },
+    "validation_split": {
+      "path": "data/results/preprocessing/natv_family/validation.csv",
+      "sha256": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835"
+    },
+    "target": {
+      "path": "config/target.yaml",
+      "sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553"
+    },
+    "config": {
+      "path": "config/pf01467.yaml",
+      "sha256": "4f29e7b2ee61bd3f7e85f7450c69202114d0ed97b025831c8a709f071a074aba"
+    }
+  },
+  "parameters": {
+    "threads": 8,
+    "coverage": 0.8,
+    "identities": [
+      0.7,
+      0.5,
+      0.3
+    ],
+    "cluster_mode": 1,
+    "max_optimal": 16,
+    "full_context_target_coverage": 0.8,
+    "min_identity": 0.3,
+    "min_aux_positions": 10,
+    "aux_val_fraction": 0.2,
+    "aux_split_seed": 20261022,
+    "mmseqs": "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs"
+  },
+  "runtime_seconds": 39.0,
+  "counts": {
+    "old_records": 8849,
+    "main_task_new": 0,
+    "aux_full_context": 486,
+    "aux_local_core": 5991,
+    "aux_rejected": 2372,
+    "aux_unique_domains": 4164,
+    "full_unique_sequences": 8849,
+    "pf01467_unique_domains": 5970,
+    "aux_split": {
+      "excluded": 2372,
+      "train": 6090,
+      "val": 387
+    },
+    "aux_split_unique": {
+      "train": 3816,
+      "val": 348
+    },
+    "aux_rejected_reasons": {
+      "no_reliable_WT_mapping": 2372
+    },
+    "current_train": 1644,
+    "current_validation": 227,
+    "test_ids": 231,
+    "domain_classes70": {
+      "new": 8849
+    },
+    "domain_classes50": {
+      "new": 8842,
+      "train_overlap": 7
+    },
+    "domain_classes30": {
+      "new": 6551,
+      "train_overlap": 2298
+    },
+    "full_classes70": {
+      "new": 8849
+    },
+    "full_classes50": {
+      "new": 8849
+    },
+    "full_classes30": {
+      "new": 8848,
+      "mixed_current": 1
+    }
+  },
+  "cluster_metrics": {
+    "domain": {
+      "0.70": {
+        "total": 743,
+        "old_only": 624,
+        "both": 0,
+        "current_only": 119,
+        "old_classes": {
+          "new": 624
+        }
+      },
+      "0.50": {
+        "total": 247,
+        "old_only": 196,
+        "both": 1,
+        "current_only": 50,
+        "old_classes": {
+          "new": 196,
+          "train_overlap": 1
+        }
+      },
+      "0.30": {
+        "total": 56,
+        "old_only": 53,
+        "both": 1,
+        "current_only": 2,
+        "old_classes": {
+          "new": 53,
+          "train_overlap": 1
+        }
+      }
+    },
+    "full": {
+      "0.70": {
+        "total": 887,
+        "old_only": 788,
+        "both": 0,
+        "current_only": 99,
+        "old_classes": {
+          "new": 788
+        }
+      },
+      "0.50": {
+        "total": 297,
+        "old_only": 264,
+        "both": 0,
+        "current_only": 33,
+        "old_classes": {
+          "new": 264
+        }
+      },
+      "0.30": {
+        "total": 97,
+        "old_only": 94,
+        "both": 1,
+        "current_only": 2,
+        "old_classes": {
+          "new": 94,
+          "mixed_current": 1
+        }
+      }
+    }
+  },
+  "increment": {
+    "single_events": {
+      "all_events": 3018,
+      "new_events_all": 1414,
+      "new_events_ge2_clusters": 1208,
+      "support_increase_events": 1604,
+      "current_train_position_unmapped": 0
+    },
+    "double_events_full_context": {
+      "all_pairs": 483993,
+      "new_pairs": 394587,
+      "new_pairs_ge2_clusters": 109110,
+      "top_pairs_written": 50,
+      "support_bins": {
+        "2_4": 91606,
+        "5_9": 13482,
+        "ge10": 4022
+      }
+    }
+  },
+  "notes": [
+    "main NatV task remains ordered NMNAT-Nudix and the original 1644/227 split; old 8849 contribute 0 main-task sequences",
+    "aux_full_context requires WT target coverage >=0.8 with reliable positions; aux_local_core is a PF01467 local fragment, not a complete NatV domain",
+    "aux split groups are joint domain clusters at 70% identity; a cluster with current train/validation members is excluded from aux train",
+    "test was read as IDs only; no test sequence homology check is claimed",
+    "cluster counts and event counts are descriptive, not transfer or activity effects",
+    "no training, generation, download or folding was performed"
+  ],
+  "outputs": {
+    "REPORT.md": "d8bdb4979f9509f97af9ae35f11da122f87ac2840e409891d74e2fce600e0edc",
+    "aux_domains.fasta": "18a59ebe26bf797fd8f64e06a98d9eb8b3cec9e9b76f02a03343c6125ffebd55",
+    "aux_masks.json": "c794c7843a76ce5a77c93c5b81038fbd9391386f9fcfcf832f235c6065b0aa4f",
+    "aux_split.csv": "f08d0dd77046cf5712da9c7ff56350bf54298655e236f4dbdef942517dab51d0",
+    "full_length.fasta": "c9fec5fb1e4a02fd501337bf897d5304dc9e3f7027789ba93957fb45632fe6df",
+    "joint_domain_clustering.fasta": "4af80ed775eab492fa47490d50cf7cdbe9a7ecf0532531773423dbe7b170ae00",
+    "joint_full_clustering.fasta": "21eb6c48d8b5240040cef9ea3d752c735271b51da6b0a1d3f863ef2e27beae1b",
+    "new_double_events_top.csv": "fa28d8c8709c045c7b4e39fbd531069439871d84349c00b3e7d7745372396f9b",
+    "new_single_events.csv": "e415d59cd7eaa5eb8cf7b8d7cb3736bb381069f0c45b707744bb619e83b984d0",
+    "pf01467_core_domains.fasta": "904908ee65ebfab5f50e173e91878b16d8bb5f9120cecdcfb1c34d2a2d80b789",
+    "records.csv": "dc060b6b948ef9b6c4a7dd3fd6732f5f937df3d7a3e32a948ab4ebbd41c3a8b1"
+  }
+}

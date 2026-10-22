@@ -38,8 +38,10 @@ natvqvae generate \
   --checkpoint data/weights/qvae/seed8301/best.pt \
   --group NMNAT_m08_r00 --draws 16 \
   --output data/results/generation/kvp40_nmnat_example
+
+natvqvae preprocess --config config/pf01467.yaml
 ```
 
-`train`、`generate`、`evaluate` 的 `--output` 分别位于 `data/results/training/`、`generation/`、`evaluation/` 下的独立运行目录；新训练的权重另存 `data/weights/qvae/<run>/checkpoint.pt`。更多参数见 `natvqvae <command> --help`。
+`train`、`generate`、`evaluate` 的 `--output` 分别位于 `data/results/training/`、`generation/`、`evaluation/` 下的独立运行目录；新训练的权重另存 `data/weights/qvae/<run>/checkpoint.pt`。`preprocess` 将旧 PF01467-only 8,849 条恢复到 `data/results/preprocessing/pf01467_8849/`。更多参数见 `natvqvae <command> --help`。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。

@@ -1,0 +1,23 @@
+source:
+  stage3_fasta: /home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/stage3_accepted_sequences.fasta
+  profile_manifest: /home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/domain_profile_manifest_v4.csv
+  corpus_manifest: /home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/corpus_boundary_manifest.jsonl
+current:
+  population: data/raw/sequences/natv_population.fasta
+  training: data/results/preprocessing/natv_family/train.csv
+  validation: data/results/preprocessing/natv_family/validation.csv
+  test: data/results/preprocessing/natv_family/test.csv
+  target: config/target.yaml
+output: data/results/preprocessing/pf01467_8849
+parameters:
+  threads: 8
+  coverage: 0.8
+  identities: [0.7, 0.5, 0.3]
+  cluster_mode: 1
+  max_optimal: 16
+  full_context_target_coverage: 0.8
+  min_identity: 0.3
+  min_aux_positions: 10
+  aux_val_fraction: 0.2
+  aux_split_seed: 20261022
+  mmseqs: /home/yhshy/miniconda3/envs/nad_data/bin/mmseqs

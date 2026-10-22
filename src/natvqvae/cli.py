@@ -9,6 +9,7 @@ from . import __version__
 from .data import PopulationData, load_yaml, sha256_file
 from .evaluate import evaluate
 from .generate import generate
+from .preprocessing import preprocess
 from .train import train
 
 
@@ -60,6 +61,10 @@ def build_parser():
         'target': dict(default='config/target.yaml'),
         'device': dict(default=None),
     }
+    prep = sub.add_parser('preprocess', help='recover and stratify the old PF01467-only corpus')
+    prep.add_argument('--config', default='config/pf01467.yaml')
+    prep.set_defaults(func=lambda args: preprocess(args.config))
+
     trainer = sub.add_parser('train', help='train a QVAE from raw population and split config')
     trainer.add_argument('--config', **common['config'])
     trainer.add_argument('--sources', **common['sources'])
