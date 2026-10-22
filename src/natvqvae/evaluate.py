@@ -145,3 +145,93 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
         for item in totals:
             handle.write(json.dumps(item, ensure_ascii=False) + '\n')
     return summary
+
+
+def evaluate_auxiliary(config_path, checkpoint, output, device=None):
+    """Evaluate both auxiliary arms on identical held-out domain masks."""
+    from .auxiliary import AuxiliaryData
+
+    output = Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(f'Auxiliary evaluation already contains files: {output}')
+    data = AuxiliaryData(config_path)
+    config = data.config['evaluation']
+    device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
+    payload = load_checkpoint(checkpoint, device='cpu')
+    model = build_model(payload, device=device)
+    encoder = FrozenEncoder(data.sources['esm_model'], device=device)
+    queries = data.validation_queries()
+    sample_count, repeats = int(config['sample_count']), int(config['repeats'])
+    if not queries or repeats < 1:
+        raise ValueError('Auxiliary evaluation requires validation queries and repeats')
+    output.mkdir(parents=True, exist_ok=True)
+    started = time.monotonic()
+    totals = []
+    batch_size = int(config['batch_size'])
+    with (output / 'per_query.jsonl').open('w') as handle:
+        for start in range(0, len(queries), batch_size):
+            batch = queries[start:start + batch_size]
+            with torch.no_grad(), torch.autocast(device_type=device.type, dtype=torch.bfloat16,
+                                                enabled=device.type == 'cuda'):
+                context, full, valid, mask, labels = data.batch(
+                    batch, encoder, device, need_full=model.arm == 'QVAE')
+                # A deterministic model has no Monte Carlo error to repeat.
+                for repeat in range(repeats if model.arm == 'QVAE' else 1):
+                    generator = torch.Generator(device=device.type)
+                    generator.manual_seed(stable_seed(config['seed'], 'aux_evaluation', start, repeat))
+                    scores = conditional_scores(model, context, full, valid, mask, labels,
+                                                sample_count, generator)
+                    for index, query in enumerate(batch):
+                        uid = query['record']['uid']
+                        sites = int(scores['sites'][index].item())
+                        item = {'sequence_id': uid,
+                                'component': data.split[uid]['domain_cluster50'],
+                                'panel': query['panel']['panel'], 'repeat': repeat,
+                                'weight': float(query['weight']), 'sites': sites,
+                                'aux_kind': query['record']['kind']}
+                        for name, values in scores.items():
+                            if name == 'sites' or values is None:
+                                continue
+                            value = float(values[index].item())
+                            item[name + '_per_residue' if name.endswith('nll') else name] = (
+                                value / sites if name.endswith('nll') else value)
+                        totals.append(item)
+                        handle.write(json.dumps(item, ensure_ascii=False) + '\n')
+            print(json.dumps({'evaluated_queries': min(start + batch_size, len(queries)),
+                              'total_queries': len(queries),
+                              'seconds': time.monotonic() - started}), flush=True)
+    weight_sum = sum(item['weight'] for item in totals)
+    summary = {
+        'arm': model.arm, 'seed': int(payload['seed']),
+        'checkpoint': str(checkpoint), 'checkpoint_sha256': sha256_file(checkpoint),
+        'validation_sequences': len(data.validation), 'queries': len(queries),
+        'components': len({item['component'] for item in totals}),
+        'sample_count': sample_count if model.arm == 'QVAE' else None,
+        'repeats': repeats if model.arm == 'QVAE' else 1,
+        'aggregation': 'equal domain groups; mean per-target-residue score over fixed masks',
+        'estimator': ('posterior IS and direct-prior Monte Carlo; finite-sample log bias remains'
+                      if model.arm == 'QVAE' else 'exact site-factorized probability'),
+        'inputs': {name: {'path': str(path), 'sha256': sha256_file(path)}
+                   for name, path in [('config', config_path), ('domains', data.sources['domains']),
+                                      ('masks', data.sources['masks']),
+                                      ('split', data.sources['split'])]},
+        'seconds': time.monotonic() - started,
+    }
+    for name in totals[0]:
+        if name.endswith('_per_residue') or name in {'kl', 'ess', 'max_weight'}:
+            summary[name] = sum(item['weight'] * item[name] for item in totals) / weight_sum
+    if model.arm == 'QVAE':
+        by_repeat = []
+        for repeat in range(repeats):
+            rows = [item for item in totals if item['repeat'] == repeat]
+            norm = sum(item['weight'] for item in rows)
+            by_repeat.append(sum(item['weight'] * item['posterior_joint_nll_per_residue']
+                                 for item in rows) / norm)
+        summary['posterior_joint_nll_repeats'] = by_repeat
+        summary['posterior_joint_nll_mc_se'] = (
+            float(torch.tensor(by_repeat, dtype=torch.float64).std(unbiased=True).item()) /
+            math.sqrt(repeats) if repeats > 1 else None)
+        summary['ess_below_10_percent_fraction'] = (
+            sum(item['weight'] for item in totals if item['ess'] < 0.1 * sample_count) / weight_sum)
+    write_json(output / 'evaluation.json', summary)
+    return summary
