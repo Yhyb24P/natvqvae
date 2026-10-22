@@ -1,0 +1,12 @@
+{
+  "status": "DESCRIPTIVE_ONLY",
+  "gate_b1": "not_evaluable",
+  "held_out_evidence": false,
+  "K_per_arm": 3,
+  "runtime": "CPU-only, existing candidate pool",
+  "outputs": [
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/supply.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/selected_candidates.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/rerank_summary.json"
+  ]
+}
