@@ -16,6 +16,9 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
              split='validation', limit=None):
     if split != 'validation':
         raise ValueError('Only the validation split is evaluated; test remains sealed')
+    output = Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(f'Evaluation output already contains files: {output}')
     data = PopulationData(sources_path, config_path, target_path)
     study = data.study
     config = study['evaluation']
@@ -74,7 +77,6 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
         'seconds': time.monotonic() - started,
         'esm_model': data.sources['esm_model'], 'target_sha256': sha256_file(target_path),
     }
-    output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     write_json(output / 'evaluation.json', summary)
     with (output / 'per_query.jsonl').open('w') as handle:

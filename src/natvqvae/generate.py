@@ -17,6 +17,9 @@ from .model import (FrozenEncoder, categorical_log_prob, categorical_samples,
 
 def generate(config_path, sources_path, target_path, checkpoint, output, device=None,
              group_filter=None, draws=None):
+    output = Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(f'Generation output already contains files: {output}')
     data = PopulationData(sources_path, config_path, target_path)
     study = data.study
     generation = dict(study['generation'])
@@ -34,7 +37,6 @@ def generate(config_path, sources_path, target_path, checkpoint, output, device=
         if not groups:
             raise ValueError(f'Unknown generation group: {group_filter}')
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
-    output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     write_json(output / 'masks.json', groups)
     rows = []

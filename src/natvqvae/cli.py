@@ -12,11 +12,11 @@ from .generate import generate
 from .train import train
 
 
-def _external_output(value):
+def _result_output(value, category):
     path = Path(value).resolve()
-    data = (Path(__file__).resolve().parents[2] / 'data').resolve()
-    if path == data or data in path.parents:
-        raise ValueError('Output must be outside the repository data/ directory')
+    root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
+    if root not in path.parents:
+        raise ValueError(f'Output must be a run directory under data/results/{category}/')
     return path
 
 
@@ -67,7 +67,7 @@ def build_parser():
     trainer.add_argument('--device', **common['device'])
     trainer.add_argument('--output', required=True)
     trainer.set_defaults(func=lambda args: train(args.config, args.sources, args.target,
-                                                _external_output(args.output), args.device))
+                                                _result_output(args.output, 'training'), args.device))
 
     generator = sub.add_parser('generate', help='sample full NatV variants from a checkpoint')
     generator.add_argument('--config', **common['config'])
@@ -79,7 +79,7 @@ def build_parser():
     generator.add_argument('--group', default=None)
     generator.add_argument('--draws', type=int, default=None)
     generator.set_defaults(func=lambda args: generate(
-        args.config, args.sources, args.target, args.checkpoint, _external_output(args.output),
+        args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'generation'),
         args.device, args.group, args.draws))
 
     evaluator = sub.add_parser('evaluate', help='evaluate a checkpoint on validation masks')
@@ -92,7 +92,7 @@ def build_parser():
     evaluator.add_argument('--split', default='validation')
     evaluator.add_argument('--limit', type=int, default=None)
     evaluator.set_defaults(func=lambda args: evaluate(
-        args.config, args.sources, args.target, args.checkpoint, _external_output(args.output),
+        args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'evaluation'),
         args.device, args.split, args.limit))
     return parser
 

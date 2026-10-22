@@ -6,13 +6,11 @@ __pycache__/
 build/
 dist/
 
-# model weights and run outputs are external; data/raw is the only tracked data
-data/interim/
-data/models/
-data/results/
+# Weights and run outputs are local by default; select formal results with git add -f.
+/data/weights/
+/data/results/
 
-# local agent tooling and private configuration
-AGENTS.md
+# Local agent settings
 CLAUDE.md
 GEMINI.md
 .qoder/

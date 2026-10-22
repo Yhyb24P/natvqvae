@@ -5,7 +5,7 @@ import torch
 
 from natvqvae.model import build_model, load_checkpoint
 
-CHECKPOINT = Path('/home/yhshy/models/natvqvae/QVAE/seed8301/best.pt')
+CHECKPOINT = Path('data/weights/qvae/seed8301/best.pt')
 
 
 @pytest.mark.skipif(not CHECKPOINT.exists(), reason='current QVAE checkpoint not present')

@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from natvqvae.cli import _external_output, build_parser
+from natvqvae.cli import _result_output, build_parser
 
 
 def test_cli_has_formal_commands():
@@ -12,7 +12,12 @@ def test_cli_has_formal_commands():
             parser.parse_args([command, '--help'])
 
 
-def test_output_must_be_outside_data(tmp_path):
-    assert _external_output(tmp_path / 'run') == (tmp_path / 'run').resolve()
+def test_results_are_organized_by_purpose():
+    expected = Path('data/results/generation/wt_qvae').resolve()
+    assert _result_output('data/results/generation/wt_qvae', 'generation') == expected
     with pytest.raises(ValueError):
-        _external_output(Path('data/results/run'))
+        _result_output('data/raw/variants', 'generation')
+    with pytest.raises(ValueError):
+        _result_output('data/results/training/run1', 'generation')
+    with pytest.raises(ValueError):
+        _result_output('data/results/generation', 'generation')

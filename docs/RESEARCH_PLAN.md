@@ -7,9 +7,9 @@
 ## 数据与角色
 
 - 当前 raw 序列为 training+validation 的 1,871 条 NatV 双域序列，来自 `data/raw/sequences/natv_population.fasta`。
-- 精确 split 保存在 `config/splits/`：training 1,644/47 组分，validation 227/44 组分，test 231；training/validation 组分互斥。
+- 精确 split 保存在 `data/results/preprocessing/natv_family/`：training 1,644/47 组分，validation 227/44 组分，test 231；training/validation 组分互斥。
 - test 只保留 231 个 ID，不保存或加载序列；训练、生成和评价默认不读取 test。249 条注释冲突、75 条旧封存、4 条排除不在当前 split 中。
-- 输入特征来自冻结 ESM-2；模型不训练 ESM。`config/sources.yaml` 绑定外部权重路径。
+- 输入特征来自冻结 ESM-2；模型不训练 ESM。`config/sources.yaml` 绑定本地 `data/weights/esm2/` 权重路径。
 
 ## 模型与训练
 

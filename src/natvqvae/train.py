@@ -64,6 +64,10 @@ def train(config_path, sources_path, target_path, output, device=None):
     config = study['training']
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
     output = Path(output)
+    checkpoint = Path(data.sources['checkpoint_dir']) / output.name / 'checkpoint.pt'
+    if (output.exists() and any(output.iterdir())) or (
+            checkpoint.parent.exists() and any(checkpoint.parent.iterdir())):
+        raise FileExistsError(f'Run output or weights already exist: {output.name}')
     output.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(int(config['seed']))
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
@@ -125,7 +129,7 @@ def train(config_path, sources_path, target_path, output, device=None):
         'epoch': max_epochs,
         'config': dict(config),
     }
-    checkpoint = output / 'checkpoint.pt'
+    checkpoint.parent.mkdir(parents=True, exist_ok=True)
     torch.save(payload, checkpoint)
     write_json(output / 'training_summary.json', {
         'status': 'COMPLETED', 'steps': step, 'checkpoint': str(checkpoint),
