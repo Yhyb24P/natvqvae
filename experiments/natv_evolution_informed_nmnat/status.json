@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETED",
+  "gate": "PASS",
+  "n_hypotheses": 8,
+  "n_s1": 556,
+  "n_s2": 63,
+  "n_s4": 61,
+  "n_s5": 1871,
+  "runtime_seconds": 3.0,
+  "outputs": [
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/source_inventory.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/cluster_representatives.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/target_aware_alignment.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/anchor_neighbor_variation.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/s5_position_frequencies.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/hypothesis_table.csv",
+    "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/gate_A.json"
+  ],
+  "note": "CPU only; no test/sealed/conflict/excluded sequence loaded; no MMseqs/download/folding."
+}
