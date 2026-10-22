@@ -49,6 +49,20 @@
 - 正式汇总命令：`PYTHONPATH=src python -m natvqvae.cli microenv-summarize --config config/microenvironment.yaml --output data/results/evaluation/natv_nudix_microenvironment`。输出 `metrics.csv` 54 行；每行含 `model_path` 与 `model_sha256`，字段区分 E248/D308 的侧链 O 与酰胺 N，并记录最近金属标签；汇总同时校验每 run 3 个样本、模型序列、配体身份与离子种类/数量，`summary.json` 给出各状态/序列的数值范围。
 - 运行命令模板：`BOLTZ_CACHE=/mnt/e/models/boltz2 /home/yhshy/miniconda3/envs/boltz2/bin/boltz predict <yaml> --out_dir <dir> --accelerator gpu --devices 1 --diffusion_samples 3 --sampling_steps 200 --recycling_steps 3 --seed <seed> --output_format mmcif --num_workers 2`。
 
+## 实验结构锚点核查（2026-10-23）
+
+为判断 D4 能否从约束假说升级为实验锚点，核查了 5IW4（E. coli NudC–NAD，2.6 Å，无突变）、8ZB4（M. abscessus NudC–NAD，2.7 Å，无突变）、5ISY（E. coli NudC E178Q，2.35 Å）和 6O3P（mouse NUDT12 E219A/E220A/E221A，AMP+3 Mg，1.6 Å）。
+
+- TMalign 到 2QJT Nudix（204–338）：TM 0.705–0.719，RMSD 2.36–2.69 Å。局部几何（均为最近原子距离，不是反应基团一一对应）：5IW4/5ISY 的 NAD 焦磷酸落在 2QJT AMP 磷酸旁（0.7–2.3 Å）；8ZB4 的 NAD PN/O2N 距 2QJT AMP O1P 1.8–3.5 Å；6O3P 三个 Mg 与 2QJT 三个 Mn 重合 0.9–1.0 Å。
+- 但现有单链模型未支持完整口袋迁移：5IW4/5ISY 的腺嘌呤/核糖由另一亚基 Tyr124 堆叠，8ZB4 由另一亚基 Phe156/Pro157 接触；跨链接触集中在 AMP 端。KVP40 组装未知，单体模型不能复现该跨亚基接触。5IW4 原始论文摘要明确该催化口袋由两个单体共同组成。这是“未支持”，不是“证明 KVP40 不能采用该结合方式”。
+- 5ISY 的功能对照：原始研究报道 E. coli NudC E178Q 使 NAD⁺ 水解活性几乎不可检出，但该突变体仍结合 NAD⁺ 并给出了晶体结构（PDB 5ISY；Cell Res 2016）。这支持“保留底物结合构象不等于保留金属依赖水解”的机制可能性；本轮未独立复算该功能数据，也不能定量外推到 KVP40 E248Q/D308N。
+- 5ISY 与 6O3P 带构建体突变（5ISY E178Q；6O3P E219A/E220A/E221A，UNP 编号；CIF auth 354–356 的对应需按原始 sequence/label/auth 映射理解）。不能仅凭 Mutation:Yes 判定突变位于催化金属位，也不能自动判定全部金属坐标无效；因此 6O3P 只作带突变背景的参照，不作 WT 催化簇断言。8ZB4 的 Ca 也不是生理 Mg/Mn。
+- 把 8ZB4 NAD 与 6O3P Mg 刚性组合进现有模型会产生 1.13–1.30 Å 的蛋白–配体冲突；两次独立刚体变换不能当作已观测复合物。
+
+结论：不构造 D4_exp；保留 5IW4 WT NAD 的局部焦磷酸/烟酰胺参照与 2QJT/2R5W 金属位参照，6O3P 仅作带突变背景的参照。预测 D4 与 6O3P/8ZB4 的局部几何接近或差异只作参照，不足以把 D4 升级为实验支持；原 54 模型 D4 距离差来自组成/约束共折叠，不是模板转移结果，新迁移提案未成立。B2 的 D4 距离差异既不能证明也不能否定机制。
+
+来源：RCSB 5IW4/5ISY/8ZB4/6O3P；Höfer et al., Nat Chem Biol 2016, DOI 10.1038/nchembio.2132（5IW4，摘要明确催化口袋由两个单体共同组成）；Zhang et al., Cell Res 2016, DOI 10.1038/cr.2016.98（5ISY）；Meng et al., J Mol Biol 2024, DOI 10.1016/j.jmb.2024.168864（8ZB4）；Nudt12 论文 Nat Chem Biol 2019, DOI 10.1038/s41589-019-0293-7（6O3P）。
+
 ## 边界与停止决定
 
 - D307 在 Boltz 模型中经 OD2 直接配位金属（1.9–3.6 Å），而 Huang 2008 的晶体证据是水介导、D307 仅“may”广义碱；模型可能高估 D307 的直接配位。模型没有显式水，无法评估金属–水网络，因此“金属簇维持”不能作为结论。
