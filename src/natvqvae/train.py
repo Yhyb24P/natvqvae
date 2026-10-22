@@ -105,25 +105,23 @@ def _score_validation(model, data, encoder, queries, device, sample_count, seed)
                 rows.append(row)
     model.train()
     total_sites = sum(row['sites'] for row in rows)
-    denominator = sum(row['weight'] * row['sites'] for row in rows)
-    if not rows or total_sites < 1 or denominator <= 0:
+    weight_sum = sum(row['weight'] for row in rows)
+    if not rows or total_sites < 1 or weight_sum <= 0:
         raise ValueError('Validation selection produced no scored sites')
     summary = {'queries': len(rows), 'sites': total_sites,
-               'weighted_sites': denominator,
+               'weighted_sites': sum(row['weight'] * row['sites'] for row in rows),
                'selection_metric': 'prior_joint_nll_per_residue'}
     for name in ('prior_joint_nll', 'posterior_joint_nll', 'marginal_nll',
                  'prior_expected_reconstruction_nll',
                  'posterior_expected_reconstruction_nll'):
         summary[name + '_per_residue'] = sum(
-            row[name + '_per_residue'] * row['sites'] * row['weight']
-            for row in rows) / denominator
-    summary['kl_mean'] = sum(row['kl'] * row['sites'] * row['weight']
-                             for row in rows) / denominator
+            row[name + '_per_residue'] * row['weight'] for row in rows) / weight_sum
+    summary['kl_mean'] = sum(row['kl'] * row['weight'] for row in rows) / weight_sum
     if rows[0].get('ess') is not None:
-        summary['ess_mean'] = sum(row['ess'] * row['sites'] * row['weight']
-                                  for row in rows) / denominator
-        summary['max_weight_mean'] = sum(row['max_weight'] * row['sites'] * row['weight']
-                                         for row in rows) / denominator
+        summary['ess_mean'] = sum(row['ess'] * row['weight']
+                                  for row in rows) / weight_sum
+        summary['max_weight_mean'] = sum(row['max_weight'] * row['weight']
+                                         for row in rows) / weight_sum
     return summary, rows
 
 
