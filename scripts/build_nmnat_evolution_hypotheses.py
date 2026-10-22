@@ -634,10 +634,12 @@ def main():
     selected_positions = sorted({int(position) for item in hypotheses
                                  for position in str(item['positions']).split(';')})
     record_queries = {}
+    record_tier = {}
     for item in candidate_rows.to_dict('records'):
         query = item.get('full_sequence') or item.get('domain_sequence')
         if query:
             record_queries[item['record_id']] = query
+            record_tier[item['record_id']] = item['tier']
     stable_record_sets = {}
     stable_record_nopt = {}
     for record_id, query in record_queries.items():
@@ -659,10 +661,11 @@ def main():
         stable_set = set()
         for position in selected_positions:
             if stable[position] and len(values[position]) == 1:
-                mapped_positions.add(position)
                 residue = next(iter(values[position]))
-                if residue is not None and residue != WT_DOMAIN[position - DOMAIN_START]:
-                    stable_set.add((position, WT_DOMAIN[position - DOMAIN_START], residue))
+                if residue is not None:
+                    mapped_positions.add(position)
+                    if residue != WT_DOMAIN[position - DOMAIN_START]:
+                        stable_set.add((position, WT_DOMAIN[position - DOMAIN_START], residue))
         s5_stable_sets.append(stable_set)
         s5_stable_mapped.append(mapped_positions)
 
@@ -678,9 +681,15 @@ def main():
         t5_clusters = {record_cluster[record_id] for record_id in t5_ids}
         item['raw_n_clusters'] = item['n_clusters']
         item['raw_n_records'] = item['n_records']
+        item['raw_evidence_tiers'] = item['evidence_tiers']
+        item['raw_clusters'] = item['clusters']
         item['n_clusters'] = len(old_clusters)
         item['n_records'] = len(old_ids)
         item['t5_clusters'] = len(t5_clusters)
+        stable_tiers = {record_tier[record_id] for record_id in old_ids + t5_ids
+                        if record_id in record_tier}
+        item['evidence_tiers'] = ';'.join(sorted(stable_tiers))
+        item['clusters'] = ';'.join(sorted(map(str, old_clusters | t5_clusters)))
         item['stable_support_fraction'] = (len(old_ids) / item['raw_n_records']
                                            if item['raw_n_records'] else None)
         qualities = [align_quality[record_id] for record_id in old_ids if record_id in align_quality]
@@ -716,7 +725,12 @@ def main():
             item['pair_s5_count'] = None
             item['pair_s5_total'] = None
             item['pair_s5_frequency'] = None
-        if item['n_clusters'] >= 2:
+        context_supported = bool(stable_tiers & {'T1', 'T2', 'T5'})
+        frequency_ok = item['s5_frequency'] is not None and item['s5_frequency'] <= 0.05
+        pair_ok = True
+        if item['pair_clusters'] is not None:
+            pair_ok = (item['pair_s5_count'] == 0 and item['pair_s5_total'] > 0)
+        if item['n_clusters'] >= 2 and context_supported and frequency_ok and pair_ok:
             retained.append(item)
     hypotheses = retained
 

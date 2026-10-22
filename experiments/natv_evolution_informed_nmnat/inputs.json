@@ -41,7 +41,7 @@
   },
   "script": {
     "path": "/home/yhshy/git_files/natvqvae/scripts/build_nmnat_evolution_hypotheses.py",
-    "sha256": "fddd794d36dcb387317b906b3421de98cbaf264583874756c9543019b848748d"
+    "sha256": "8deecb60e78f71ac9bd4b2b2c181c464439b8b2b20eaeeca225c48b86fe293da"
   },
   "wt_sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
 }

@@ -6,7 +6,7 @@
   "n_s2": 63,
   "n_s4": 61,
   "n_s5": 1871,
-  "runtime_seconds": 6.44,
+  "runtime_seconds": 6.0,
   "outputs": [
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/source_inventory.csv",
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/cluster_representatives.csv",

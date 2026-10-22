@@ -42,7 +42,7 @@
 ### A3. 目标感知的完整域对齐与邻域表
 
 - 以完整蛋白为 query、WT NMNAT 4–181 与 WT 1–341 为 target，使用 BLOSUM62 局部比对（不重跑 MMseqs、不做全局比对）；拒绝仅用 PF01467 局部切片推断锚点。
-- 记录：覆盖、identity、gap、锚点列稳定性、H14/H17/T135/R138 的 WT-relative 残基、锚点 ±6 位线性序列邻域。只复用 `data/processed/anchor_mapping_audit.csv` 的最近锚点距离；`domain_pocket_map.json` 未作为候选几何真值，也没有逐残基口袋距离。不新算对接或折叠；2QJO 是 NAD 产物参照，不是 ATP/NMN 中间态。
+- 记录：覆盖、identity、gap、锚点列稳定性、H14/H17/T135/R138 的 WT-relative 残基、锚点 ±6 位线性序列邻域。等分最优数 >32 的记录整条按不稳定排除，不抽样前 32 条。只复用 `data/processed/anchor_mapping_audit.csv` 的最近锚点距离；`domain_pocket_map.json` 未作为候选几何真值，也没有逐残基口袋距离。不新算对接或折叠；2QJO 是 NAD 产物参照，不是 ATP/NMN 中间态。
 - 对每个位置统计各证据层的替换、不同 70% 序列簇支持数、S5 中的 NatV 频率；同一序列多名称/多 EC 保留冲突，不强行归类。
 - 输出 `source_inventory.csv`、`cluster_representatives.csv`、`target_aware_alignment.csv`、`anchor_neighbor_variation.csv`、`s5_position_frequencies.csv`、`hypothesis_table.csv`、`gate_A.json`。
 
