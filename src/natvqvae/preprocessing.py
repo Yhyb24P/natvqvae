@@ -787,6 +787,6 @@ def _write_csv(path, rows, fieldnames=None):
         Path(path).write_text('')
         return
     with open(path, 'w', newline='') as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames or list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=fieldnames or list(rows[0]), lineterminator='\n')
         writer.writeheader()
         writer.writerows(rows)
