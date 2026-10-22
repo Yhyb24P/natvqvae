@@ -5,7 +5,7 @@
 ## 输入与方法
 
 - 序列：WT、B1（E248Q）、B2（D308N），来自 `data/results/generation/natv_dual_domain_design/candidates.fasta`；MSA 为 512 行 WT 源 MSA，查询行替换为对应序列。
-- D2：AMP + 3 个催化 Mn，取自 2QJT B 链 B505/B506/B507；AMP 取 B602；B509 与 A 链的额外 Mn 不计入。D4：NAD⁺ + 3 个 Mg。两者均以 pocket 约束将配体锚定到 Nudix 盒（KVP40 232/233/248/252/307/308）。
+- D2 的化学组成：AMP + 3 个 Mn；催化簇数量与位点映射参考 2QJT B 链 B505/B506/B507（AMP 参照 B602；B509 与 A 链额外 Mn 不计入），但 `microenv-build` 只写 CCD 组成与数量，不迁移 2QJT 原子坐标，坐标由 Boltz 预测。D4：NAD⁺ + 3 个 Mg，金属数量为假说。两者均以 pocket 约束将配体锚定到 Nudix 盒（KVP40 232/233/248/252/307/308）。
 - 无约束对照：同一输入去掉 pocket 约束，检查配体是否自主落在 Nudix 位点。
 - Boltz-2 2.2.1，`/mnt/e/models/boltz2/boltz2_conf.ckpt`（SHA256 前缀 090e82ac8c92f5e9），RTX 5090 D；seeds 20261023/20261024，每个 seed 3 个 diffusion samples；sampling 200、recycling 3。共 54 个模型：D2/D4 各 3 序列 × 2 seeds × 3 样本（约束态）+ 3 序列 × 1 seed × 3 样本（无约束对照）。
 - 指标：各残基 O/N 原子到最近金属的距离；L9（KVP40 302–314）CA 在 Nudix 对齐后的 RMSD；NAD⁺ 姿态在 Nudix 对齐后的 RMSD；全蛋白/域间 CA RMSD。逐模型数据见 `metrics.csv`，运行身份见 `summary.json`。
