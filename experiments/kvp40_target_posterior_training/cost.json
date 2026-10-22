@@ -1,9 +1,0 @@
-{
-  "wall_seconds": 216.13650574200437,
-  "wall_budget_seconds": 3600,
-  "single_gpu_allocation_seconds_upper_bound": 216.13650574200437,
-  "gpu": "NVIDIA GeForce RTX 5090 D",
-  "attempted_fits": 6,
-  "attempt": 1,
-  "outcome": "COMPLETED"
-}

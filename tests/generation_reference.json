@@ -1,0 +1,28 @@
+{
+  "checkpoint_seed": 8301,
+  "temperature": 1.0,
+  "cases": [
+    {
+      "group": {
+        "id": "global_m08_r00",
+        "region": "global",
+        "mask_size": 8,
+        "positions": [24, 75, 121, 161, 170, 218, 289, 316]
+      },
+      "prior_seed": 4760158717949623936,
+      "uniform_seed": 6865704229295553863,
+      "sequence_sha256": "d39dd5c4c7076d87cbdd6c71cefc82530d9def7942208ef40f7873021807ec04"
+    },
+    {
+      "group": {
+        "id": "NMNAT_m08_r00",
+        "region": "NMNAT",
+        "mask_size": 8,
+        "positions": [11, 41, 63, 86, 92, 122, 127, 162]
+      },
+      "prior_seed": 7861042871222718852,
+      "uniform_seed": 4583253480542647296,
+      "sequence_sha256": "f97d892fe5e7c48ff9d917b0ef0e3c43816194e88e720f5fcbee32f0be6adcd9"
+    }
+  ]
+}

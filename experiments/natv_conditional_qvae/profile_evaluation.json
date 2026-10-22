@@ -1,9 +1,0 @@
-{
-  "profile_sha256": {
-    "hmm_pf01467": "3055836d6ce3009a9d7f976acddda55cd10f79a29937e8fb442b9a99b1994f73",
-    "hmm_pf00293": "4a00411798c912ea708bc0e06a3ae61e03929767ddbebc08483a8cfacb201dc1"
-  },
-  "unique_sequences_including_WT": 98565,
-  "scores_sha256": "68a6dcdcd8a4c11152039b4046dbb71cad1457402893a1f292bfcf0f28acad74",
-  "interpretation": "family profile compatibility, not independent activity evidence; no universal engineering rejection threshold"
-}

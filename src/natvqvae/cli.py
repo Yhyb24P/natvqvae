@@ -1,51 +1,112 @@
-"""Command line entry point."""
+"""Command line entry point for data checks, training, generation, and evaluation."""
 from __future__ import annotations
 
 import argparse
-import sys
+import json
 from pathlib import Path
 
-from . import __version__, regions
-from .intake import load_manifest, source_root, verify_all
-from .sequence import WT_SHA256, wt_sequence
+from . import __version__
+from .data import PopulationData, load_yaml, sha256_file
+from .evaluate import evaluate
+from .generate import generate
+from .train import train
 
 
-def _doctor(args: argparse.Namespace) -> int:
-    print(f"natvqvae {__version__}")
-    print("\n[contracts]")
-    regions.validate_partition()
-    print(f"  region partition 1..341           OK  ({len(regions.regions())} regions)")
-    print(f"  anchors                           OK  {sorted(regions.catalytic_anchors())}")
-    print(f"  WT sequence                       OK  341 aa, sha256 {WT_SHA256[:12]}...")
+def _external_output(value):
+    path = Path(value).resolve()
+    data = (Path(__file__).resolve().parents[2] / 'data').resolve()
+    if path == data or data in path.parents:
+        raise ValueError('Output must be outside the repository data/ directory')
+    return path
 
-    manifest = load_manifest()
-    root = Path(args.root) if args.root else source_root(manifest)
-    print(f"\n[data] source root: {root}")
-    results = verify_all(manifest, root)
-    for r in results:
-        print(f"  [{'OK  ' if r.ok else 'FAIL'}] {r.name:22} {r.detail}")
-    failures = [r for r in results if not r.ok]
-    if failures:
-        print(f"\nFAIL: {len(failures)} data entry/entries failed verification", file=sys.stderr)
+
+def _doctor(args):
+    data = PopulationData(args.sources, args.config, args.target)
+    study = load_yaml(args.config)
+    sources = load_yaml(args.sources)
+    checkpoints = sorted(Path(sources['checkpoint_dir']).glob('*/best.pt'))
+    print(f'natvqvae {__version__}')
+    print(f"target {data.target.name}: {len(data.target.sequence)} aa")
+    print(f"population {sources['population']}: {len(data.population)} sequences")
+    print(f"training {len(data.train)} sequences / {len(set(r.component for r in data.train))} components")
+    print(f"validation {len(data.validation)} sequences / {len(set(r.component for r in data.validation))} components")
+    print(f"test ids {len(data.test_rows)} (not loaded as sequences)")
+    print(f"ESM model {sources['esm_model']}")
+    print(f"checkpoints {len(checkpoints)}")
+    for path in checkpoints:
+        print(f'  {path}')
+    for key in ('population', 'esm_model'):
+        path = Path(sources[key])
+        print(f"  [{'OK' if path.exists() else 'MISSING'}] {key}: {path}")
+    if not Path(sources['esm_model']).exists() or not checkpoints:
         return 1
-    print(f"\nOK: {len(results)} data entries verified; regions and anchors validated")
     return 0
 
 
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="natvqvae", description="NatV net-NAD+ design and input checks")
-    parser.add_argument("--version", action="version", version=f"natvqvae {__version__}")
-    sub = parser.add_subparsers(dest="command", required=True)
-    doctor = sub.add_parser("doctor", help="validate contracts and input hashes")
-    doctor.add_argument("--root", default=None, help="source repository root")
+def build_parser():
+    parser = argparse.ArgumentParser(prog='natvqvae', description='KVP40 NatV QVAE generation')
+    parser.add_argument('--version', action='version', version=f'natvqvae {__version__}')
+    sub = parser.add_subparsers(dest='command', required=True)
+
+    doctor = sub.add_parser('doctor', help='check target, raw inputs, splits and checkpoints')
+    doctor.add_argument('--config', default='config/study.yaml')
+    doctor.add_argument('--sources', default='config/sources.yaml')
+    doctor.add_argument('--target', default='config/target.yaml')
     doctor.set_defaults(func=_doctor)
+
+    common = {
+        'config': dict(default='config/study.yaml'),
+        'sources': dict(default='config/sources.yaml'),
+        'target': dict(default='config/target.yaml'),
+        'device': dict(default=None),
+    }
+    trainer = sub.add_parser('train', help='train a QVAE from raw population and split config')
+    trainer.add_argument('--config', **common['config'])
+    trainer.add_argument('--sources', **common['sources'])
+    trainer.add_argument('--target', **common['target'])
+    trainer.add_argument('--device', **common['device'])
+    trainer.add_argument('--output', required=True)
+    trainer.set_defaults(func=lambda args: train(args.config, args.sources, args.target,
+                                                _external_output(args.output), args.device))
+
+    generator = sub.add_parser('generate', help='sample full NatV variants from a checkpoint')
+    generator.add_argument('--config', **common['config'])
+    generator.add_argument('--sources', **common['sources'])
+    generator.add_argument('--target', **common['target'])
+    generator.add_argument('--device', **common['device'])
+    generator.add_argument('--checkpoint', required=True)
+    generator.add_argument('--output', required=True)
+    generator.add_argument('--group', default=None)
+    generator.add_argument('--draws', type=int, default=None)
+    generator.set_defaults(func=lambda args: generate(
+        args.config, args.sources, args.target, args.checkpoint, _external_output(args.output),
+        args.device, args.group, args.draws))
+
+    evaluator = sub.add_parser('evaluate', help='evaluate a checkpoint on validation masks')
+    evaluator.add_argument('--config', **common['config'])
+    evaluator.add_argument('--sources', **common['sources'])
+    evaluator.add_argument('--target', **common['target'])
+    evaluator.add_argument('--device', **common['device'])
+    evaluator.add_argument('--checkpoint', required=True)
+    evaluator.add_argument('--output', required=True)
+    evaluator.add_argument('--split', default='validation')
+    evaluator.add_argument('--limit', type=int, default=None)
+    evaluator.set_defaults(func=lambda args: evaluate(
+        args.config, args.sources, args.target, args.checkpoint, _external_output(args.output),
+        args.device, args.split, args.limit))
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv=None):
     args = build_parser().parse_args(argv)
-    return int(args.func(args))
+    result = args.func(args)
+    if isinstance(result, Path):
+        print(json.dumps({'status': 'COMPLETED', 'output': str(result)}, ensure_ascii=False))
+        return 0
+    if isinstance(result, int):
+        return result
+    return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())

@@ -8,6 +8,10 @@ version = "0.0.1"
 description = "Computational design of KVP40 NatV variants for net NAD+ synthesis"
 requires-python = ">=3.10"
 dependencies = [
+    "numpy>=1.24",
+    "torch>=2.1",
+    "transformers>=4.40",
+    "safetensors>=0.4",
     "pyyaml>=6",
 ]
 

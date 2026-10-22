@@ -1,0 +1,9 @@
+population: data/raw/sequences/natv_population.fasta
+splits:
+  training: config/splits/train.csv
+  validation: config/splits/validation.csv
+  test: config/splits/test.csv
+esm_model: /mnt/e/wsl_cold/nad_qvae_v2/nad_models/esm2
+checkpoint_dir: /home/yhshy/models/natvqvae/QVAE
+structures: data/raw/structures
+references: data/raw/references
