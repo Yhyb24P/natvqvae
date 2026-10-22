@@ -63,6 +63,8 @@ BioEmu2 可在个别候选存在真实构象不确定性时研究 WT 与变体�
 
 四轮已退役生成实验的证据、负结果、限制与提交 SHA 见[退役生成实验证据](../discovery/natv_generation_evidence_decision.md)；模型来源与身份见 [DATA_PROVENANCE.md](DATA_PROVENANCE.md)。这些结果不支持把 H2 首轮候选作为下一阶段必须资产。
 
+2026-10-22 完成 NMNAT 演化设计证据 Phase A/B1：从审计后的 556/44、63/19、318/22 与 reviewed positives 61/7 中得到 7 条待检验设计假设；B1 仅对现有候选池做描述性重排，配对 F13Y+A134G 缺失，未取得 held-out 证据，不能判 Gate B1 通过，B2 未启动。这些集合是设计证据来源，不是训练人口；详细结果与限制见[实验报告](../experiments/natv_evolution_informed_nmnat/REPORT.md)。
+
 ## 文献依据
 
 Huang, N., et al. (2008). Bifunctional NMN Adenylyltransferase/ADP-Ribose Pyrophosphatase: Structure and Function in Bacterial NAD Metabolism. *Structure*, 16, 196–209. https://doi.org/10.1016/j.str.2007.11.017

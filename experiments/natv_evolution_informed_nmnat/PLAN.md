@@ -1,6 +1,6 @@
 # NatV NMNAT 演化信息用于设计：研究计划
 
-状态：Phase A 已执行（Gate A PASS，7 条假设），结果见 [HYPOTHESES.md](HYPOTHESES.md)；Phase B1 已完成描述性 supply/rank 诊断，`gate_b1=not_evaluable`，B2 未启动（见 [B1_RERANK.md](B1_RERANK.md)）。
+状态：Phase A 已执行（Gate A PASS，7 条假设），Phase B1 已完成描述性 supply/rank 诊断（`gate_b1=not_evaluable`），B2 未启动。总结论见 [REPORT.md](REPORT.md)；Phase A 详细结果 [HYPOTHESES.md](HYPOTHESES.md)，B1 详细结果 [B1_RERANK.md](B1_RERANK.md)，运行身份 [RUN_PROVENANCE.json](RUN_PROVENANCE.json)。
 
 ## Context
 

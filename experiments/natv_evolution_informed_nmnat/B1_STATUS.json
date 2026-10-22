@@ -8,5 +8,13 @@
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/supply.csv",
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/selected_candidates.csv",
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_b1/rerank_summary.json"
-  ]
+  ],
+  "git_head_at_execution": "5308980",
+  "executed_script_sha256": "e6b55ac11f1499f852839eaec91085267119e48bd6c31fbd9bf8dee5466a2756",
+  "script_committed_as": "2c6e2a6",
+  "label_only_correction_commit": "341fd10",
+  "runtime_seconds": 1.3,
+  "candidate_pool_sha256": "8498f2577352e4f195019531c7925749a4e2a8249aaca340533ef8dee35eecdf",
+  "hypothesis_table_sha256": "01947f6274c288f4f679849a957f149947d5a37aea2f13d042f42573671ad0cb",
+  "representatives_sha256": "0f2581ba456f27943ded98dba4e8d60bd84eb085a9820db1514e6f5fb22a840e"
 }

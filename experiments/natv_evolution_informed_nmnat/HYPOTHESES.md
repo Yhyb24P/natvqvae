@@ -2,7 +2,7 @@
 
 状态：Gate A PASS；7 条假设；CPU-only，6.0 s；未训练、未下载、未折叠、未读 test。所有活性、底物特异性、kcat/Km 与 NAD⁺ 净积累仍为 UNKNOWN。
 
-方案见 [PLAN.md](PLAN.md)，输入与 SHA 见 [inputs.json](inputs.json)，原始表在 `data/results/natv_evolution_informed_nmnat/raw/phase_a/`。
+方案见 [PLAN.md](PLAN.md)，总结论见 [REPORT.md](REPORT.md)，输入与 SHA 见 [inputs.json](inputs.json)，运行身份见 [RUN_PROVENANCE.json](RUN_PROVENANCE.json)，原始表在 `data/results/natv_evolution_informed_nmnat/raw/phase_a/`。
 
 ## 来源与计数
 

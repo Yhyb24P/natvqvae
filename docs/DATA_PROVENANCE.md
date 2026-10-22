@@ -8,6 +8,18 @@
 
 家族 MSA 某次结构对应分析为 1,638 条，较 1,644 的差异来自其额外筛选；不可混称。旧逐查询 ESM-2 和演化特征来自掩码输入规划，不是新任务通用张量。训练来源在参考查询前要核对角色，历史的公开 WT 和同源实验模板是参照，不是可以偷偷补入训练的样本。
 
+## 演化设计证据来源（非训练）
+
+2026-10-22 的 NMNAT 演化设计证据使用以下有界来源：
+
+- S1：审计后的 complete+EC 556 条/44 个 70% 模式1 序列簇（238 EC NMNAT-only + 318 EC dual）；
+- S2：全长上下文 63 条/19 簇（与 S1 有 6 条重叠，不重复计数）；
+- S3：EC-dual 318 条/22 簇，仅作注释背景；
+- S4：旧 `nmnat_specificity_reference_v1` 的 reviewed positives 61 条/7 簇，仅交叉核对，分类器未验证；
+- S5：正式 training 1,644 + validation 227 的 NMNAT CDD 域，仅作频率/组分基线。
+
+这些集合不是新的训练、验证或测试人口，不改变 1,644/227/231；249/75/4 继续隔离，test 未读。Phase B1 只使用 QVAE 现有候选池，不生成新序列。方法与负结果见[实验报告](../experiments/natv_evolution_informed_nmnat/REPORT.md)，输入身份见同目录 `inputs.json` 与 `RUN_PROVENANCE.json`。
+
 ## 模型与对齐资料
 
 `nad_qvae` 作为只读研究档案，源码、权重、配置与分割差异入口为 `discovery/natv_model_inheritance/model_reuse_decision.md` 和 `discovery/natv_model_inheritance/source_checks.json`。模型来源、权重身份与继承判断保留。

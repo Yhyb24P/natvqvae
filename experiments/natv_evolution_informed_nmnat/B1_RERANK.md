@@ -1,6 +1,6 @@
 # Phase B1：现有候选池的 NMNAT 证据重排诊断
 
-状态：`DESCRIPTIVE_ONLY`；`gate_b1=not_evaluable`；无 held-out 证据。未生成新序列、未训练、未下载、未折叠、未读 test；B2 未启动。
+状态：`DESCRIPTIVE_ONLY`；`gate_b1=not_evaluable`；无 held-out 证据；CPU-only 1.3 s。未生成新序列、未训练、未下载、未折叠、未读 test；B2 未启动。总结论见 [REPORT.md](REPORT.md)，运行身份见 [RUN_PROVENANCE.json](RUN_PROVENANCE.json)。
 
 本诊断只回答：Phase A 的 7 条假设能否在**现有** NMNAT 候选池中被选中，以及原始候选池是否包含这些替换。它不检验模型分布、不评价候选优劣、不构成 Gate B1 通过。
 
