@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 import time
 from collections import Counter, defaultdict
@@ -29,7 +30,6 @@ OLD_FULL = ROOT / 'data/results/natv_evolution_data_audit/raw/old_only_full_prot
 T80 = ROOT / 'data/results/natv_evolution_data_audit/raw/wt_full_context_hits_t80.csv'
 T50 = ROOT / 'data/results/natv_evolution_data_audit/raw/wt_full_context_hits_t50.csv'
 ANCHOR_AUDIT = ROOT / 'data/processed/anchor_mapping_audit.csv'
-POCKET_MAP = ROOT / 'data/raw/source/domain_pocket_map.json'
 SAMPLES = ROOT / 'data/processed/samples.csv'
 QV = ROOT / 'experiments/natv_conditional_qvae/representative_candidates.csv'
 OLD_REF = Path('/home/yhshy/git_files/nad_qvae/experiments/run_reports/'
@@ -45,6 +45,7 @@ DOMAIN_START, DOMAIN_END = 4, 181
 WT = wt_sequence()
 WT_DOMAIN = WT[DOMAIN_START - 1:DOMAIN_END]
 WINDOW = 6
+MAX_OPTIMAL = 32
 
 
 def write_json(path, value):
@@ -100,6 +101,31 @@ def align_map(target, query, target_offset, count_optimal=False):
     }
 
 
+def map_alignment(alignment, target, query, target_offset):
+    mapped = {}
+    for (t0, t1), (q0, q1) in zip(alignment.aligned[0], alignment.aligned[1]):
+        for offset in range(t1 - t0):
+            target_index = t0 + offset
+            query_index = q0 + offset
+            if 0 <= target_index < len(target) and 0 <= query_index < len(query):
+                mapped[target_offset + target_index] = query[query_index]
+    return mapped
+
+
+def stable_positions(query, positions, max_optimal=MAX_OPTIMAL):
+    alignments = make_aligner().align(WT_DOMAIN, query)
+    n_optimal = len(alignments)
+    if n_optimal > max_optimal:
+        return {position: False for position in positions}, {}, n_optimal
+    values = {position: set() for position in positions}
+    for alignment in alignments:
+        mapped = map_alignment(alignment, WT_DOMAIN, query, DOMAIN_START)
+        for position in positions:
+            values[position].add(mapped.get(position))
+    stable = {position: len(values[position]) == 1 for position in positions}
+    return stable, values, n_optimal
+
+
 def variant_set(mapped, wt_domain, domain_start):
     result = set()
     for position, residue in mapped.items():
@@ -134,8 +160,10 @@ def region_of(position):
 
 
 def aa_class(residue):
-    if residue in 'AVILMFWY':
+    if residue in 'AVILM':
         return 'hydrophobic'
+    if residue in 'FWY':
+        return 'aromatic'
     if residue in 'STNQ':
         return 'polar'
     if residue in 'KRH':
@@ -395,12 +423,16 @@ def main():
     s5_counts = defaultdict(Counter)
     s5_variant_counts = Counter()
     s5_sets = []
+    s5_mapped_positions = []
+    s5_queries = []
     for item in samples.itertuples():
         start, end = int(item.nmnat_cdd_from), int(item.nmnat_cdd_to)
         query = item.sequence[start - 1:end]
+        s5_queries.append(query)
         mapping = align_map(WT_DOMAIN, query, DOMAIN_START, count_optimal=False)
         values = variant_set(mapping['mapped'], WT_DOMAIN, DOMAIN_START)
         s5_sets.append(values)
+        s5_mapped_positions.append(set(mapping['mapped']))
         for position, residue in mapping['mapped'].items():
             if DOMAIN_START <= position <= DOMAIN_END:
                 s5_counts[position][residue] += 1
@@ -466,9 +498,9 @@ def main():
             's5_frequency': (s5_variant_counts.get((position, wt_residue, alt_residue), 0) /
                              s5_total.get(position, 1)),
             'anchor_distance': anchor_distance, 'nearest_anchor': nearest_anchor,
-            'template_distance_A': anchor_info.get('distance'),
-            'first_shell_2QJO': anchor_info.get('within_4_5'),
-            'pocket_2QJO': anchor_info.get('within_8'),
+            'nearest_anchor_template_distance_A': anchor_info.get('distance'),
+            'nearest_anchor_first_shell_2QJO': anchor_info.get('within_4_5'),
+            'nearest_anchor_pocket_2QJO': anchor_info.get('within_8'),
             'in_window': anchor_distance <= WINDOW,
             'region': region_of(position),
             'qvae_rep_match': (position, alt_residue) in qvae_single,
@@ -529,7 +561,7 @@ def main():
                 's5_frequency': float(row.s5_frequency),
                 'anchor_distance': int(row.anchor_distance),
                 'nearest_anchor': int(row.nearest_anchor),
-                'template_distance_A': row.template_distance_A,
+                'nearest_anchor_template_distance_A': row.nearest_anchor_template_distance_A,
                 'qvae_rep_match': bool(row.qvae_rep_match),
                 'pair_clusters': None, 'pair_t5_clusters': None, 'pair_novel': None,
                 'structural_note': structural_note(row),
@@ -558,8 +590,9 @@ def main():
                 t5_pair_clusters = pair_clusters - old_pair_clusters
                 if len(old_pair_clusters) < 2:
                     continue
-                if any((a['position'], a['alt_residue']) in values and
-                       (b['position'], b['alt_residue']) in values for values in s5_sets):
+                a_triple = (int(a['position']), a['wt_residue'], a['alt_residue'])
+                b_triple = (int(b['position']), b['wt_residue'], b['alt_residue'])
+                if any(a_triple in values and b_triple in values for values in s5_sets):
                     continue
                 if frozenset(((int(a['position']), a['alt_residue']),
                               (int(b['position']), b['alt_residue']))) in qvae_pairs:
@@ -589,29 +622,131 @@ def main():
                 'design_risk': 'conservative pair; combined effects still UNKNOWN',
                 's5_frequency': max(float(a['s5_frequency']), float(b['s5_frequency'])),
                 'anchor_distance': max(int(a['anchor_distance']), int(b['anchor_distance'])),
-                'nearest_anchor': None, 'template_distance_A': None,
+                'nearest_anchor': None, 'nearest_anchor_template_distance_A': None,
                 'qvae_rep_match': False,
                 'pair_clusters': n_clusters, 'pair_t5_clusters': None, 'pair_novel': True,
                 'structural_note': structural_note(a) + ' | ' + structural_note(b),
                 'unknown': 'activity, substrate specificity, kcat/Km, net NAD+; pair co-occurrence is sequence evidence only',
             })
 
+    # Limited stability check: for the selected positions only, require the
+    # mapped residue to be identical across all (capped) optimal local alignments.
+    selected_positions = sorted({int(position) for item in hypotheses
+                                 for position in str(item['positions']).split(';')})
+    record_queries = {}
+    for item in candidate_rows.to_dict('records'):
+        query = item.get('full_sequence') or item.get('domain_sequence')
+        if query:
+            record_queries[item['record_id']] = query
+    stable_record_sets = {}
+    stable_record_nopt = {}
+    for record_id, query in record_queries.items():
+        stable, values, n_optimal = stable_positions(query, selected_positions)
+        stable_set = set()
+        for position in selected_positions:
+            if stable[position] and len(values[position]) == 1:
+                residue = next(iter(values[position]))
+                if residue is not None and residue != WT_DOMAIN[position - DOMAIN_START]:
+                    stable_set.add((position, WT_DOMAIN[position - DOMAIN_START], residue))
+        stable_record_sets[record_id] = stable_set
+        stable_record_nopt[record_id] = n_optimal
+
+    s5_stable_sets = []
+    s5_stable_mapped = []
+    for query in s5_queries:
+        stable, values, _n_optimal = stable_positions(query, selected_positions)
+        mapped_positions = set()
+        stable_set = set()
+        for position in selected_positions:
+            if stable[position] and len(values[position]) == 1:
+                mapped_positions.add(position)
+                residue = next(iter(values[position]))
+                if residue is not None and residue != WT_DOMAIN[position - DOMAIN_START]:
+                    stable_set.add((position, WT_DOMAIN[position - DOMAIN_START], residue))
+        s5_stable_sets.append(stable_set)
+        s5_stable_mapped.append(mapped_positions)
+
+    retained = []
+    for item in hypotheses:
+        triples = [(int(position), wt, alt) for wt, position, alt in
+                   re.findall(r'([A-Z])(\d+)([A-Z])', item['substitutions'])]
+        old_ids = [record_id for record_id, values in stable_record_sets.items()
+                   if not record_id.startswith('ref:') and all(triple in values for triple in triples)]
+        t5_ids = [record_id for record_id, values in stable_record_sets.items()
+                  if record_id.startswith('ref:') and all(triple in values for triple in triples)]
+        old_clusters = {record_cluster[record_id] for record_id in old_ids}
+        t5_clusters = {record_cluster[record_id] for record_id in t5_ids}
+        item['raw_n_clusters'] = item['n_clusters']
+        item['raw_n_records'] = item['n_records']
+        item['n_clusters'] = len(old_clusters)
+        item['n_records'] = len(old_ids)
+        item['t5_clusters'] = len(t5_clusters)
+        item['stable_support_fraction'] = (len(old_ids) / item['raw_n_records']
+                                           if item['raw_n_records'] else None)
+        qualities = [align_quality[record_id] for record_id in old_ids if record_id in align_quality]
+        item['support_target_coverage_median'] = (
+            float(np.median([q['target_coverage'] for q in qualities])) if qualities else None)
+        item['support_identity_median'] = (
+            float(np.median([q['identity'] for q in qualities if q['identity'] is not None]))
+            if qualities else None)
+        item['support_n_optimal_median'] = (
+            float(np.median([stable_record_nopt[record_id] for record_id in old_ids]))
+            if old_ids else None)
+        if item['pair_clusters'] is not None:
+            item['pair_clusters'] = len(old_clusters)
+            first, second = triples
+            pair_count = sum(1 for values in s5_stable_sets
+                             if first in values and second in values)
+            pair_total = sum(1 for positions in s5_stable_mapped
+                             if first[0] in positions and second[0] in positions)
+            item['pair_s5_count'] = pair_count
+            item['pair_s5_total'] = pair_total
+            item['pair_s5_frequency'] = pair_count / pair_total if pair_total else None
+            item['s5_frequency'] = max(
+                (sum(1 for values in s5_stable_sets if triple in values) /
+                 max(sum(1 for positions in s5_stable_mapped if triple[0] in positions), 1)
+                 for triple in triples))
+            item['s5_frequency_basis'] = 'max single-position stable frequency; pair frequency separate'
+        else:
+            triple = triples[0]
+            count = sum(1 for values in s5_stable_sets if triple in values)
+            total = sum(1 for positions in s5_stable_mapped if triple[0] in positions)
+            item['s5_frequency'] = count / total if total else None
+            item['s5_frequency_basis'] = 'single-position stable mapping'
+            item['pair_s5_count'] = None
+            item['pair_s5_total'] = None
+            item['pair_s5_frequency'] = None
+        if item['n_clusters'] >= 2:
+            retained.append(item)
+    hypotheses = retained
+
     hypothesis_frame = pd.DataFrame(hypotheses)
     hypothesis_frame.to_csv(RAW / 'hypothesis_table.csv', index=False)
 
     supported = [h for h in hypotheses if set(h['evidence_tiers'].split(';')) & {'T1', 'T2', 'T5'}]
-    gate_pass = len(hypotheses) >= 2 and len(supported) >= 1
+    gate_pass = len(hypotheses) >= 2 and len(supported) == len(hypotheses)
     reasons = []
     if len(hypotheses) < 2:
-        reasons.append('fewer than 2 hypotheses with >=2 independent clusters')
-    if not supported:
-        reasons.append('no hypothesis supported by T1/T2/T5; only T3/T4 or unsupported')
+        reasons.append('fewer than 2 hypotheses with >=2 stable old-only clusters')
+    if len(supported) != len(hypotheses):
+        reasons.append('some hypotheses lack T1/T2/T5 context or reviewed evidence')
     if not gate_pass and not reasons:
         reasons.append('gate criteria not met')
     gate = {
         'status': 'PASS' if gate_pass else 'STOP',
         'n_hypotheses': len(hypotheses),
         'n_hypotheses_with_context_or_reviewed_evidence': len(supported),
+        'evidence_by_hypothesis': [
+            {key: item.get(key) for key in
+             ['variant_id', 'substitutions', 'evidence_tiers', 'n_clusters', 'n_records',
+              't5_clusters', 'stable_support_fraction', 's5_frequency', 'pair_s5_frequency']}
+            for item in hypotheses
+        ],
+        'stable_mapping': {
+            'selected_positions': selected_positions,
+            'max_optimal_alignments': MAX_OPTIMAL,
+            'note': 'positions unstable across capped optimal alignments are excluded from support',
+        },
         'source_counts': {
             'S1_complete_ec': int(len(s1)),
             'S1_clusters': int(s1[cluster_column].nunique()),
@@ -624,9 +759,11 @@ def main():
         },
         'eligible_variants': int(len(eligible_frame)),
         'reasons': reasons,
-        'note': ('Hypotheses require >=2 independent 70% clusters and a position within '
-                 f'{WINDOW} residues of H14/H17/T135/R138; S1/S2 overlap is not counted twice. '
-                 'T5 is a reviewed-domain cross-check, not a classifier truth.'),
+        'note': ('Hypotheses require >=2 different old-only 70% sequence clusters and a position '
+                 f'within {WINDOW} residues of H14/H17/T135/R138; S1/S2 overlap is not counted twice. '
+                 'Sequence clusters are not independent evolutionary events. T5 is a reviewed-domain '
+                 'cross-check; its ref prefix does not prove independence from old sequences, and it '
+                 'does not establish function.'),
     }
     write_json(RAW / 'gate_A.json', gate)
 
@@ -636,7 +773,6 @@ def main():
         't80': {'path': str(T80), 'sha256': sha256_file(T80)},
         't50': {'path': str(T50), 'sha256': sha256_file(T50)},
         'anchor_audit': {'path': str(ANCHOR_AUDIT), 'sha256': sha256_file(ANCHOR_AUDIT)},
-        'pocket_map': {'path': str(POCKET_MAP), 'sha256': sha256_file(POCKET_MAP)},
         'samples': {'path': str(SAMPLES), 'sha256': sha256_file(SAMPLES)},
         'qvae_representatives': {'path': str(QV), 'sha256': sha256_file(QV)},
         'reference_manifest': {'path': str(REF_MANIFEST), 'sha256': sha256_file(REF_MANIFEST)},

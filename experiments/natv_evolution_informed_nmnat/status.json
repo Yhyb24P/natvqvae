@@ -1,12 +1,12 @@
 {
   "status": "COMPLETED",
   "gate": "PASS",
-  "n_hypotheses": 8,
+  "n_hypotheses": 7,
   "n_s1": 556,
   "n_s2": 63,
   "n_s4": 61,
   "n_s5": 1871,
-  "runtime_seconds": 3.0,
+  "runtime_seconds": 6.44,
   "outputs": [
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/source_inventory.csv",
     "/home/yhshy/git_files/natvqvae/data/results/natv_evolution_informed_nmnat/raw/phase_a/cluster_representatives.csv",

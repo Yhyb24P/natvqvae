@@ -1,6 +1,6 @@
 # NatV NMNAT 演化信息用于设计：研究计划
 
-状态：Phase A 已执行（Gate A PASS，8 条假设），结果见 [HYPOTHESES.md](HYPOTHESES.md)；Phase B 未启动。
+状态：Phase A 已执行（Gate A PASS，7 条假设），结果见 [HYPOTHESES.md](HYPOTHESES.md)；Phase B 未启动。
 
 ## Context
 
@@ -17,7 +17,7 @@
 - 远缘不等于无价值，但 30–33% identity 处于 twilight zone；结构邻近不等于功能，EC/文本注释不等于实验。
 - 556/44、63/19、318/22 是候选来源集合，不是训练库；簇数不是独立家族数，不能相加成样本量。
 - QVAE 仍是主生成器；生物学知识可以先作为设计假设和候选重排信号，不必先转成训练数据或潜变量通道。
-- 若证据只能支持当前 NatV 已有的变异，或不能形成独立簇支持，则报告负结果并停止，不降低阈值凑候选。
+- 若证据只能支持当前 NatV 已有的变异，或不能形成不同 70% 序列簇支持，则报告负结果并停止，不降低阈值凑候选。
 
 ## Phase A：证据整理与设计假设（CPU，预计 <2 CPU-hours；无下载/折叠）
 
@@ -35,26 +35,26 @@
 
 ### A2. 代表序列与证据层
 
-- 每个 70% mode1 簇选一个代表：优先 target coverage ≥0.8、完整上下文、较低 C 端缺口；同分时按 seq_hash 固定排序。记录簇大小与选择规则。
+- 每个 70% mode1 簇选一个代表：按 tier、target coverage、域长度、S4 evidence tier 排序；未使用 seq_hash 或 C 端缺口 tie-break。记录簇大小与选择规则。
 - 证据层：T1 = 全长 ≥80% WT 覆盖 + complete + EC（6/3 簇）；T2 = complete+EC 局部（556/44，注明 C 端窗口）；T3 = 全长 text-only（63/19 减去 T1）；T4 = EC-dual 318/22（无 WT 序列命中，仅注释层）；T5 = reviewed positives 61/7（交叉核对）；S5 = 家族基线。
 - 主分析不把 S1/S2/S3/S4 的数量相加；每个结论写清来源层和簇支持数。
 
 ### A3. 目标感知的完整域对齐与邻域表
 
-- 以完整蛋白为 query、WT NMNAT 4–181 与 WT 1–341 为 target，使用 MMseqs target coverage（复用 `scripts/audit_wt_full_context.py` 的参数）加 BLOSUM62 局部/全局对齐；拒绝仅用 PF01467 局部切片推断锚点。
-- 记录：覆盖、identity、gap、锚点列是否有歧义、H14/H17/T135/R138 的 WT-relative 残基、锚点 ±4–6 位邻域、2QJO ≤8 Å/≤4.5 Å 口袋位置（复用 `data/processed/anchor_mapping_audit.csv`、`data/raw/source/domain_pocket_map.json`、`structural_interpretation_basis.json`）。不新算对接或折叠；2QJO 是 NAD 产物参照，不是 ATP/NMN 中间态。`structural_interpretation_basis.json` 的 `formal_input_manifest=false`，执行前必须重新绑定实际模板文件与 SHA；编号偏移/缺口按 `docs/NATV_PAIRING_AUDIT.md` 继承。
-- 对每个位置统计各证据层的替换、独立簇支持数、S5 中的 NatV 频率；同一序列多名称/多 EC 保留冲突，不强行归类。
-- 输出 `target_aware_alignment.csv`、`anchor_neighbor_variation.csv`、`evidence_tiers.csv`。
+- 以完整蛋白为 query、WT NMNAT 4–181 与 WT 1–341 为 target，使用 BLOSUM62 局部比对（不重跑 MMseqs、不做全局比对）；拒绝仅用 PF01467 局部切片推断锚点。
+- 记录：覆盖、identity、gap、锚点列稳定性、H14/H17/T135/R138 的 WT-relative 残基、锚点 ±6 位线性序列邻域。只复用 `data/processed/anchor_mapping_audit.csv` 的最近锚点距离；`domain_pocket_map.json` 未作为候选几何真值，也没有逐残基口袋距离。不新算对接或折叠；2QJO 是 NAD 产物参照，不是 ATP/NMN 中间态。
+- 对每个位置统计各证据层的替换、不同 70% 序列簇支持数、S5 中的 NatV 频率；同一序列多名称/多 EC 保留冲突，不强行归类。
+- 输出 `source_inventory.csv`、`cluster_representatives.csv`、`target_aware_alignment.csv`、`anchor_neighbor_variation.csv`、`s5_position_frequencies.csv`、`hypothesis_table.csv`、`gate_A.json`。
 
 ### A4. 设计假设表
 
 - 目标 6–8 条，硬上限 12 条；仅 NMNAT 4–181、全长 341 aa、单/双替换、无 indel、不碰 Nudix/linker/末端。
 - 入选规则：
-  - 至少 2 个独立 70% 簇在该替换/位置组合上支持；直接改 H14/H17/R138 需要至少 2 个证据层且无结构冲突，T135 的天然 K/S/A 只作候选；
+  - 至少 2 个不同 70% 序列簇在该替换/位置组合上支持；直接改 H14/H17/R138 需要至少 2 个证据层且无结构冲突，T135 的天然 K/S/A 只作候选；
   - 优先锚点邻近/口袋第二壳层、当前 NatV 稀有的替换；与 S5 频率、QVAE 代表候选比较，排除已常见的组合；
   - 记录模板邻近、配体距离、局部空间/电荷风险与 UNKNOWN；不称“提高活性”。
 - 每条假设包含：variant_id、位置与替换、支持簇/层、S5 频率、模板依据、与现有 QVAE 候选的差异、匹配 WT/对照、待检验问题。
-- **Gate A**：若没有≥2 个独立簇支持、或只有 T4/text-only 支持、或全部是 S5 已常见变异，停止并报告“没有可信的新 NMNAT 替换”；不进入 Phase B，不降阈值。
+- **Gate A**：若没有≥2 个不同 70% 序列簇支持、或只有 T4/text-only 支持、或全部是 S5 已常见变异，停止并报告“没有可信的新 NMNAT 替换”；不进入 Phase B，不降阈值。
 
 ### A5. Phase A 交付
 
@@ -69,7 +69,7 @@
 ### B1. 候选重排诊断（CPU，不重训、不改变分布）
 
 - 输入：现役正式候选池 `data/results/natv_conditional_qvae/raw/candidates.parquet`、`matched_attempts.parquet`、`representative_candidates.csv`；不生成新序列。
-- 按 Phase A 的透明证据分重排/筛选 NMNAT 候选；证据分只作用于 NMNAT 4–181（Nudix/linker/末端不变），由独立簇支持、证据层和 S5 频率构成，不训练新分类器。同预算比较：
+- 按 Phase A 的透明证据分重排/筛选 NMNAT 候选；证据分只作用于 NMNAT 4–181（Nudix/linker/末端不变），由不同 70% 序列簇支持、证据层和 S5 频率构成，不训练新分类器。同预算比较：
   - A：现役代表选择（无证据）；
   - B：QVAE 候选按证据分重排；
   - C：deterministic 候选按同一证据分重排；
@@ -106,7 +106,7 @@
 ## 验证
 
 - Phase A：运行 `python scripts/build_nmnat_evolution_hypotheses.py --run experiments/natv_evolution_informed_nmnat`；检查 556/44、63/19、318/22、61/7 的来源计数、簇代表唯一性、不包含 protected roles、锚点分母与缺口说明、输入/输出 SHA256。
-- 人工核对 6–8 条假设：每条都有≥2 独立簇、明确证据层、S5 频率、模板依据、UNKNOWN 和匹配对照；若没有，`gate_A.json` 必须写明停止原因。
+- 人工核对 7 条假设：每条都有≥2 个不同 70% 序列簇、明确证据层、S5 频率、锚点依据、UNKNOWN 和匹配对照；若没有，`gate_A.json` 必须写明停止原因。
 - Phase B：B1 在 CPU 上对既有候选池 dry-run 并核对证据分/簇留出；B2 先 dry-run 校验 arm/掩码/种子/预算/先验权重与 checkpoint SHA，再申请 GPU 授权运行；输出完整失败、WT、重复与 MC 记录。
 - 不新增训练/下载/折叠；不修改 1,644/227/231 角色；249/75/4 继续隔离。
 

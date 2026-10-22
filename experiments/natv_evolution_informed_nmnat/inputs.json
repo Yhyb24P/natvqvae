@@ -19,10 +19,6 @@
     "path": "/home/yhshy/git_files/natvqvae/data/processed/anchor_mapping_audit.csv",
     "sha256": "7ba702100030b1bb5fc388e9d18af11ddb459cc5603a91fa9798955b36605838"
   },
-  "pocket_map": {
-    "path": "/home/yhshy/git_files/natvqvae/data/raw/source/domain_pocket_map.json",
-    "sha256": "5d016646f146e5b1619cdee58a6442b097c79fc4c69ca32b2b1d4a71e4452bec"
-  },
   "samples": {
     "path": "/home/yhshy/git_files/natvqvae/data/processed/samples.csv",
     "sha256": "d101f3abbc3c3e8db846110385ee484ca01eb5d2102b97d0ace6547b6c03e4e7"
@@ -45,7 +41,7 @@
   },
   "script": {
     "path": "/home/yhshy/git_files/natvqvae/scripts/build_nmnat_evolution_hypotheses.py",
-    "sha256": "a9a3eb137de13bbbdcf2b592f796d13d482aadac9e3e3fe67255a89cf7f7de15"
+    "sha256": "fddd794d36dcb387317b906b3421de98cbaf264583874756c9543019b848748d"
   },
   "wt_sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
 }
