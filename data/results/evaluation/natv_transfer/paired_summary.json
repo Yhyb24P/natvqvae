@@ -1,478 +1,258 @@
 {
-  "runs": {
-    "random_seed8301": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.770962711581824,
-          "posterior_joint_nll_per_residue": 1.7709546526249724,
-          "marginal_nll_per_residue": 1.7710946127510114,
-          "rows": 2724,
-          "components": 44
-        },
+  "per_pair": {
+    "prior_joint_nll_per_residue": {
+      "random_seed8301|auxinit_seed8301": {
         "global": {
-          "prior_joint_nll_per_residue": 1.715717701629351,
-          "posterior_joint_nll_per_residue": 1.7156436479835442,
-          "marginal_nll_per_residue": 1.7157794790459016,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.862090895256612,
-          "posterior_joint_nll_per_residue": 1.862076418198514,
-          "marginal_nll_per_residue": 1.862129300383049,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.480353929459749,
-          "posterior_joint_nll_per_residue": 1.4804650699708857,
-          "marginal_nll_per_residue": 1.48044043787118,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.9668773246358948,
-          "posterior_joint_nll_per_residue": 1.966974622400505,
-          "marginal_nll_per_residue": 1.9668798843509703,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.7599356499548053,
-        "posterior_joint_nll_per_residue": 1.7599561178853136,
-        "marginal_nll_per_residue": 1.760004109747626,
-        "ess": 60.15596042265362,
-        "posterior_joint_nll_mc_se": null
-      }
-    },
-    "random_seed8302": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.7953951323101842,
-          "posterior_joint_nll_per_residue": 1.795421853001338,
-          "marginal_nll_per_residue": 1.795569214785089,
-          "rows": 2724,
-          "components": 44
-        },
-        "global": {
-          "prior_joint_nll_per_residue": 1.7350636251518967,
-          "posterior_joint_nll_per_residue": 1.7351400339470326,
-          "marginal_nll_per_residue": 1.7351235064893678,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.8657610391595807,
-          "posterior_joint_nll_per_residue": 1.8656915207877185,
-          "marginal_nll_per_residue": 1.865823414089041,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.516215004036648,
-          "posterior_joint_nll_per_residue": 1.5162376500264767,
-          "marginal_nll_per_residue": 1.516294569558517,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.8872924903012254,
-          "posterior_joint_nll_per_residue": 1.8873158553459985,
-          "marginal_nll_per_residue": 1.8872614774374128,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.7621610628246032,
-        "posterior_joint_nll_per_residue": 1.7621776620207308,
-        "marginal_nll_per_residue": 1.762236610116765,
-        "ess": 59.919729784209515,
-        "posterior_joint_nll_mc_se": null
-      }
-    },
-    "random_seed8303": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.8128286980722368,
-          "posterior_joint_nll_per_residue": 1.8128250227935174,
-          "marginal_nll_per_residue": 1.8133259384716756,
-          "rows": 2724,
-          "components": 44
-        },
-        "global": {
-          "prior_joint_nll_per_residue": 1.7423726901818082,
-          "posterior_joint_nll_per_residue": 1.7423336563835774,
-          "marginal_nll_per_residue": 1.7425030058019586,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.8714664451182057,
-          "posterior_joint_nll_per_residue": 1.8715782006485768,
-          "marginal_nll_per_residue": 1.8715904155515704,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.5179375244716462,
-          "posterior_joint_nll_per_residue": 1.5180086555435146,
-          "marginal_nll_per_residue": 1.518066418141304,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.9167148812641661,
-          "posterior_joint_nll_per_residue": 1.916719045479495,
-          "marginal_nll_per_residue": 1.9167614903212291,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.7747993384625764,
-        "posterior_joint_nll_per_residue": 1.7748261728340267,
-        "marginal_nll_per_residue": 1.7750042339587284,
-        "ess": 59.09897734609504,
-        "posterior_joint_nll_mc_se": null
-      }
-    },
-    "auxinit_seed8301": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.7585663196598817,
-          "posterior_joint_nll_per_residue": 1.7584859086731253,
-          "marginal_nll_per_residue": 1.7586580825367557,
-          "rows": 2724,
-          "components": 44
-        },
-        "global": {
-          "prior_joint_nll_per_residue": 1.7031232108887917,
-          "posterior_joint_nll_per_residue": 1.703125843708757,
-          "marginal_nll_per_residue": 1.7031583116737699,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.8208814461886054,
-          "posterior_joint_nll_per_residue": 1.820945792597274,
-          "marginal_nll_per_residue": 1.820891497925131,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.479065612042933,
-          "posterior_joint_nll_per_residue": 1.479018938614534,
-          "marginal_nll_per_residue": 1.4791229609682173,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.9362315211215275,
-          "posterior_joint_nll_per_residue": 1.9362960521128965,
-          "marginal_nll_per_residue": 1.936271343075148,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.7407606655856156,
-        "posterior_joint_nll_per_residue": 1.7407564697373514,
-        "marginal_nll_per_residue": 1.7408102919424164,
-        "ess": 60.44891674594084,
-        "posterior_joint_nll_mc_se": null
-      }
-    },
-    "auxinit_seed8302": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.7853460107226788,
-          "posterior_joint_nll_per_residue": 1.785241367413734,
-          "marginal_nll_per_residue": 1.7855343774477848,
-          "rows": 2724,
-          "components": 44
-        },
-        "global": {
-          "prior_joint_nll_per_residue": 1.7235166571875156,
-          "posterior_joint_nll_per_residue": 1.7235086733185305,
-          "marginal_nll_per_residue": 1.7235742842161763,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.8249488142300527,
-          "posterior_joint_nll_per_residue": 1.8250391739459426,
-          "marginal_nll_per_residue": 1.8249790093090583,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.5146756999781426,
-          "posterior_joint_nll_per_residue": 1.5146406668670642,
-          "marginal_nll_per_residue": 1.514751752404813,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.9026597333440705,
-          "posterior_joint_nll_per_residue": 1.902756308381079,
-          "marginal_nll_per_residue": 1.9026730242544756,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.7524241723196734,
-        "posterior_joint_nll_per_residue": 1.7524249960748253,
-        "marginal_nll_per_residue": 1.7525044825218277,
-        "ess": 59.944893394478065,
-        "posterior_joint_nll_mc_se": null
-      }
-    },
-    "auxinit_seed8303": {
-      "regions": {
-        "random": {
-          "prior_joint_nll_per_residue": 1.7776148006861903,
-          "posterior_joint_nll_per_residue": 1.777651037246701,
-          "marginal_nll_per_residue": 1.7778806137654102,
-          "rows": 2724,
-          "components": 44
-        },
-        "global": {
-          "prior_joint_nll_per_residue": 1.7153728316875356,
-          "posterior_joint_nll_per_residue": 1.7153673386702941,
-          "marginal_nll_per_residue": 1.7154316425638394,
-          "rows": 5448,
-          "components": 44
-        },
-        "NMNAT": {
-          "prior_joint_nll_per_residue": 1.8064852675620326,
-          "posterior_joint_nll_per_residue": 1.8065514076872138,
-          "marginal_nll_per_residue": 1.8065068827303403,
-          "rows": 5448,
-          "components": 44
-        },
-        "Nudix": {
-          "prior_joint_nll_per_residue": 1.5409230517862984,
-          "posterior_joint_nll_per_residue": 1.540781326223501,
-          "marginal_nll_per_residue": 1.5410313442005403,
-          "rows": 5448,
-          "components": 44
-        },
-        "linker": {
-          "prior_joint_nll_per_residue": 1.9727507893990477,
-          "posterior_joint_nll_per_residue": 1.9728670426157424,
-          "marginal_nll_per_residue": 1.9728532960091136,
-          "rows": 5448,
-          "components": 44
-        }
-      },
-      "global": {
-        "prior_joint_nll_per_residue": 1.76356593900339,
-        "posterior_joint_nll_per_residue": 1.7635815934113446,
-        "marginal_nll_per_residue": 1.7636869969736024,
-        "ess": 60.00417114543212,
-        "posterior_joint_nll_mc_se": null
-      }
-    }
-  },
-  "per_seed": {
-    "8301": {
-      "prior_joint_nll_per_residue": {
-        "global": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.012594490740558224,
-          "ci_low": -0.023227893504896815,
-          "ci_high": -0.0014547368337225971
+          "ci95": [
+            -0.023227893504896815,
+            -0.0014547368337225971
+          ]
         },
         "NMNAT": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.04120944906799909,
-          "ci_low": -0.05391279524538206,
-          "ci_high": -0.02900241922553767
+          "ci95": [
+            -0.05391279524538206,
+            -0.02900241922553767
+          ]
         },
         "Nudix": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.0012883174168207127,
-          "ci_low": -0.014285414183622478,
-          "ci_high": 0.01213089578448864
+          "ci95": [
+            -0.014285414183622478,
+            0.01213089578448864
+          ]
         },
         "linker": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.030645803514364908,
-          "ci_low": -0.06297123205499072,
-          "ci_high": -0.0012488970032977543
+          "ci95": [
+            -0.06297123205499072,
+            -0.0012488970032977543
+          ]
         },
         "random": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.012396391921939738,
-          "ci_low": -0.02090345861049086,
-          "ci_high": -0.004012821728076044
+          "ci95": [
+            -0.02090345861049086,
+            -0.004012821728076044
+          ]
         }
       },
-      "posterior_joint_nll_per_residue": {
+      "random_seed8302|auxinit_seed8302": {
         "global": {
-          "n": 44,
-          "mean": -0.012517804274792826,
-          "ci_low": -0.023217480751385054,
-          "ci_high": -0.00143295960651149
-        },
-        "NMNAT": {
-          "n": 44,
-          "mean": -0.04113062560124385,
-          "ci_low": -0.05378890915931529,
-          "ci_high": -0.028940251440868963
-        },
-        "Nudix": {
-          "n": 44,
-          "mean": -0.001446131356346949,
-          "ci_low": -0.014547407813075914,
-          "ci_high": 0.011923942831709588
-        },
-        "linker": {
-          "n": 44,
-          "mean": -0.03067857028760924,
-          "ci_low": -0.06305586298301662,
-          "ci_high": -0.0014058023912425102
-        },
-        "random": {
-          "n": 44,
-          "mean": -0.012468743951849265,
-          "ci_low": -0.02095279093914287,
-          "ci_high": -0.004116915981417523
-        }
-      }
-    },
-    "8302": {
-      "prior_joint_nll_per_residue": {
-        "global": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.01154696796438337,
-          "ci_low": -0.023364157049582668,
-          "ci_high": 0.0006942575360228446
+          "ci95": [
+            -0.023364157049582668,
+            0.0006942575360228446
+          ]
         },
         "NMNAT": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.040812224929533764,
-          "ci_low": -0.052367900650386524,
-          "ci_high": -0.029223891892583804
+          "ci95": [
+            -0.052367900650386524,
+            -0.029223891892583804
+          ]
         },
         "Nudix": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.0015393040585072585,
-          "ci_low": -0.013126666268993987,
-          "ci_high": 0.011161356552366893
+          "ci95": [
+            -0.013126666268993987,
+            0.011161356552366893
+          ]
         },
         "linker": {
-          "n": 44,
+          "groups": 44,
           "mean": 0.01536724304285027,
-          "ci_low": -0.017216581135939053,
-          "ci_high": 0.04655608486438708
+          "ci95": [
+            -0.017216581135939053,
+            0.04655608486438708
+          ]
         },
         "random": {
-          "n": 44,
+          "groups": 44,
           "mean": -0.01004912158751073,
-          "ci_low": -0.018374639855165416,
-          "ci_high": -0.0016291958500087268
+          "ci95": [
+            -0.018374639855165416,
+            -0.0016291958500087268
+          ]
         }
       },
-      "posterior_joint_nll_per_residue": {
+      "random_seed8303|auxinit_seed8303": {
         "global": {
-          "n": 44,
-          "mean": -0.01163136062849726,
-          "ci_low": -0.023393363545057954,
-          "ci_high": 0.0005816975685947329
+          "groups": 44,
+          "mean": -0.026999858494271646,
+          "ci95": [
+            -0.04538470249296532,
+            -0.008222439320188303
+          ]
         },
         "NMNAT": {
-          "n": 44,
-          "mean": -0.04065234684177506,
-          "ci_low": -0.05219736737177616,
-          "ci_high": -0.029045461820601196
+          "groups": 44,
+          "mean": -0.06498117755616824,
+          "ci95": [
+            -0.08532486385902101,
+            -0.04475141647430495
+          ]
         },
         "Nudix": {
-          "n": 44,
-          "mean": -0.0015969831594092043,
-          "ci_low": -0.013139207731661702,
-          "ci_high": 0.011085151543020876
+          "groups": 44,
+          "mean": 0.022985527314653573,
+          "ci95": [
+            -0.004155405761981417,
+            0.050146974481471665
+          ]
         },
         "linker": {
-          "n": 44,
-          "mean": 0.015440453035075841,
-          "ci_low": -0.01715445029632887,
-          "ci_high": 0.04664384778026673
+          "groups": 44,
+          "mean": 0.05603590813487704,
+          "ci95": [
+            -0.00427172820980274,
+            0.11406496376485183
+          ]
         },
         "random": {
-          "n": 44,
-          "mean": -0.010180485587606314,
-          "ci_low": -0.018521375287780903,
-          "ci_high": -0.0017845965226698298
+          "groups": 44,
+          "mean": -0.03521389738604681,
+          "ci95": [
+            -0.053259435328541466,
+            -0.017051209279382962
+          ]
         }
       }
     },
-    "8303": {
-      "prior_joint_nll_per_residue": {
+    "posterior_joint_nll_per_residue": {
+      "random_seed8301|auxinit_seed8301": {
         "global": {
-          "n": 44,
-          "mean": -0.026999858494271646,
-          "ci_low": -0.04538470249296532,
-          "ci_high": -0.008222439320188303
+          "groups": 44,
+          "mean": -0.012517804274792826,
+          "ci95": [
+            -0.023217480751385054,
+            -0.00143295960651149
+          ]
         },
         "NMNAT": {
-          "n": 44,
-          "mean": -0.06498117755616824,
-          "ci_low": -0.08532486385902101,
-          "ci_high": -0.04475141647430495
+          "groups": 44,
+          "mean": -0.04113062560124385,
+          "ci95": [
+            -0.05378890915931529,
+            -0.028940251440868963
+          ]
         },
         "Nudix": {
-          "n": 44,
-          "mean": 0.022985527314653573,
-          "ci_low": -0.004155405761981417,
-          "ci_high": 0.050146974481471665
+          "groups": 44,
+          "mean": -0.001446131356346949,
+          "ci95": [
+            -0.014547407813075914,
+            0.011923942831709588
+          ]
         },
         "linker": {
-          "n": 44,
-          "mean": 0.05603590813487704,
-          "ci_low": -0.00427172820980274,
-          "ci_high": 0.11406496376485183
+          "groups": 44,
+          "mean": -0.03067857028760924,
+          "ci95": [
+            -0.06305586298301662,
+            -0.0014058023912425102
+          ]
         },
         "random": {
-          "n": 44,
-          "mean": -0.03521389738604681,
-          "ci_low": -0.053259435328541466,
-          "ci_high": -0.017051209279382962
+          "groups": 44,
+          "mean": -0.012468743951849265,
+          "ci95": [
+            -0.02095279093914287,
+            -0.004116915981417523
+          ]
         }
       },
-      "posterior_joint_nll_per_residue": {
+      "random_seed8302|auxinit_seed8302": {
         "global": {
-          "n": 44,
-          "mean": -0.026966317713279227,
-          "ci_low": -0.0453315301765534,
-          "ci_high": -0.00814749608747115
+          "groups": 44,
+          "mean": -0.01163136062849726,
+          "ci95": [
+            -0.023393363545057954,
+            0.0005816975685947329
+          ]
         },
         "NMNAT": {
-          "n": 44,
-          "mean": -0.06502679296136357,
-          "ci_low": -0.08534315319110704,
-          "ci_high": -0.04483019738686366
+          "groups": 44,
+          "mean": -0.04065234684177506,
+          "ci95": [
+            -0.05219736737177616,
+            -0.029045461820601196
+          ]
         },
         "Nudix": {
-          "n": 44,
-          "mean": 0.0227726706799864,
-          "ci_low": -0.004508720301793029,
-          "ci_high": 0.04997067952522775
+          "groups": 44,
+          "mean": -0.0015969831594092043,
+          "ci95": [
+            -0.013139207731661702,
+            0.011085151543020876
+          ]
         },
         "linker": {
-          "n": 44,
-          "mean": 0.056147997136246054,
-          "ci_low": -0.004372400560666705,
-          "ci_high": 0.11423181352411138
+          "groups": 44,
+          "mean": 0.015440453035075841,
+          "ci95": [
+            -0.01715445029632887,
+            0.04664384778026673
+          ]
         },
         "random": {
-          "n": 44,
+          "groups": 44,
+          "mean": -0.010180485587606314,
+          "ci95": [
+            -0.018521375287780903,
+            -0.0017845965226698298
+          ]
+        }
+      },
+      "random_seed8303|auxinit_seed8303": {
+        "global": {
+          "groups": 44,
+          "mean": -0.026966317713279227,
+          "ci95": [
+            -0.0453315301765534,
+            -0.00814749608747115
+          ]
+        },
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.06502679296136357,
+          "ci95": [
+            -0.08534315319110704,
+            -0.04483019738686366
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": 0.0227726706799864,
+          "ci95": [
+            -0.004508720301793029,
+            0.04997067952522775
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": 0.056147997136246054,
+          "ci95": [
+            -0.004372400560666705,
+            0.11423181352411138
+          ]
+        },
+        "random": {
+          "groups": 44,
           "mean": -0.03517398554682021,
-          "ci_low": -0.053312356381486424,
-          "ci_high": -0.017002356202991113
+          "ci95": [
+            -0.053312356381486424,
+            -0.017002356202991113
+          ]
         }
       }
     }
@@ -480,67 +260,517 @@
   "overall": {
     "prior_joint_nll_per_residue": {
       "global": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.017047105733071083,
-        "ci_low": -0.026811204714945594,
-        "ci_high": -0.00700813042064781
+        "ci95": [
+          -0.026811204714945594,
+          -0.00700813042064781
+        ]
       },
       "NMNAT": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.04900095051790036,
-        "ci_low": -0.06025225572346953,
-        "ci_high": -0.03758172975605085
+        "ci95": [
+          -0.06025225572346953,
+          -0.03758172975605085
+        ]
       },
       "Nudix": {
-        "n": 44,
+        "groups": 44,
         "mean": 0.006719301946441865,
-        "ci_low": -0.00626375528095867,
-        "ci_high": 0.01975713386851891
+        "ci95": [
+          -0.00626375528095867,
+          0.01975713386851891
+        ]
       },
       "linker": {
-        "n": 44,
+        "groups": 44,
         "mean": 0.013585782554454138,
-        "ci_low": -0.01231350436056749,
-        "ci_high": 0.038755105085549524
+        "ci95": [
+          -0.01231350436056749,
+          0.038755105085549524
+        ]
       },
       "random": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.019219803631832424,
-        "ci_low": -0.027887995393356405,
-        "ci_high": -0.010986755158954918
+        "ci95": [
+          -0.027887995393356405,
+          -0.010986755158954918
+        ]
       }
     },
     "posterior_joint_nll_per_residue": {
       "global": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.017038494205523103,
-        "ci_low": -0.02680908447978448,
-        "ci_high": -0.006998976506536314
+        "ci95": [
+          -0.02680908447978448,
+          -0.006998976506536314
+        ]
       },
       "NMNAT": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.04893658846812749,
-        "ci_low": -0.06015812498345235,
-        "ci_high": -0.037511381114412
+        "ci95": [
+          -0.06015812498345235,
+          -0.037511381114412
+        ]
       },
       "Nudix": {
-        "n": 44,
+        "groups": 44,
         "mean": 0.006576518721410083,
-        "ci_low": -0.006419519201487273,
-        "ci_high": 0.0195971160368577
+        "ci95": [
+          -0.006419519201487273,
+          0.0195971160368577
+        ]
       },
       "linker": {
-        "n": 44,
+        "groups": 44,
         "mean": 0.013636626627904215,
-        "ci_low": -0.01235514823607266,
-        "ci_high": 0.038883723695274035
+        "ci95": [
+          -0.01235514823607266,
+          0.038883723695274035
+        ]
       },
       "random": {
-        "n": 44,
+        "groups": 44,
         "mean": -0.019274405028758598,
-        "ci_low": -0.027944924902020142,
-        "ci_high": -0.010999915383049343
+        "ci95": [
+          -0.027944924902020142,
+          -0.010999915383049343
+        ]
       }
     }
-  }
+  },
+  "ci_scope": "component bootstrap over the common groups given the fixed training seeds; seed variability is reported separately",
+  "runs": {
+    "random_seed8301": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7157177016293246,
+          "posterior_joint_nll_per_residue": 1.7156436479835149,
+          "prior_joint_nll_mc_se": 6.092792178856092e-05,
+          "posterior_joint_nll_mc_se": 5.852967794584725e-05,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8620908952565758,
+          "posterior_joint_nll_per_residue": 1.8620764181984832,
+          "prior_joint_nll_mc_se": 6.98948220831442e-05,
+          "posterior_joint_nll_mc_se": 5.254198605085004e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.4803539294597237,
+          "posterior_joint_nll_per_residue": 1.4804650699708584,
+          "prior_joint_nll_mc_se": 3.194569258897111e-05,
+          "posterior_joint_nll_mc_se": 5.3499123449162816e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.9668773246358597,
+          "posterior_joint_nll_per_residue": 1.9669746224004712,
+          "prior_joint_nll_mc_se": 4.927688679909655e-05,
+          "posterior_joint_nll_mc_se": 4.4812204038875155e-05,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.770962711581811,
+          "posterior_joint_nll_per_residue": 1.7709546526249633,
+          "prior_joint_nll_mc_se": 4.516847450639862e-05,
+          "posterior_joint_nll_mc_se": 1.868730293151671e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/random_seed8301/best.pt",
+        "checkpoint_sha256": "417dede1de05d3917fc11ec23f63b5f48e8d46be8426ecdfe90e663946a2862a",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 136.375336468991,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.7599356499548053,
+        "posterior_joint_nll_per_residue": 1.7599561178853136,
+        "marginal_nll_per_residue": 1.760004109747626,
+        "prior_expected_reconstruction_nll_per_residue": 1.76094168447295,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7609297135837974,
+        "kl": 0.0035926978657472085,
+        "ess": 60.15596042265362,
+        "max_weight": 0.026714550963499
+      }
+    },
+    "random_seed8302": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7350636251518645,
+          "posterior_joint_nll_per_residue": 1.7351400339470002,
+          "prior_joint_nll_mc_se": 2.269070673376454e-05,
+          "posterior_joint_nll_mc_se": 4.645512533445671e-05,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8657610391595498,
+          "posterior_joint_nll_per_residue": 1.8656915207876876,
+          "prior_joint_nll_mc_se": 3.3718169184109625e-05,
+          "posterior_joint_nll_mc_se": 3.8284509995790324e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.5162150040366271,
+          "posterior_joint_nll_per_residue": 1.5162376500264494,
+          "prior_joint_nll_mc_se": 4.20027847117165e-05,
+          "posterior_joint_nll_mc_se": 4.9132284117672155e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8872924903011883,
+          "posterior_joint_nll_per_residue": 1.8873158553459677,
+          "prior_joint_nll_mc_se": 5.075033376888433e-05,
+          "posterior_joint_nll_mc_se": 0.00011505630498969678,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.795395132310179,
+          "posterior_joint_nll_per_residue": 1.7954218530013295,
+          "prior_joint_nll_mc_se": 4.408961917480837e-05,
+          "posterior_joint_nll_mc_se": 3.224573756855225e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/random_seed8302/best.pt",
+        "checkpoint_sha256": "64e5a7d71d1183788873ddce2b6e441e5d12c67bf8662e0973f63d709404fb22",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 133.25302756899328,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.7621610628246032,
+        "posterior_joint_nll_per_residue": 1.7621776620207308,
+        "marginal_nll_per_residue": 1.762236610116765,
+        "prior_expected_reconstruction_nll_per_residue": 1.763192681567343,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7632167351726495,
+        "kl": 0.003938392478046482,
+        "ess": 59.919729784209515,
+        "max_weight": 0.027100018377694317
+      }
+    },
+    "random_seed8303": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7423726901817729,
+          "posterior_joint_nll_per_residue": 1.7423336563835434,
+          "prior_joint_nll_mc_se": 2.3273836132016918e-05,
+          "posterior_joint_nll_mc_se": 6.830538550067319e-06,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8714664451181682,
+          "posterior_joint_nll_per_residue": 1.8715782006485397,
+          "prior_joint_nll_mc_se": 2.9262249071095012e-05,
+          "posterior_joint_nll_mc_se": 5.731450667889378e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.5179375244716218,
+          "posterior_joint_nll_per_residue": 1.5180086555434875,
+          "prior_joint_nll_mc_se": 1.5762175978982365e-05,
+          "posterior_joint_nll_mc_se": 4.635757065620607e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.9167148812641337,
+          "posterior_joint_nll_per_residue": 1.916719045479462,
+          "prior_joint_nll_mc_se": 6.0476427785225586e-05,
+          "posterior_joint_nll_mc_se": 5.353294655141396e-05,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.812828698072231,
+          "posterior_joint_nll_per_residue": 1.8128250227935083,
+          "prior_joint_nll_mc_se": 3.724201929333576e-05,
+          "posterior_joint_nll_mc_se": 5.0232116978817044e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/random_seed8303/best.pt",
+        "checkpoint_sha256": "54037cca7db31827d2edddc2e54547908c52e46c132b06dccdb0e16f8a87a172",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 123.55390412999259,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.7747993384625764,
+        "posterior_joint_nll_per_residue": 1.7748261728340267,
+        "marginal_nll_per_residue": 1.7750042339587284,
+        "prior_expected_reconstruction_nll_per_residue": 1.7760081418483138,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7760694625941995,
+        "kl": 0.0024149273345923867,
+        "ess": 59.09897734609504,
+        "max_weight": 0.028886126288785768
+      }
+    },
+    "auxinit_seed8301": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.703123210888766,
+          "posterior_joint_nll_per_residue": 1.7031258437087218,
+          "prior_joint_nll_mc_se": 4.3730173559363485e-05,
+          "posterior_joint_nll_mc_se": 2.3570148327884053e-05,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8208814461885772,
+          "posterior_joint_nll_per_residue": 1.8209457925972397,
+          "prior_joint_nll_mc_se": 4.066586204813655e-05,
+          "posterior_joint_nll_mc_se": 4.018605973202395e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.4790656120429029,
+          "posterior_joint_nll_per_residue": 1.4790189386145114,
+          "prior_joint_nll_mc_se": 3.2540483571171194e-05,
+          "posterior_joint_nll_mc_se": 2.8506909353923065e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.9362315211214949,
+          "posterior_joint_nll_per_residue": 1.9362960521128618,
+          "prior_joint_nll_mc_se": 3.7184666758571764e-05,
+          "posterior_joint_nll_mc_se": 6.6813995723181e-05,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7585663196598722,
+          "posterior_joint_nll_per_residue": 1.7584859086731144,
+          "prior_joint_nll_mc_se": 3.1253021906670184e-05,
+          "posterior_joint_nll_mc_se": 1.2596355576006508e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/auxinit_seed8301/best.pt",
+        "checkpoint_sha256": "881559d9869be85e287ec0098994edefeee050cb94eb6320408e54100792fb6f",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 136.2554932130006,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.7407606655856156,
+        "posterior_joint_nll_per_residue": 1.7407564697373514,
+        "marginal_nll_per_residue": 1.7408102919424164,
+        "prior_expected_reconstruction_nll_per_residue": 1.7417266268705782,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7417204316627268,
+        "kl": 0.0017400251773926857,
+        "ess": 60.44891674594084,
+        "max_weight": 0.026128720896854533
+      }
+    },
+    "auxinit_seed8302": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7235166571874816,
+          "posterior_joint_nll_per_residue": 1.7235086733185028,
+          "prior_joint_nll_mc_se": 3.718889629815146e-05,
+          "posterior_joint_nll_mc_se": 2.8605266342412106e-05,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8249488142300165,
+          "posterior_joint_nll_per_residue": 1.8250391739459126,
+          "prior_joint_nll_mc_se": 2.9283161323628254e-05,
+          "posterior_joint_nll_mc_se": 5.30704910104087e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.5146756999781197,
+          "posterior_joint_nll_per_residue": 1.51464066686704,
+          "prior_joint_nll_mc_se": 3.877667350015711e-05,
+          "posterior_joint_nll_mc_se": 5.663570118244977e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.902659733344038,
+          "posterior_joint_nll_per_residue": 1.9027563083810433,
+          "prior_joint_nll_mc_se": 3.538910845886252e-05,
+          "posterior_joint_nll_mc_se": 5.717844383495617e-05,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7853460107226682,
+          "posterior_joint_nll_per_residue": 1.7852413674137237,
+          "prior_joint_nll_mc_se": 5.2840300404402446e-05,
+          "posterior_joint_nll_mc_se": 1.2197301449558429e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/auxinit_seed8302/best.pt",
+        "checkpoint_sha256": "406534443555105915d41c9d84e07a34da2540ae2e97d3a9a5293a77dce4d35b",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 125.75256959800026,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.7524241723196734,
+        "posterior_joint_nll_per_residue": 1.7524249960748253,
+        "marginal_nll_per_residue": 1.7525044825218277,
+        "prior_expected_reconstruction_nll_per_residue": 1.7534725025677287,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7534848447871725,
+        "kl": 0.0021317332582059556,
+        "ess": 59.944893394478065,
+        "max_weight": 0.027263138424249087
+      }
+    },
+    "auxinit_seed8303": {
+      "regions": {
+        "global": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7153728316875019,
+          "posterior_joint_nll_per_residue": 1.7153673386702648,
+          "prior_joint_nll_mc_se": 1.5714628407436993e-05,
+          "posterior_joint_nll_mc_se": 3.3884465718635846e-05,
+          "repeats": 4
+        },
+        "NMNAT": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.8064852675619998,
+          "posterior_joint_nll_per_residue": 1.8065514076871763,
+          "prior_joint_nll_mc_se": 2.1299487736274058e-05,
+          "posterior_joint_nll_mc_se": 2.0319578606820245e-05,
+          "repeats": 4
+        },
+        "Nudix": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.5409230517862753,
+          "posterior_joint_nll_per_residue": 1.5407813262234742,
+          "prior_joint_nll_mc_se": 2.8792500642596263e-05,
+          "posterior_joint_nll_mc_se": 3.665085990793032e-05,
+          "repeats": 4
+        },
+        "linker": {
+          "rows": 5448,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.9727507893990113,
+          "posterior_joint_nll_per_residue": 1.9728670426157076,
+          "prior_joint_nll_mc_se": 8.076326929721837e-05,
+          "posterior_joint_nll_mc_se": 8.065244801994696e-05,
+          "repeats": 4
+        },
+        "random": {
+          "rows": 2724,
+          "components": 44,
+          "prior_joint_nll_per_residue": 1.7776148006861845,
+          "posterior_joint_nll_per_residue": 1.777651037246688,
+          "prior_joint_nll_mc_se": 2.716551981170496e-05,
+          "posterior_joint_nll_mc_se": 2.9162418947647234e-05,
+          "repeats": 4
+        }
+      },
+      "global_evaluation": {
+        "status": "COMPLETED",
+        "split": "validation",
+        "checkpoint": "data/weights/qvae/auxinit_seed8303/best.pt",
+        "checkpoint_sha256": "86f7a5e38e7538975e43c21ce4cd8995db6eb6bbdea8da0221ac924dcc73dd71",
+        "queries": 24516,
+        "sample_count": 64,
+        "repeats": 4,
+        "aggregation": "component-weighted mean of per-target-residue query scores",
+        "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+        "seconds": 136.2138170459948,
+        "esm_model": "data/weights/esm2",
+        "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+        "prior_joint_nll_per_residue": 1.76356593900339,
+        "posterior_joint_nll_per_residue": 1.7635815934113446,
+        "marginal_nll_per_residue": 1.7636869969736024,
+        "prior_expected_reconstruction_nll_per_residue": 1.76455433478212,
+        "posterior_expected_reconstruction_nll_per_residue": 1.7645884593725976,
+        "kl": 0.0030484054591427335,
+        "ess": 60.00417114543212,
+        "max_weight": 0.027109648833878786
+      }
+    }
+  },
+  "limits": "component-level bootstrap given the trained seeds; not a resampling of training seeds; MC SE is the observed four-repeat standard error"
 }

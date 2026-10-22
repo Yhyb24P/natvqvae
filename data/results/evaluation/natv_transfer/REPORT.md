@@ -26,9 +26,11 @@
 
 ## 全开发验证评价
 
-对 227 条 validation 的 27 个混合 mask 做 4 次重复评价；按 component 与 seed 配对，bootstrap 2,000 次（seed 8802）。最终配对使用 44 个共同 component。
+对 227 条 validation 的 27 个混合 mask 做 4 次重复评价；按 component 与 seed 配对，bootstrap 2,000 次（seed 8802）。最终配对使用 44 个共同 component。表中的“全部掩码加权总体”指 27 个混合 mask 的总体加权评分；“global 区域掩码”专指 `global_*` 位置掩码，两者不能混称。
 
-| run | global prior NLL | global posterior NLL | ESS |
+四次重复分别加权汇总后，NMNAT 的 MC SE 为 2.1×10⁻⁵–7.0×10⁻⁵ nats/残基，约为 0.049 效应的 0.04–0.14%。overall CI 是先对每个 component 取 3 个 seed 的差值均值，再对 44 个 component 做 bootstrap；它不重采样训练 seed，seed 差异另列。
+
+| run | 全部掩码加权总体 prior NLL | 全部掩码加权总体 posterior NLL | ESS |
 |---|---:|---:|---:|
 | random_8301 | 1.759936 | 1.759956 | 60.16 |
 | random_8302 | 1.762161 | 1.762178 | 59.92 |
@@ -41,13 +43,13 @@
 
 | region | mean Δ prior NLL | 95% CI | 判断 |
 |---|---:|---:|---|
-| global | -0.0170 | [-0.0268, -0.0070] | 改善 |
+| global 区域掩码 | -0.0170 | [-0.0268, -0.0070] | 改善 |
 | NMNAT | -0.0490 | [-0.0603, -0.0376] | 改善，跨 3 seeds 一致 |
-| Nudix | +0.0067 | [-0.0063, 0.0198] | 区间含 0，无显著退化 |
+| Nudix | +0.0067 | [-0.0063, 0.0198] | 未检出明确差异；不能排除约 +0.02 退化 |
 | linker | +0.0136 | [-0.0123, 0.0388] | 区间含 0 |
 | random masks | -0.0192 | [-0.0279, -0.0110] | 改善 |
 
-按 seed 的 NMNAT 差值：8301 -0.0412、8302 -0.0408、8303 -0.0650。posterior 结果与 prior 基本相同（NMNAT -0.0489，CI [-0.0602, -0.0375]），说明这是条件分布层面的迁移，而不是某个采样估计的偶然波动。
+按 seed 的 NMNAT 差值：8301 -0.0412、8302 -0.0408、8303 -0.0650。posterior 结果与 prior 基本相同（NMNAT -0.0489，CI [-0.0602, -0.0375]）。prior 与 posterior 是同一共享边缘分布的两种估计，接近不能证明潜变量不是主要机制；现有结果只能说明没有新的 shared-z 优势证据，不能归因到某个参数模块。
 
 ## 候选生成
 
@@ -56,13 +58,13 @@
 - 总 unique 全长序列 18,413（19 次重复 attempts 保留在分母）；所有候选只改 NMNAT 区域。
 - 原始统计：auxinit 的 Hamming 略低（13.03/13.26/13.35 vs random 13.24/13.61/13.37）；口袋位点行比例略低（0.673/0.686/0.689 vs 0.682/0.713/0.696）；锚点行在 seed 8301/8302 更低。
 - Hamming 相等配对分别为 1,404/1,239/976 对；匹配后口袋行比例几乎相同（如 seed 8301 0.601 vs 0.600），锚点行 auxinit 仍略低。
-- 结论：辅助初始化改善了条件概率，但没有证据表明它增加了候选数量、唯一性或口袋/锚点定向变化；在本固定预算下，auxinit 候选更偏保守，而不是更多或更“催化环境密集”。
+- 结论：辅助初始化改善了条件概率，但没有观察到候选数量、唯一性或口袋/锚点供给的优势；在本固定预算下 auxinit 的 Hamming 略低。口袋变化更多也不等于更优；当前代理量和 6 个探索性结构只支持“未观察到优势”，不证明不存在设计价值。
 
 代表候选按 3 对 Hamming 匹配（7/11/15 编辑）选出，见 `representative_candidates.fasta/csv`；优先匹配编辑强度与研究差异，而不是单看距离。
 
 ## 结构
 
-结构仅使用既有 BioEmu2 structure 模式，8 帧/序列，512 行固定 MSA；无配体、无 pLDDT/PAE、无新折叠或对接。所有目标 8/8 帧通过 physicality 检查。
+结构使用既有 BioEmu2 checkpoint 的 structure 模式预测，8 帧/序列，512 行固定 MSA；无新训练/下载/对接，无配体、无 pLDDT/PAE。所有目标 8/8 帧通过 physicality 检查。
 
 辅助域阶段（`data/results/evaluation/kvp40_auxiliary_structures/`）WT + 9 条唯一候选共 10 个目标，764.7 s。候选到 WT 的 median full RMSD 为 0.56–1.10 Å，NMNAT RMSD 0.294–0.914 Å；I145 邻域在 QVAE_R03/R04 和 deterministic_R04 达到 2.1–3.1 Å，其余约 0.28–1.17 Å。这里只有模板/预测邻近性，不是活性或稳定性证据。
 
@@ -81,10 +83,10 @@
 
 ## 解释与边界
 
-1. **迁移收益存在**：辅助初始化在完整 NatV 的 NMNAT 条件 NLL 上稳定改善约 0.049 nats/残基，global 约 0.017；Nudix 没有显著退化。这支持“更广的 NMNAT 演化信息可以改善完整 NatV 的条件序列建模”。
-2. **候选供给没有同步改善**：固定 18,432 次尝试下，auxinit 没有更多 unique、更多口袋/锚点变化；Hamming 匹配后差异也很小。因此不能仅凭 NLL 宣称“产生了更多更好的设计候选”。
-3. **潜变量不是主要机制**：prior 与 posterior 的差异很小、ESS 约 60/64；本结果更适合解释为辅助初始化对共享上下文/解码器的表征迁移，而不是共享 z 的联合建模优势。
-4. **单一辅助 seed**：auxinit 的三次主训练共享同一个辅助预训练 seed 8601；主 seed 变化已报告，但辅助 seed 的不确定性未覆盖。辅助预训练 18.95 min 单列，不能与 random 臂的总成本视为相等。
+1. **迁移收益存在**：辅助初始化在完整 NatV 的 NMNAT 条件 NLL 上稳定改善约 0.049 nats/残基，全部掩码加权总体约 0.017；Nudix 未检出明确差异，但不能排除约 +0.02 的退化。这支持“更广的 NMNAT 演化信息可以改善完整 NatV 的条件序列建模”，但收益属于辅助初始化整体方案。
+2. **候选供给没有同步改善**：固定 18,432 次尝试下，auxinit 没有更多 unique、更多口袋/锚点变化；Hamming 匹配后差异也很小。口袋变化更多不等于更优，当前代理量与 6 个探索性代表结构只支持“未观察到优势”，不证明无设计价值，也不能仅凭 NLL 宣称产生了更多更好的候选。
+3. **只能说到表征层面**：prior 与 posterior 的差异很小、ESS 约 60/64，但两者是同一共享边缘分布的两种估计，不能据此把机制归因到或排除某个参数模块；现有结果只支持辅助初始化整体方案带来的条件概率迁移。
+4. **单一辅助 seed 与整体方案**：auxinit 的三次主训练共享同一个辅助预训练 seed 8601；主 seed 变化已报告，但辅助 seed 的不确定性未覆盖。辅助预训练 18.95 min 单列，且额外步数/优化历程未与 random 臂匹配，因此收益是辅助初始化整体方案效应，不能独立归因于“新增演化信息”。
 5. **数据与结构限制**：30–35% identity 处于 twilight zone；70% 序列簇不是独立家族；2QJO 是 NAD⁺ 产物参照，没有 ATP/NMN 三元结构；结构邻近、模板位置和模型分数不等于活性、稳定性或 kcat/Km。
 6. 所有候选的酶学活性、底物特异性、Nudix 水解与 NAD⁺ 净积累仍为 UNKNOWN；test 未参与。
 
@@ -92,7 +94,8 @@
 
 - 训练：`data/results/training/natv_transfer/`，权重 `data/weights/qvae/{random,auxinit}_seed83xx/{initial,best,last}.pt`。
 - 生成：`data/results/generation/natv_transfer/`。
-- 评价：`data/results/evaluation/natv_transfer/{run}/evaluation.json` 与 `per_query.jsonl`；配对汇总 `paired_summary.json`。
+- 评价：`data/results/evaluation/natv_transfer/{run}/evaluation.json` 与 `per_query.jsonl`；汇总由 `natvqvae transfer-summary --manifest data/results/evaluation/natv_transfer/manifest.json --output <new empty evaluation run>` 从现有文件重建，输出 `paired_summary.json`、`generation_summary.json`、`training_curves.*`、`representative_candidates.*`、`run_identity.json`。`run_identity.json` 记录 config/target/population/split/checkpoint/输入与输出 SHA。
 - 训练曲线：`data/results/evaluation/natv_transfer/training_curves.png`。
 - 生成统计：`data/results/evaluation/natv_transfer/generation_summary.json`。
 - 结构：`data/results/evaluation/kvp40_auxiliary_structures/`；迁移代表结构 `data/results/evaluation/natv_transfer_structures/`。
+- 运行身份与校验：`manifest.json` 固定 runs/pairs/paths，`run_identity.json` 记录 code/git revision、summary 实现 SHA、manifest/config/target/population/split/checkpoint、每个 run 的 training/evaluation/generation summary、validation curve/selection、per_query 与候选文件 SHA，以及结构 summary SHA。Git 选择性提交小型 training/evaluation/generation summary；per_query、candidates 和大轨迹保留本地，可由 run_identity 的 SHA 校验。原候选恢复使用 `manifest.json` 中的路径与 `transfer-summary` 入口，不依赖临时脚本。

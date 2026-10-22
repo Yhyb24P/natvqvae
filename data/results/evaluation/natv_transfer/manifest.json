@@ -1,0 +1,164 @@
+{
+  "study": "full_natv_transfer",
+  "config": "config/transfer.yaml",
+  "target": "config/target.yaml",
+  "pocket_mapping": "data/results/evaluation/aux_qvae_seed8601/2qjo_wt_mapping.json",
+  "anchors": [
+    14,
+    17,
+    135,
+    138
+  ],
+  "runs": [
+    {
+      "name": "random_seed8301",
+      "arm": "random",
+      "seed": 8301,
+      "training_summary": "data/results/training/natv_transfer/random_seed8301/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/random_seed8301/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/random_seed8301/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/random_seed8301/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/random_seed8301/generation.json",
+      "candidates": "data/results/generation/natv_transfer/random_seed8301/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/random_seed8301/validation_selection.json"
+    },
+    {
+      "name": "random_seed8302",
+      "arm": "random",
+      "seed": 8302,
+      "training_summary": "data/results/training/natv_transfer/random_seed8302/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/random_seed8302/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/random_seed8302/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/random_seed8302/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/random_seed8302/generation.json",
+      "candidates": "data/results/generation/natv_transfer/random_seed8302/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/random_seed8302/validation_selection.json"
+    },
+    {
+      "name": "random_seed8303",
+      "arm": "random",
+      "seed": 8303,
+      "training_summary": "data/results/training/natv_transfer/random_seed8303/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/random_seed8303/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/random_seed8303/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/random_seed8303/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/random_seed8303/generation.json",
+      "candidates": "data/results/generation/natv_transfer/random_seed8303/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/random_seed8303/validation_selection.json"
+    },
+    {
+      "name": "auxinit_seed8301",
+      "arm": "auxinit",
+      "seed": 8301,
+      "training_summary": "data/results/training/natv_transfer/auxinit_seed8301/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/auxinit_seed8301/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/auxinit_seed8301/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/auxinit_seed8301/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/auxinit_seed8301/generation.json",
+      "candidates": "data/results/generation/natv_transfer/auxinit_seed8301/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/auxinit_seed8301/validation_selection.json"
+    },
+    {
+      "name": "auxinit_seed8302",
+      "arm": "auxinit",
+      "seed": 8302,
+      "training_summary": "data/results/training/natv_transfer/auxinit_seed8302/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/auxinit_seed8302/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/auxinit_seed8302/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/auxinit_seed8302/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/auxinit_seed8302/generation.json",
+      "candidates": "data/results/generation/natv_transfer/auxinit_seed8302/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/auxinit_seed8302/validation_selection.json"
+    },
+    {
+      "name": "auxinit_seed8303",
+      "arm": "auxinit",
+      "seed": 8303,
+      "training_summary": "data/results/training/natv_transfer/auxinit_seed8303/training_summary.json",
+      "training_curve": "data/results/training/natv_transfer/auxinit_seed8303/validation_curve.jsonl",
+      "per_query": "data/results/evaluation/natv_transfer/auxinit_seed8303/per_query.jsonl",
+      "evaluation": "data/results/evaluation/natv_transfer/auxinit_seed8303/evaluation.json",
+      "generation": "data/results/generation/natv_transfer/auxinit_seed8303/generation.json",
+      "candidates": "data/results/generation/natv_transfer/auxinit_seed8303/candidates.csv",
+      "validation_selection": "data/results/training/natv_transfer/auxinit_seed8303/validation_selection.json"
+    }
+  ],
+  "pairs": [
+    [
+      "random_seed8301",
+      "auxinit_seed8301"
+    ],
+    [
+      "random_seed8302",
+      "auxinit_seed8302"
+    ],
+    [
+      "random_seed8303",
+      "auxinit_seed8303"
+    ]
+  ],
+  "representatives": [
+    {
+      "representative_id": "random_H07",
+      "run": "random_seed8302",
+      "arm": "random",
+      "candidate_id": "QVAE_s8302_NMNAT_m08_r02_d52",
+      "research_question": "低编辑 + T135A 锚点",
+      "matched_hamming": 7
+    },
+    {
+      "representative_id": "auxinit_H07",
+      "run": "auxinit_seed8302",
+      "arm": "auxinit",
+      "candidate_id": "QVAE_s8302_NMNAT_m08_r02_d52",
+      "research_question": "低编辑 + T135A 锚点",
+      "matched_hamming": 7
+    },
+    {
+      "representative_id": "random_H11",
+      "run": "random_seed8302",
+      "arm": "random",
+      "candidate_id": "QVAE_s8302_NMNAT_m16_r10_d38",
+      "research_question": "口袋/第二壳层多替换",
+      "matched_hamming": 11
+    },
+    {
+      "representative_id": "auxinit_H11",
+      "run": "auxinit_seed8302",
+      "arm": "auxinit",
+      "candidate_id": "QVAE_s8302_NMNAT_m16_r10_d38",
+      "research_question": "口袋/第二壳层多替换",
+      "matched_hamming": 11
+    },
+    {
+      "representative_id": "random_H15",
+      "run": "random_seed8302",
+      "arm": "random",
+      "candidate_id": "QVAE_s8302_NMNAT_m16_r06_d27",
+      "research_question": "T135S + 多口袋位点",
+      "matched_hamming": 15
+    },
+    {
+      "representative_id": "auxinit_H15",
+      "run": "auxinit_seed8302",
+      "arm": "auxinit",
+      "candidate_id": "QVAE_s8302_NMNAT_m16_r06_d24",
+      "research_question": "T135R + 多口袋位点",
+      "matched_hamming": 15
+    }
+  ],
+  "structure_summaries": [
+    "data/results/evaluation/kvp40_auxiliary_structures/structure_summary.json",
+    "data/results/evaluation/natv_transfer_structures/structure_summary.json"
+  ],
+  "inputs": [
+    "config/transfer.yaml",
+    "config/sources.yaml",
+    "config/target.yaml",
+    "data/raw/sequences/natv_population.fasta",
+    "data/results/preprocessing/natv_family/train.csv",
+    "data/results/preprocessing/natv_family/validation.csv",
+    "data/results/preprocessing/natv_family/test.csv",
+    "data/weights/aux_qvae/QVAE_seed8601_best.pt"
+  ]
+}

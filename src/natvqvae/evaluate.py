@@ -5,7 +5,9 @@ import json
 import math
 import time
 import csv
-from collections import Counter
+import hashlib
+import subprocess
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -389,3 +391,309 @@ def summarize_auxiliary(config_path, training_dir, generation_dir, evaluation_di
               'implementation_sha256': sha256_file(__file__)}
     write_json(destination, result)
     return result
+
+
+_TRANSFER_REGIONS = ('global', 'NMNAT', 'Nudix', 'linker', 'random')
+
+
+def _panel_region(panel):
+    for region in _TRANSFER_REGIONS:
+        if panel.startswith(region + '_'):
+            return region
+    raise ValueError(f'Unknown panel region: {panel}')
+
+
+def _bootstrap(values, reps=2000, seed=8802):
+    values = np.asarray(values, dtype=float)
+    rng = np.random.default_rng(seed)
+    draws = rng.integers(len(values), size=(reps, len(values)))
+    means = values[draws].mean(1)
+    return {'groups': len(values), 'mean': float(values.mean()),
+            'ci95': np.quantile(means, [0.025, 0.975]).tolist()}
+
+
+def _read_transfer_run(run):
+    rows = [json.loads(line) for line in open(run['per_query'])]
+    component = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    repeats = defaultdict(lambda: defaultdict(lambda: [0.0, 0.0, 0.0]))
+    for row in rows:
+        region = _panel_region(row['panel'])
+        weight = float(row['weight'])
+        component[region]['prior_joint_nll_per_residue'][row['component']].append(
+            row['prior_joint_nll_per_residue'])
+        component[region]['posterior_joint_nll_per_residue'][row['component']].append(
+            row['posterior_joint_nll_per_residue'])
+        bucket = repeats[region][int(row['repeat'])]
+        bucket[0] += weight
+        bucket[1] += weight * row['prior_joint_nll_per_residue']
+        bucket[2] += weight * row['posterior_joint_nll_per_residue']
+    summary = json.load(open(run['evaluation']))
+    regions = {}
+    for region in _TRANSFER_REGIONS:
+        prior_repeats = [bucket[1] / bucket[0] for _, bucket in sorted(repeats[region].items())]
+        post_repeats = [bucket[2] / bucket[0] for _, bucket in sorted(repeats[region].items())]
+        prior_se = float(np.std(prior_repeats, ddof=1) / math.sqrt(len(prior_repeats)))
+        post_se = float(np.std(post_repeats, ddof=1) / math.sqrt(len(post_repeats)))
+        regions[region] = {
+            'rows': sum(len(v) for v in component[region]['prior_joint_nll_per_residue'].values()),
+            'components': len(component[region]['prior_joint_nll_per_residue']),
+            'prior_joint_nll_per_residue': float(np.mean([
+                np.mean(values) for values in
+                component[region]['prior_joint_nll_per_residue'].values()])),
+            'posterior_joint_nll_per_residue': float(np.mean([
+                np.mean(values) for values in
+                component[region]['posterior_joint_nll_per_residue'].values()])),
+            'prior_joint_nll_mc_se': prior_se,
+            'posterior_joint_nll_mc_se': post_se,
+            'repeats': len(prior_repeats),
+        }
+    return {'components': {
+        region: {metric: {name: float(np.mean(values)) for name, values in by_name.items()}
+                 for metric, by_name in by_metric.items()}
+        for region, by_metric in component.items()},
+        'regions': regions, 'evaluation': summary}
+
+
+def _paired_transfer(data, pairs):
+    result = {'per_pair': {}, 'overall': {}, 'ci_scope': (
+        'component bootstrap over the common groups given the fixed training seeds; '
+        'seed variability is reported separately')}
+    for metric in ('prior_joint_nll_per_residue', 'posterior_joint_nll_per_residue'):
+        result['per_pair'][metric] = {}
+        for random_name, aux_name in pairs:
+            key = f'{random_name}|{aux_name}'
+            result['per_pair'][metric][key] = {}
+            for region in _TRANSFER_REGIONS:
+                random = data[random_name]['components'][region][metric]
+                aux = data[aux_name]['components'][region][metric]
+                common = sorted(set(random) & set(aux))
+                result['per_pair'][metric][key][region] = _bootstrap(
+                    [aux[c] - random[c] for c in common])
+        result['overall'][metric] = {}
+        for region in _TRANSFER_REGIONS:
+            by_component = defaultdict(list)
+            for random_name, aux_name in pairs:
+                random = data[random_name]['components'][region][metric]
+                aux = data[aux_name]['components'][region][metric]
+                for component in sorted(set(random) & set(aux)):
+                    by_component[component].append(aux[component] - random[component])
+            result['overall'][metric][region] = _bootstrap(
+                [float(np.mean(values)) for values in by_component.values()])
+    return result
+
+
+def _generation_transfer(manifest):
+    from .data import Target
+    wt = Target.load(manifest['target']).sequence
+    mapping = json.load(open(manifest['pocket_mapping']))
+    pocket = set(mapping['pocket_positions'])
+    anchors = set(manifest['anchors'])
+    runs = {run['name']: run for run in manifest['runs']}
+    rows = {name: list(csv.DictReader(open(run['candidates'], newline='')))
+            for name, run in runs.items()}
+    output = {'runs': {}, 'pairs': {}, 'totals': {}}
+    for name, values in rows.items():
+        pocket_rows = anchor_rows = nudix_ok = 0
+        pocket_edits = anchor_edits = 0
+        for row in values:
+            edits = json.loads(row['edits'])
+            positions = {edit['position'] for edit in edits}
+            pocket_hits = positions & pocket
+            anchor_hits = positions & anchors
+            pocket_rows += bool(pocket_hits)
+            anchor_rows += bool(anchor_hits)
+            pocket_edits += len(pocket_hits)
+            anchor_edits += len(anchor_hits)
+            if not positions <= set(range(4, 182)):
+                raise ValueError(f'Candidate changed outside NMNAT: {row["candidate_id"]}')
+            nudix_ok += 1
+        unique = len({row['sequence_sha256'] for row in values})
+        output['runs'][name] = {
+            'arm': runs[name]['arm'], 'seed': int(runs[name]['seed']),
+            'attempts': len(values), 'unique_sequences': unique,
+            'duplicate_attempts_beyond_first': len(values) - unique,
+            'mean_Hamming': float(np.mean([int(row['Hamming']) for row in values])),
+            'pocket_edit_rows': pocket_rows, 'pocket_edits': pocket_edits,
+            'anchor_edit_rows': anchor_rows, 'anchor_edits': anchor_edits,
+            'nudix_unchanged': nudix_ok,
+        }
+    for random_name, aux_name in manifest['pairs']:
+        random, aux = rows[random_name], rows[aux_name]
+        random_by_key = {(row['group'], int(row['draw'])): row for row in random}
+        aux_by_key = {(row['group'], int(row['draw'])): row for row in aux}
+        if set(random_by_key) != set(aux_by_key):
+            raise ValueError('Generation attempts differ between arms')
+        for key in random_by_key:
+            a, b = random_by_key[key], aux_by_key[key]
+            if any(a[field] != b[field] for field in
+                   ('group', 'mask_size', 'prior_seed', 'uniform_seed')):
+                raise ValueError('Generation masks/uniforms differ between arms')
+        matched = [key for key in random_by_key
+                   if int(random_by_key[key]['Hamming']) == int(aux_by_key[key]['Hamming'])]
+        def stats(pool, source):
+            pocket_rows = sum(bool({e['position'] for e in json.loads(row['edits'])} & pocket)
+                              for row in (pool[k] for k in source))
+            anchor_rows = sum(bool({e['position'] for e in json.loads(row['edits'])} & anchors)
+                              for row in (pool[k] for k in source))
+            return {'rows': len(source), 'pocket_rows': pocket_rows,
+                    'pocket_rate': pocket_rows / len(source) if source else None,
+                    'anchor_rows': anchor_rows,
+                    'anchor_rate': anchor_rows / len(source) if source else None}
+        output['pairs'][f'{random_name}|{aux_name}'] = {
+            'pairs': len(random_by_key), 'common_masks_uniforms': True,
+            'hamming_equal_pairs': len(matched),
+            'raw': {'random': stats(random_by_key, list(random_by_key)),
+                    'auxinit': stats(aux_by_key, list(aux_by_key))},
+            'hamming_matched': {'random': stats(random_by_key, matched),
+                                'auxinit': stats(aux_by_key, matched)},
+        }
+    output['totals'] = {
+        'attempts': sum(v['attempts'] for v in output['runs'].values()),
+        'unique_sequences': sum(v['unique_sequences'] for v in output['runs'].values()),
+        'nudix_unchanged': sum(v['nudix_unchanged'] for v in output['runs'].values()),
+    }
+    return output
+
+
+def _training_curves(manifest, output):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    figure, axis = plt.subplots(figsize=(8, 5))
+    colors = {'random': '#1f77b4', 'auxinit': '#d62728'}
+    curve_rows = []
+    for run in manifest['runs']:
+        values = [json.loads(line) for line in open(run['training_curve'])]
+        epochs = [row['epoch'] for row in values]
+        scores = [row['prior_joint_nll_per_residue'] for row in values]
+        axis.plot(epochs, scores, marker='o', ms=3, lw=1.3, alpha=.85,
+                  color=colors[run['arm']], label=run['name'])
+        best = min(values, key=lambda row: row['prior_joint_nll_per_residue'])
+        axis.scatter([best['epoch']], [best['prior_joint_nll_per_residue']],
+                     marker='*', s=90, color=colors[run['arm']], edgecolor='black', zorder=5)
+        for row in values:
+            curve_rows.append([run['name'], row['epoch'], row['stage'],
+                               row['prior_joint_nll_per_residue'],
+                               row['posterior_joint_nll_per_residue'], row.get('ess_mean')])
+    axis.set_xlabel('epoch')
+    axis.set_ylabel('NMNAT selection prior joint NLL / residue')
+    axis.set_title('Full NatV transfer: fixed 384-query selection')
+    axis.grid(alpha=.25)
+    axis.legend(fontsize=7, ncol=2)
+    figure.tight_layout()
+    figure.savefig(output / 'training_curves.png', dpi=160)
+    with (output / 'training_curves.csv').open('w', newline='') as handle:
+        writer = csv.writer(handle, lineterminator='\n')
+        writer.writerow(['run', 'epoch', 'stage', 'prior_joint_nll_per_residue',
+                         'posterior_joint_nll_per_residue', 'ess_mean'])
+        writer.writerows(curve_rows)
+
+
+def _transfer_representatives(manifest, output):
+    runs = {run['name']: run for run in manifest['runs']}
+    rows = {name: list(csv.DictReader(open(run['candidates'], newline='')))
+            for name, run in runs.items()}
+    selected, fasta = [], {}
+    for item in manifest['representatives']:
+        pool = rows[item['run']]
+        matches = [row for row in pool if row['candidate_id'] == item['candidate_id']]
+        if len(matches) != 1:
+            raise ValueError(f'Representative not unique: {item}')
+        row = matches[0]
+        if int(row['Hamming']) != int(item['matched_hamming']):
+            raise ValueError(f'Representative Hamming differs: {item}')
+        sequence = row['sequence']
+        digest = row['sequence_sha256']
+        if hashlib.sha256(sequence.encode()).hexdigest() != digest:
+            raise ValueError(f'Representative SHA differs: {item}')
+        representative_id = item['representative_id']
+        fasta.setdefault(digest, {'id': representative_id, 'sequence': sequence})
+        selected.append({
+            'representative_id': representative_id, 'arm': item['arm'],
+            'seed': int(runs[item['run']]['seed']), 'candidate_id': row['candidate_id'],
+            'research_question': item['research_question'],
+            'matched_hamming': int(item['matched_hamming']), 'Hamming': int(row['Hamming']),
+            'edits': ';'.join(f'{edit["from"]}{edit["position"]}{edit["to"]}'
+                              for edit in json.loads(row['edits'])),
+            'sequence_sha256': digest, 'sequence': sequence,
+            'group': row['group'], 'draw': row['draw'],
+            'uniform_seed': row['uniform_seed'],
+        })
+    with (output / 'representative_candidates.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(selected[0]), lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(selected)
+    with (output / 'representative_candidates.fasta').open('w') as handle:
+        for item in fasta.values():
+            handle.write(f'>{item["id"]}\n{item["sequence"]}\n')
+    return selected
+
+
+def _transfer_identity(manifest, manifest_path, paired_path, generation_path, curves_path,
+                       representatives_path):
+    def digest(path):
+        return sha256_file(Path(path)) if Path(path).exists() else None
+    runs = {}
+    for run in manifest['runs']:
+        summary = json.load(open(run['training_summary']))
+        runs[run['name']] = {
+            'arm': run['arm'], 'seed': int(run['seed']),
+            'training_summary': {'path': run['training_summary'],
+                                 'sha256': digest(run['training_summary'])},
+            'evaluation': {'path': run['evaluation'], 'sha256': digest(run['evaluation'])},
+            'per_query': {'path': run['per_query'], 'sha256': digest(run['per_query'])},
+            'generation': {'path': run['generation'], 'sha256': digest(run['generation'])},
+            'candidates': {'path': run['candidates'], 'sha256': digest(run['candidates'])},
+            'training_curve': {'path': run['training_curve'], 'sha256': digest(run['training_curve'])},
+            'validation_selection': {'path': run['validation_selection'],
+                                     'sha256': digest(run['validation_selection'])},
+            'checkpoints': summary['checkpoints'],
+        }
+    structures = {}
+    for path in manifest.get('structure_summaries', []):
+        structures[path] = {'sha256': digest(path)}
+    identity = {
+        'manifest': {'path': str(manifest_path), 'sha256': digest(manifest_path)},
+        'git_revision': subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'summary_implementation_sha256': sha256_file(__file__),
+        'inputs': {path: digest(path) for path in manifest.get('inputs', [])},
+        'runs': runs,
+        'structures': structures,
+        'paired_summary': {'path': str(paired_path), 'sha256': digest(paired_path)},
+        'generation_summary': {'path': str(generation_path), 'sha256': digest(generation_path)},
+        'training_curves': {'path': str(curves_path), 'sha256': digest(curves_path)},
+        'representative_candidates': {'path': str(representatives_path),
+                                      'sha256': digest(representatives_path)},
+    }
+    return identity
+
+
+def summarize_transfer(manifest_path, output):
+    """Rebuild transfer summaries from existing per-query and candidate files."""
+    manifest = json.load(open(manifest_path))
+    output = Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(f'Transfer summary output already contains files: {output}')
+    output.mkdir(parents=True, exist_ok=True)
+    data = {run['name']: _read_transfer_run(run) for run in manifest['runs']}
+    paired = _paired_transfer(data, manifest['pairs'])
+    paired['runs'] = {run['name']: {
+        'regions': data[run['name']]['regions'],
+        'global_evaluation': data[run['name']]['evaluation'],
+    } for run in manifest['runs']}
+    paired['limits'] = (
+        'component-level bootstrap given the trained seeds; not a resampling of training seeds; '
+        'MC SE is the observed four-repeat standard error')
+    generation = _generation_transfer(manifest)
+    _training_curves(manifest, output)
+    representatives = _transfer_representatives(manifest, output)
+    write_json(output / 'paired_summary.json', paired)
+    write_json(output / 'generation_summary.json', generation)
+    identity = _transfer_identity(
+        manifest, manifest_path, output / 'paired_summary.json',
+        output / 'generation_summary.json', output / 'training_curves.png',
+        output / 'representative_candidates.csv')
+    write_json(output / 'run_identity.json', identity)
+    return {'status': 'COMPLETED', 'runs': len(data), 'representatives': len(representatives),
+            'output': str(output)}

@@ -1,0 +1,22 @@
+{
+  "status": "COMPLETED",
+  "split": "validation",
+  "checkpoint": "data/weights/qvae/auxinit_seed8301/best.pt",
+  "checkpoint_sha256": "881559d9869be85e287ec0098994edefeee050cb94eb6320408e54100792fb6f",
+  "queries": 24516,
+  "sample_count": 64,
+  "repeats": 4,
+  "aggregation": "component-weighted mean of per-target-residue query scores",
+  "estimator": "posterior importance sampling and direct-prior categorical Monte Carlo",
+  "seconds": 136.2554932130006,
+  "esm_model": "data/weights/esm2",
+  "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+  "prior_joint_nll_per_residue": 1.7407606655856156,
+  "posterior_joint_nll_per_residue": 1.7407564697373514,
+  "marginal_nll_per_residue": 1.7408102919424164,
+  "prior_expected_reconstruction_nll_per_residue": 1.7417266268705782,
+  "posterior_expected_reconstruction_nll_per_residue": 1.7417204316627268,
+  "kl": 0.0017400251773926857,
+  "ess": 60.44891674594084,
+  "max_weight": 0.026128720896854533
+}

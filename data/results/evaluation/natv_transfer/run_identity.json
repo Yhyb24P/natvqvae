@@ -1,0 +1,320 @@
+{
+  "manifest": {
+    "path": "data/results/evaluation/natv_transfer/manifest.json",
+    "sha256": "9b557ccbf2593c53d30ff7004a9c715f713eaf78b00a2fc721c6b3e69c374842"
+  },
+  "git_revision": "711a8a718a0f610a1254a26199f19a1f105210fe",
+  "summary_implementation_sha256": "f3e76305b71fae810b08a27ba4a174a127391639f6c30e07c93cd96dbe59b12a",
+  "inputs": {
+    "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
+    "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/preprocessing/natv_family/test.csv": "49278f009e15571687e2775a37132634be5bb2448974eb3cfa10c87331741bee",
+    "data/weights/aux_qvae/QVAE_seed8601_best.pt": "54f629d0fcbc948fa3069562a3c54f232b58adf1cf4102212fba1fa0c0707af8"
+  },
+  "runs": {
+    "random_seed8301": {
+      "arm": "random",
+      "seed": 8301,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/random_seed8301/training_summary.json",
+        "sha256": "2289a950384058d0aa90df5815ad9b44e21a7065d4290f7ae449aa0f3b445be8"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8301/evaluation.json",
+        "sha256": "f76c3017660f53a176e79a581433b9208a2a899e29d420658df7797f97a87f1c"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8301/per_query.jsonl",
+        "sha256": "1c3397296ae572dd2edd62db89a07d3f81e51f0ef18fc8c72c64ff733e49dcec"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/random_seed8301/generation.json",
+        "sha256": "55400be980fd4fcacc1c01c8c1e9311fd052855ed24856a471002e2facc56626"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/random_seed8301/candidates.csv",
+        "sha256": "d4730b1af0192d3f2af40d3ae852649efd971c54ac6e95fa75461cecd64ee8e4"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/random_seed8301/validation_curve.jsonl",
+        "sha256": "84e29c8d29e6821badf005bd60fc134be629132e96447576cd67c0c81a4bbd1d"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/random_seed8301/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/random_seed8301/initial.pt",
+          "sha256": "c9dea3be75d733653d4fb5d28f06c84909f492c943f499f1855c68fb6e298871"
+        },
+        "best": {
+          "path": "data/weights/qvae/random_seed8301/best.pt",
+          "sha256": "417dede1de05d3917fc11ec23f63b5f48e8d46be8426ecdfe90e663946a2862a"
+        },
+        "last": {
+          "path": "data/weights/qvae/random_seed8301/last.pt",
+          "sha256": "8eb6ce92ef632310129464c9cffe0cbf9414a82a367a973accc9b069ad94fdc9"
+        }
+      }
+    },
+    "random_seed8302": {
+      "arm": "random",
+      "seed": 8302,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/random_seed8302/training_summary.json",
+        "sha256": "6a45bf4e56a568ca2e9c7c5e0dfba65f93c59ae7de37a5a015129b440673c6b0"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8302/evaluation.json",
+        "sha256": "7391898f56c93d363c7524488cf5f2cad67bac1f5dd03f6b0536a003d607b7e7"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8302/per_query.jsonl",
+        "sha256": "6b6c5a2abbd561a81002df0eb158c3f0e32b395debfb940abdc1245ce36d4a1b"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/random_seed8302/generation.json",
+        "sha256": "865992fa5de4b7c971aad39119c0d88d2f62d687e14e8832a3e42e22d86944e0"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/random_seed8302/candidates.csv",
+        "sha256": "1bc07e1eef743d0545bd5904deb69691c83e1a11d48640612fdbdc653f62be38"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/random_seed8302/validation_curve.jsonl",
+        "sha256": "0c0d480f01b4292fde05fb9b56b7e973d20463f4887d0e72a9fff8f2f6b4150c"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/random_seed8302/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/random_seed8302/initial.pt",
+          "sha256": "29d59b13670fe45beb30dcb38d922de872da56bffd10488217355ae70032d624"
+        },
+        "best": {
+          "path": "data/weights/qvae/random_seed8302/best.pt",
+          "sha256": "64e5a7d71d1183788873ddce2b6e441e5d12c67bf8662e0973f63d709404fb22"
+        },
+        "last": {
+          "path": "data/weights/qvae/random_seed8302/last.pt",
+          "sha256": "0b8c40c962387353c3b8516b09b9bfc7f164e5d3d9b84d48b7a038d920924272"
+        }
+      }
+    },
+    "random_seed8303": {
+      "arm": "random",
+      "seed": 8303,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/random_seed8303/training_summary.json",
+        "sha256": "118592562cdd67f49d34ab7153d075e9a05bad934c5335d63a2fae4257a3530c"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8303/evaluation.json",
+        "sha256": "e0800eec4c5f6f73a6a6d8097088917ee2e932df33cb607bc5e2f5a952882e2f"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/random_seed8303/per_query.jsonl",
+        "sha256": "2a6f1c360359afae643aca52fc7ed5b7f9dc8f46ea5ccb32fd5274681325b995"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/random_seed8303/generation.json",
+        "sha256": "734327d5384e1d7558062d6e1e3ae9c03f74b0c47cc86f3fac8c91c9ab4118e2"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/random_seed8303/candidates.csv",
+        "sha256": "7a7a3fbe988465b1efdb69dfc4ab4c36e9589e6c83bc659fb125833d4d097f03"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/random_seed8303/validation_curve.jsonl",
+        "sha256": "e398e484e07a9e6b35c24743d160a195fa45058796c0f1f8ca74d8cbca21d76f"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/random_seed8303/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/random_seed8303/initial.pt",
+          "sha256": "166dd63649a5963028e173f08903050d154c53e7d52bcb301173b4ec2fe80c8c"
+        },
+        "best": {
+          "path": "data/weights/qvae/random_seed8303/best.pt",
+          "sha256": "54037cca7db31827d2edddc2e54547908c52e46c132b06dccdb0e16f8a87a172"
+        },
+        "last": {
+          "path": "data/weights/qvae/random_seed8303/last.pt",
+          "sha256": "1ddc4fa919cc40ae01f24a822a026466a6069746b5ca5295f4d0b87e0d798e9f"
+        }
+      }
+    },
+    "auxinit_seed8301": {
+      "arm": "auxinit",
+      "seed": 8301,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8301/training_summary.json",
+        "sha256": "3471c7d91defb4a11f3e62792d97e8a32adb209c93a68dde1144d74fca362ed8"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8301/evaluation.json",
+        "sha256": "a47e746413017483b0c8532ae0c56fe92d39a3e9159f527360719b0cf8c44586"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8301/per_query.jsonl",
+        "sha256": "594132e0904187e4664adecc0b3caa5cc8f8149fa0237adcc1f9bd0d065312fb"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8301/generation.json",
+        "sha256": "59e4469c6274e21c633ff160007b492196f33263c05f88365a6b54649bad8744"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8301/candidates.csv",
+        "sha256": "732fb2bf636efd3584a68eb401b3f86e8060292187fc1626cfeaa2192cf81143"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8301/validation_curve.jsonl",
+        "sha256": "eff6cc5ff475f7d7eea8ba91080d09c35c037f76fec36565d7ea31869a045a3e"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8301/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/auxinit_seed8301/initial.pt",
+          "sha256": "061f8bef6829c50f3e85b04eb79a5e2358ef223a4330502f9172940e7dedec0f"
+        },
+        "best": {
+          "path": "data/weights/qvae/auxinit_seed8301/best.pt",
+          "sha256": "881559d9869be85e287ec0098994edefeee050cb94eb6320408e54100792fb6f"
+        },
+        "last": {
+          "path": "data/weights/qvae/auxinit_seed8301/last.pt",
+          "sha256": "a446d89911b9f651b5d46901e163fe3e17fa3052bd809a59ed11a11dc837df25"
+        }
+      }
+    },
+    "auxinit_seed8302": {
+      "arm": "auxinit",
+      "seed": 8302,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8302/training_summary.json",
+        "sha256": "633c15c1ae0b853aacab467b54fca2af6cc4d39f902a2955fd51fa2379a7a722"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8302/evaluation.json",
+        "sha256": "ce46dc2911fe39d373756aa03035eab761f6a0c9fcbbd2a618e26bd64e55d992"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8302/per_query.jsonl",
+        "sha256": "1cbe0fe7da695baa99ce8677cb65563cb9069627353b893eb93419353d4d1b6f"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8302/generation.json",
+        "sha256": "9b2f3832558ff6a07cc0fc2844e6cd0d2286962755f4c3fccfdd7cc21e3a38f5"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8302/candidates.csv",
+        "sha256": "a840519860b94629550743d2c33a5228679f310d04f708206f2459be34ad66a6"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8302/validation_curve.jsonl",
+        "sha256": "c86112a9fc2f835b13eec4b3d584b7abab6f167e9d29e6cdb1a4a38e7bb775b5"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8302/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/auxinit_seed8302/initial.pt",
+          "sha256": "954d6de3589ed5c316dd9092002f04d9ce2933f5526e02521aa0fe48ebedbcda"
+        },
+        "best": {
+          "path": "data/weights/qvae/auxinit_seed8302/best.pt",
+          "sha256": "406534443555105915d41c9d84e07a34da2540ae2e97d3a9a5293a77dce4d35b"
+        },
+        "last": {
+          "path": "data/weights/qvae/auxinit_seed8302/last.pt",
+          "sha256": "af1de2f5f4fc290bdd77c5f741701f7f7ba14a0e3f520df44734ecdcc46f9148"
+        }
+      }
+    },
+    "auxinit_seed8303": {
+      "arm": "auxinit",
+      "seed": 8303,
+      "training_summary": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8303/training_summary.json",
+        "sha256": "eefa333b31a058357d8272cb7230110a92a1f322d196ba31e93bd79b7b4c9537"
+      },
+      "evaluation": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8303/evaluation.json",
+        "sha256": "370c64702be78a3892776100db0be14e1a293584fd2fdcbe324778eeee762c53"
+      },
+      "per_query": {
+        "path": "data/results/evaluation/natv_transfer/auxinit_seed8303/per_query.jsonl",
+        "sha256": "5b308c94d67123894c676504e6dfa2eef808deb879c96c87528fb907b41fa426"
+      },
+      "generation": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8303/generation.json",
+        "sha256": "db74b1f904779eee11f71db47b228b333136fb7e888072210b8990364458e2a1"
+      },
+      "candidates": {
+        "path": "data/results/generation/natv_transfer/auxinit_seed8303/candidates.csv",
+        "sha256": "d79a997377b65802601c6b3e634c4a8ef0eee63aa4f3cef7c1a4adde386833c6"
+      },
+      "training_curve": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8303/validation_curve.jsonl",
+        "sha256": "0b5739bdf33ad6343f4f3fb179e1e84fc4a74f3e8dc2f14bdc3aed6359ede9bb"
+      },
+      "validation_selection": {
+        "path": "data/results/training/natv_transfer/auxinit_seed8303/validation_selection.json",
+        "sha256": "418deab0d9e234267d9bf984ff9d5cc274017d23033c85a00a1b5667b8e1e115"
+      },
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/qvae/auxinit_seed8303/initial.pt",
+          "sha256": "172dc88bc45ca6b2bb08f84faa406d1996a99001573da2f4acd7cb6c9e3617d6"
+        },
+        "best": {
+          "path": "data/weights/qvae/auxinit_seed8303/best.pt",
+          "sha256": "86f7a5e38e7538975e43c21ce4cd8995db6eb6bbdea8da0221ac924dcc73dd71"
+        },
+        "last": {
+          "path": "data/weights/qvae/auxinit_seed8303/last.pt",
+          "sha256": "1bfb6272348149d923709d6c47b794d47dc10333d2831e2915d61f702f8597d6"
+        }
+      }
+    }
+  },
+  "structures": {
+    "data/results/evaluation/kvp40_auxiliary_structures/structure_summary.json": {
+      "sha256": "a0851d41f677677513aa43558e4e32f4b55cd367ebe4fecac196d16005d5da63"
+    },
+    "data/results/evaluation/natv_transfer_structures/structure_summary.json": {
+      "sha256": "4efac554d0b9139654dbc9cfac7bc992b2f83a0f39c2e52629ae1dc0b7b242da"
+    }
+  },
+  "paired_summary": {
+    "path": "/tmp/natv_transfer_summary_repro2/paired_summary.json",
+    "sha256": "8a840ee3803ff77a5f9c972a4720bfb21a0abaa09fba866dd53c83a7a5d29b41"
+  },
+  "generation_summary": {
+    "path": "/tmp/natv_transfer_summary_repro2/generation_summary.json",
+    "sha256": "ef603692c888dd06659f2a4a7b334e7f15aa61af855b81cd0301276223fe22b4"
+  },
+  "training_curves": {
+    "path": "/tmp/natv_transfer_summary_repro2/training_curves.png",
+    "sha256": "e9bd6cb8903cd060894cce6fe90437511ac8cd43e7a34aafb95ac80c2dc99819"
+  },
+  "representative_candidates": {
+    "path": "/tmp/natv_transfer_summary_repro2/representative_candidates.csv",
+    "sha256": "a4ba492c88856a538d136e3f4d3d1d7597ced4ea9a345f211ed4120f998308af"
+  }
+}

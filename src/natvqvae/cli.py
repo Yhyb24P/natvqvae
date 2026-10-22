@@ -8,7 +8,7 @@ from pathlib import Path
 from . import __version__
 from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
-from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary
+from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summarize_transfer
 from .generate import generate
 from .preprocessing import preprocess
 from .train import train
@@ -79,6 +79,13 @@ def build_parser():
     summary.set_defaults(func=lambda args: summarize_auxiliary(
         args.config, _result_output(args.training, 'training'),
         _result_output(args.generation, 'generation'), _result_output(args.evaluation, 'evaluation')))
+
+    transfer_summary = sub.add_parser(
+        'transfer-summary', help='rebuild full NatV transfer summaries from existing outputs')
+    transfer_summary.add_argument('--manifest', required=True)
+    transfer_summary.add_argument('--output', required=True)
+    transfer_summary.set_defaults(func=lambda args: summarize_transfer(
+        args.manifest, _result_output(args.output, 'evaluation')))
 
     trainer = sub.add_parser('train', help='train a QVAE from raw population and split config')
     trainer.add_argument('--config', **common['config'])

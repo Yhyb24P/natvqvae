@@ -1,148 +1,200 @@
 {
   "runs": {
     "random_seed8301": {
+      "arm": "random",
+      "seed": 8301,
       "attempts": 3072,
       "unique_sequences": 3070,
-      "duplicate_attempts": 2,
-      "hamming_mean": 13.236979166666666,
-      "hamming_min": 2,
-      "hamming_max": 30,
+      "duplicate_attempts_beyond_first": 2,
+      "mean_Hamming": 13.236979166666666,
       "pocket_edit_rows": 2096,
-      "pocket_edits_total": 4468,
-      "pocket_edits_per_candidate": 1.4544270833333333,
+      "pocket_edits": 4468,
       "anchor_edit_rows": 343,
-      "anchor_edits_total": 348,
-      "nudix_unchanged": 3072,
-      "total_edits": 40664
+      "anchor_edits": 348,
+      "nudix_unchanged": 3072
     },
     "random_seed8302": {
+      "arm": "random",
+      "seed": 8302,
       "attempts": 3072,
       "unique_sequences": 3068,
-      "duplicate_attempts": 4,
-      "hamming_mean": 13.608723958333334,
-      "hamming_min": 2,
-      "hamming_max": 31,
+      "duplicate_attempts_beyond_first": 4,
+      "mean_Hamming": 13.608723958333334,
       "pocket_edit_rows": 2189,
-      "pocket_edits_total": 4934,
-      "pocket_edits_per_candidate": 1.6061197916666667,
+      "pocket_edits": 4934,
       "anchor_edit_rows": 440,
-      "anchor_edits_total": 445,
-      "nudix_unchanged": 3072,
-      "total_edits": 41806
+      "anchor_edits": 445,
+      "nudix_unchanged": 3072
     },
     "random_seed8303": {
+      "arm": "random",
+      "seed": 8303,
       "attempts": 3072,
       "unique_sequences": 3069,
-      "duplicate_attempts": 3,
-      "hamming_mean": 13.368815104166666,
-      "hamming_min": 2,
-      "hamming_max": 30,
+      "duplicate_attempts_beyond_first": 3,
+      "mean_Hamming": 13.368815104166666,
       "pocket_edit_rows": 2139,
-      "pocket_edits_total": 4693,
-      "pocket_edits_per_candidate": 1.5276692708333333,
+      "pocket_edits": 4693,
       "anchor_edit_rows": 435,
-      "anchor_edits_total": 444,
-      "nudix_unchanged": 3072,
-      "total_edits": 41069
+      "anchor_edits": 444,
+      "nudix_unchanged": 3072
     },
     "auxinit_seed8301": {
+      "arm": "auxinit",
+      "seed": 8301,
       "attempts": 3072,
       "unique_sequences": 3068,
-      "duplicate_attempts": 4,
-      "hamming_mean": 13.03125,
-      "hamming_min": 2,
-      "hamming_max": 30,
+      "duplicate_attempts_beyond_first": 4,
+      "mean_Hamming": 13.03125,
       "pocket_edit_rows": 2068,
-      "pocket_edits_total": 4235,
-      "pocket_edits_per_candidate": 1.3785807291666667,
+      "pocket_edits": 4235,
       "anchor_edit_rows": 246,
-      "anchor_edits_total": 247,
-      "nudix_unchanged": 3072,
-      "total_edits": 40032
+      "anchor_edits": 247,
+      "nudix_unchanged": 3072
     },
     "auxinit_seed8302": {
+      "arm": "auxinit",
+      "seed": 8302,
       "attempts": 3072,
       "unique_sequences": 3067,
-      "duplicate_attempts": 5,
-      "hamming_mean": 13.255859375,
-      "hamming_min": 2,
-      "hamming_max": 30,
+      "duplicate_attempts_beyond_first": 5,
+      "mean_Hamming": 13.255859375,
       "pocket_edit_rows": 2107,
-      "pocket_edits_total": 4575,
-      "pocket_edits_per_candidate": 1.4892578125,
+      "pocket_edits": 4575,
       "anchor_edit_rows": 316,
-      "anchor_edits_total": 318,
-      "nudix_unchanged": 3072,
-      "total_edits": 40722
+      "anchor_edits": 318,
+      "nudix_unchanged": 3072
     },
     "auxinit_seed8303": {
+      "arm": "auxinit",
+      "seed": 8303,
       "attempts": 3072,
       "unique_sequences": 3071,
-      "duplicate_attempts": 1,
-      "hamming_mean": 13.349609375,
-      "hamming_min": 2,
-      "hamming_max": 31,
+      "duplicate_attempts_beyond_first": 1,
+      "mean_Hamming": 13.349609375,
       "pocket_edit_rows": 2118,
-      "pocket_edits_total": 4726,
-      "pocket_edits_per_candidate": 1.5384114583333333,
+      "pocket_edits": 4726,
       "anchor_edit_rows": 474,
-      "anchor_edits_total": 483,
-      "nudix_unchanged": 3072,
-      "total_edits": 41010
+      "anchor_edits": 483,
+      "nudix_unchanged": 3072
     }
   },
   "pairs": {
-    "8301": {
+    "random_seed8301|auxinit_seed8301": {
       "pairs": 3072,
       "common_masks_uniforms": true,
       "hamming_equal_pairs": 1404,
-      "raw_random_hamming_mean": 13.236979166666666,
-      "raw_aux_hamming_mean": 13.03125,
-      "raw_random_pocket_rows": 0.6822916666666666,
-      "raw_aux_pocket_rows": 0.6731770833333334,
-      "raw_random_anchor_rows": 0.11165364583333333,
-      "raw_aux_anchor_rows": 0.080078125,
-      "matched_random_pocket_rows": 0.5997150997150997,
-      "matched_aux_pocket_rows": 0.6011396011396012,
-      "matched_random_anchor_rows": 0.09544159544159544,
-      "matched_aux_anchor_rows": 0.08190883190883191
+      "raw": {
+        "random": {
+          "rows": 3072,
+          "pocket_rows": 2096,
+          "pocket_rate": 0.6822916666666666,
+          "anchor_rows": 343,
+          "anchor_rate": 0.11165364583333333
+        },
+        "auxinit": {
+          "rows": 3072,
+          "pocket_rows": 2068,
+          "pocket_rate": 0.6731770833333334,
+          "anchor_rows": 246,
+          "anchor_rate": 0.080078125
+        }
+      },
+      "hamming_matched": {
+        "random": {
+          "rows": 1404,
+          "pocket_rows": 842,
+          "pocket_rate": 0.5997150997150997,
+          "anchor_rows": 134,
+          "anchor_rate": 0.09544159544159544
+        },
+        "auxinit": {
+          "rows": 1404,
+          "pocket_rows": 844,
+          "pocket_rate": 0.6011396011396012,
+          "anchor_rows": 115,
+          "anchor_rate": 0.08190883190883191
+        }
+      }
     },
-    "8302": {
+    "random_seed8302|auxinit_seed8302": {
       "pairs": 3072,
       "common_masks_uniforms": true,
       "hamming_equal_pairs": 1239,
-      "raw_random_hamming_mean": 13.608723958333334,
-      "raw_aux_hamming_mean": 13.255859375,
-      "raw_random_pocket_rows": 0.7125651041666666,
-      "raw_aux_pocket_rows": 0.6858723958333334,
-      "raw_random_anchor_rows": 0.14322916666666666,
-      "raw_aux_anchor_rows": 0.10286458333333333,
-      "matched_random_pocket_rows": 0.6311541565778854,
-      "matched_aux_pocket_rows": 0.6182405165456013,
-      "matched_random_anchor_rows": 0.13478611783696529,
-      "matched_aux_anchor_rows": 0.11138014527845036
+      "raw": {
+        "random": {
+          "rows": 3072,
+          "pocket_rows": 2189,
+          "pocket_rate": 0.7125651041666666,
+          "anchor_rows": 440,
+          "anchor_rate": 0.14322916666666666
+        },
+        "auxinit": {
+          "rows": 3072,
+          "pocket_rows": 2107,
+          "pocket_rate": 0.6858723958333334,
+          "anchor_rows": 316,
+          "anchor_rate": 0.10286458333333333
+        }
+      },
+      "hamming_matched": {
+        "random": {
+          "rows": 1239,
+          "pocket_rows": 782,
+          "pocket_rate": 0.6311541565778854,
+          "anchor_rows": 167,
+          "anchor_rate": 0.13478611783696529
+        },
+        "auxinit": {
+          "rows": 1239,
+          "pocket_rows": 766,
+          "pocket_rate": 0.6182405165456013,
+          "anchor_rows": 138,
+          "anchor_rate": 0.11138014527845036
+        }
+      }
     },
-    "8303": {
+    "random_seed8303|auxinit_seed8303": {
       "pairs": 3072,
       "common_masks_uniforms": true,
       "hamming_equal_pairs": 976,
-      "raw_random_hamming_mean": 13.368815104166666,
-      "raw_aux_hamming_mean": 13.349609375,
-      "raw_random_pocket_rows": 0.6962890625,
-      "raw_aux_pocket_rows": 0.689453125,
-      "raw_random_anchor_rows": 0.1416015625,
-      "raw_aux_anchor_rows": 0.154296875,
-      "matched_random_pocket_rows": 0.6198770491803278,
-      "matched_aux_pocket_rows": 0.6086065573770492,
-      "matched_random_anchor_rows": 0.15061475409836064,
-      "matched_aux_anchor_rows": 0.1598360655737705
+      "raw": {
+        "random": {
+          "rows": 3072,
+          "pocket_rows": 2139,
+          "pocket_rate": 0.6962890625,
+          "anchor_rows": 435,
+          "anchor_rate": 0.1416015625
+        },
+        "auxinit": {
+          "rows": 3072,
+          "pocket_rows": 2118,
+          "pocket_rate": 0.689453125,
+          "anchor_rows": 474,
+          "anchor_rate": 0.154296875
+        }
+      },
+      "hamming_matched": {
+        "random": {
+          "rows": 976,
+          "pocket_rows": 605,
+          "pocket_rate": 0.6198770491803278,
+          "anchor_rows": 147,
+          "anchor_rate": 0.15061475409836064
+        },
+        "auxinit": {
+          "rows": 976,
+          "pocket_rows": 594,
+          "pocket_rate": 0.6086065573770492,
+          "anchor_rows": 156,
+          "anchor_rate": 0.1598360655737705
+        }
+      }
     }
   },
   "totals": {
     "attempts": 18432,
     "unique_sequences": 18413,
-    "pocket_edits": 27631,
-    "anchor_edits": 2285,
     "nudix_unchanged": 18432
   }
 }
