@@ -1,0 +1,14 @@
+target: config/target.yaml
+candidates: data/results/evaluation/natv_transfer/representative_candidates.fasta
+candidate_records: data/results/evaluation/natv_transfer/representative_candidates.csv
+checkpoint: /mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt
+checkpoint_sha256: 3b4ba9236b7b458f47b40b694847b6bb4110c744becd6d2c53de7b1d04c07a81
+msa_cache: /mnt/e/bioemu2/msa/7e90e212b21b14a8a647ae3767cb0b13d3caef551fff889af616530d61ff9310.json
+msa_rows: 512
+seed: 20261022
+samples: 8
+batch_size: 4
+sampler_steps: 200
+device: cuda
+precision: bf16-mixed
+cpu_threads: 8

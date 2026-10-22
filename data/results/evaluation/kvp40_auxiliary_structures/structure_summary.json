@@ -1,0 +1,1735 @@
+{
+  "targets": {
+    "WT": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+      "msa_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "707944dad549465f172887f448ff629fe794df4a3acd7dcf30967352adec41d9",
+        "samples.xtc": "869851de02de11cc4e6319abe0acc1fb4632c62d9cb79863d9e3f9abf87c0c37",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 48.214374091003265,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6660540699958801,
+          "min": 0.34790921211242676,
+          "max": 1.148566722869873
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.2965160608291626,
+          "min": 0.18968059122562408,
+          "max": 0.44782754778862
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.16800253093242645,
+          "min": 0.10851867496967316,
+          "max": 0.2225075662136078
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.30090194940567017,
+          "min": 0.15322349965572357,
+          "max": 0.44189926981925964
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.08254614099860191,
+          "min": 0.0206240676343441,
+          "max": 0.15750977396965027
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.07432997226715088,
+          "min": 0.030657444149255753,
+          "max": 0.14712369441986084
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.13765044510364532,
+          "min": 0.07026445865631104,
+          "max": 0.3395652174949646
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.1278432123363018,
+          "min": 0.044903144240379333,
+          "max": 0.2585229277610779
+        },
+        "frame_pairs": 56,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.48554801940918,
+          31.80914306640625,
+          31.704086303710938,
+          32.02244186401367,
+          31.610538482666016,
+          31.75687599182129,
+          31.754465103149414,
+          31.997264862060547
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.25925925925925924,
+          0.28888888888888886,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -91.34842681884766,
+          -98.40345001220703,
+          -98.78164672851562,
+          -97.0534439086914,
+          -98.0406494140625,
+          -96.13060760498047,
+          -94.25362396240234,
+          -91.862060546875
+        ],
+        "I145_psi_degrees": [
+          -41.9565544128418,
+          -37.610477447509766,
+          -37.24358367919922,
+          -39.071102142333984,
+          -38.21247100830078,
+          -40.07655334472656,
+          -41.66798400878906,
+          -41.48283386230469
+        ]
+      }
+    },
+    "QVAE_R01": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKDTMMFLDNWSKTEFFTEMKAELDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "3f567e7bd076bd02163727c5183bd55e74dbdbd8f59dd11ac671178d86d5f427",
+      "msa_sha256": "8289abb015bead0c33f97c8243723cb014dae17655444c89073909ec8e74b06d",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "7fecba33cc05599a53c81627542a87601efc250f58897280ad97f4c8d544eea7",
+        "samples.xtc": "373600ffedd827d3de6d04ecbe9b3f7ce09212318e4fd394008ad0db7444a4a1",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.86275339400163,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 1.1004866361618042,
+          "min": 0.77960604429245,
+          "max": 1.5809320211410522
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.4020097255706787,
+          "min": 0.24708041548728943,
+          "max": 0.6992382407188416
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.3911261707544327,
+          "min": 0.3288411796092987,
+          "max": 0.47857311367988586
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.3987414389848709,
+          "min": 0.06706686317920685,
+          "max": 1.9655805826187134
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.14583145827054977,
+          "min": 0.038094792515039444,
+          "max": 0.26933419704437256
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.1326809674501419,
+          "min": 0.04866732656955719,
+          "max": 0.2721599042415619
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.2652433514595032,
+          "min": 0.032949067652225494,
+          "max": 0.5663396120071411
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.25982263684272766,
+          "min": 0.03941897302865982,
+          "max": 0.5612572431564331
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.33491325378418,
+          31.65008544921875,
+          31.634885787963867,
+          31.761781692504883,
+          31.423675537109375,
+          31.45258140563965,
+          31.568580627441406,
+          31.70585823059082
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.4606741573033708,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.2518518518518518,
+          0.28888888888888886,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595
+        ],
+        "I145_phi_degrees": [
+          -91.56975555419922,
+          -98.77384948730469,
+          -101.95743560791016,
+          -100.98833465576172,
+          -66.1366195678711,
+          -95.21209716796875,
+          -95.17886352539062,
+          -94.40691375732422
+        ],
+        "I145_psi_degrees": [
+          -41.76679611206055,
+          -37.98402404785156,
+          -36.803192138671875,
+          -39.22968673706055,
+          135.70021057128906,
+          -39.79582977294922,
+          -41.209197998046875,
+          -40.7757453918457
+        ]
+      }
+    },
+    "QVAE_R02": {
+      "sequence": "MSHAIFIGRFRPFHNGHISAITQAFDALELDKMTILIGSSNRHRSVKNPFVFEEVRDMMLVALPDHIRSKVRFVPLGDIAKDDVWQSNVRSRARGATHIVGGDKDESSYFLKLFPELKLFQPEAVKMGNKVISATDFRELYFSEILLNHPVVSGLIPKETMMFLDNWSKTEFFTEMKREYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "4a740795d8c9c11a19e3a62d9c1f95c3464cd236542f491657a5b31c4eaa4de4",
+      "msa_sha256": "490af733131ab935e5a63107997e51b6527544e99fd33b590605a3d1789fb330",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "668253fffd41e39323a64f97012934aa4fe4356907b72862632ac655a384cbd6",
+        "samples.xtc": "c67e120495073c6d11903fd1a8c22f539ee85461bd8cf616348046fb26ee40af",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.55325784800516,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6753274500370026,
+          "min": 0.40823864936828613,
+          "max": 1.0851433277130127
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.4263518452644348,
+          "min": 0.2881012260913849,
+          "max": 0.6710681915283203
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.16434957832098007,
+          "min": 0.10411298274993896,
+          "max": 0.4633854329586029
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.2821004092693329,
+          "min": 0.08359000086784363,
+          "max": 0.6059788465499878
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.3343917429447174,
+          "min": 0.22766107320785522,
+          "max": 0.4764566421508789
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.333292156457901,
+          "min": 0.20565064251422882,
+          "max": 0.44927549362182617
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.26488515734672546,
+          "min": 0.12203719466924667,
+          "max": 0.5980877876281738
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.15853997319936752,
+          "min": 0.06024126708507538,
+          "max": 0.4204469919204712
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.56802749633789,
+          31.59508514404297,
+          31.46664810180664,
+          31.764612197875977,
+          31.413766860961914,
+          31.643917083740234,
+          31.500349044799805,
+          31.683809280395508
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.4550561797752809,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685,
+          0.14606741573033707,
+          0.17415730337078653,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -92.57926177978516,
+          -94.05024719238281,
+          -91.25177764892578,
+          -94.79654693603516,
+          -90.29375457763672,
+          -92.71285247802734,
+          -91.94900512695312,
+          -92.30583190917969
+        ],
+        "I145_psi_degrees": [
+          -40.04694366455078,
+          -38.55024337768555,
+          -40.785728454589844,
+          -38.97275161743164,
+          -39.93159103393555,
+          -39.69655990600586,
+          -40.679954528808594,
+          -40.11600112915039
+        ]
+      }
+    },
+    "QVAE_R03": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRQKVRFVPLEDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNRVISATDFRELYFSEPLLNHPVMSGLIPKETMMFLDNWSKTNFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "9d595104fe7af80cbaa7b05b6bd9da2f911c62f1f5955e93ff8d0868328ed697",
+      "msa_sha256": "83e8c6fb534fb7876bbf6ae777506a7c6086bba4c58c260148a91e2edd8dd675",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "028cf92b94ba3c6d5d3c1394dabe1a5f3b11bdd7f77450ec6fd548985a658610",
+        "samples.xtc": "e5cd0a82cce4b04c1dcedbbb9ddb8467a8d76b5c36b3a78e29cb4ba2fb70db17",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.61968538600195,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.7402946352958679,
+          "min": 0.5515883564949036,
+          "max": 1.1420310735702515
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.7102963030338287,
+          "min": 0.6079835891723633,
+          "max": 0.8431464433670044
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.40502697229385376,
+          "min": 0.18123625218868256,
+          "max": 0.5152634382247925
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 2.147132158279419,
+          "min": 1.7660560607910156,
+          "max": 3.0391855239868164
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.10714464634656906,
+          "min": 0.025657622143626213,
+          "max": 0.30965474247932434
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.10228686034679413,
+          "min": 0.007182524539530277,
+          "max": 0.20764677226543427
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.2270873710513115,
+          "min": 0.10779865831136703,
+          "max": 0.4650331735610962
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.21814453601837158,
+          "min": 0.1304398626089096,
+          "max": 0.444961816072464
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.583383560180664,
+          31.79440689086914,
+          31.657432556152344,
+          31.801977157592773,
+          31.641857147216797,
+          31.668498992919922,
+          31.748178482055664,
+          31.73306655883789
+        ],
+        "NMNAT_helix_fraction": [
+          0.46629213483146065,
+          0.4438202247191011,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.4438202247191011,
+          0.4438202247191011,
+          0.4438202247191011,
+          0.4606741573033708
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -63.88205337524414,
+          -60.669273376464844,
+          -77.04493713378906,
+          -59.54482650756836,
+          -59.85137176513672,
+          -60.74782943725586,
+          -60.634910583496094,
+          -58.31682205200195
+        ],
+        "I145_psi_degrees": [
+          -29.476673126220703,
+          124.14384460449219,
+          68.4241714477539,
+          120.2248764038086,
+          129.31785583496094,
+          128.6129608154297,
+          130.25326538085938,
+          121.2725830078125
+        ]
+      }
+    },
+    "QVAE_R04": {
+      "sequence": "MSHAIFIGRFRPYHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFERVRDMMGVALPDHIRSKVRFVPLPDYADDDVWQSNVRSRARGATHIIGYDKDEVSYYLKLFPELKLFQPEPVRMYNKVISGTDFRELYFSEDEVNHPVMSGLIPKETMMYLDNWSKTEFFTEMIAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "280de7cedc87c04f1ee48f211d5e89f7aca265e70c80a02fb8eb15eda7e51f3f",
+      "msa_sha256": "8661f36cbef9b720c0ec50ab7de59f5da5e9bdb7092316002ccbe6233e988d08",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "908bacade7d9ba30dc287e56c2033065d17f449a4ea46f693b16048990792a9f",
+        "samples.xtc": "f54a3777115876964beb623788c57c7c33f38ab2c8dd957d8273f6c13e386718",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.751057284003764,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.9223091304302216,
+          "min": 0.701715886592865,
+          "max": 1.4638333320617676
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.9008761942386627,
+          "min": 0.7212239503860474,
+          "max": 1.1674026250839233
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.1859670728445053,
+          "min": 0.1151614785194397,
+          "max": 0.49002763628959656
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 3.1052762269973755,
+          "min": 2.1954030990600586,
+          "max": 4.2080979347229
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.3468211591243744,
+          "min": 0.08667387813329697,
+          "max": 0.4694887697696686
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.18537672609090805,
+          "min": 0.08455128222703934,
+          "max": 0.3060040771961212
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.5392010509967804,
+          "min": 0.21041451394557953,
+          "max": 0.8862794637680054
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.6492066383361816,
+          "min": 0.2878094017505646,
+          "max": 0.9104182720184326
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.298118591308594,
+          31.506433486938477,
+          31.399490356445312,
+          31.431169509887695,
+          31.334304809570312,
+          31.422548294067383,
+          31.44778823852539,
+          31.465818405151367
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.4943820224719101,
+          0.4606741573033708,
+          0.46629213483146065,
+          0.47191011235955055
+        ],
+        "NMNAT_strand_fraction": [
+          0.15730337078651685,
+          0.17415730337078653,
+          0.15730337078651685,
+          0.17415730337078653,
+          0.17415730337078653,
+          0.15730337078651685,
+          0.15730337078651685,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.32592592592592595
+        ],
+        "I145_phi_degrees": [
+          -72.17896270751953,
+          -68.65678405761719,
+          -72.24003601074219,
+          -70.9501724243164,
+          -81.41361999511719,
+          -68.1735610961914,
+          -67.16920471191406,
+          -67.99189758300781
+        ],
+        "I145_psi_degrees": [
+          -26.728649139404297,
+          -30.481081008911133,
+          -15.739730834960938,
+          -19.782011032104492,
+          114.08547973632812,
+          -31.33701515197754,
+          -36.44076919555664,
+          -28.51378059387207
+        ]
+      }
+    },
+    "QVAE_R05": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPIGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISASDFRELYFSEILLNHRVMSGLIPKEVMMFLDNQSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "7a4e5d19a10534e5351e6cd8783cdd386888bb5ec1ab339e9d3ece38adca17bb",
+      "msa_sha256": "6aac4fcc7bc961d9dd0890b4b1477e3d9d025d1735f55ed134f48335215ecbc8",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "905e4585be9b4aa8ebc8fec83fd913c5784abf4fdaae8a9fdc7f20ddbb1a49ec",
+        "samples.xtc": "95b1e25737905d1faa296ef2665af1a4cec37005fa2a80f4437755c15cfcea59",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 43.82336124200083,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6463135182857513,
+          "min": 0.17610758543014526,
+          "max": 1.317579746246338
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.3199612945318222,
+          "min": 0.1432495266199112,
+          "max": 0.516772449016571
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.15360916405916214,
+          "min": 0.06583264470100403,
+          "max": 0.44789421558380127
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.30585286021232605,
+          "min": 0.09214597940444946,
+          "max": 0.5804005265235901
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.11920009925961494,
+          "min": 0.02899004891514778,
+          "max": 0.22018633782863617
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.08080481365323067,
+          "min": 0.04274263232946396,
+          "max": 0.19853419065475464
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.1667545959353447,
+          "min": 0.01941656321287155,
+          "max": 0.4240671396255493
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.14946278184652328,
+          "min": 0.033402688801288605,
+          "max": 0.3042460083961487
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.477031707763672,
+          31.835681915283203,
+          31.846559524536133,
+          31.878524780273438,
+          31.715700149536133,
+          31.667888641357422,
+          31.73383903503418,
+          31.905860900878906
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -87.87309265136719,
+          -94.75604248046875,
+          -97.87162780761719,
+          -96.48917388916016,
+          -91.24397277832031,
+          -93.06181335449219,
+          -88.59029388427734,
+          -90.5671615600586
+        ],
+        "I145_psi_degrees": [
+          -42.680091857910156,
+          -39.814720153808594,
+          -38.93997573852539,
+          -37.83225631713867,
+          -41.43206024169922,
+          -40.821781158447266,
+          -43.11670684814453,
+          -41.665130615234375
+        ]
+      }
+    },
+    "deterministic_R02": {
+      "sequence": "MSHAIFIGRFRPFHNGHISAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMIGAALSDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPETVKMYNKVISATDFRELYFSEILLNVPVMSGLIPKWVMMFLENYSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "0100ffb3c6847e6d0edee49a4a198cc404446284b08850eb9d19d66c25bec98b",
+      "msa_sha256": "5932ac2aabc7a41717e7efe46e0ceda330a9fa635a8e4058599f8078f9a056d0",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "50a3eadd18cde550f548a2db15f35e21d0944c9121e312bfb811f540a940b4b0",
+        "samples.xtc": "9b30ebf2cc2803e27758f5866c8e49849230158d06c3006fe594d0fb77e74370",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 41.631352978001814,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.7204184532165527,
+          "min": 0.424154669046402,
+          "max": 1.3795678615570068
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.5834157764911652,
+          "min": 0.4536778926849365,
+          "max": 0.7143216729164124
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.1647876650094986,
+          "min": 0.06925678253173828,
+          "max": 0.4644196033477783
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 1.1706457734107971,
+          "min": 0.5965099334716797,
+          "max": 1.7940354347229004
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.36990776658058167,
+          "min": 0.17970651388168335,
+          "max": 0.5101099014282227
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.42929744720458984,
+          "min": 0.26269829273223877,
+          "max": 0.542653501033783
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.3925492614507675,
+          "min": 0.22585147619247437,
+          "max": 0.7450913786888123
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.25667521357536316,
+          "min": 0.03354933485388756,
+          "max": 0.5120656490325928
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.452354431152344,
+          31.746906280517578,
+          31.745311737060547,
+          31.766738891601562,
+          31.529613494873047,
+          31.467071533203125,
+          31.640348434448242,
+          31.717798233032227
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.4606741573033708,
+          0.48314606741573035,
+          0.46629213483146065,
+          0.48314606741573035,
+          0.4606741573033708,
+          0.47191011235955055,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -116.66026306152344,
+          -73.38359069824219,
+          -89.1489028930664,
+          -115.12387084960938,
+          -66.49825286865234,
+          -79.28272247314453,
+          -76.56037902832031,
+          -63.992652893066406
+        ],
+        "I145_psi_degrees": [
+          1.8390127420425415,
+          -45.24884796142578,
+          -43.82181930541992,
+          -0.10935954749584198,
+          -43.549232482910156,
+          -44.53972625732422,
+          -45.296714782714844,
+          -42.98433303833008
+        ]
+      }
+    },
+    "deterministic_R03": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRQKVRFVPLEDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNRVISATDFRELYFSELLLNHPVMSGLIPKETMMFLDNWSKTNFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "092678fae62fa491d3e8d58774a3a0849d1dd60f9eef85bd1d7fd9140a79ce59",
+      "msa_sha256": "69305ac96ee127eef43e1db2f90312cbae91315169ab57a36fd8f4a1b8fcfdcd",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "6d3443504769fdcf646aa639a2debf163f394bac1e6443ec3c62d4d123147f78",
+        "samples.xtc": "7b8ca32d381c49a5481e92b4c87541fc1f870b97b78f3017332f012fe87cd20c",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.46379521200288,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.5601819455623627,
+          "min": 0.3211902976036072,
+          "max": 1.107454538345337
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.29439373314380646,
+          "min": 0.20619791746139526,
+          "max": 0.46209388971328735
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.4002780318260193,
+          "min": 0.09807997941970825,
+          "max": 0.5206007361412048
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.29659515619277954,
+          "min": 0.0973513275384903,
+          "max": 0.47439032793045044
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.09108147025108337,
+          "min": 0.023013057187199593,
+          "max": 0.19850672781467438
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.08920769393444061,
+          "min": 0.026979267597198486,
+          "max": 0.20031467080116272
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.18415965139865875,
+          "min": 0.03886321187019348,
+          "max": 0.41718047857284546
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.11623041704297066,
+          "min": 0.028512097895145416,
+          "max": 0.247885063290596
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.54987335205078,
+          31.722917556762695,
+          31.63683319091797,
+          31.848209381103516,
+          31.609241485595703,
+          31.5859432220459,
+          31.69522476196289,
+          31.645954132080078
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47191011235955055,
+          0.4606741573033708,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.25925925925925924,
+          0.25925925925925924,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.25925925925925924,
+          0.25925925925925924,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -96.46154022216797,
+          -98.02983856201172,
+          -98.52765655517578,
+          -97.62889099121094,
+          -99.25434875488281,
+          -96.96437072753906,
+          -98.21060943603516,
+          -99.82123565673828
+        ],
+        "I145_psi_degrees": [
+          -29.301998138427734,
+          -26.952287673950195,
+          -26.552169799804688,
+          -27.5487117767334,
+          -23.079782485961914,
+          -28.51254653930664,
+          -25.997732162475586,
+          -26.108200073242188
+        ]
+      }
+    },
+    "deterministic_R04": {
+      "sequence": "MSHAIFIGRFRPYHNGHLSAITQAFDALDLDKLTILIGSSNRHRSVKNPFVFERVRDMMGVALPDHIRSKVRFVPLPDYADDDVWQSNVRSRARGATHIIGYDKDEVSYYLKLFPELKLFQPEPVRMYNKVISGTDFRELYFSEDEVNHPVMSGLIPKETMMYLDNWSKTEFFTEMIAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "8423fd39df7af3f361df4dff5018de81e81c4698b1bf014bd0fa7cd1e3a5567f",
+      "msa_sha256": "b7b4373bee459b871ea968531606579bb38e1280c3b1e50c7e41e4512bc2eb41",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "088805bc940a00f7d11d192407c36f8c865d27f46ceab6f047124f829c9f8edd",
+        "samples.xtc": "eab0b55906b905939ba2964217385d912e82f889cea3e0ac09691887fbdbcc9d",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.717962639995676,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.9247399568557739,
+          "min": 0.6940139532089233,
+          "max": 1.4692045450210571
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.9139951169490814,
+          "min": 0.7229172587394714,
+          "max": 1.1707534790039062
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.18463191390037537,
+          "min": 0.1164894849061966,
+          "max": 0.4908874034881592
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 3.1162577867507935,
+          "min": 2.1776328086853027,
+          "max": 4.210022926330566
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.33302365243434906,
+          "min": 0.11956033110618591,
+          "max": 0.4618546962738037
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.1765080988407135,
+          "min": 0.07264706492424011,
+          "max": 0.34208977222442627
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.5564470589160919,
+          "min": 0.19568213820457458,
+          "max": 0.8738741874694824
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.6939795315265656,
+          "min": 0.2768153250217438,
+          "max": 0.9091207981109619
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.30780029296875,
+          31.525196075439453,
+          31.411319732666016,
+          31.43712615966797,
+          31.342479705810547,
+          31.409011840820312,
+          31.460054397583008,
+          31.47926139831543
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.4943820224719101,
+          0.47752808988764045,
+          0.46629213483146065,
+          0.47191011235955055
+        ],
+        "NMNAT_strand_fraction": [
+          0.15730337078651685,
+          0.17415730337078653,
+          0.17415730337078653,
+          0.17415730337078653,
+          0.17415730337078653,
+          0.15730337078651685,
+          0.15730337078651685,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595
+        ],
+        "I145_phi_degrees": [
+          -72.25096893310547,
+          -68.23918151855469,
+          -71.80597686767578,
+          -71.45088958740234,
+          -81.67487335205078,
+          -68.3166732788086,
+          -67.0141372680664,
+          -68.17913055419922
+        ],
+        "I145_psi_degrees": [
+          -26.7269229888916,
+          -30.695585250854492,
+          -16.266155242919922,
+          -19.012466430664062,
+          114.19501495361328,
+          -29.679100036621094,
+          -36.580810546875,
+          -28.435869216918945
+        ]
+      }
+    },
+    "deterministic_R05": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVYEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISASDFRELYFSEILLNHEVMSGLIPKEVMMFLDNNSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "08d565dd05df91a8f4b5ff03203f850e1f3ac5d4e384cbfd63c1cb5b0051025a",
+      "msa_sha256": "2d3de31ba4b53e9a791fb598228709b19dc334fecb937a5291613ca522206bc2",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "d27598c82c9f5992ae46524a7afc61e88cef9ab0dfa6f6efeb0de20fe1f703ef",
+        "samples.xtc": "2c8185f5d2adc4758ae3c5f1c37455090d6184f8c6b953fdb2b0fd4e2e69381a",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 42.50545141399925,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6010675728321075,
+          "min": 0.1868240237236023,
+          "max": 1.1906764507293701
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.3105112165212631,
+          "min": 0.12057606875896454,
+          "max": 0.4816609025001526
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.16847558319568634,
+          "min": 0.06750746816396713,
+          "max": 0.49821847677230835
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.30431605875492096,
+          "min": 0.12968528270721436,
+          "max": 0.5488147735595703
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.1246379166841507,
+          "min": 0.01767561584711075,
+          "max": 0.20854708552360535
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.0706746093928814,
+          "min": 0.010511700063943863,
+          "max": 0.1581202745437622
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.14804133027791977,
+          "min": 0.018282057717442513,
+          "max": 0.5042231678962708
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.12855452299118042,
+          "min": 0.04314864054322243,
+          "max": 0.35912051796913147
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.451196670532227,
+          31.73432159423828,
+          31.79844856262207,
+          31.849510192871094,
+          31.585695266723633,
+          31.604045867919922,
+          31.716367721557617,
+          31.853069305419922
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.25925925925925924,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -89.50703430175781,
+          -94.52704620361328,
+          -97.9856185913086,
+          -95.33191680908203,
+          -97.7319107055664,
+          -92.89114379882812,
+          -88.24559020996094,
+          -87.70514678955078
+        ],
+        "I145_psi_degrees": [
+          -42.35182571411133,
+          -41.736289978027344,
+          -41.03748321533203,
+          -40.88492965698242,
+          -40.16954040527344,
+          -41.71681213378906,
+          -43.15035629272461,
+          -42.976497650146484
+        ]
+      }
+    }
+  },
+  "config": {
+    "target": "config/target.yaml",
+    "candidates": "data/results/generation/aux_qvae_seed8601/representative_candidates.fasta",
+    "candidate_records": "data/results/generation/aux_qvae_seed8601/representative_candidates.csv",
+    "checkpoint": "/mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt",
+    "checkpoint_sha256": "3b4ba9236b7b458f47b40b694847b6bb4110c744becd6d2c53de7b1d04c07a81",
+    "msa_cache": "/mnt/e/bioemu2/msa/7e90e212b21b14a8a647ae3767cb0b13d3caef551fff889af616530d61ff9310.json",
+    "msa_rows": 512,
+    "seed": 20261022,
+    "samples": 8,
+    "batch_size": 4,
+    "sampler_steps": 200,
+    "device": "cuda",
+    "precision": "bf16-mixed",
+    "cpu_threads": 8
+  },
+  "seconds": 764.7321208369976,
+  "checkpoint_sha256": "3b4ba9236b7b458f47b40b694847b6bb4110c744becd6d2c53de7b1d04c07a81",
+  "inputs": {
+    "config/candidate_structures.yaml": "17ee2825161ce2f45a8366791850f65ddde5ab34acf921219b37bf2711b95cd5",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/results/generation/aux_qvae_seed8601/representative_candidates.fasta": "fc6587df708cefe967a87b59e0b85119436e1eef8cc11ab24cf1cdfd8ef22501",
+    "data/results/generation/aux_qvae_seed8601/representative_candidates.csv": "4f0d4cb4648035294227b6cd329b213fcd17a45a416289c11f53f2b781052013",
+    "/mnt/e/bioemu2/msa/7e90e212b21b14a8a647ae3767cb0b13d3caef551fff889af616530d61ff9310.json": "138305d98e3820228ee82a889a5e3e1b6686b0d1edf580fef6c50a4d70903b7a"
+  },
+  "homolog_rows_sha256": "13ea1d43b56625c5a6fe78c73f44800ebdded54d8ed201f91f7c04c5628390bf",
+  "implementation_sha256": "2c85945cab1911c3dae4c5cdd174a615cb03ef961c559be4b19585130e0f72cf",
+  "git_revision": "ea450b3202a31a895aafdb8fc73f933011733748",
+  "coordinate_units": "MDTraj nm; all reported distances converted to angstroms",
+  "mode": "BioEmu2 structure predictions; no ligand, no experimental WT, no pLDDT/PAE",
+  "comparison": "All predicted frames retained, including physicality failures; paired-frame ranges are descriptive"
+}

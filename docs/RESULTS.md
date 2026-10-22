@@ -28,6 +28,13 @@
 - 完成 18,432 次两臂生成；其中每臂 3,072 次是 KVP40 WT 域条件生成，得到 10 条代表记录、9 条不同的 341 aa 序列。两臂各生成一条含 F13Y+A134G 的多替换候选，不构成该组合的独立功能验证，也不是 QVAE 独有供给。
 - 本次验证的是辅助域模型与候选供给，没有检验辅助预训练对完整 NatV 主模型的迁移收益。结果、训练曲线、代表序列与复现依据见[研究报告](../data/results/evaluation/aux_qvae_seed8601/REPORT.md)。
 
+## 完整 NatV 辅助迁移
+
+- 随机初始化与辅助域 QVAE 初始化两臂，各 3 个主训练 seed、2,704 steps、同一 27-mask 训练与 384-query NMNAT 选择规则。六次训练合计 2.12 h；辅助预训练 18.95 min 单列，只有一个辅助 seed。
+- 全 227×27 开发验证、按 44 个 component 与 seed 配对：辅助初始化使 NMNAT 条件先验 NLL 改善 0.0490 nats/残基，95% CI [-0.0603, -0.0376]；global 改善 0.0170，CI [-0.0268, -0.0070]；Nudix 差值 +0.0067，CI [-0.0063, 0.0198]，无显著退化。三个主 seed 的 NMNAT 差值分别为 -0.0412、-0.0408、-0.0650。
+- 18,432 次共同 mask/uniform 生成（每臂 9,216）中，两臂 unique、口袋/锚点编辑没有显示辅助初始化优势；原始 Hamming 和锚点变化在 auxinit 略低，Hamming 匹配后口袋行比例接近。说明条件概率迁移没有同步转化为更多或更口袋定向的候选供给。
+- 结构：辅助域 9 条唯一候选 + WT、迁移 3 对 Hamming 匹配代表 + WT 均完成 8 帧 BioEmu2 prediction，全部 8/8 physicality 通过。迁移配对 median full RMSD 0.54–0.62 Å、NMNAT 0.28–0.46 Å；H15 的 I145 邻域较大，配对间无一致方向。结构仅作条件性证据；2QJO 是 NAD⁺ 产物参照，2QJT/2R5W 不作为 NMNAT 锚点模板；无配体、无 pLDDT/PAE、无活性结论。完整报告与复现路径见[迁移报告](../data/results/evaluation/natv_transfer/REPORT.md)。
+
 ## 证据边界
 
 - 30–35% identity 处于 twilight zone；局部比对、域边界和锚点对应仍可能不确定。

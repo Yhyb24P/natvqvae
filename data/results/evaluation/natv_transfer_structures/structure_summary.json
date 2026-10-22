@@ -1,0 +1,1225 @@
+{
+  "targets": {
+    "WT": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+      "msa_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "707944dad549465f172887f448ff629fe794df4a3acd7dcf30967352adec41d9",
+        "samples.xtc": "869851de02de11cc4e6319abe0acc1fb4632c62d9cb79863d9e3f9abf87c0c37",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 44.59947352600284,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6660540699958801,
+          "min": 0.34790921211242676,
+          "max": 1.148566722869873
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.2965160608291626,
+          "min": 0.18968059122562408,
+          "max": 0.44782754778862
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.16800253093242645,
+          "min": 0.10851867496967316,
+          "max": 0.2225075662136078
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.30090194940567017,
+          "min": 0.15322349965572357,
+          "max": 0.44189926981925964
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.08254614099860191,
+          "min": 0.0206240676343441,
+          "max": 0.15750977396965027
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.07432997226715088,
+          "min": 0.030657444149255753,
+          "max": 0.14712369441986084
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.13765044510364532,
+          "min": 0.07026445865631104,
+          "max": 0.3395652174949646
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.1278432123363018,
+          "min": 0.044903144240379333,
+          "max": 0.2585229277610779
+        },
+        "frame_pairs": 56,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.48554801940918,
+          31.80914306640625,
+          31.704086303710938,
+          32.02244186401367,
+          31.610538482666016,
+          31.75687599182129,
+          31.754465103149414,
+          31.997264862060547
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.25925925925925924,
+          0.28888888888888886,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -91.34842681884766,
+          -98.40345001220703,
+          -98.78164672851562,
+          -97.0534439086914,
+          -98.0406494140625,
+          -96.13060760498047,
+          -94.25362396240234,
+          -91.862060546875
+        ],
+        "I145_psi_degrees": [
+          -41.9565544128418,
+          -37.610477447509766,
+          -37.24358367919922,
+          -39.071102142333984,
+          -38.21247100830078,
+          -40.07655334472656,
+          -41.66798400878906,
+          -41.48283386230469
+        ]
+      }
+    },
+    "random_H07": {
+      "sequence": "MSHAIFIGKFRPFHNGHLSAIEQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMLVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSKYQKLFPELKLFQPEPVKMYNKVISAADFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYNSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "aff4b7c678a680f7e57dfd9a2b0cf766dea81d9319d80491da8af21fb1586859",
+      "msa_sha256": "3fb17ff3422a7360d58962b2d571aa3e0980c64521827c70d0c87ce07c29d573",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "d2ff1d8f83e0585d1dbf32dd4efe386b2315ee837351cd67225ed5d9c89999f8",
+        "samples.xtc": "bb328b1ad9e3ab9818ec0a6a8931129fa70e8d177bd3d8b9c1ba2d1c9f0be4a5",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 40.97085339999467,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.5810512900352478,
+          "min": 0.16975076496601105,
+          "max": 0.9608281254768372
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.30886685848236084,
+          "min": 0.19418609142303467,
+          "max": 0.4496636688709259
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.3702154904603958,
+          "min": 0.06697231531143188,
+          "max": 0.4719689190387726
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.3011500984430313,
+          "min": 0.12505951523780823,
+          "max": 0.5306987762451172
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.08542657271027565,
+          "min": 0.018013322725892067,
+          "max": 0.18424047529697418
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.08404439315199852,
+          "min": 0.037560392171144485,
+          "max": 0.1869281381368637
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.24295739084482193,
+          "min": 0.06378684937953949,
+          "max": 0.5311053395271301
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.12531981617212296,
+          "min": 0.033841323107481,
+          "max": 0.32109034061431885
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.634531021118164,
+          31.82600212097168,
+          31.773178100585938,
+          31.9263858795166,
+          31.758716583251953,
+          31.866352081298828,
+          31.80748176574707,
+          31.953773498535156
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.2518518518518518,
+          0.25925925925925924,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -83.22689056396484,
+          -92.47210693359375,
+          -91.75963592529297,
+          -89.3637924194336,
+          -88.78202819824219,
+          -87.51549530029297,
+          -86.82910919189453,
+          -84.26776123046875
+        ],
+        "I145_psi_degrees": [
+          -42.75680923461914,
+          -38.92328643798828,
+          -39.0109977722168,
+          -40.97768783569336,
+          -40.87587356567383,
+          -41.070865631103516,
+          -42.27671813964844,
+          -42.87821960449219
+        ]
+      }
+    },
+    "auxinit_H07": {
+      "sequence": "MSHAIFIGKFRPFHNGHLSAIEQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMLVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSWYQKLFPELKLFQPEPVKMYNKVISAADFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYHSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "d7c7e66fd77550562ec539c38a613afa42037d323e9f656e8e2ecfb67cff38ba",
+      "msa_sha256": "33f94da1562b61428c21710872e4ac93f4f126458c734f09f89f43e0ef67b427",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "7aab11e20288a903ee48931e8540dbe1a7cc1826310879ead202f3b0dc4cddac",
+        "samples.xtc": "7b06634b391d4c53d565be82cfb8261d1f12038db663c17aae4366f77d8a29f4",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 41.05225490400335,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.5387362539768219,
+          "min": 0.19277259707450867,
+          "max": 1.1236906051635742
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.32605111598968506,
+          "min": 0.17544516921043396,
+          "max": 0.49241122603416443
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.20373785495758057,
+          "min": 0.07872162759304047,
+          "max": 0.46778085827827454
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.2780078202486038,
+          "min": 0.0934814065694809,
+          "max": 0.5099806785583496
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.1112104021012783,
+          "min": 0.02954391948878765,
+          "max": 0.22111164033412933
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.08841890469193459,
+          "min": 0.021006233990192413,
+          "max": 0.1691550314426422
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.19629649817943573,
+          "min": 0.05459773540496826,
+          "max": 0.3462621569633484
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.1290540099143982,
+          "min": 0.05389905720949173,
+          "max": 0.22176505625247955
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.659835815429688,
+          31.854951858520508,
+          31.737037658691406,
+          31.78813934326172,
+          31.67106819152832,
+          31.703786849975586,
+          31.74410629272461,
+          32.02725601196289
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.15730337078651685,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -86.5782470703125,
+          -88.57567596435547,
+          -89.62014770507812,
+          -86.13029479980469,
+          -90.56134033203125,
+          -85.4014892578125,
+          -85.0362548828125,
+          -84.9874267578125
+        ],
+        "I145_psi_degrees": [
+          -40.791343688964844,
+          -39.836002349853516,
+          -38.660064697265625,
+          -41.4762077331543,
+          -39.24469757080078,
+          -41.7064208984375,
+          -41.57561492919922,
+          -41.594112396240234
+        ]
+      }
+    },
+    "random_H11": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSAVTQAFEALDLDKMTILIGSSQRHRSVRNPFVFEEVRDMMGVALPDHIRSKVHFVPLGDHAKDDVWQSNVQSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVIDATDFRELYFSEILLNHPVMSGLVPPETMMFLDNWSKTEFFTEMQAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "0d4b072f46ead5fa5731c76b217083b317a4d1db21cb13c0537c06bb4db83422",
+      "msa_sha256": "10d9bd8ec1552e3f5c06699d1b1dc8d595797eaec7af721d1e29bb750b082e0a",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "71b8eec02ad7a6ca0f00e334863d1bbebbb0b180e04dd39ebca441eaee7c7827",
+        "samples.xtc": "c4bbf04c1fcf1a47534a570dbcec927ed32054173da7ce7261ef1f17cc11e3ee",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 41.149415370004135,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.5558998882770538,
+          "min": 0.19881609082221985,
+          "max": 1.1182193756103516
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.2839052379131317,
+          "min": 0.18688079714775085,
+          "max": 0.4956575632095337
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.3837112635374069,
+          "min": 0.08590936660766602,
+          "max": 0.46853703260421753
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.3332601487636566,
+          "min": 0.13130992650985718,
+          "max": 0.5814455151557922
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.10839058458805084,
+          "min": 0.011730672791600227,
+          "max": 0.18544407188892365
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.09560221806168556,
+          "min": 0.0034919665195047855,
+          "max": 0.1940944939851761
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.16503866016864777,
+          "min": 0.07689348608255386,
+          "max": 0.34492212533950806
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.10640401020646095,
+          "min": 0.0321287102997303,
+          "max": 0.28768622875213623
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.61868667602539,
+          31.78351593017578,
+          31.75916862487793,
+          31.7769832611084,
+          31.643457412719727,
+          31.603172302246094,
+          31.764705657958984,
+          31.79490852355957
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.25925925925925924
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -79.35530853271484,
+          -88.02448272705078,
+          -89.2936019897461,
+          -87.54497528076172,
+          -87.14146423339844,
+          -80.83499908447266,
+          -81.40276336669922,
+          -79.42039489746094
+        ],
+        "I145_psi_degrees": [
+          -43.765750885009766,
+          -43.071876525878906,
+          -42.36858367919922,
+          -43.413841247558594,
+          -43.714385986328125,
+          -44.41729736328125,
+          -44.18636703491211,
+          -44.243377685546875
+        ]
+      }
+    },
+    "auxinit_H11": {
+      "sequence": "MSHAIFIGRFRPFHNGHLSALTQAFEALDLDKMTILIGSSRRHRSVRNPFVFEEVRDMMGVALPDHIRSKVHFVPLGDHAKDDVWQSNVQSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVIKATDFRELYFSEILLNHPVMSGLVPPETMMFLDNWSKTEFFTEMNAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "7763d54c35b1b2e278da3c40ddf9a7f2d18875f752256082149ee01848b3c947",
+      "msa_sha256": "c657163a851f3c6171d23cbe9bddfff53d27a7bec7140ce9252e78d81abf0efa",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "96aa22e43cf03b9f5d8737f9058b6641eb25d15bff360e3926fb9ba00c061ada",
+        "samples.xtc": "490d2ed9a45cfdee231ebb9ed81a2abb6ec1f7cccb18705b2a4f88d9e05764ee",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 40.93478295899695,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.5551666915416718,
+          "min": 0.18164554238319397,
+          "max": 0.9947568774223328
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.29555168747901917,
+          "min": 0.1694205105304718,
+          "max": 0.4157760739326477
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.15498223900794983,
+          "min": 0.05380725488066673,
+          "max": 0.20905116200447083
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.25246867537498474,
+          "min": 0.12735794484615326,
+          "max": 0.5059326887130737
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.11179490387439728,
+          "min": 0.03463957458734512,
+          "max": 0.17661699652671814
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.1364704966545105,
+          "min": 0.07378393411636353,
+          "max": 0.20953434705734253
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.1446702927350998,
+          "min": 0.04085563123226166,
+          "max": 0.4887256324291229
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.12566586583852768,
+          "min": 0.03538093715906143,
+          "max": 0.3111830949783325
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.54159164428711,
+          31.737260818481445,
+          31.719797134399414,
+          31.778980255126953,
+          31.67069435119629,
+          31.687026977539062,
+          31.740509033203125,
+          31.896379470825195
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707
+        ],
+        "Nudix_helix_fraction": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.32592592592592595,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -95.90901947021484,
+          -94.0561752319336,
+          -94.03495788574219,
+          -91.47100830078125,
+          -92.48699951171875,
+          -94.45819854736328,
+          -91.57551574707031,
+          -94.86092376708984
+        ],
+        "I145_psi_degrees": [
+          -40.106483459472656,
+          -41.26321029663086,
+          -41.30335998535156,
+          -41.931373596191406,
+          -41.33301544189453,
+          -40.49070739746094,
+          -42.367733001708984,
+          -40.309871673583984
+        ]
+      }
+    },
+    "random_H15": {
+      "sequence": "MSHAIFIGRFRPFHNGHLDAITQAFDALDLDKMTILIGSSNRHRSIKNPFVFEEVRAMMVVALPDHIRSKVRFVPLGGYYKDDVWQSNVRSRFRGAYHIVGYDKDENSYYLKLFPELKLFQPEPLKMGNKVISASDFRELYFSEILKNHPVMSGLIPKETMMFLDNWSKGDFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "8ebca7360b80218e977fe57ab1af42d737ccd7238bd5a386c2f60c0bf66dccd3",
+      "msa_sha256": "141fd68d7b74e8038bfb38aa3abe3113470b6e47234e63bea54654dd1097197f",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "be35652ed81a039917018cf1373f3294ac5eb9e3c7e41482a617194610a06f08",
+        "samples.xtc": "2fe54a750aea6387d308aa1e83f1f318036dd7a78c173e57cc089a12de0a7c72",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 41.22231549699791,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6187295317649841,
+          "min": 0.40824267268180847,
+          "max": 1.126534342765808
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.4550350308418274,
+          "min": 0.34911784529685974,
+          "max": 0.5680378079414368
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.4041510969400406,
+          "min": 0.12397489696741104,
+          "max": 0.5178131461143494
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.7982757389545441,
+          "min": 0.6274617910385132,
+          "max": 1.0501387119293213
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.32550084590911865,
+          "min": 0.22759908437728882,
+          "max": 0.4489094614982605
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.2551235109567642,
+          "min": 0.17568877339363098,
+          "max": 0.348990797996521
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.26151183247566223,
+          "min": 0.14148418605327606,
+          "max": 0.4816160798072815
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.19110790640115738,
+          "min": 0.05455009639263153,
+          "max": 0.3630978465080261
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.69930648803711,
+          31.922922134399414,
+          31.755733489990234,
+          31.96233558654785,
+          31.705646514892578,
+          31.728260040283203,
+          31.907835006713867,
+          31.82804298400879
+        ],
+        "NMNAT_helix_fraction": [
+          0.47752808988764045,
+          0.46629213483146065,
+          0.4606741573033708,
+          0.47191011235955055,
+          0.46629213483146065,
+          0.46629213483146065,
+          0.47191011235955055,
+          0.46629213483146065
+        ],
+        "NMNAT_strand_fraction": [
+          0.15730337078651685,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.14606741573033707,
+          0.15730337078651685,
+          0.14606741573033707,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.2518518518518518,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.26666666666666666,
+          0.25925925925925924,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -94.30091094970703,
+          -95.3799819946289,
+          -94.23445129394531,
+          -107.71844482421875,
+          -95.19010162353516,
+          -106.80610656738281,
+          -94.14219665527344,
+          -94.83794403076172
+        ],
+        "I145_psi_degrees": [
+          -30.51392364501953,
+          -29.703073501586914,
+          -31.06048583984375,
+          -10.97463321685791,
+          -28.680625915527344,
+          -12.664153099060059,
+          -30.327171325683594,
+          -30.22071647644043
+        ]
+      }
+    },
+    "auxinit_H15": {
+      "sequence": "MSHAIFIGRFRPFHNGHLNAITQAFDALDLDKMTILIGSSNRHRSPKNPFVFEEVREMMEVALPDHIRSKVRFVPLGNYYKDDVWQSNVRSRCRGADHIVGYDKDELSYYLKLFPELKLFQPEPMKMNNKVISARDFRELYFSEILHNHPVMSGLIPKETMMFLDNWSKAPFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI",
+      "sequence_sha256": "3c0092f95621f8aaa9ebac20592a3fe067e62fb513cbea369c2a0c7c5e9c1a33",
+      "msa_sha256": "731e7d93542e9fe5e4bc56ca92cd71fbefa7d36f1e00d538968b1808ab361484",
+      "provided_msa_rows": 512,
+      "samples": 8,
+      "physicality_passed": 8,
+      "physicality": [
+        {
+          "frame": 0,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 1,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 2,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 3,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 4,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 5,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 6,
+          "status": "passed",
+          "reason": null
+        },
+        {
+          "frame": 7,
+          "status": "passed",
+          "reason": null
+        }
+      ],
+      "output_sha256": {
+        "topology.cif": "a0736a066ba158c124e0b959882e3a9c3ffff49227a800d25b56ba5127b6a335",
+        "samples.xtc": "7381900405419a1c4d643dc63dd87d6f73878eaac7ac8370d5e311cdabe451d2",
+        "physicality.json": "24f52ef39713bed0ca9fc9c6d434e43d6a318298e8e27a10faa0085459e2b4a1"
+      },
+      "seconds": 41.103837376998854,
+      "metrics": {
+        "full_rmsd_A": {
+          "median": 0.6046760082244873,
+          "min": 0.43967121839523315,
+          "max": 1.0794328451156616
+        },
+        "NMNAT_rmsd_A": {
+          "median": 0.44455789029598236,
+          "min": 0.36689311265945435,
+          "max": 0.5403914451599121
+        },
+        "Nudix_rmsd_A": {
+          "median": 0.4255334883928299,
+          "min": 0.20452551543712616,
+          "max": 0.5276053547859192
+        },
+        "I145_neighborhood_rmsd_A": {
+          "median": 0.8240109384059906,
+          "min": 0.6134827136993408,
+          "max": 0.9753347039222717
+        },
+        "anchor_14_CA_displacement_A": {
+          "median": 0.2371167317032814,
+          "min": 0.13730749487876892,
+          "max": 0.35122907161712646
+        },
+        "anchor_17_CA_displacement_A": {
+          "median": 0.1768369823694229,
+          "min": 0.10596321523189545,
+          "max": 0.2684784531593323
+        },
+        "anchor_135_CA_displacement_A": {
+          "median": 0.34355559945106506,
+          "min": 0.2225854992866516,
+          "max": 0.5392295122146606
+        },
+        "anchor_138_CA_displacement_A": {
+          "median": 0.3096473515033722,
+          "min": 0.13184188306331635,
+          "max": 0.4555932283401489
+        },
+        "frame_pairs": 64,
+        "frame_pair_note": "Descriptive pairs, not independent observations or a confidence interval",
+        "domain_centroid_distance_A": [
+          31.70609474182129,
+          31.883644104003906,
+          31.77977752685547,
+          31.954803466796875,
+          31.73926544189453,
+          31.746402740478516,
+          31.8636417388916,
+          31.802539825439453
+        ],
+        "NMNAT_helix_fraction": [
+          0.47191011235955055,
+          0.47191011235955055,
+          0.47191011235955055,
+          0.47752808988764045,
+          0.47752808988764045,
+          0.47191011235955055,
+          0.47191011235955055,
+          0.47752808988764045
+        ],
+        "NMNAT_strand_fraction": [
+          0.16853932584269662,
+          0.15730337078651685,
+          0.14606741573033707,
+          0.15730337078651685,
+          0.15730337078651685,
+          0.14606741573033707,
+          0.15730337078651685,
+          0.15730337078651685
+        ],
+        "Nudix_helix_fraction": [
+          0.2518518518518518,
+          0.26666666666666666,
+          0.26666666666666666,
+          0.2518518518518518,
+          0.2518518518518518,
+          0.2740740740740741,
+          0.2518518518518518,
+          0.26666666666666666
+        ],
+        "Nudix_strand_fraction": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "I145_phi_degrees": [
+          -96.954833984375,
+          -96.068603515625,
+          -99.31227111816406,
+          -114.62511444091797,
+          -96.74263000488281,
+          -98.61185455322266,
+          -95.5517578125,
+          -98.02656555175781
+        ],
+        "I145_psi_degrees": [
+          -28.96641731262207,
+          -28.09895896911621,
+          -26.173168182373047,
+          -5.690115928649902,
+          -27.720050811767578,
+          -29.10380744934082,
+          -28.162368774414062,
+          -27.488431930541992
+        ]
+      }
+    }
+  },
+  "config": {
+    "target": "config/target.yaml",
+    "candidates": "data/results/evaluation/natv_transfer/representative_candidates.fasta",
+    "candidate_records": "data/results/evaluation/natv_transfer/representative_candidates.csv",
+    "checkpoint": "/mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt",
+    "checkpoint_sha256": "3b4ba9236b7b458f47b40b694847b6bb4110c744becd6d2c53de7b1d04c07a81",
+    "msa_cache": "/mnt/e/bioemu2/msa/7e90e212b21b14a8a647ae3767cb0b13d3caef551fff889af616530d61ff9310.json",
+    "msa_rows": 512,
+    "seed": 20261022,
+    "samples": 8,
+    "batch_size": 4,
+    "sampler_steps": 200,
+    "device": "cuda",
+    "precision": "bf16-mixed",
+    "cpu_threads": 8
+  },
+  "seconds": 709.2758630850003,
+  "checkpoint_sha256": "3b4ba9236b7b458f47b40b694847b6bb4110c744becd6d2c53de7b1d04c07a81",
+  "inputs": {
+    "config/candidate_structures_natv_transfer.yaml": "8ad7a8a47830a81248b631f0ccdf630650571f9f506a0665ff02dcf1fbce4cd3",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/results/evaluation/natv_transfer/representative_candidates.fasta": "2b99d2eebc74e9253d10b3aabd60e6e439dcd20b1afb30399e54c91abe6bb540",
+    "data/results/evaluation/natv_transfer/representative_candidates.csv": "a4ba492c88856a538d136e3f4d3d1d7597ced4ea9a345f211ed4120f998308af",
+    "/mnt/e/bioemu2/msa/7e90e212b21b14a8a647ae3767cb0b13d3caef551fff889af616530d61ff9310.json": "138305d98e3820228ee82a889a5e3e1b6686b0d1edf580fef6c50a4d70903b7a"
+  },
+  "homolog_rows_sha256": "13ea1d43b56625c5a6fe78c73f44800ebdded54d8ed201f91f7c04c5628390bf",
+  "implementation_sha256": "2c85945cab1911c3dae4c5cdd174a615cb03ef961c559be4b19585130e0f72cf",
+  "git_revision": "ea450b3202a31a895aafdb8fc73f933011733748",
+  "coordinate_units": "MDTraj nm; all reported distances converted to angstroms",
+  "mode": "BioEmu2 structure predictions; no ligand, no experimental WT, no pLDDT/PAE",
+  "comparison": "All predicted frames retained, including physicality failures; paired-frame ranges are descriptive"
+}
