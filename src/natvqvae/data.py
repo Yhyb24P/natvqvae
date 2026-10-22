@@ -234,3 +234,58 @@ class PopulationData:
     def encode_wt(self, encoder, positions, device):
         h, valid, mask = encoder([self.target.sequence], [positions])
         return h.to(device), valid.to(device), mask.to(device)
+
+
+def load_auxiliary_inputs(directory):
+    """Validate the formal auxiliary-domain FASTA, masks and split/weights."""
+    import csv as _csv
+    import json as _json
+    import math as _math
+    directory = Path(directory)
+    all_domains = load_fasta(directory / 'aux_domains.fasta')
+    high = load_fasta(directory / 'aux_domains_high_confidence.fasta')
+    risk = load_fasta(directory / 'aux_domains_risk.fasta')
+    masks = _json.loads((directory / 'aux_masks.json').read_text())
+    if set(all_domains) != set(masks):
+        raise ValueError('Aux domain FASTA and mask keys differ')
+    high_ids = set((directory / 'aux_high_confidence_ids.txt').read_text().split())
+    risk_ids = set((directory / 'aux_risk_ids.txt').read_text().split())
+    if high_ids != set(high) or risk_ids != set(risk):
+        raise ValueError('Aux high/risk FASTA and ID lists differ')
+    if set(high) | set(risk) != set(all_domains) or set(high) & set(risk):
+        raise ValueError('Aux high/risk partition differs from all domains')
+    for aux_id, sequence in all_domains.items():
+        if aux_id != 'aux:' + hashlib.sha256(sequence.encode()).hexdigest():
+            raise ValueError(f'Aux sequence SHA differs: {aux_id}')
+        item = masks[aux_id]
+        pairs = item.get('pairs', [])
+        query_positions = [pair[0] for pair in pairs]
+        wt_positions = [pair[1] for pair in pairs]
+        if len(set(query_positions)) != len(query_positions) or len(set(wt_positions)) != len(wt_positions):
+            raise ValueError(f'Aux mask is not one-to-one: {aux_id}')
+        if sorted(query_positions) != sorted(set(item.get('positions', []))):
+            raise ValueError(f'Aux positions differ from pairs: {aux_id}')
+        if sorted(wt_positions) != sorted(set(item.get('wt_positions', []))):
+            raise ValueError(f'Aux WT positions differ from pairs: {aux_id}')
+        if any(not (0 <= position < len(sequence)) for position in query_positions):
+            raise ValueError(f'Aux query position out of range: {aux_id}')
+        if any(not (4 <= position <= 181) for position in wt_positions):
+            raise ValueError(f'Aux WT position out of range: {aux_id}')
+    rows = list(_csv.DictReader(open(directory / 'aux_split.csv', newline='')))
+    ids = [row['aux_uid'] for row in rows]
+    if len(ids) != len(set(ids)) or not set(ids) <= set(high):
+        raise ValueError('Aux split IDs are not unique high-confidence domains')
+    if any(row['split'] not in {'train', 'val'} for row in rows):
+        raise ValueError('Aux split contains an invalid split')
+    for row in rows:
+        weight = float(row['weight'])
+        if not _math.isfinite(weight) or weight <= 0:
+            raise ValueError('Aux weight must be finite and positive')
+    clusters = {}
+    for row in rows:
+        cluster = row['domain_cluster50']
+        if cluster in clusters and clusters[cluster] != row['split']:
+            raise ValueError('Aux 50% cluster crosses train/val')
+        clusters[cluster] = row['split']
+    return {'domains': all_domains, 'masks': masks, 'split': rows,
+            'high': high, 'risk': risk}
