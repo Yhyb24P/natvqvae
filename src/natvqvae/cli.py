@@ -11,6 +11,8 @@ from .data import PopulationData, load_yaml, sha256_file
 from .design import build_design, run_boltz, summarize_design
 from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summarize_transfer
 from .generate import generate
+from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
+                               summarize_microenvironment)
 from .preprocessing import preprocess
 from .train import train
 
@@ -179,6 +181,27 @@ def build_parser():
     design_summary.add_argument('--config', default='config/design.yaml')
     design_summary.add_argument('--output', required=True)
     design_summary.set_defaults(func=lambda args: summarize_design(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    microenv_build = sub.add_parser('microenv-build',
+                                    help='build Nudix D2/D4 inputs for WT/B1/B2')
+    microenv_build.add_argument('--config', default='config/microenvironment.yaml')
+    microenv_build.add_argument('--output', required=True)
+    microenv_build.set_defaults(func=lambda args: build_microenvironment(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    microenv_boltz = sub.add_parser('microenv-boltz',
+                                    help='run the recorded Boltz-2 micro-environment states')
+    microenv_boltz.add_argument('--config', default='config/microenvironment.yaml')
+    microenv_boltz.add_argument('--output', required=True)
+    microenv_boltz.set_defaults(func=lambda args: run_microenvironment_boltz(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    microenv_summary = sub.add_parser('microenv-summarize',
+                                      help='summarize Nudix metal-site metrics from existing models')
+    microenv_summary.add_argument('--config', default='config/microenvironment.yaml')
+    microenv_summary.add_argument('--output', required=True)
+    microenv_summary.set_defaults(func=lambda args: summarize_microenvironment(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

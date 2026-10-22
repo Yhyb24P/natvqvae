@@ -1,0 +1,77 @@
+{
+  "config": "config/microenvironment.yaml",
+  "config_sha256": "902c6fbc884bd9815993c5b8f7ab7cef78bccbade948b1bd01dc8fa0d8d3d63d",
+  "candidates_sha256": "38950bddb3e470509655d7e1fe2f90fddf06bc1121f108f229402e825f8384a2",
+  "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "source_structure": "data/raw/structures/2QJT.cif",
+  "source_structure_sha256": "31601e0f3ce2dbc595df23d532988733770364edadfa0335cd81951ab8db880b",
+  "sequences": {
+    "WT": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+    "B1": "7437f49b54fc6b00ec3736379434b3dc189040448392e1d2a167c091e9d2272a",
+    "B2": "5cf3e6befedbd9796398c5f306bb81a3f702c25f5d8c5f779f6fcce17f2e01f4"
+  },
+  "states": {
+    "D2": {
+      "ligand": "AMP",
+      "ion": "MN",
+      "ions": 3,
+      "source": "2QJT chain B catalytic Mn"
+    },
+    "D4": {
+      "ligand": "NAD",
+      "ion": "MG",
+      "ions": 3,
+      "source": "hypothesis, NAD plus 3 Mg"
+    }
+  },
+  "inputs": [
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/WT.yaml",
+      "sha256": "16a042c2f8272a3f3e34dbadb81696d867e3fadcb5f32c0e094086495e7a5786"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/WT_nocon.yaml",
+      "sha256": "9475473d997ce49e4240e45f7d587fa60a8fd9c4748ac4bccbb70c7051dcf040"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/WT_D4.yaml",
+      "sha256": "c1147028c4e445c98c05ed24d0d3fa8261b2e108090c42b2e01169912c95dc10"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/WT_D4_nocon.yaml",
+      "sha256": "25a70a564620c9479275dec151c2d771f5ead6e7ad5e024f80f3ca5dea70a7b4"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B1.yaml",
+      "sha256": "f81e093792f7b3cabca219f53aa9ef2f226ebf4cea6b7cc965de3e0ff55dbf96"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B1_nocon.yaml",
+      "sha256": "e347cc30ffc60a486f35e6278fe780a5d52361d93491a0a94c31a7401a2630e9"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B1_D4.yaml",
+      "sha256": "5c0f2b82fbcd3754b70afd193a023b7de1b84c7221eba8de7fd81465c0433acc"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B1_D4_nocon.yaml",
+      "sha256": "e60a109b8c524120afeb1bdc1649ec405e89905fed138e30231c9621497d6f81"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B2.yaml",
+      "sha256": "50dc282b5d3605978612942b91112e91510aecbb2ef8845a2d7bf7a4ec848df9"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B2_nocon.yaml",
+      "sha256": "98d7502cf2c5c313925e39c8181f32a33ffb8b7532f50a19bc70e2d6f4cfbeeb"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B2_D4.yaml",
+      "sha256": "4a2e2bd41b89d0224a0afdfdfe8e63c8249e86ef1513fbb1bc4e1f42c74e7e9e"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nudix_microenvironment/inputs/B2_D4_nocon.yaml",
+      "sha256": "f7ff6c20bbbc3aeb7077ee0b4e2284e2ae21ed2934176c027f8abd490ad1a1bf"
+    }
+  ]
+}

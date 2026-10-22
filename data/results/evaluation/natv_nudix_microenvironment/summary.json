@@ -1,0 +1,70 @@
+{
+  "status": "COMPLETED",
+  "tool": {
+    "name": "Boltz-2",
+    "version": "2.2.1",
+    "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256_prefix": "090e82ac8c92f5e9",
+    "gpu": "RTX 5090 D"
+  },
+  "config_sha256": "902c6fbc884bd9815993c5b8f7ab7cef78bccbade948b1bd01dc8fa0d8d3d63d",
+  "candidates_sha256": "38950bddb3e470509655d7e1fe2f90fddf06bc1121f108f229402e825f8384a2",
+  "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "source_structure_sha256": "31601e0f3ce2dbc595df23d532988733770364edadfa0335cd81951ab8db880b",
+  "runs": [
+    {
+      "state": "D2",
+      "kind": "constrained",
+      "seed": 20261023,
+      "pattern": "{sequence}"
+    },
+    {
+      "state": "D2",
+      "kind": "constrained",
+      "seed": 20261024,
+      "pattern": "{sequence}_seed2"
+    },
+    {
+      "state": "D2",
+      "kind": "unconstrained",
+      "seed": 20261023,
+      "pattern": "{sequence}_nocon"
+    },
+    {
+      "state": "D4",
+      "kind": "constrained",
+      "seed": 20261023,
+      "pattern": "{sequence}_D4"
+    },
+    {
+      "state": "D4",
+      "kind": "constrained",
+      "seed": 20261024,
+      "pattern": "{sequence}_D4_seed2"
+    },
+    {
+      "state": "D4",
+      "kind": "unconstrained",
+      "seed": 20261023,
+      "pattern": "{sequence}_D4_nocon"
+    }
+  ],
+  "model_rows": 54,
+  "models_by_state": {
+    "D2": 27,
+    "D4": 27
+  },
+  "metrics_file": "metrics.csv",
+  "metrics": [
+    "ligand_site",
+    "E248_O",
+    "E248_amide_N",
+    "D308_O",
+    "D308_amide_N",
+    "E252",
+    "D307_OD1",
+    "D307_OD2",
+    "G232O",
+    "l9_ca_rmsd"
+  ]
+}

@@ -1,0 +1,50 @@
+task: natv_nudix_microenvironment
+paths:
+  candidates: data/results/generation/natv_dual_domain_design/candidates.csv
+  msa_source: data/results/generation/natv_dual_domain_design/source_msa_WT_512.a3m
+  output: data/results/evaluation/natv_nudix_microenvironment
+source:
+  path: data/raw/structures/2QJT.cif
+  chain: B
+  catalytic_ions: [505, 506, 507]
+  ligand_residue: 602
+sequences: [WT, B1, B2]
+msa_rows: 512
+states:
+  D2:
+    input: "{sequence}"
+    ligand: AMP
+    ion: MN
+    ions: 3
+    source: 2QJT chain B catalytic Mn
+  D4:
+    input: "{sequence}_D4"
+    ligand: NAD
+    ion: MG
+    ions: 3
+    source: hypothesis, NAD plus 3 Mg
+pocket_contacts: [232, 233, 248, 252, 307, 308]
+mutations:
+  B1: {position: 248, wt: E, mut: Q}
+  B2: {position: 308, wt: D, mut: N}
+runs:
+  - {state: D2, kind: constrained, seed: 20261023, pattern: "{sequence}"}
+  - {state: D2, kind: constrained, seed: 20261024, pattern: "{sequence}_seed2"}
+  - {state: D2, kind: unconstrained, seed: 20261023, pattern: "{sequence}_nocon"}
+  - {state: D4, kind: constrained, seed: 20261023, pattern: "{sequence}_D4"}
+  - {state: D4, kind: constrained, seed: 20261024, pattern: "{sequence}_D4_seed2"}
+  - {state: D4, kind: unconstrained, seed: 20261023, pattern: "{sequence}_D4_nocon"}
+boltz:
+  binary: /home/yhshy/miniconda3/envs/boltz2/bin/boltz
+  cache: /mnt/e/models/boltz2
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  output_format: mmcif
+  num_workers: 2
+tool:
+  name: Boltz-2
+  version: 2.2.1
+  checkpoint: /mnt/e/models/boltz2/boltz2_conf.ckpt
+  checkpoint_sha256_prefix: 090e82ac8c92f5e9
+  gpu: RTX 5090 D
