@@ -1,0 +1,44 @@
+{
+  "status": "SCOPE_CORRECTION",
+  "applies_to": {
+    "script": "scripts/audit_evolution_data.py",
+    "executed_copy": "data/results/natv_evolution_data_audit/raw/audit_evolution_data_executed.py",
+    "executed_sha256": "2533740d47b2a4981776651be1f4c6d9a429e6b36af448b9ba125334009619f7",
+    "run_outputs": "data/results/natv_evolution_data_audit/raw/"
+  },
+  "retracted_claim": "No current test sequence is read.",
+  "actual_scope": {
+    "stage3_sequences_loaded": 13972,
+    "profile_rows_processed": 13972,
+    "sequence_loaded_for_all_profile_rows": true,
+    "domain_slice_attempted_for_all_profile_rows": true,
+    "loaded_roles": {
+      "test": 225,
+      "quarantined_old_sealed_component": 71,
+      "annotation_conflict_quarantine": 249,
+      "excluded_noncanonical_or_domain": 4,
+      "training": 1644,
+      "validation": 200,
+      "stage3_only": 11579
+    },
+    "test_or_sealed_in_mmseqs_inputs": false,
+    "test_or_sealed_in_nearest_targets": false,
+    "test_or_sealed_used_for_training_or_model_selection": false,
+    "test_or_sealed_used_for_generation": false,
+    "test_or_sealed_used_for_performance_evaluation": false,
+    "output_containing_test_or_sealed_metadata": [
+      "stage3_audit.csv"
+    ],
+    "outputs_not_containing_test_or_sealed_sequences": [
+      "pf01467_only_domains.fasta",
+      "current_natv_nmnat_domains.fasta",
+      "combined_nmnat_domains.fasta",
+      "pf01467_only_audit.csv",
+      "nearest_natv_nmnat.csv",
+      "anchor_mapping_old_only_reps.csv"
+    ]
+  },
+  "effect_on_conclusions": "The 8,849 PF01467-only population, its clustering and its nearest-neighbor results are derived from stage3-only records and training+validation NatV domains. Test/sealed sequences were loaded and PF01467-domain-sliced, but were not used in those comparative computations or in any model fit.",
+  "future_action": "Future scripts count all roles from metadata but materialize sequences and slice domains only for an explicit whitelist. audit_wt_full_context.py implements this and asserts zero intersection with protected roles. Any future test use must disclose this contact and follow the preregistered evaluation boundary.",
+  "test_status": "sealed; not deleted, not unsealed by this correction"
+}
