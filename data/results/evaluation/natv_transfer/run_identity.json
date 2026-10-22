@@ -3,8 +3,8 @@
     "path": "data/results/evaluation/natv_transfer/manifest.json",
     "sha256": "9b557ccbf2593c53d30ff7004a9c715f713eaf78b00a2fc721c6b3e69c374842"
   },
-  "git_revision": "711a8a718a0f610a1254a26199f19a1f105210fe",
-  "summary_implementation_sha256": "f3e76305b71fae810b08a27ba4a174a127391639f6c30e07c93cd96dbe59b12a",
+  "git_revision": "50efc93c770cd8c03e4bde2b45edc0d82e3cc2ac",
+  "summary_implementation_sha256": "7d0c3991e2d0b1fae85d4109fb09b900a578c01ea5e8d137b9ad7bc5fac21375",
   "inputs": {
     "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
     "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
@@ -302,19 +302,19 @@
     }
   },
   "paired_summary": {
-    "path": "/tmp/natv_transfer_summary_repro2/paired_summary.json",
-    "sha256": "8a840ee3803ff77a5f9c972a4720bfb21a0abaa09fba866dd53c83a7a5d29b41"
+    "path": "/tmp/natv_transfer_summary_repro3/paired_summary.json",
+    "sha256": "6c08ed50b7b014e482ad8ef0b7b697be924c8dbd70614e0941f4e3cca6acd054"
   },
   "generation_summary": {
-    "path": "/tmp/natv_transfer_summary_repro2/generation_summary.json",
-    "sha256": "ef603692c888dd06659f2a4a7b334e7f15aa61af855b81cd0301276223fe22b4"
+    "path": "/tmp/natv_transfer_summary_repro3/generation_summary.json",
+    "sha256": "7453f62efdce06202b2f461a793feee0cc6b48ac51e035faceab82f46bdaa034"
   },
   "training_curves": {
-    "path": "/tmp/natv_transfer_summary_repro2/training_curves.png",
+    "path": "/tmp/natv_transfer_summary_repro3/training_curves.png",
     "sha256": "e9bd6cb8903cd060894cce6fe90437511ac8cd43e7a34aafb95ac80c2dc99819"
   },
   "representative_candidates": {
-    "path": "/tmp/natv_transfer_summary_repro2/representative_candidates.csv",
+    "path": "/tmp/natv_transfer_summary_repro3/representative_candidates.csv",
     "sha256": "a4ba492c88856a538d136e3f4d3d1d7597ced4ea9a345f211ed4120f998308af"
   }
 }

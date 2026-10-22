@@ -194,7 +194,24 @@
   },
   "totals": {
     "attempts": 18432,
-    "unique_sequences": 18413,
+    "per_run_unique_sum": 18413,
+    "per_run_duplicate_attempts_beyond_first": 19,
+    "global_union_unique": 18286,
+    "global_duplicate_attempts_beyond_first": 146,
+    "arms": {
+      "random": {
+        "attempts": 9216,
+        "per_run_unique_sum": 9207,
+        "cross_seed_union": 9201,
+        "duplicate_attempts_beyond_first": 15
+      },
+      "auxinit": {
+        "attempts": 9216,
+        "per_run_unique_sum": 9206,
+        "cross_seed_union": 9196,
+        "duplicate_attempts_beyond_first": 20
+      }
+    },
     "nudix_unchanged": 18432
   }
 }

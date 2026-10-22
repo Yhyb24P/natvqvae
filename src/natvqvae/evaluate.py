@@ -447,28 +447,36 @@ def _read_transfer_run(run):
             'posterior_joint_nll_mc_se': post_se,
             'repeats': len(prior_repeats),
         }
+    repeat_aggregates = {
+        region: {'prior': [bucket[1] / bucket[0] for _, bucket in sorted(repeats[region].items())],
+                 'posterior': [bucket[2] / bucket[0] for _, bucket in sorted(repeats[region].items())]}
+        for region in _TRANSFER_REGIONS}
     return {'components': {
         region: {metric: {name: float(np.mean(values)) for name, values in by_name.items()}
                  for metric, by_name in by_metric.items()}
         for region, by_metric in component.items()},
-        'regions': regions, 'evaluation': summary}
+        'regions': regions, 'repeat_aggregates': repeat_aggregates,
+        'evaluation': summary}
 
 
 def _paired_transfer(data, pairs):
-    result = {'per_pair': {}, 'overall': {}, 'ci_scope': (
+    result = {'per_pair': {}, 'component_differences': {}, 'overall': {}, 'ci_scope': (
         'component bootstrap over the common groups given the fixed training seeds; '
         'seed variability is reported separately')}
     for metric in ('prior_joint_nll_per_residue', 'posterior_joint_nll_per_residue'):
         result['per_pair'][metric] = {}
+        result['component_differences'][metric] = {}
         for random_name, aux_name in pairs:
             key = f'{random_name}|{aux_name}'
             result['per_pair'][metric][key] = {}
+            result['component_differences'][metric][key] = {}
             for region in _TRANSFER_REGIONS:
                 random = data[random_name]['components'][region][metric]
                 aux = data[aux_name]['components'][region][metric]
                 common = sorted(set(random) & set(aux))
-                result['per_pair'][metric][key][region] = _bootstrap(
-                    [aux[c] - random[c] for c in common])
+                differences = {c: float(aux[c] - random[c]) for c in common}
+                result['component_differences'][metric][key][region] = differences
+                result['per_pair'][metric][key][region] = _bootstrap(list(differences.values()))
         result['overall'][metric] = {}
         for region in _TRANSFER_REGIONS:
             by_component = defaultdict(list)
@@ -547,9 +555,30 @@ def _generation_transfer(manifest):
             'hamming_matched': {'random': stats(random_by_key, matched),
                                 'auxinit': stats(aux_by_key, matched)},
         }
+    arm_stats = {}
+    for arm in ('random', 'auxinit'):
+        names = [run['name'] for run in manifest['runs'] if run['arm'] == arm]
+        per_run = [len({row['sequence_sha256'] for row in rows[name]}) for name in names]
+        union = set()
+        for name in names:
+            union |= {row['sequence_sha256'] for row in rows[name]}
+        arm_stats[arm] = {
+            'attempts': sum(len(rows[name]) for name in names),
+            'per_run_unique_sum': sum(per_run),
+            'cross_seed_union': len(union),
+            'duplicate_attempts_beyond_first': sum(len(rows[name]) for name in names) - len(union),
+        }
+    global_union = set()
+    for values in rows.values():
+        global_union |= {row['sequence_sha256'] for row in values}
     output['totals'] = {
         'attempts': sum(v['attempts'] for v in output['runs'].values()),
-        'unique_sequences': sum(v['unique_sequences'] for v in output['runs'].values()),
+        'per_run_unique_sum': sum(v['unique_sequences'] for v in output['runs'].values()),
+        'per_run_duplicate_attempts_beyond_first': sum(
+            v['duplicate_attempts_beyond_first'] for v in output['runs'].values()),
+        'global_union_unique': len(global_union),
+        'global_duplicate_attempts_beyond_first': sum(len(v) for v in rows.values()) - len(global_union),
+        'arms': arm_stats,
         'nudix_unchanged': sum(v['nudix_unchanged'] for v in output['runs'].values()),
     }
     return output
@@ -680,8 +709,21 @@ def summarize_transfer(manifest_path, output):
     paired = _paired_transfer(data, manifest['pairs'])
     paired['runs'] = {run['name']: {
         'regions': data[run['name']]['regions'],
+        'repeat_aggregates': data[run['name']]['repeat_aggregates'],
         'global_evaluation': data[run['name']]['evaluation'],
     } for run in manifest['runs']}
+    paired['all_mask_overall'] = {}
+    for metric in ('prior_joint_nll_per_residue', 'posterior_joint_nll_per_residue'):
+        random_values = [data[run['name']]['evaluation'][metric]
+                         for run in manifest['runs'] if run['arm'] == 'random']
+        aux_values = [data[run['name']]['evaluation'][metric]
+                      for run in manifest['runs'] if run['arm'] == 'auxinit']
+        per_seed = [a - r for r, a in zip(random_values, aux_values)]
+        paired['all_mask_overall'][metric] = {
+            'random': random_values, 'auxinit': aux_values,
+            'per_seed_delta': per_seed, 'mean_delta': float(np.mean(per_seed)),
+            'note': 'equal-weight mean over the six evaluation.json summaries; not the global_* region mask'}
+
     paired['limits'] = (
         'component-level bootstrap given the trained seeds; not a resampling of training seeds; '
         'MC SE is the observed four-repeat standard error')
