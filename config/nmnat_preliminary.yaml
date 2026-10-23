@@ -1,0 +1,21 @@
+preliminary_runs:
+  - label: ATP_MG_anchor_WT_seed20261026_smoke
+    kind: single_sample_technical_validation
+    path: /tmp/nmnat_binding_smoke
+    actual_samples: 1
+    inputs:
+      - boltz_results_ATP_MG_anchor_WT_seed20261026/processed/records/ATP_MG_anchor_WT_seed20261026.json
+    result_glob: "**/*.cif"
+    note: "temporary one-seed/one-sample config and input YAML were not retained; processed record is the surviving input identity"
+  - label: ATP_ONLY_WT_seed20261026_trial
+    kind: exploratory_three_model
+    path: data/results/evaluation/kvp40_nmnat_atp_only_trial
+    actual_samples: 3
+    config: config/nmnat_atp_only.yaml
+    build: data/results/evaluation/kvp40_nmnat_atp_only_trial/build.json
+    run_identity: data/results/evaluation/kvp40_nmnat_atp_only_trial/run_identity.json
+    analysis_identity: data/results/evaluation/kvp40_nmnat_atp_only_trial/analysis_identity.json
+    inputs:
+      - inputs/seed20261026/ATP_ONLY_unconstrained_WT_seed20261026.yaml
+    result_glob: "runs/**/*.cif"
+    note: "WT-only exploratory run; not part of the 36 formal models"

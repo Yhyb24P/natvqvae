@@ -83,6 +83,13 @@
 - 1NUS 的全局对齐最弱（TM 0.58–0.68，TMalign RMSD 3.25 Å，非局部姿态误差）；NMN 每个克隆有 24/31 个 role_mismatch、3 个 unmapped，不能判断 NMN 口袋。锚点 H14/H17/T135/R138 的 CA 变化均 <0.5 Å，只说明未见大幅主链位移，不排除侧链/微环境重排；距离近不代表氢键或催化几何。
 - 边界：固定迁移姿态、3 个 diffusion 样本；WT 自身迁移姿态也有 clash；不能作活性/产量排名，不能说明真实结合姿态、顺序、限速步或金属配位。详见[ePCR NMNAT 环境报告](../data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md)。
 
+## NMNAT 底物共折叠（2026-10-23）
+
+- P1：完整 WT 的 ATP+1 Mg（18 模型）与 NMN（9 模型）共折叠。ATP 的蛋白侧落在 NMNAT，H14/H17/T135/R138 与磷酸氧保持邻近，多数模型无严重冲突；但 Mg 多数没有与 ATP 共定位，不能称为 ATP/Mg 复合物。输入是完整双域 WT + ATP + 单个 Mg，未指定 Mg 归属；1F9A 的一枚 Mg 只提供 NMNAT 局部参照，不证明完整 NatV 的总金属占位。该频率同时受单 Mg 组成、两个潜在金属相关口袋和模型先验影响，不是金属占有率，也不判为定位失败。CCD 的 ATP 形式电荷 0、NMN +1、Mg +2 只是预测表示，不是溶液质子化/离子态。见[报告](../data/results/evaluation/kvp40_nmnat_substrate_conformations/REPORT.md)。
+- P3：WT/A1/A2/A3 的 36 个 ATP-only 模型，按同 seed 模型对比较 ATP 姿态与 102–105 环。ATP 位姿差与 WT 自身样本差同量级，未见跨 seed 一致超出背景的偏离；A1 H17 有小幅同向距离增加，A3 环区差较小，均不能推断功能或稳定性。不做活性排序。见[报告](../data/results/evaluation/kvp40_nmnat_atp_variants/REPORT.md)。
+- P2：1NUS/1NUP、1GZU、1HYB 的 NMN 接触已按配体化学组和蛋白官能团映射。来源非独立、含突变体或低分辨结构，原子角色不一致，不能定义唯一 KVP40 NMN 姿态或约束集。见[报告](../data/results/evaluation/kvp40_nmnat_p2_sources/REPORT.md)。
+- 三组结果均无显式水、角度/质子化/金属配位分析；不能推断活性、亲和力、催化构象或 NAD⁺ 产量。P1/P3 的 63 个坐标以确定性 gzip 和 manifest 保存；完整定义与数值见各报告和 CSV。
+
 ## 证据边界
 
 - 30–35% identity 处于 twilight zone；局部比对、域边界和锚点对应仍可能不确定。

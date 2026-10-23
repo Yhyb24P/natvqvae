@@ -1,0 +1,37 @@
+task: kvp40_nmnat_atp_only_trial
+target: config/target.yaml
+candidates: data/results/generation/natv_dual_domain_design/candidates.csv
+msa_source: data/results/generation/natv_dual_domain_design/source_msa_WT_512.a3m
+msa_rows: 512
+sequences: [WT]
+states:
+  ATP_ONLY:
+    ligand: ATP
+    ions: []
+constraints:
+  ATP_ONLY: []
+modes:
+  ATP_ONLY: [unconstrained]
+seeds: [20261026]
+pocket:
+  max_distance: 6.0
+  force: false
+analysis:
+  contact_cutoff_A: 4.0
+  clash_cutoff_A: 2.0
+  metal_cutoff_A: 3.2
+  anchors: [14, 17, 135, 138]
+  atp_loop: [102, 105]
+  nmn_candidates: []
+reference_apo: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_0.cif.gz
+boltz:
+  binary: /home/yhshy/miniconda3/envs/boltz2/bin/boltz
+  cache: /mnt/e/models/boltz2
+  checkpoint: /mnt/e/models/boltz2/boltz2_conf.ckpt
+  checkpoint_sha256: 090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  output_format: mmcif
+  num_workers: 2
+  timeout_seconds: 7200

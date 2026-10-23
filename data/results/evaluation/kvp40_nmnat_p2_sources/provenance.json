@@ -1,0 +1,89 @@
+{
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_nmn_sources.yaml",
+  "config_sha256": "fdacebfd31fdda4475f1c7bdd102f0c1e64526911c5c71a130e790c38493117f",
+  "reference": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_0.cif.gz",
+  "reference_sha256": "5cbf89a0709478c72f6446b8b833939a6c29be6256bc973d9681831680af6388",
+  "implementation_sha256": "0f440a4a1ff523ffd5cecd3ffa4846309c91ac3228a7ab27cbbf0d12333a0903",
+  "tmalign": "/home/yhshy/miniconda3/bin/TMalign",
+  "sources": {
+    "1NUS": {
+      "path": "data/raw/structures/nmnat/1NUS.cif",
+      "sha256": "a96cda31c5b671ebfe3917e073cde639a29c6532b4af13be75a009828d1e872e",
+      "family": "human_NMNAT3",
+      "chain": "A",
+      "protein_range": [
+        3,
+        234
+      ],
+      "note": "WT human NMNAT3, NMN+APC; 1NUS and 1NUP are the same enzyme/paper",
+      "tm_scores": [
+        0.58422,
+        0.67804
+      ],
+      "tmalign_rmsd_A": 3.25,
+      "fit_rmsd_A": 2.31,
+      "fit_pairs": 135,
+      "mapped_residues": 153
+    },
+    "1NUP": {
+      "path": "data/raw/structures/nmnat_p2/1NUP.cif",
+      "sha256": "64e0d85b987e688c57cf263db2708330174f9bbd66560d6c9a400d968d17d32d",
+      "family": "human_NMNAT3",
+      "chain": "A",
+      "protein_range": [
+        3,
+        235
+      ],
+      "note": "WT human NMNAT3, NMN+SO4, 1.9 A; same enzyme/paper as 1NUS",
+      "tm_scores": [
+        0.58453,
+        0.68165
+      ],
+      "tmalign_rmsd_A": 3.11,
+      "fit_rmsd_A": 2.27,
+      "fit_pairs": 136,
+      "mapped_residues": 152
+    },
+    "1GZU": {
+      "path": "data/raw/structures/nmnat_p2/1GZU.cif",
+      "sha256": "d71d18cfe8e710d79b976db2d22802edc8e74472b5248b385ef96e784508eb15",
+      "family": "human_NMNAT1",
+      "chain": "A",
+      "protein_range": [
+        6,
+        271
+      ],
+      "note": "human NMNAT1 WT, NMN, 2.9 A; MSE converted to MET for CA mapping, Se/S not equivalent; missing residues retained",
+      "tm_scores": [
+        0.56214,
+        0.69016
+      ],
+      "tmalign_rmsd_A": 3.47,
+      "fit_rmsd_A": 2.42,
+      "fit_pairs": 138,
+      "mapped_residues": 160
+    },
+    "1HYB": {
+      "path": "data/raw/structures/nmnat_p2/1HYB.cif",
+      "sha256": "277e1b7fa15124f1e1b413f1009921dc50829506247cbc6b1e3c82ca6c52e1d2",
+      "family": "archaeal_NadM",
+      "chain": "A",
+      "protein_range": [
+        4,
+        170
+      ],
+      "note": "Methanothermobacter thermautotrophicus NadM H19A active-site mutant, NMN+SO4; not a WT standard",
+      "tm_scores": [
+        0.84543,
+        0.77248
+      ],
+      "tmalign_rmsd_A": 1.95,
+      "fit_rmsd_A": 1.89,
+      "fit_pairs": 154,
+      "mapped_residues": 155
+    }
+  },
+  "ligand": "NMN",
+  "contact_cutoff_A": 4.0,
+  "method": "TMalign source chain to WT0 NMNAT 4-181; NMN contacts <= cutoff; chemical groups and atom/role compatibility recorded"
+}

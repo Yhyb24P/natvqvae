@@ -1,0 +1,203 @@
+{
+  "config_sha256": "97e9b5ac0d07c84365d321824487281c82bcc210097077dc1aefccbc4fe1d1ec",
+  "build_sha256": "ba1d109c9ebe1956f14b74a8642f74e6e3b8ec084b1693d02ba6bf85f25f9b24",
+  "run_identity": {
+    "config_sha256": "97e9b5ac0d07c84365d321824487281c82bcc210097077dc1aefccbc4fe1d1ec",
+    "build_sha256": "ba1d109c9ebe1956f14b74a8642f74e6e3b8ec084b1693d02ba6bf85f25f9b24",
+    "code_sha256": "dec237f48cb75032bc720552e312a0a7ded252855ef72eec1e2e1973bf4aa566",
+    "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "source_sha256": "370c6d40ffb7f301103bb201682b982c949ac764509b0fe6fb1bc4557f1d05be",
+  "reference_apo_sha256": "5cbf89a0709478c72f6446b8b833939a6c29be6256bc973d9681831680af6388",
+  "ccd_pickle_sha256": {
+    "ATP": {
+      "path": "/mnt/e/models/boltz2/mols/ATP.pkl",
+      "sha256": "71dee21ceaafa9d6aa856891f91e880ce34d4369bfaf60cf57f11ded68b5c1f1"
+    },
+    "MG": {
+      "path": "/mnt/e/models/boltz2/mols/MG.pkl",
+      "sha256": "fce685cb31077f9a5bfa853cc68c28902a8abdcb71a017c6ee582cff06749c0b"
+    },
+    "NMN": {
+      "path": "/mnt/e/models/boltz2/mols/NMN.pkl",
+      "sha256": "e24078cb4ff266bf624768c2ce5a87fac383c97e85596ea061d768312dd7f00d"
+    }
+  },
+  "preliminary_runs": [
+    {
+      "label": "ATP_MG_anchor_WT_seed20261026_smoke",
+      "kind": "single_sample_technical_validation",
+      "path": "/tmp/nmnat_binding_smoke",
+      "actual_samples": 1,
+      "note": "temporary one-seed/one-sample config and input YAML were not retained; processed record is the surviving input identity",
+      "input_sha256": [
+        {
+          "path": "/tmp/nmnat_binding_smoke/boltz_results_ATP_MG_anchor_WT_seed20261026/processed/records/ATP_MG_anchor_WT_seed20261026.json",
+          "sha256": "a1edaed8bca4576a5afbe4b826da5ecafa9054e7ebd0ec72dced402bf7793ea6"
+        }
+      ],
+      "result_sha256": [
+        {
+          "path": "/tmp/nmnat_binding_smoke/boltz_results_ATP_MG_anchor_WT_seed20261026/predictions/ATP_MG_anchor_WT_seed20261026/ATP_MG_anchor_WT_seed20261026_model_0.cif",
+          "sha256": "af5da66feabf6b94e0484da98ef6e633a37b32a87ba76af0ccfa0962e7db1b02"
+        }
+      ]
+    },
+    {
+      "label": "ATP_ONLY_WT_seed20261026_trial",
+      "kind": "exploratory_three_model",
+      "path": "data/results/evaluation/kvp40_nmnat_atp_only_trial",
+      "actual_samples": 3,
+      "note": "WT-only exploratory run; not part of the 36 formal models",
+      "config_sha256": "e5983c4524fd05b35eab94073f810b5e87491c98ba55b28c4351244f44b71307",
+      "build_sha256": "71e8a73b146d58690a65d3dab4e47a7596aab0783aa78d52f986359dae543cbe",
+      "run_identity_sha256": "e58786ef320cd9bb11a833cac4e05b75331f96ce281b4691083a0bc43cd786ec",
+      "analysis_identity_sha256": "9883a75fbe12cebec5b0d331437a618e77bc188bd636054c03784168a6775eed",
+      "input_sha256": [
+        {
+          "path": "data/results/evaluation/kvp40_nmnat_atp_only_trial/inputs/seed20261026/ATP_ONLY_unconstrained_WT_seed20261026.yaml",
+          "sha256": "e252389a53f88c85428922650cd36e2a496ca23adefd0a248d43753864cef988"
+        }
+      ],
+      "result_sha256": [
+        {
+          "path": "data/results/evaluation/kvp40_nmnat_atp_only_trial/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_0.cif",
+          "sha256": "79178fc206a290e363c427a89dfc98763844840096eff71a979d7808af69bc5c"
+        },
+        {
+          "path": "data/results/evaluation/kvp40_nmnat_atp_only_trial/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_1.cif",
+          "sha256": "a697fa695c21ea791e5de5b05b2afa29bb2de9e4401dad556aac910869e30870"
+        },
+        {
+          "path": "data/results/evaluation/kvp40_nmnat_atp_only_trial/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_2.cif",
+          "sha256": "6349006093c15cd7d3b5f16c8e1ad81fe8fd2f15add0ba22d1ce4a9341c24537"
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_unconstrained_WT_seed20261026/ATP_MG_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "4e6c07a043993128e880fa7e003087b7c16a7ba276fe9a131ffadb3dde468e3b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_unconstrained_WT_seed20261026/ATP_MG_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "7108459a8a9e1610fbcaba4d5107b845676a91e471b7e086cd4ba894bd4871ac"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_unconstrained_WT_seed20261026/ATP_MG_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "8c456477450f4e1be51cf6596df98323e3b9ab01f8ae174533586b2735867bb8"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_anchor_WT_seed20261026/ATP_MG_anchor_WT_seed20261026_model_0.cif",
+      "sha256": "7ed1d105bab13ba297501c9b5506033a1b3965308831108d246a5b2529a423ac"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_anchor_WT_seed20261026/ATP_MG_anchor_WT_seed20261026_model_1.cif",
+      "sha256": "48d3756528d84b0138dd9c19218e43f75052a37331c02090551a3758b0e0c77f"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_MG_anchor_WT_seed20261026/ATP_MG_anchor_WT_seed20261026_model_2.cif",
+      "sha256": "7e0eb317ccbc95699a3985169ad57895a0096f7778db394b01a05c667b6ffdd2"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "ec2efe9bedf9ad6a24d67def54e097759a9b59dfecff84699155f1d74f5e2c65"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "46b253b685a82e532f25590ff29147fb11e1ab92dbd73e83f75be49d540ffeb2"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "4d0e5cfe795cb0d16230fd481abd4e950ff314b2fd861628ce1b3c0b00dfc409"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_unconstrained_WT_seed20261027/ATP_MG_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "63e832f0244b9fd264c5111607a3d5a302b202d15e7c244e343fda498954fd94"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_unconstrained_WT_seed20261027/ATP_MG_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "3e92d5694d167f1adb6d869daac48ae7ddd48adf9fd72f72b0c6db5a22fb4b87"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_unconstrained_WT_seed20261027/ATP_MG_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "3c67ea142889985a725e33efb4ec9937d2156b949820b9a026107c263991a2f0"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_anchor_WT_seed20261027/ATP_MG_anchor_WT_seed20261027_model_0.cif",
+      "sha256": "da9662d023f83d52b097d84874387f0a750f417ea933e2d49cd8718200785cf9"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_anchor_WT_seed20261027/ATP_MG_anchor_WT_seed20261027_model_1.cif",
+      "sha256": "0245cdbb8eb0cdc876e784ba31c59da7e7178ec8b87c15babc42cc96c624a19f"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_MG_anchor_WT_seed20261027/ATP_MG_anchor_WT_seed20261027_model_2.cif",
+      "sha256": "bcb614e04573450f6be83f908d425df31ae5388814dd420e261beaba80b6a331"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "8baebb316f7ea1be64205c4179a76f711fae2200e23c8647c804c89227399a26"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "ce7497ecc38dfd0885b025efa1fb1d3ea6ee1351793068cdf4cede158c1a4d77"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "2f26adaa1e8d1883fb113d94662d486983e4349871df0611763930f39924fc61"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_unconstrained_WT_seed20261028/ATP_MG_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "2c3261bcaa69f6734e892e846422feb61e5969628e1c1b6dade752756df88aa9"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_unconstrained_WT_seed20261028/ATP_MG_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "07c5d87fb04bcebbccde1a91bbcebb58bc45d17c08b05591c3cf8bd2a316bc03"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_unconstrained_WT_seed20261028/ATP_MG_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "c5c498f41e77fddf2bcb1c7b08d94ad210fe6c4003973e2735638098aa2f05ee"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_anchor_WT_seed20261028/ATP_MG_anchor_WT_seed20261028_model_0.cif",
+      "sha256": "328d9c92aaf42de943fba31b6ecefd3e4cd9ce42ed139c8a3d26b00705d4aecc"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_anchor_WT_seed20261028/ATP_MG_anchor_WT_seed20261028_model_1.cif",
+      "sha256": "788b27a2a7114365031dc31c3e670d894506652426f5ce73bf08743ec7289d95"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_MG_anchor_WT_seed20261028/ATP_MG_anchor_WT_seed20261028_model_2.cif",
+      "sha256": "983761f75ab976c6ecd450e3aa11bb4a67e062e0fed44c41e1e0a55fcfce8c3a"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "0b0f49ecc4131ba2e4b688339c2fca220995238a179386a0c76b99d1fdf27df6"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "9395a7531bbc8622b591715d6b14d40e0cf8457c0df46a63560e34f688f29411"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "e7f6fd2154f0974b1d37abf33b2d50340b6cd153ddab159b360b4aba75a940e1"
+    }
+  ],
+  "created_utc": "2026-10-23T15:22:55.893428+00:00"
+}

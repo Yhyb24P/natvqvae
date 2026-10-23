@@ -15,7 +15,10 @@ from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summari
 from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
                                summarize_microenvironment)
+from .nmnat_binding import (build_nmnat_binding, run_nmnat_binding_boltz,
+                            summarize_nmnat_binding)
 from .nmnat_mapping import audit_atp_contacts, build_nmnat_mapping
+from .nmnat_nmn import analyze_nmn_sources
 from .preprocessing import preprocess
 from .train import train
 
@@ -247,6 +250,39 @@ def build_parser():
     epcr_nmnat.add_argument('--config', default='config/epcr_nmnat_environment.yaml')
     epcr_nmnat.add_argument('--output', required=True)
     epcr_nmnat.set_defaults(func=lambda args: build_epcr_nmnat_environment(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_binding_build = sub.add_parser(
+        'nmnat-binding-build', help='build NMNAT substrate co-folding inputs')
+    nmnat_binding_build.add_argument('--config', default='config/nmnat_binding.yaml')
+    nmnat_binding_build.add_argument('--output', required=True)
+    nmnat_binding_build.set_defaults(func=lambda args: build_nmnat_binding(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_binding_run = sub.add_parser(
+        'nmnat-binding-run', help='run NMNAT substrate co-folding with Boltz-2')
+    nmnat_binding_run.add_argument('--config', default='config/nmnat_binding.yaml')
+    nmnat_binding_run.add_argument('--output', required=True)
+    nmnat_binding_run.add_argument('--wait-for-pid', type=int, default=None,
+                                  help='wait for an existing coordinated compute process to exit')
+    nmnat_binding_run.add_argument('--checkpoint-stage-dir', default=None,
+                                  help='verified temporary checkpoint copy for slow WSL storage')
+    nmnat_binding_run.set_defaults(func=lambda args: run_nmnat_binding_boltz(
+        args.config, _result_output(args.output, 'evaluation'), args.wait_for_pid,
+        args.checkpoint_stage_dir))
+
+    nmnat_binding_summary = sub.add_parser(
+        'nmnat-binding-summarize', help='summarize NMNAT substrate co-folding models')
+    nmnat_binding_summary.add_argument('--config', default='config/nmnat_binding.yaml')
+    nmnat_binding_summary.add_argument('--output', required=True)
+    nmnat_binding_summary.set_defaults(func=lambda args: summarize_nmnat_binding(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_nmn_sources = sub.add_parser(
+        'nmnat-nmn-sources', help='map experimental NMN contacts by chemical group and source family')
+    nmnat_nmn_sources.add_argument('--config', default='config/nmnat_nmn_sources.yaml')
+    nmnat_nmn_sources.add_argument('--output', required=True)
+    nmnat_nmn_sources.set_defaults(func=lambda args: analyze_nmn_sources(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

@@ -1,0 +1,33 @@
+task: kvp40_nmnat_nmn_sources
+reference: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_0.cif.gz
+ligand: NMN
+contact_cutoff_A: 4.0
+sources:
+  1NUS:
+    path: data/raw/structures/nmnat/1NUS.cif
+    chain: A
+    protein_range: [3, 234]
+    family: human_NMNAT3
+    note: "WT human NMNAT3, NMN+APC; 1NUS and 1NUP are the same enzyme/paper"
+  1NUP:
+    path: data/raw/structures/nmnat_p2/1NUP.cif
+    chain: A
+    protein_range: [3, 235]
+    family: human_NMNAT3
+    note: "WT human NMNAT3, NMN+SO4, 1.9 A; same enzyme/paper as 1NUS"
+  1GZU:
+    path: data/raw/structures/nmnat_p2/1GZU.cif
+    chain: A
+    protein_range: [6, 271]
+    family: human_NMNAT1
+    mse_as_met: true
+    note: "human NMNAT1 WT, NMN, 2.9 A; MSE converted to MET for CA mapping, Se/S not equivalent; missing residues retained"
+  1HYB:
+    path: data/raw/structures/nmnat_p2/1HYB.cif
+    chain: A
+    protein_range: [4, 170]
+    family: archaeal_NadM
+    note: "Methanothermobacter thermautotrophicus NadM H19A active-site mutant, NMN+SO4; not a WT standard"
+alignment:
+  tmalign: /home/yhshy/miniconda3/bin/TMalign
+  min_fit_pairs: 20

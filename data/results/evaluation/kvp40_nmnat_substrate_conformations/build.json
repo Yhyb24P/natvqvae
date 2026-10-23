@@ -1,0 +1,217 @@
+{
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_binding.yaml",
+  "config_sha256": "97e9b5ac0d07c84365d321824487281c82bcc210097077dc1aefccbc4fe1d1ec",
+  "config_values": {
+    "task": "kvp40_nmnat_binding",
+    "target": "config/target.yaml",
+    "candidates": "data/results/generation/natv_dual_domain_design/candidates.csv",
+    "msa_source": "data/results/generation/natv_dual_domain_design/source_msa_WT_512.a3m",
+    "msa_rows": 512,
+    "sequences": [
+      "WT"
+    ],
+    "states": {
+      "ATP_MG": {
+        "ligand": "ATP",
+        "ions": [
+          "MG"
+        ]
+      },
+      "NMN": {
+        "ligand": "NMN",
+        "ions": []
+      }
+    },
+    "constraints": {
+      "ATP_MG": [
+        14,
+        17,
+        135,
+        138
+      ],
+      "NMN": []
+    },
+    "modes": {
+      "ATP_MG": [
+        "unconstrained",
+        "anchor"
+      ],
+      "NMN": [
+        "unconstrained"
+      ]
+    },
+    "seeds": [
+      20261026,
+      20261027,
+      20261028
+    ],
+    "pocket": {
+      "max_distance": 6.0,
+      "force": false
+    },
+    "analysis": {
+      "contact_cutoff_A": 4.0,
+      "clash_cutoff_A": 2.0,
+      "metal_cutoff_A": 3.2,
+      "anchors": [
+        14,
+        17,
+        135,
+        138
+      ],
+      "atp_loop": [
+        102,
+        105
+      ],
+      "nmn_candidates": [
+        7,
+        8,
+        38,
+        79,
+        85,
+        86,
+        110
+      ]
+    },
+    "reference_apo": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_0.cif.gz",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "created_utc": "2026-10-23T14:28:20.521060+00:00",
+  "code_sha256": "765cdbbcf40676984ef27ebafe94c9bce7588c4ef1c637629d1a00511683fd30",
+  "target": "config/target.yaml",
+  "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+  "candidates": "data/results/generation/natv_dual_domain_design/candidates.csv",
+  "candidates_sha256": "38950bddb3e470509655d7e1fe2f90fddf06bc1121f108f229402e825f8384a2",
+  "msa_source": "/home/yhshy/git_files/natvqvae/data/results/generation/natv_dual_domain_design/source_msa_WT_512.a3m",
+  "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "msa_files": [
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/WT.a3m",
+      "sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6"
+    }
+  ],
+  "msa_rows": 512,
+  "sequences": {
+    "WT": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+  },
+  "states": {
+    "ATP_MG": {
+      "ligand": "ATP",
+      "ions": [
+        "MG"
+      ]
+    },
+    "NMN": {
+      "ligand": "NMN",
+      "ions": []
+    }
+  },
+  "constraints": {
+    "ATP_MG": [
+      14,
+      17,
+      135,
+      138
+    ],
+    "NMN": []
+  },
+  "modes": {
+    "ATP_MG": [
+      "unconstrained",
+      "anchor"
+    ],
+    "NMN": [
+      "unconstrained"
+    ]
+  },
+  "seeds": [
+    20261026,
+    20261027,
+    20261028
+  ],
+  "inputs": [
+    {
+      "state": "ATP_MG",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261026/ATP_MG_unconstrained_WT_seed20261026.yaml",
+      "sha256": "2ad267e87ce2205b19fb5c205eaefcaa38138b8e2823d2f7215875657c1e3dd9"
+    },
+    {
+      "state": "ATP_MG",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261027/ATP_MG_unconstrained_WT_seed20261027.yaml",
+      "sha256": "2ad267e87ce2205b19fb5c205eaefcaa38138b8e2823d2f7215875657c1e3dd9"
+    },
+    {
+      "state": "ATP_MG",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261028/ATP_MG_unconstrained_WT_seed20261028.yaml",
+      "sha256": "2ad267e87ce2205b19fb5c205eaefcaa38138b8e2823d2f7215875657c1e3dd9"
+    },
+    {
+      "state": "ATP_MG",
+      "mode": "anchor",
+      "sequence": "WT",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261026/ATP_MG_anchor_WT_seed20261026.yaml",
+      "sha256": "0094386db6c469fc08bb54a875d9a91fae6f3636977b3d823d4b808dc7a19e4b"
+    },
+    {
+      "state": "ATP_MG",
+      "mode": "anchor",
+      "sequence": "WT",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261027/ATP_MG_anchor_WT_seed20261027.yaml",
+      "sha256": "0094386db6c469fc08bb54a875d9a91fae6f3636977b3d823d4b808dc7a19e4b"
+    },
+    {
+      "state": "ATP_MG",
+      "mode": "anchor",
+      "sequence": "WT",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261028/ATP_MG_anchor_WT_seed20261028.yaml",
+      "sha256": "0094386db6c469fc08bb54a875d9a91fae6f3636977b3d823d4b808dc7a19e4b"
+    },
+    {
+      "state": "NMN",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261026/NMN_unconstrained_WT_seed20261026.yaml",
+      "sha256": "d49c0668cdb89bb8d3d6c53e0f567b5b702bd6d630d6168dd16e91b38205586c"
+    },
+    {
+      "state": "NMN",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261027/NMN_unconstrained_WT_seed20261027.yaml",
+      "sha256": "d49c0668cdb89bb8d3d6c53e0f567b5b702bd6d630d6168dd16e91b38205586c"
+    },
+    {
+      "state": "NMN",
+      "mode": "unconstrained",
+      "sequence": "WT",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/inputs/seed20261028/NMN_unconstrained_WT_seed20261028.yaml",
+      "sha256": "d49c0668cdb89bb8d3d6c53e0f567b5b702bd6d630d6168dd16e91b38205586c"
+    }
+  ]
+}

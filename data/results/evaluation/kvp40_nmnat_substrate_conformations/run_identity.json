@@ -1,0 +1,20 @@
+{
+  "config_sha256": "97e9b5ac0d07c84365d321824487281c82bcc210097077dc1aefccbc4fe1d1ec",
+  "build_sha256": "ba1d109c9ebe1956f14b74a8642f74e6e3b8ec084b1693d02ba6bf85f25f9b24",
+  "code_sha256": "dec237f48cb75032bc720552e312a0a7ded252855ef72eec1e2e1973bf4aa566",
+  "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+  "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+  "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+  "boltz": {
+    "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+    "cache": "/mnt/e/models/boltz2",
+    "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "diffusion_samples": 3,
+    "sampling_steps": 200,
+    "recycling_steps": 3,
+    "output_format": "mmcif",
+    "num_workers": 2,
+    "timeout_seconds": 7200
+  }
+}
