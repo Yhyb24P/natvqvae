@@ -47,6 +47,7 @@
 - 规范化入口：`src/natvqvae/microenvironment.py`，CLI 为 `microenv-build`、`microenv-boltz`、`microenv-summarize`；配置为 `config/microenvironment.yaml`。`microenv-build` 从 candidates、源 MSA、2QJT 与状态定义重建全部输入；`microenv-boltz` 按记录的 seeds/settings 运行；`microenv-summarize` 从现有模型重算 `metrics.csv` 与 `summary.json`。
 - 54 个模型为 D2/D4 各 18 个约束态 + 各 9 个无约束对照。现有模型在 CLI 规范化之前产生，但输入、命令、seed、checkpoint 与汇总口径已由上述入口固定；本次只重跑 `microenv-summarize`，未重跑预测。
 - 正式汇总命令：`PYTHONPATH=src python -m natvqvae.cli microenv-summarize --config config/microenvironment.yaml --output data/results/evaluation/natv_nudix_microenvironment`。输出 `metrics.csv` 54 行；每行含 `model_path` 与 `model_sha256`，字段区分 E248/D308 的侧链 O 与酰胺 N，并记录最近金属标签；汇总同时校验每 run 3 个样本、模型序列、配体身份与离子种类/数量，`summary.json` 给出各状态/序列的数值范围。
+- 54 个 source CIF 已选择性归档为 `coordinates/` 下的确定性 gzip（3.49 MiB，mtime=0），`coordinates_manifest.csv` 记录原始路径、归档路径、原始/压缩 SHA256 与字节数。远端可解压这些坐标并核对 `metrics.csv`，无需重跑预测；未归档 confidence/Pae/NPZ/缓存或重复副本。
 - 运行命令模板：`BOLTZ_CACHE=/mnt/e/models/boltz2 /home/yhshy/miniconda3/envs/boltz2/bin/boltz predict <yaml> --out_dir <dir> --accelerator gpu --devices 1 --diffusion_samples 3 --sampling_steps 200 --recycling_steps 3 --seed <seed> --output_format mmcif --num_workers 2`。
 
 ## 实验结构锚点核查（2026-10-23）
@@ -74,6 +75,7 @@
 
 - `inputs/`：12 份 MSA 与 Boltz YAML（D2/D4、约束/无约束）。
 - `build.json`：配置、candidates、源 MSA、2QJT 与 12 份输入的 SHA256。
-- 各运行目录下的 mmCIF 与 confidence JSON（不作为小型结果提交）。
-- `metrics.csv`：54 个模型的原子级指标；`summary.json`：工具、权重、seed、运行范围与指标列。
+- `coordinates/`：54 个原始 CIF 的无损 gzip；`coordinates_manifest.csv` 记录原始/压缩 SHA256 与路径，可复算原子几何。
+- 各运行目录下的 confidence/Pae/NPZ 与重复 mmCIF 保留本地，不提交。
+- `metrics.csv`：54 个模型的原子级指标；`summary.json`：工具、权重、seed、运行范围、指标列与坐标归档信息。
 - 正式入口：`src/natvqvae/microenvironment.py`；配置：`config/microenvironment.yaml`。

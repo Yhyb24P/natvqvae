@@ -46,6 +46,7 @@
 - D2（AMP+3 Mn）与 D4（NAD⁺+3 Mg）的 WT/B1/B2 共 54 个 Boltz-2 模型先前产生；现由正式 CLI 校验并汇总：D2/D4 各 18 个约束态（2 seeds × 3 samples）+ 9 个无约束对照；每 run 的样本数、序列、配体与离子组成均有校验，指标可由 `microenv-summarize` 重算。
 - 约束模型中，突变体的酰胺羰基 O 到最近簇金属的距离通常高于 WT 羧酸 O 的最近距离：B2 D2 5.41–5.97 Å（WT 2.11–2.93）、D4 2.92–6.42 Å（WT 2.31–2.85）；B1 D2 2.56–2.86 Å（WT 2.05–2.19）、D4 2.08–3.23 Å（WT 1.90–2.53）。三金属簇内位点归属未建立（C/D/E 标签可互换），模型无显式水，D307 直接配位与晶体不一致，因此不能判配位丢失、结合强弱或功能后果。
 - 无约束时 AMP 与 NAD⁺ 均落在 NMNAT 位点，D2/D4 的配体姿态是约束条件态；L9 在 Nudix 域对齐后的静态 RMSD 为 0.71–0.85 Å，不能排除域间重排。未进入 MD；NAD⁺ 净生成与 B1/B2 机制仍未定。详见[微环境报告](../data/results/evaluation/natv_nudix_microenvironment/REPORT.md)，研究边界见 [RESEARCH_PLAN.md](RESEARCH_PLAN.md) 的冻结方案。
+- 54 个模型的原始 CIF 已按确定性 gzip 选择性归档到 `coordinates/`，`coordinates_manifest.csv` 记录原始/压缩 SHA256 与路径；远端可复算原子几何，未提交 confidence/缓存/重复副本。
 
 ## Nudix 实验结构锚点核查（2026-10-23）
 

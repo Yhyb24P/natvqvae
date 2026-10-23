@@ -830,5 +830,12 @@
     "l9_ca_rmsd",
     "ligand_phosphate_O",
     "nad_rmsd_to_wt_model0"
-  ]
+  ],
+  "coordinates_archive": {
+    "count": 54,
+    "manifest": "coordinates_manifest.csv",
+    "total_archive_bytes": 3656324,
+    "lossless_gzip": true,
+    "note": "original CIF SHA256 and archive SHA256 are recorded; decompress to reproduce atomic geometry"
+  }
 }
