@@ -10,6 +10,7 @@ from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
 from .design import build_design, run_boltz, summarize_design
 from .epcr import build_epcr, run_epcr_boltz, summarize_epcr
+from .epcr_nmnat import build_epcr_nmnat_environment
 from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summarize_transfer
 from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
@@ -239,6 +240,13 @@ def build_parser():
     nmnat_audit.add_argument('--config', default='config/nmnat_mapping.yaml')
     nmnat_audit.add_argument('--output', required=True)
     nmnat_audit.set_defaults(func=lambda args: audit_atp_contacts(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    epcr_nmnat = sub.add_parser(
+        'epcr-nmnat', help='compare NMNAT substrate environments across ePCR WT/NatV10/NatV89')
+    epcr_nmnat.add_argument('--config', default='config/epcr_nmnat_environment.yaml')
+    epcr_nmnat.add_argument('--output', required=True)
+    epcr_nmnat.set_defaults(func=lambda args: build_epcr_nmnat_environment(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

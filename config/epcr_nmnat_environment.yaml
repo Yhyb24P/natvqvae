@@ -1,0 +1,52 @@
+target: config/target.yaml
+nmnat_config: config/nmnat_mapping.yaml
+
+reference:
+  clone: WT
+  model_index: 0
+
+model_identity:
+  boltz_version: "2.2.1"
+  seed: 20261025
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  msa_rows: 512
+
+models:
+  WT:
+    glob: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_*.cif.gz
+  NatV10:
+    glob: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV10_NatV10_model_*.cif.gz
+  NatV89:
+    glob: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV89_NatV89_model_*.cif.gz
+
+mutations:
+  NatV10:
+    - {name: D83V, position: 83, from: D, to: V, domain: NMNAT, focus_atoms: [OD1, OD2]}
+    - {name: M162V, position: 162, from: M, to: V, domain: NMNAT, focus_atoms: [SD]}
+    - {name: L317P, position: 317, from: L, to: P, domain: Nudix, focus_atoms: []}
+    - {name: M323K, position: 323, from: M, to: K, domain: Nudix, focus_atoms: [NZ]}
+  NatV89:
+    - {name: I21N, position: 21, from: I, to: N, domain: NMNAT, focus_atoms: [ND2, OD1]}
+    - {name: F137Y, position: 137, from: F, to: Y, domain: NMNAT, focus_atoms: [OH]}
+    - {name: I156T, position: 156, from: I, to: T, domain: NMNAT, focus_atoms: [OG1]}
+    - {name: P301S, position: 301, from: P, to: S, domain: Nudix, focus_atoms: [OG]}
+    - {name: V320E, position: 320, from: V, to: E, domain: Nudix, focus_atoms: [OE1, OE2]}
+
+domains:
+  NMNAT: [4, 181]
+  Nudix: [204, 338]
+
+analysis:
+  contact_cutoff_A: 4.0
+  clash_cutoff_A: 2.0
+  close_cutoff_A: 2.5
+  mutation_environment_A: 8.0
+  anchor_residues: [14, 17, 135, 138]
+
+plot:
+  enabled: true
+  pymol: /home/yhshy/bio_tools/bin/pymol
+  width: 1600
+  height: 1200

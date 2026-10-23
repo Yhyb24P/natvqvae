@@ -1,0 +1,174 @@
+{
+  "config": "/home/yhshy/git_files/natvqvae/config/epcr_nmnat_environment.yaml",
+  "config_sha256": "4328c9bd0632fb3f8e2e587e0cbb9751000667336481849e02f80f9876bb9f86",
+  "nmnat_config": "/home/yhshy/git_files/natvqvae/config/nmnat_mapping.yaml",
+  "nmnat_config_sha256": "7249b830ea5c21aafcb763a03d66ecaf772d9788cf3825e86b8c1782800d4176",
+  "target_sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "reference": {
+    "clone": "WT",
+    "model": "WT_WT_model_0.cif.gz"
+  },
+  "model_identity": {
+    "boltz_version": "2.2.1",
+    "seed": 20261025,
+    "diffusion_samples": 3,
+    "sampling_steps": 200,
+    "recycling_steps": 3,
+    "msa_rows": 512
+  },
+  "models": [
+    {
+      "clone": "WT",
+      "model": "WT_WT_model_0.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_0.cif.gz",
+      "sha256": "5cbf89a0709478c72f6446b8b833939a6c29be6256bc973d9681831680af6388",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+      "fit_rmsd_A": 0.0
+    },
+    {
+      "clone": "WT",
+      "model": "WT_WT_model_1.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_1.cif.gz",
+      "sha256": "54c1e7af138009679d927d5091aaf2f0b10480d49e02d4c0ca796bba2c857f4a",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+      "fit_rmsd_A": 1.177
+    },
+    {
+      "clone": "WT",
+      "model": "WT_WT_model_2.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_2.cif.gz",
+      "sha256": "e7fec5e867f1cd0f4af0976e792239240bfcbc8b5569fe306715bd7f13b350d0",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+      "fit_rmsd_A": 1.116
+    },
+    {
+      "clone": "NatV10",
+      "model": "NatV10_NatV10_model_0.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV10_NatV10_model_0.cif.gz",
+      "sha256": "70da4d2b30acdd113bd07c2a96c4e89874985ce75b69fbc58dd46cd2bb30d5b5",
+      "sequence_sha256": "745b6f218b5ba3e982e28f82355f321195d0091cad10cdca8c5629d9a65b122a",
+      "fit_rmsd_A": 1.108
+    },
+    {
+      "clone": "NatV10",
+      "model": "NatV10_NatV10_model_1.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV10_NatV10_model_1.cif.gz",
+      "sha256": "de8b2f4b8609d864e61b7f4c946dc12c689774081fcfebfdc61f39edd460823c",
+      "sequence_sha256": "745b6f218b5ba3e982e28f82355f321195d0091cad10cdca8c5629d9a65b122a",
+      "fit_rmsd_A": 1.152
+    },
+    {
+      "clone": "NatV10",
+      "model": "NatV10_NatV10_model_2.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV10_NatV10_model_2.cif.gz",
+      "sha256": "0a37e8226c3eceffae814d4c4ed78ac14afd256d06682acf32d94dca86e0eb9a",
+      "sequence_sha256": "745b6f218b5ba3e982e28f82355f321195d0091cad10cdca8c5629d9a65b122a",
+      "fit_rmsd_A": 0.996
+    },
+    {
+      "clone": "NatV89",
+      "model": "NatV89_NatV89_model_0.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV89_NatV89_model_0.cif.gz",
+      "sha256": "d78e593ce7d928d7aeefd9698a917a73c58e62fc3318d68ddf1258ae2a9bd9a0",
+      "sequence_sha256": "dc25990d2ba46937ddb02cce0613b34ef26abf997422f79ada15c3fdde3c6dfd",
+      "fit_rmsd_A": 1.294
+    },
+    {
+      "clone": "NatV89",
+      "model": "NatV89_NatV89_model_1.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV89_NatV89_model_1.cif.gz",
+      "sha256": "d26b765ddb76a72cf6db5eab6f8e9e899a12e0169ccad203a668d3c343d51719",
+      "sequence_sha256": "dc25990d2ba46937ddb02cce0613b34ef26abf997422f79ada15c3fdde3c6dfd",
+      "fit_rmsd_A": 1.189
+    },
+    {
+      "clone": "NatV89",
+      "model": "NatV89_NatV89_model_2.cif.gz",
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV89_NatV89_model_2.cif.gz",
+      "sha256": "348b649fc5df565980bc6b20ae344efa5a5b34009dd5de80ff198465466478ad",
+      "sequence_sha256": "dc25990d2ba46937ddb02cce0613b34ef26abf997422f79ada15c3fdde3c6dfd",
+      "fit_rmsd_A": 1.085
+    }
+  ],
+  "state_sources": {
+    "1F9A": {
+      "pdb_id": "1F9A",
+      "path": "data/raw/structures/nmnat/1F9A.cif",
+      "sha256": "439d19c0d3174ceaa64c31604e9a8ee857018bea21497af8e8998ad07be6766d",
+      "tm_scores": [
+        0.84007,
+        0.78098
+      ],
+      "tmalign_rmsd_A": 2.11,
+      "fit_rmsd_A": 1.96,
+      "fit_pairs": 156
+    },
+    "1NUS": {
+      "pdb_id": "1NUS",
+      "path": "data/raw/structures/nmnat/1NUS.cif",
+      "sha256": "a96cda31c5b671ebfe3917e073cde639a29c6532b4af13be75a009828d1e872e",
+      "tm_scores": [
+        0.58422,
+        0.67804
+      ],
+      "tmalign_rmsd_A": 3.25,
+      "fit_rmsd_A": 2.31,
+      "fit_pairs": 135
+    },
+    "2QJO": {
+      "pdb_id": "2QJO",
+      "path": "data/raw/structures/nmnat/2QJO.cif",
+      "sha256": "e1adfc6c97524e7fdac1528e5db178eb7b9a14e05e49cb63cbdb705478a3c663",
+      "tm_scores": [
+        0.84423,
+        0.85759
+      ],
+      "tmalign_rmsd_A": 1.94,
+      "fit_rmsd_A": 1.53,
+      "fit_pairs": 162
+    }
+  },
+  "common_frame": "WT model 0 NMNAT 4-181; each model aligned by CA 4-181; source ligands transformed once to WT0",
+  "source_code": {
+    "epcr_nmnat": {
+      "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/epcr_nmnat.py",
+      "sha256": "cf6e1944ca6e4f4a1f252169d05d8600b9b487ecf76d54776ec5284b9119b997"
+    },
+    "nmnat_mapping": {
+      "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_mapping.py",
+      "sha256": "95ac51779144ceaaa5a81a3edaa6ca005ec2f353ced0f157f83704cc3a7bf22b"
+    }
+  },
+  "invocation": {
+    "argv": [
+      "/home/yhshy/miniconda3/envs/nad_data/bin/natvqvae",
+      "epcr-nmnat",
+      "--config",
+      "config/epcr_nmnat_environment.yaml",
+      "--output",
+      "data/results/evaluation/kvp40_epcr_nmnat_environment"
+    ],
+    "cwd": "/home/yhshy/git_files/natvqvae"
+  },
+  "software": {
+    "python": "3.10.19",
+    "numpy": "2.2.6"
+  },
+  "analysis": {
+    "contact_cutoff_A": 4.0,
+    "clash_cutoff_A": 2.0,
+    "close_cutoff_A": 2.5,
+    "mutation_environment_A": 8.0,
+    "anchor_residues": [
+      14,
+      17,
+      135,
+      138
+    ]
+  },
+  "figures": {
+    "structure": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/figures/epcr_nmnat_structure.png",
+    "sidechains": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/figures/epcr_nmnat_sidechains.png",
+    "differences": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/figures/epcr_nmnat_differences.png"
+  }
+}
