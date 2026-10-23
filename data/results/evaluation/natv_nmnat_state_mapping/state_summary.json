@@ -1,0 +1,120 @@
+{
+  "1F9A": {
+    "models": [
+      "WT_WT_model_0.cif.gz",
+      "WT_WT_model_1.cif.gz",
+      "WT_WT_model_2.cif.gz"
+    ],
+    "source_contacts": 61,
+    "mapped_contacts": [
+      61,
+      61,
+      61
+    ],
+    "high_confidence": [
+      50,
+      50,
+      50
+    ],
+    "recovered_contacts": [
+      36,
+      36,
+      35
+    ],
+    "ligand_protein_min_A": [
+      0.6,
+      0.29,
+      2.25
+    ],
+    "severe_clash_models": 2,
+    "close_clash_models": 3,
+    "ligand_ligand_min_A": [],
+    "interface_status": [],
+    "metal_atp_o_min_A": [
+      2.2,
+      2.2,
+      2.2
+    ],
+    "note": "Rigid ligand transfer onto apo predictions; not a predicted complex"
+  },
+  "1NUS": {
+    "models": [
+      "WT_WT_model_0.cif.gz",
+      "WT_WT_model_1.cif.gz",
+      "WT_WT_model_2.cif.gz"
+    ],
+    "source_contacts": 77,
+    "mapped_contacts": [
+      74,
+      74,
+      74
+    ],
+    "high_confidence": [
+      38,
+      35,
+      38
+    ],
+    "recovered_contacts": [
+      42,
+      40,
+      35
+    ],
+    "ligand_protein_min_A": [
+      0.2,
+      0.53,
+      1.22
+    ],
+    "severe_clash_models": 3,
+    "close_clash_models": 3,
+    "ligand_ligand_min_A": [
+      4.13,
+      4.13,
+      4.13
+    ],
+    "interface_status": [
+      "weak_candidate",
+      "overlap",
+      "no_candidate"
+    ],
+    "metal_atp_o_min_A": [],
+    "note": "Rigid ligand transfer onto apo predictions; not a predicted complex"
+  },
+  "2QJO": {
+    "models": [
+      "WT_WT_model_0.cif.gz",
+      "WT_WT_model_1.cif.gz",
+      "WT_WT_model_2.cif.gz"
+    ],
+    "source_contacts": 101,
+    "mapped_contacts": [
+      101,
+      101,
+      101
+    ],
+    "high_confidence": [
+      81,
+      79,
+      86
+    ],
+    "recovered_contacts": [
+      75,
+      77,
+      66
+    ],
+    "ligand_protein_min_A": [
+      0.53,
+      0.24,
+      1.36
+    ],
+    "severe_clash_models": 3,
+    "close_clash_models": 3,
+    "ligand_ligand_min_A": [
+      2.66,
+      2.66,
+      2.66
+    ],
+    "interface_status": [],
+    "metal_atp_o_min_A": [],
+    "note": "Rigid ligand transfer onto apo predictions; not a predicted complex"
+  }
+}

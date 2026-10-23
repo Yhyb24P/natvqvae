@@ -1,0 +1,176 @@
+{
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_mapping.yaml",
+  "config_sha256": "7249b830ea5c21aafcb763a03d66ecaf772d9788cf3825e86b8c1782800d4176",
+  "target_sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "target_length": 341,
+  "wt_models": [
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_0.cif.gz",
+      "sha256": "a1b53ee58ba2a010375540da0c5c64502e128cf34343b52b4e62465c33a7b367",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+    },
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_1.cif.gz",
+      "sha256": "02f1ef0ed64fd06dbe2684353c1dd8716b98267bcf754ea00dc160982a19fe92",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+    },
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_2.cif.gz",
+      "sha256": "8fc2e67f9ec9b17c306eea91418efadbbc061a2a4659a17a20bb127dd3dd95d3",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+    }
+  ],
+  "wt_identity": {
+    "glob": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_*.cif.gz",
+    "expected_models": 3,
+    "run_summary": "data/results/evaluation/natv_dual_domain_design/boltz_run_summary.json",
+    "report": "data/results/evaluation/natv_dual_domain_design/REPORT.md",
+    "boltz_version": "2.2.1",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "seed": 20261022,
+    "diffusion_samples": 3,
+    "sampling_steps": 200,
+    "recycling_steps": 3,
+    "msa_rows": 512,
+    "state": "apo_monomer"
+  },
+  "variant_models": [
+    {
+      "variant": "A1",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A1_A1_model_0.cif.gz",
+      "sha256": "d0a117e27ee9bdae3b968ac47d5e74e3df6c81e67ce4083a4cd88a556883626d"
+    },
+    {
+      "variant": "A1",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A1_A1_model_1.cif.gz",
+      "sha256": "de370ae22d628f0663dc0f0dd46d74cc843707a5f2cd3f5fd51bd48240815466"
+    },
+    {
+      "variant": "A1",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A1_A1_model_2.cif.gz",
+      "sha256": "62dc9771f1cdfd087adbc5de8a9c4e03451346bd6ad1ce3e1f30977dcc3dc3d9"
+    },
+    {
+      "variant": "A2",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A2_A2_model_0.cif.gz",
+      "sha256": "8e0d3ade1ce2fb9ba2dbb2e30a6d72dcf2724029c44ee638c0156046d699a53a"
+    },
+    {
+      "variant": "A2",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A2_A2_model_1.cif.gz",
+      "sha256": "51f570674694f5d9d326226820b8607294bcbb09b96a9d6bd2a7b6223d41248e"
+    },
+    {
+      "variant": "A2",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A2_A2_model_2.cif.gz",
+      "sha256": "1b3127752ff7245fd528f141050fdb589b6e5bf490acdb3f5176959bfb5a5748"
+    },
+    {
+      "variant": "A3",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A3_A3_model_0.cif.gz",
+      "sha256": "6e553df6a5f03a58a9a604b23ca98eec329103bbf3a342c58f43e478fe1fe31a"
+    },
+    {
+      "variant": "A3",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A3_A3_model_1.cif.gz",
+      "sha256": "b75eb2acb8e6c4f01c830298d64047e149713d9a52cb2e09814051eb5e0af644"
+    },
+    {
+      "variant": "A3",
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/A3_A3_model_2.cif.gz",
+      "sha256": "3580610ac35d2287e8b2e4e08b8f381b0de00cd57e3d08a759e9f1481e7eed8b"
+    }
+  ],
+  "sources": [
+    {
+      "state": "1F9A",
+      "pdb_id": "1F9A",
+      "path": "data/raw/structures/nmnat/1F9A.cif",
+      "sha256": "439d19c0d3174ceaa64c31604e9a8ee857018bea21497af8e8998ad07be6766d",
+      "assembly_id": "1",
+      "protein_chain": "A",
+      "protein_range": [
+        1,
+        164
+      ],
+      "ligand_chains": [
+        "A"
+      ],
+      "ligands": [
+        "ATP",
+        "MG"
+      ]
+    },
+    {
+      "state": "1NUS",
+      "pdb_id": "1NUS",
+      "path": "data/raw/structures/nmnat/1NUS.cif",
+      "sha256": "a96cda31c5b671ebfe3917e073cde639a29c6532b4af13be75a009828d1e872e",
+      "assembly_id": "1",
+      "protein_chain": "A",
+      "protein_range": [
+        3,
+        234
+      ],
+      "ligand_chains": [
+        "A"
+      ],
+      "ligands": [
+        "NMN",
+        "APC"
+      ]
+    },
+    {
+      "state": "2QJO",
+      "pdb_id": "2QJO",
+      "path": "data/raw/structures/nmnat/2QJO.cif",
+      "sha256": "e1adfc6c97524e7fdac1528e5db178eb7b9a14e05e49cb63cbdb705478a3c663",
+      "assembly_id": "1",
+      "protein_chain": "A",
+      "protein_range": [
+        1,
+        181
+      ],
+      "ligand_chains": [
+        "A"
+      ],
+      "ligands": [
+        "NAD",
+        "POP"
+      ]
+    }
+  ],
+  "negative_controls": {
+    "2QJT": {
+      "pdb_id": "2QJT",
+      "path": "data/raw/structures/nmnat/2QJT.cif",
+      "note": "AMP/Mn contacts are in the C-terminal Nudix domain; not used for NMNAT mapping"
+    }
+  },
+  "tmalign": {
+    "path": "/home/yhshy/miniconda3/bin/TMalign",
+    "version": "* TM-align (Version 20240303): protein and RNA structure alignment   *"
+  },
+  "software": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "biopython": "1.87"
+  },
+  "analysis": {
+    "contact_cutoff_A": 4.0,
+    "clash_cutoff_A": 2.0,
+    "close_cutoff_A": 2.5,
+    "interface_probe_A": 6.0,
+    "variant_direct_A": 4.5,
+    "variant_motif_ranges": [
+      [
+        8,
+        22
+      ],
+      [
+        130,
+        138
+      ]
+    ]
+  }
+}

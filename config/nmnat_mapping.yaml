@@ -1,0 +1,81 @@
+target: config/target.yaml
+
+wt:
+  glob: data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_*.cif.gz
+  expected_models: 3
+  run_summary: data/results/evaluation/natv_dual_domain_design/boltz_run_summary.json
+  report: data/results/evaluation/natv_dual_domain_design/REPORT.md
+  boltz_version: "2.2.1"
+  checkpoint_sha256: "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1"
+  seed: 20261022
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  msa_rows: 512
+  state: apo_monomer
+
+variants:
+  A1:
+    glob: data/results/evaluation/natv_dual_domain_design/coordinates/A1_A1_model_*.cif.gz
+    positions: [18, 57, 94, 127]
+  A2:
+    glob: data/results/evaluation/natv_dual_domain_design/coordinates/A2_A2_model_*.cif.gz
+    positions: [22, 60, 111]
+  A3:
+    glob: data/results/evaluation/natv_dual_domain_design/coordinates/A3_A3_model_*.cif.gz
+    positions: [61, 86, 134]
+
+sources:
+  1F9A:
+    pdb_id: 1F9A
+    path: data/raw/structures/nmnat/1F9A.cif
+    assembly_id: "1"
+    protein_chain: A
+    protein_range: [1, 164]
+    ligand_chains: [A]
+    ligands: [ATP, MG]
+    contact_cutoff_A: 4.0
+    metal_cutoff_A: 3.2
+  1NUS:
+    pdb_id: 1NUS
+    path: data/raw/structures/nmnat/1NUS.cif
+    assembly_id: "1"
+    protein_chain: A
+    protein_range: [3, 234]
+    ligand_chains: [A]
+    ligands: [NMN, APC]
+    interface_chain: B
+    interface_residue: 140
+    interface_ligand: APC
+    interface_ligand_atom: O1G
+    contact_cutoff_A: 4.0
+  2QJO:
+    pdb_id: 2QJO
+    path: data/raw/structures/nmnat/2QJO.cif
+    assembly_id: "1"
+    protein_chain: A
+    protein_range: [1, 181]
+    ligand_chains: [A]
+    ligands: [NAD, POP]
+    contact_cutoff_A: 4.0
+
+negative_controls:
+  2QJT:
+    pdb_id: 2QJT
+    path: data/raw/structures/nmnat/2QJT.cif
+    note: "AMP/Mn contacts are in the C-terminal Nudix domain; not used for NMNAT mapping"
+
+alignment:
+  tmalign: /home/yhshy/miniconda3/bin/TMalign
+  min_aligned_length: 80
+  min_fit_pairs: 20
+  fit_match_symbols: [":"]
+  all_match_symbols: [":", "."]
+
+analysis:
+  contact_cutoff_A: 4.0
+  clash_cutoff_A: 2.0
+  close_cutoff_A: 2.5
+  interface_probe_A: 6.0
+  variant_direct_A: 4.5
+  variant_motif_ranges: [[8, 22], [130, 138]]

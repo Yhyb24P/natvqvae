@@ -1,0 +1,4 @@
+state,wt_model,source_chain,source_residue,source_atom,ligand_chain,ligand_resname,ligand_atom,source_distance_A,protein_min_A,nearest_basic,basic_distance_A,status
+1NUS,WT_WT_model_0.cif.gz,B,LYS140,NZ,A,APC,O1G,2.73,2.0,LYS104:NZ,4.95,weak_candidate
+1NUS,WT_WT_model_1.cif.gz,B,LYS140,NZ,A,APC,O1G,2.73,1.89,LYS104:NZ,4.08,overlap
+1NUS,WT_WT_model_2.cif.gz,B,LYS140,NZ,A,APC,O1G,2.73,3.58,ARG138:NH2,7.73,no_candidate

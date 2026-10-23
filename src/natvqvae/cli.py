@@ -14,6 +14,7 @@ from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summari
 from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
                                summarize_microenvironment)
+from .nmnat_mapping import build_nmnat_mapping
 from .preprocessing import preprocess
 from .train import train
 
@@ -224,6 +225,13 @@ def build_parser():
     epcr_summary.add_argument('--config', default='config/epcr_full_length.yaml')
     epcr_summary.add_argument('--output', required=True)
     epcr_summary.set_defaults(func=lambda args: summarize_epcr(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_map = sub.add_parser(
+        'nmnat-map', help='map state-specific NMNAT contacts onto matched full-length WT models')
+    nmnat_map.add_argument('--config', default='config/nmnat_mapping.yaml')
+    nmnat_map.add_argument('--output', required=True)
+    nmnat_map.set_defaults(func=lambda args: build_nmnat_mapping(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

@@ -1,0 +1,10 @@
+state,wt_model,source_contacts,mapped_contacts,high_confidence,ligand_protein_min_A,ligand_protein_nearest,severe_clash,close_clash,ligand_ligand_min_A,ligand_ligand_pair,interface_status,interface_nearest_basic,interface_basic_distance_A,interface_protein_min_A,metal_min_A,metal_atp_o_min_A,metal_nearest
+1F9A,WT_WT_model_0.cif.gz,61,61,50,0.6,ASP103:OD1,True,True,,,,,,,0.87,2.2,ASP105:N
+1F9A,WT_WT_model_1.cif.gz,61,61,50,0.29,TYR102:CZ,True,True,,,,,,,1.66,2.2,ASP105:N
+1F9A,WT_WT_model_2.cif.gz,61,61,50,2.25,ALA134:N,False,True,,,,,,,4.74,2.2,SER107:OG
+1NUS,WT_WT_model_0.cif.gz,77,74,38,0.2,TYR110:CE1,True,True,4.13,NMN-APC,weak_candidate,LYS104:NZ,4.95,2.0,,,
+1NUS,WT_WT_model_1.cif.gz,77,74,35,0.53,TYR102:CG,True,True,4.13,NMN-APC,overlap,LYS104:NZ,4.08,1.89,,,
+1NUS,WT_WT_model_2.cif.gz,77,74,38,1.22,TRP85:CE3,True,True,4.13,NMN-APC,no_candidate,ARG138:NH2,7.73,3.58,,,
+2QJO,WT_WT_model_0.cif.gz,101,101,81,0.53,ASP103:CG,True,True,2.66,NAD-POP,,,,,,,
+2QJO,WT_WT_model_1.cif.gz,101,101,79,0.24,ASP105:OD1,True,True,2.66,NAD-POP,,,,,,,
+2QJO,WT_WT_model_2.cif.gz,101,101,86,1.36,SER133:CB,True,True,2.66,NAD-POP,,,,,,,

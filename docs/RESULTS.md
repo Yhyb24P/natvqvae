@@ -60,6 +60,15 @@
 - 对 WT 的 Cα RMSD 中位：NatV10 full 0.87、NMNAT 1.00、Nudix 0.48 Å；NatV89 full 0.84、NMNAT 0.74、Nudix 0.42 Å；整体在自身样本离散附近，无整体折叠或域级分离证据。
 - 局部 Cα 位移高于同位置自基线的是 L317P、M323K、I156T、V320E；D83V、M162V、I21N、F137Y、P301S 与自基线相当。域质心距离 31.3–31.7 Å，仅距离、不测方向。仅预测结构，不推断活性/稳定性；NatV10/89 是多突变克隆，不是 B1/B2。详见[结构比较报告](../data/results/evaluation/kvp40_epcr_full_length_structures/REPORT.md)。
 
+## NMNAT 状态分层接触映射（2026-10-23）
+
+- 使用与 A1–A3 同一 Boltz-2 运行的 WT 全长三模型（seed 20261022、3 samples、apo、pLDDT 0.922、pTM 0.913），把 1F9A ATP/Mg²⁺、1NUS NMN/APC 和 2QJO NAD/POP 的实验接触经 TMalign 对齐后刚性迁移；不做诱导契合、MD、对接或新预测。结果在 `data/results/evaluation/natv_nmnat_state_mapping/`。
+- 1F9A：61 个源接触全部映射，50 个高置信；恢复 35–36 个；Mg–ATP 氧最小距离保持 2.2 Å；但配体–蛋白最近 0.29–2.25 Å，2/3 模型严重重叠。
+- 1NUS：77 个源接触中 74 个映射，35–38 个高置信；恢复 35–42 个；NMN–APC 最近 4.13 Å，配体间不冲突；但配体–蛋白 0.20–1.22 Å，3/3 模型严重重叠。K140′–APC O1G 源距离 2.73 Å；迁移后最近碱性残基为 K104（4.08–4.95 Å，弱候选/重叠）或 R138（7.73 Å，无候选），**没有一致的界面替代证据**。
+- 2QJO：101 个源接触全部映射，79–86 个高置信；恢复 66–77 个；NAD–POP 最近 2.66 Å；配体–蛋白 0.24–1.36 Å，3/3 模型严重重叠。
+- 变体位置选择：A3 A134G 在三种状态均为 direct（2.25–3.10 Å）；A3 Q86I 仅在 1NUS 为 direct；A1 L18I、A2 T22Q 仅为 motif 候选；A1 D57S/R94N/M127A、A2 G60L/L111K、A3 V61H 未入选。未入选不代表低活性；没有活性排名。
+- 边界：预测模型为 apo，刚性迁移的蛋白–配体冲突说明需要侧链/环区重排，不说明配体不能结合；fit RMSD 1.36–2.31 Å，单个近距离不能精确解释；没有实验验证。详见[映射报告](../data/results/evaluation/natv_nmnat_state_mapping/REPORT.md)。
+
 ## 证据边界
 
 - 30–35% identity 处于 twilight zone；局部比对、域边界和锚点对应仍可能不确定。
