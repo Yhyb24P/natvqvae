@@ -85,6 +85,12 @@ N1 NMNAT NAD⁺+PPi（2QJO）；N2 NMNAT NMN+ATP+Mg²⁺（1NUS 参照+独立建
 
 在 ATP-only 与 NMN-only 结果之后，直接检验同一 WT 输入中两种底物能否共同占据 NMNAT，以及 1 Mg 是否改变这种组织。正式输入为 `config/nmnat_joint.yaml`：ATP+NMN 与 ATP+NMN+1 Mg 各 3 seeds × 3 samples，共 18 模型，无 pocket/几何约束；Mg 仅作为输入因子，不指定归属。两条件用于区分双底物本身与金属输入对联合占位预测的影响；固定单底物姿态不能替代这一检验。18 个模型已完成；结果、边界与复现方式见 `data/results/evaluation/kvp40_nmnat_joint/REPORT.md`，不在本计划重复数值。该轮不追加同输入、同评价的预测；只有出现能区分竞争解释且输入足以支持解释的具体问题时才追加计算。
 
+## 联合姿态的显式水初始响应（2026-10-24）
+
+在联合共折叠收口后，检验这些姿态在正确核苷酸电荷、显式水与单个预测位置 Mg 下的局部响应，而不是继续提高共折叠置信度。`config/nmnat_md.yaml` 从 18 个联合模型中取 9 个固定初态（noMg、Mg 在 NMNAT、Mg 在 Nudix 各 3 seed，按 group×seed 最低 model index；不按结果换组），每个初态用 2 个速度种子。体系为 Amber14SB、GAFF2/AM1-BCC、TIP3P、Li/Merz 12-6 Mg²⁺，ATP −4、NMN −1，Na⁺ 中和，12 Å 水壳；不使用 12-6-4，不把 Na⁺ 中和当作 12 mM MgCl₂ 缓冲液。每体系先 EM，再 100 ps NVT + 100 ps NPT（只约束蛋白重原子）+ 1 ns production（无约束），观察段合计 18 ns、准备段 3.6 ns；ATP/NMN/Mg 全程无位置约束。
+
+输入身份包括 CIF、参数与 CCD 的 SHA，以及 `atom_mapping.json` 中的 topology atom index ↔ ACPYPE name ↔ CCD name 映射；反应几何按 PA 中心最小镜像，配体比较按 NMNAT 4–181 CA 配准并保持蛋白/配体同像。分析区分水 O、ATP/NMN O、蛋白 O 与蛋白 N，不把 K104 NZ 当作合理氧供体。1 ns 只描述局部初始响应，不解释为平衡、Mg 交换、占有率、反应速率或催化活性；初态差异不单独归因于 Mg 或底物。实际结果与失败项见 `data/results/evaluation/kvp40_nmnat_md/`。
+
 ## NMNAT 底物共折叠与 A 类配对（2026-10-23）
 
 本轮路线：以完整 WT 为背景做独立配体共折叠，分别处理 ATP 蛋白侧、金属放置和 NMN 来源对应；在共同 ATP-only 状态下比较 A1/A2/A3 完整组合。实际执行、结果与证据边界见 [RESULTS.md](RESULTS.md)，方法与逐模型数值见对应结果目录的 `REPORT.md`。

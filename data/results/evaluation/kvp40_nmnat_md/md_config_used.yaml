@@ -1,0 +1,25 @@
+task: kvp40_nmnat_md
+joint_run: data/results/evaluation/kvp40_nmnat_joint
+ccd_cache: /mnt/e/models/boltz2/mols
+acpype: /home/yhshy/miniconda3/envs/nad_data/bin/acpype
+tleap: /home/yhshy/miniconda3/envs/nad_data/bin/tleap
+grompp: /home/yhshy/opt/gromacs/2026.1-cuda/bin/gmx
+mdrun: /home/yhshy/opt/gromacs/2026.1-cuda/bin/gmx
+em_threads: 8
+em_max_steps: 20000
+em_tol: 500
+initial_manifest: true
+models: []
+md_temperature: 298.15
+md_dt_fs: 2
+md_nvt_ps: 100
+md_npt_ps: 100
+md_production_ps: 1000
+md_threads: 8
+md_use_gpu: true
+md_require_gpu: true
+md_gpu_max_util: 10
+md_gpu_max_mem_fraction: 0.1
+md_gpu_poll_seconds: 60
+md_gpu_wait_hours: 12
+md_velocity_seeds: [20261024, 20261025]

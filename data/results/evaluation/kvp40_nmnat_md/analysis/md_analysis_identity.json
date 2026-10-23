@@ -1,0 +1,20 @@
+{
+  "code": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_md_analysis.py",
+  "code_sha256": "9bdf32a64cf949e06659e23014494204d35933e19a31eb09ff6d15eff0f96759",
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_md.yaml",
+  "config_sha256": "ba51dccfc661788633e765719bf9801eb73def45b207e189487d3b6303e90c45",
+  "md_runs_sha256": "5bbdf0e6f496683ee3e0e1952a68e3a2649aaf93eb962ec7a25f5a89eec41f52",
+  "atom_mapping_sha256": "0beffe8ca2802a61ea7dcb2150e3d77ae51bda9ab21c7feb1caa3466a174fcbf",
+  "trajectories": 18,
+  "physical_frames": 1818,
+  "candidate_rows": 5454,
+  "candidate_summaries": 54,
+  "mg_ligand_rows": 57,
+  "rmsd_reference": "EM structure (not the original Boltz model)",
+  "limits": [
+    "1 ns is a local initial-response window, not equilibrium",
+    "no ligand dissociation/occupancy or catalytic activity claim",
+    "one Mg at its predicted position; no 12 mM buffer claim",
+    "initial groups are fixed from the pre-simulation manifest"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "started_at": "2026-10-24T03:53:43+0800",
+  "code": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_md.py",
+  "code_sha256": "501cc2fb4f7a8b83d399a111791ebae37204c62929091b072e11f9bf30b93b13",
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_md.yaml",
+  "config_sha256": "ba51dccfc661788633e765719bf9801eb73def45b207e189487d3b6303e90c45",
+  "systems_sha256": "4428cf32638ffc5afb12081ab48c77736491c49d9fce3e6c215a0a10c2db8909"
+}

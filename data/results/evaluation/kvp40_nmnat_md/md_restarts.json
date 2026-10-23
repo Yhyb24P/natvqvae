@@ -1,0 +1,9 @@
+[
+  {
+    "stopped_pid": 34248,
+    "stopped_at": "2026-10-24T04:28:00+0800",
+    "reason": "old runner waited for exclusive GPU idle after 2 completed trajectories; new code checks once at batch start and resumes shared GPU",
+    "completed_runs_at_restart": 2,
+    "new_code_sha256": "2e59ede818878ce6eab9d42344470f6263b919e22033b6fd5c1c624ee8e690aa"
+  }
+]

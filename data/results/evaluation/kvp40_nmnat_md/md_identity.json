@@ -1,0 +1,33 @@
+{
+  "started_at": "2026-10-24T04:28:01+0800",
+  "code": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_md.py",
+  "code_sha256": "2e59ede818878ce6eab9d42344470f6263b919e22033b6fd5c1c624ee8e690aa",
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_md.yaml",
+  "config_sha256": "ba51dccfc661788633e765719bf9801eb73def45b207e189487d3b6303e90c45",
+  "manifest_sha256": "94b36afe68297a24e2cc6bba6d1c2dad9594d281bdd58076ce821753d966eb46",
+  "velocity_seeds": [
+    20261024,
+    20261025
+  ],
+  "planned": {
+    "runs": 18,
+    "production_ns": 18.0,
+    "equilibration_ns": 3.6,
+    "total_ns": 21.6
+  },
+  "settings": {
+    "md_temperature": 298.15,
+    "md_dt_fs": 2,
+    "md_nvt_ps": 100,
+    "md_npt_ps": 100,
+    "md_production_ps": 1000,
+    "md_threads": 8,
+    "md_use_gpu": true,
+    "md_require_gpu": true
+  },
+  "stages": {
+    "nvt": "protein heavy-atom position restraints",
+    "npt": "protein heavy-atom position restraints",
+    "production": "no restraints"
+  }
+}

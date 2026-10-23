@@ -85,6 +85,23 @@ NMNAT 辅助域任务使用 `config/aux_qvae.yaml`，入口为 `aux-train`、`au
 
 `nmnat_joint.yaml` 的联合条件把 ATP 与 NMN 放在同一 WT 输入中（可另加 1 Mg），`nmnat-joint-reference` 只做既有单底物姿态的逐对注册参照，`nmnat-joint-summarize` 输出共同占位、三候选反应几何与金属近邻，`nmnat-joint-poses` 用 NMNAT 4–181 CA 叠合比较联合与同 seed 单底物姿态（全原子与非磷酸 RMSD，附单底物自身采样背景）；联合模型不是固定单底物姿态的简单拼接，这些 RMSD 也不用于活性评价。
 
+`config/nmnat_md.yaml` 把联合模型转成显式水体系并做初始响应 MD：
+
+```
+natvqvae nmnat-md-build --config config/nmnat_md.yaml \
+  --output data/results/evaluation/kvp40_nmnat_md
+natvqvae nmnat-md-em --config config/nmnat_md.yaml \
+  --output data/results/evaluation/kvp40_nmnat_md
+natvqvae nmnat-md-run --config config/nmnat_md.yaml \
+  --output data/results/evaluation/kvp40_nmnat_md --wait-gpu
+natvqvae nmnat-md-map --config config/nmnat_md.yaml \
+  --output data/results/evaluation/kvp40_nmnat_md
+natvqvae nmnat-md-analyze --config config/nmnat_md.yaml \
+  --output data/results/evaluation/kvp40_nmnat_md
+```
+
+`build` 用 Amber14SB、GAFF2/AM1-BCC、TIP3P、Li/Merz 12-6 Mg²⁺ 和 Na⁺ 中和，为 18 个联合模型各建一个体系；`md_initial_states.csv` 固定 9 个初态（noMg、Mg_NMNAT、Mg_Nudix 各 3 seed，取最低 model index），不按结果换组。`em` 以数值 Fmax 判定收敛。`run` 对每个初态用 2 个速度种子跑 100 ps NVT + 100 ps NPT + 1 ns production（合计 21.6 ns）；NVT/NPT 仅约束蛋白重原子，production 完全释放，ATP/NMN/Mg 全程无位置约束。`map` 写 `atom_mapping.json`（拓扑 atom index ↔ ACPYPE atom name ↔ CCD name，附 SMILES、CCD、参数和 CIF 哈希），后续几何不得按 GROMACS atom name 猜原子。`analyze` 只汇总已完成轨迹，按 PA 中心最小镜像、NMNAT 4–181 CA 配准、水/配体/蛋白氧分类统计，并分列跨配体全原子最小距离与两个磷酸端 O–O 最小距离。1 ns 只描述局部初始响应，不解释为平衡、Mg 交换、占有率或活性。
+
 `nmnat-map`（`config/nmnat_mapping.yaml`）把 1F9A ATP/Mg、1NUS NMN/APC 和 2QJO NAD/POP 的实验接触刚性映射到与 A1–A3 同一 Boltz 运行的 WT 全长模型；只做接触、变换和空间冲突检查，不预测复合物。结果在 `data/results/evaluation/natv_nmnat_state_mapping/`。`nmnat-audit` 对 1F9A ATP/Mg 做原子/基团级化学分类和冲突分列，结果在 `data/results/evaluation/natv_nmnat_atp_audit/`。`epcr-nmnat`（`config/epcr_nmnat_environment.yaml`）复用既有 WT/NatV10/NatV89 9 个全长模型，在共同 WT0 的 NMNAT 框架中比较三种实验配体姿态下的突变侧链环境和接触状态；不重跑预测，不做 MD/对接。结果在 `data/results/evaluation/kvp40_epcr_nmnat_environment/`。输出目录必须为新目录或空目录；已有结果不会被覆盖，重跑请换新目录。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。

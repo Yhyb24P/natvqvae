@@ -20,6 +20,9 @@ from .nmnat_binding import (build_nmnat_binding, run_nmnat_binding_boltz,
                             write_fixed_pose_reference,
                             write_single_substrate_pose_comparison)
 from .nmnat_mapping import audit_atp_contacts, build_nmnat_mapping
+from .nmnat_md import (build_nmnat_md, run_nmnat_md_em, run_nmnat_md_pilot,
+                       write_atom_mapping)
+from .nmnat_md_analysis import analyze_nmnat_md
 from .nmnat_nmn import analyze_nmn_sources
 from .preprocessing import preprocess
 from .train import train
@@ -301,6 +304,43 @@ def build_parser():
     nmnat_joint_poses.add_argument('--config', default='config/nmnat_joint.yaml')
     nmnat_joint_poses.add_argument('--output', required=True)
     nmnat_joint_poses.set_defaults(func=lambda args: write_single_substrate_pose_comparison(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_md_build = sub.add_parser(
+        'nmnat-md-build',
+        help='build explicit-solvent WT ATP/NMN GROMACS systems')
+    nmnat_md_build.add_argument('--config', default='config/nmnat_md.yaml')
+    nmnat_md_build.add_argument('--output', required=True)
+    nmnat_md_build.set_defaults(func=lambda args: build_nmnat_md(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_md_em = sub.add_parser(
+        'nmnat-md-em', help='energy-minimize the prepared WT ATP/NMN systems')
+    nmnat_md_em.add_argument('--config', default='config/nmnat_md.yaml')
+    nmnat_md_em.add_argument('--output', required=True)
+    nmnat_md_em.set_defaults(func=lambda args: run_nmnat_md_em(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_md_run = sub.add_parser(
+        'nmnat-md-run', help='run the WT ATP/NMN NVT-NPT-production pilot')
+    nmnat_md_run.add_argument('--config', default='config/nmnat_md.yaml')
+    nmnat_md_run.add_argument('--output', required=True)
+    nmnat_md_run.add_argument('--wait-gpu', action='store_true')
+    nmnat_md_run.set_defaults(func=lambda args: run_nmnat_md_pilot(
+        args.config, _result_output(args.output, 'evaluation'), args.wait_gpu))
+
+    nmnat_md_map = sub.add_parser(
+        'nmnat-md-map', help='write topology-index to CCD-name mapping metadata')
+    nmnat_md_map.add_argument('--config', default='config/nmnat_md.yaml')
+    nmnat_md_map.add_argument('--output', required=True)
+    nmnat_md_map.set_defaults(func=lambda args: write_atom_mapping(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_md_analyze = sub.add_parser(
+        'nmnat-md-analyze', help='analyze completed WT ATP/NMN MD trajectories')
+    nmnat_md_analyze.add_argument('--config', default='config/nmnat_md.yaml')
+    nmnat_md_analyze.add_argument('--output', required=True)
+    nmnat_md_analyze.set_defaults(func=lambda args: analyze_nmnat_md(
         args.config, _result_output(args.output, 'evaluation')))
 
     nmnat_nmn_sources = sub.add_parser(
