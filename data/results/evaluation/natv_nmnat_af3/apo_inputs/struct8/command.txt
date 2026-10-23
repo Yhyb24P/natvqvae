@@ -1,0 +1,1 @@
+/home/yhshy/miniconda3/envs/bioemu2/bin/bioemu2 predict-structure --system /mnt/e/bioemu2/outputs/natv_wt/system.yaml --num-samples 8 --batch-size 4 --seed 20261022 --checkpoint-path /mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt --out /mnt/e/bioemu2/outputs/natv_wt_struct8

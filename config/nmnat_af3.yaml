@@ -1,0 +1,35 @@
+task: natv_nmnat_af3_cross_model
+target: config/target.yaml
+wt_msa: data/results/evaluation/kvp40_nmnat_binding/inputs/WT.a3m
+joint_run: data/results/evaluation/kvp40_nmnat_joint
+af3:
+  python: /home/yhshy/venvs/natv_af3_v3_0_4_20261008/bin/python
+  script: /home/yhshy/models/alphafold3/src/run_alphafold.py
+  model_dir: /mnt/e/models/alphafold3
+  weights: /mnt/e/models/alphafold3/af3.bin
+  weights_sha256: df8bbf2621f17dd3ee21c2a921e84a50bc2b80cdc0c7971cb915c2826fee1f9b
+  db_dir: /mnt/e/models/alphafold3/public_databases
+  buckets: 512
+  num_seeds: 3
+  num_diffusion_samples: 3
+  num_recycles: 10
+  memory_fraction: 0.35
+  min_free_gb: 8
+  jax_cache: /tmp/jax_af3_cache
+conditions:
+  wt_atp_nmn: [ATP, NMN]
+  wt_atp_nmn_mg: [ATP, NMN, MG]
+reference:
+  name: ref_1f9a_atp_mg
+  cif: data/raw/structures/nmnat/1F9A.cif
+  chain: A
+  ligands: [ATP, MG]
+apo:
+  sets:
+    - label: struct8
+      directory: data/results/evaluation/natv_nmnat_af3/apo_inputs/struct8
+      mode: structure
+    - label: eq8
+      directory: data/results/evaluation/natv_nmnat_af3/apo_inputs/eq8
+      mode: equilibrium
+  duplicate: data/results/evaluation/kvp40_auxiliary_structures/WT

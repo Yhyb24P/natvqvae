@@ -1,0 +1,5 @@
+set,file,sha256,bytes,original
+struct8,topology.cif,36cd6b494f5db6efd2ced1ace3ecdb7af62cde82d299e1619a91c1947528a7bc,247905,/mnt/e/bioemu2/outputs/natv_wt_struct8/topology.cif
+struct8,samples.xtc,b6cf9027880187a8621fc658c89e86a865e9faa19c01ac545b50bf5e9186a6dc,87040,/mnt/e/bioemu2/outputs/natv_wt_struct8/samples.xtc
+eq8,topology.cif,812b7dc070c3e0a2ce7b8b5a706550c4fe42054fac241e266b646eb7f0521c83,250682,/mnt/e/bioemu2/outputs/natv_wt_eq8/topology.cif
+eq8,samples.xtc,beca8daefe0476a1937f8cf5ef07e559d53143dc15a809df0bc2bd51f69b11f5,86612,/mnt/e/bioemu2/outputs/natv_wt_eq8/samples.xtc

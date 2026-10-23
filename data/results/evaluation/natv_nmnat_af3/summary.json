@@ -1,0 +1,933 @@
+{
+  "models": 27,
+  "conditions": {
+    "ref_1f9a_atp_mg": {
+      "models": 9,
+      "nMN_models": 0,
+      "both_in_nmnat": null,
+      "cross_min_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "phosphate_O_O_min_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "protein_contacts_4A": {
+        "n": 9,
+        "median": 105.0,
+        "min": 76.0,
+        "max": 116.0
+      },
+      "protein_severe": 0,
+      "atp_chain_intact": 9,
+      "ptm": {
+        "n": 9,
+        "median": 0.92,
+        "min": 0.82,
+        "max": 0.92
+      },
+      "iptm": {
+        "n": 9,
+        "median": 0.93,
+        "min": 0.69,
+        "max": 0.93
+      },
+      "has_clash": 0,
+      "PA_O1P_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "angle_O1P_deg": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "PA_O2P_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "angle_O2P_deg": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "PA_O3P_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "angle_O3P_deg": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "lowest_PA_Onuc_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "lowest_angle_deg": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "metal_count_models": 9,
+      "metal_nmnat": 9,
+      "metal_shared_near_neighbor": null,
+      "metal_shared_near_neighbor_models": 0,
+      "metal_ATP_O_min_A": {
+        "n": 9,
+        "median": 2.157,
+        "min": 1.923,
+        "max": 2.222
+      },
+      "metal_NMN_O_min_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "metal_nearby_protein_O": {
+        "n": 9,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "metal_nearby_protein_N": {
+        "n": 9,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    },
+    "wt_atp_nmn": {
+      "models": 9,
+      "nMN_models": 9,
+      "both_in_nmnat": 9,
+      "cross_min_A": {
+        "n": 9,
+        "median": 2.633,
+        "min": 2.207,
+        "max": 3.62
+      },
+      "phosphate_O_O_min_A": {
+        "n": 9,
+        "median": 2.633,
+        "min": 2.207,
+        "max": 3.62
+      },
+      "protein_contacts_4A": {
+        "n": 9,
+        "median": 197.0,
+        "min": 178.0,
+        "max": 222.0
+      },
+      "protein_severe": 0,
+      "atp_chain_intact": 9,
+      "ptm": {
+        "n": 9,
+        "median": 0.94,
+        "min": 0.93,
+        "max": 0.94
+      },
+      "iptm": {
+        "n": 9,
+        "median": 0.96,
+        "min": 0.96,
+        "max": 0.96
+      },
+      "has_clash": 0,
+      "PA_O1P_A": {
+        "n": 9,
+        "median": 6.07,
+        "min": 3.84,
+        "max": 6.938
+      },
+      "angle_O1P_deg": {
+        "n": 9,
+        "median": 84.0,
+        "min": 78.4,
+        "max": 124.2
+      },
+      "PA_O2P_A": {
+        "n": 9,
+        "median": 4.068,
+        "min": 3.759,
+        "max": 5.649
+      },
+      "angle_O2P_deg": {
+        "n": 9,
+        "median": 92.4,
+        "min": 83.3,
+        "max": 133.3
+      },
+      "PA_O3P_A": {
+        "n": 9,
+        "median": 4.835,
+        "min": 3.454,
+        "max": 6.885
+      },
+      "angle_O3P_deg": {
+        "n": 9,
+        "median": 88.6,
+        "min": 81.9,
+        "max": 125.7
+      },
+      "lowest_PA_Onuc_A": {
+        "n": 9,
+        "median": 3.926,
+        "min": 3.454,
+        "max": 4.903
+      },
+      "lowest_angle_deg": {
+        "n": 9,
+        "median": 92.4,
+        "min": 80.2,
+        "max": 133.3
+      },
+      "metal_count_models": 0,
+      "metal_nmnat": 0,
+      "metal_shared_near_neighbor": null,
+      "metal_shared_near_neighbor_models": 0,
+      "metal_ATP_O_min_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "metal_NMN_O_min_A": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "metal_nearby_protein_O": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "metal_nearby_protein_N": {
+        "n": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      }
+    },
+    "wt_atp_nmn_mg": {
+      "models": 9,
+      "nMN_models": 9,
+      "both_in_nmnat": 9,
+      "cross_min_A": {
+        "n": 9,
+        "median": 2.949,
+        "min": 2.352,
+        "max": 3.452
+      },
+      "phosphate_O_O_min_A": {
+        "n": 9,
+        "median": 2.949,
+        "min": 2.352,
+        "max": 3.452
+      },
+      "protein_contacts_4A": {
+        "n": 9,
+        "median": 190.0,
+        "min": 174.0,
+        "max": 211.0
+      },
+      "protein_severe": 0,
+      "atp_chain_intact": 9,
+      "ptm": {
+        "n": 9,
+        "median": 0.94,
+        "min": 0.94,
+        "max": 0.94
+      },
+      "iptm": {
+        "n": 9,
+        "median": 0.96,
+        "min": 0.95,
+        "max": 0.96
+      },
+      "has_clash": 0,
+      "PA_O1P_A": {
+        "n": 9,
+        "median": 6.206,
+        "min": 3.813,
+        "max": 6.78
+      },
+      "angle_O1P_deg": {
+        "n": 9,
+        "median": 130.7,
+        "min": 127.9,
+        "max": 139.7
+      },
+      "PA_O2P_A": {
+        "n": 9,
+        "median": 4.152,
+        "min": 3.865,
+        "max": 5.382
+      },
+      "angle_O2P_deg": {
+        "n": 9,
+        "median": 140.2,
+        "min": 132.8,
+        "max": 145.1
+      },
+      "PA_O3P_A": {
+        "n": 9,
+        "median": 4.78,
+        "min": 3.58,
+        "max": 6.665
+      },
+      "angle_O3P_deg": {
+        "n": 9,
+        "median": 132.8,
+        "min": 124.6,
+        "max": 139.9
+      },
+      "lowest_PA_Onuc_A": {
+        "n": 9,
+        "median": 3.995,
+        "min": 3.58,
+        "max": 4.78
+      },
+      "lowest_angle_deg": {
+        "n": 9,
+        "median": 137.9,
+        "min": 127.9,
+        "max": 142.2
+      },
+      "metal_count_models": 9,
+      "metal_nmnat": 9,
+      "metal_shared_near_neighbor": 2,
+      "metal_shared_near_neighbor_models": 9,
+      "metal_ATP_O_min_A": {
+        "n": 9,
+        "median": 2.089,
+        "min": 1.946,
+        "max": 2.147
+      },
+      "metal_NMN_O_min_A": {
+        "n": 9,
+        "median": 3.36,
+        "min": 2.379,
+        "max": 3.831
+      },
+      "metal_nearby_protein_O": {
+        "n": 9,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "metal_nearby_protein_N": {
+        "n": 9,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 1.0
+      }
+    }
+  },
+  "boltz_reference": [
+    {
+      "state": "ATP_NMN",
+      "models": 9,
+      "both_in_nmnat": 9,
+      "cross_min_median_A": 2.555,
+      "lowest_PA_Onuc_median_A": 3.774,
+      "lowest_angle_median_deg": 90.5,
+      "metal_shared_near_neighbor_2p8_models": 0
+    },
+    {
+      "state": "ATP_NMN_MG",
+      "models": 9,
+      "both_in_nmnat": 9,
+      "cross_min_median_A": 2.69,
+      "lowest_PA_Onuc_median_A": 3.632,
+      "lowest_angle_median_deg": 130.0,
+      "metal_shared_near_neighbor_2p8_models": 3
+    }
+  ],
+  "pose_summary": {
+    "ref_1f9a_atp_mg:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 3.538,
+      "min": 0.112,
+      "max": 11.232
+    },
+    "ref_1f9a_atp_mg:atp_PA_terminal": {
+      "n": 36,
+      "median": 1.277,
+      "min": 0.083,
+      "max": 4.547
+    },
+    "ref_1f9a_atp_mg:atp_PG_terminal": {
+      "n": 36,
+      "median": 1.922,
+      "min": 0.123,
+      "max": 4.99
+    },
+    "ref_1f9a_atp_mg:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 2.696,
+      "min": 0.176,
+      "max": 8.364
+    },
+    "ref_1f9a_atp_mg:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 1.814,
+      "min": 0.223,
+      "max": 2.759
+    },
+    "wt_atp_nmn:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.168,
+      "min": 0.078,
+      "max": 0.384
+    },
+    "wt_atp_nmn:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.272,
+      "min": 0.054,
+      "max": 0.965
+    },
+    "wt_atp_nmn:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.231,
+      "min": 0.119,
+      "max": 0.428
+    },
+    "wt_atp_nmn:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.291,
+      "min": 0.128,
+      "max": 0.596
+    },
+    "wt_atp_nmn:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.206,
+      "min": 0.067,
+      "max": 0.367
+    },
+    "wt_atp_nmn:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.513,
+      "min": 0.253,
+      "max": 0.857
+    },
+    "wt_atp_nmn:nmn_phosphate": {
+      "n": 36,
+      "median": 1.05,
+      "min": 0.441,
+      "max": 1.722
+    },
+    "wt_atp_nmn:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.528,
+      "min": 0.178,
+      "max": 0.822
+    },
+    "wt_atp_nmn_mg:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.276,
+      "min": 0.075,
+      "max": 0.457
+    },
+    "wt_atp_nmn_mg:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.162,
+      "min": 0.053,
+      "max": 0.322
+    },
+    "wt_atp_nmn_mg:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.195,
+      "min": 0.071,
+      "max": 0.326
+    },
+    "wt_atp_nmn_mg:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.389,
+      "min": 0.112,
+      "max": 0.544
+    },
+    "wt_atp_nmn_mg:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.202,
+      "min": 0.107,
+      "max": 0.339
+    },
+    "wt_atp_nmn_mg:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.492,
+      "min": 0.186,
+      "max": 0.828
+    },
+    "wt_atp_nmn_mg:nmn_phosphate": {
+      "n": 36,
+      "median": 0.941,
+      "min": 0.305,
+      "max": 1.68
+    },
+    "wt_atp_nmn_mg:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.484,
+      "min": 0.219,
+      "max": 0.901
+    }
+  },
+  "cross_model_pose_summary": {
+    "ATP_NMN_MG_within:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.289,
+      "min": 0.095,
+      "max": 0.457
+    },
+    "ATP_NMN_MG_within:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.457,
+      "min": 0.13,
+      "max": 1.047
+    },
+    "ATP_NMN_MG_within:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.398,
+      "min": 0.112,
+      "max": 1.019
+    },
+    "ATP_NMN_MG_within:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.508,
+      "min": 0.18,
+      "max": 0.779
+    },
+    "ATP_NMN_MG_within:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.368,
+      "min": 0.074,
+      "max": 0.548
+    },
+    "ATP_NMN_MG_within:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.636,
+      "min": 0.135,
+      "max": 1.009
+    },
+    "ATP_NMN_MG_within:nmn_phosphate": {
+      "n": 36,
+      "median": 1.023,
+      "min": 0.264,
+      "max": 1.634
+    },
+    "ATP_NMN_MG_within:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.287,
+      "min": 0.196,
+      "max": 0.461
+    },
+    "ATP_NMN_within:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.247,
+      "min": 0.098,
+      "max": 0.54
+    },
+    "ATP_NMN_within:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.522,
+      "min": 0.121,
+      "max": 1.313
+    },
+    "ATP_NMN_within:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.35,
+      "min": 0.182,
+      "max": 1.259
+    },
+    "ATP_NMN_within:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.5,
+      "min": 0.163,
+      "max": 0.811
+    },
+    "ATP_NMN_within:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.33,
+      "min": 0.094,
+      "max": 1.066
+    },
+    "ATP_NMN_within:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.774,
+      "min": 0.194,
+      "max": 1.59
+    },
+    "ATP_NMN_within:nmn_phosphate": {
+      "n": 36,
+      "median": 1.41,
+      "min": 0.404,
+      "max": 3.28
+    },
+    "ATP_NMN_within:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.253,
+      "min": 0.194,
+      "max": 0.369
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:atp_CN_scaffold_RMSD_A": {
+      "n": 81,
+      "median": 0.431,
+      "min": 0.256,
+      "max": 0.775
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:atp_PA_terminal": {
+      "n": 81,
+      "median": 0.437,
+      "min": 0.21,
+      "max": 0.998
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:atp_PG_terminal": {
+      "n": 81,
+      "median": 0.642,
+      "min": 0.475,
+      "max": 1.107
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:atp_heavy_symmetry_RMSD_A": {
+      "n": 81,
+      "median": 0.563,
+      "min": 0.342,
+      "max": 0.98
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:nmn_CN_scaffold_RMSD_A": {
+      "n": 81,
+      "median": 0.754,
+      "min": 0.467,
+      "max": 0.993
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:nmn_heavy_symmetry_RMSD_A": {
+      "n": 81,
+      "median": 0.989,
+      "min": 0.606,
+      "max": 1.366
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:nmn_phosphate": {
+      "n": 81,
+      "median": 1.549,
+      "min": 0.805,
+      "max": 2.402
+    },
+    "wt_atp_nmn_mg_vs_ATP_NMN_MG:protein_CA_RMSD_A": {
+      "n": 81,
+      "median": 0.782,
+      "min": 0.518,
+      "max": 1.176
+    },
+    "wt_atp_nmn_mg_within:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.276,
+      "min": 0.075,
+      "max": 0.457
+    },
+    "wt_atp_nmn_mg_within:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.162,
+      "min": 0.053,
+      "max": 0.322
+    },
+    "wt_atp_nmn_mg_within:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.195,
+      "min": 0.071,
+      "max": 0.326
+    },
+    "wt_atp_nmn_mg_within:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.389,
+      "min": 0.112,
+      "max": 0.544
+    },
+    "wt_atp_nmn_mg_within:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.202,
+      "min": 0.107,
+      "max": 0.339
+    },
+    "wt_atp_nmn_mg_within:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.492,
+      "min": 0.186,
+      "max": 0.828
+    },
+    "wt_atp_nmn_mg_within:nmn_phosphate": {
+      "n": 36,
+      "median": 0.941,
+      "min": 0.305,
+      "max": 1.68
+    },
+    "wt_atp_nmn_mg_within:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.484,
+      "min": 0.219,
+      "max": 0.901
+    },
+    "wt_atp_nmn_vs_ATP_NMN:atp_CN_scaffold_RMSD_A": {
+      "n": 81,
+      "median": 0.382,
+      "min": 0.24,
+      "max": 0.674
+    },
+    "wt_atp_nmn_vs_ATP_NMN:atp_PA_terminal": {
+      "n": 81,
+      "median": 0.436,
+      "min": 0.129,
+      "max": 1.163
+    },
+    "wt_atp_nmn_vs_ATP_NMN:atp_PG_terminal": {
+      "n": 81,
+      "median": 0.659,
+      "min": 0.371,
+      "max": 1.469
+    },
+    "wt_atp_nmn_vs_ATP_NMN:atp_heavy_symmetry_RMSD_A": {
+      "n": 81,
+      "median": 0.545,
+      "min": 0.309,
+      "max": 0.826
+    },
+    "wt_atp_nmn_vs_ATP_NMN:nmn_CN_scaffold_RMSD_A": {
+      "n": 81,
+      "median": 0.66,
+      "min": 0.415,
+      "max": 1.131
+    },
+    "wt_atp_nmn_vs_ATP_NMN:nmn_heavy_symmetry_RMSD_A": {
+      "n": 81,
+      "median": 0.94,
+      "min": 0.512,
+      "max": 1.747
+    },
+    "wt_atp_nmn_vs_ATP_NMN:nmn_phosphate": {
+      "n": 81,
+      "median": 1.486,
+      "min": 0.474,
+      "max": 3.511
+    },
+    "wt_atp_nmn_vs_ATP_NMN:protein_CA_RMSD_A": {
+      "n": 81,
+      "median": 0.644,
+      "min": 0.53,
+      "max": 1.01
+    },
+    "wt_atp_nmn_within:atp_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.168,
+      "min": 0.078,
+      "max": 0.384
+    },
+    "wt_atp_nmn_within:atp_PA_terminal": {
+      "n": 36,
+      "median": 0.272,
+      "min": 0.054,
+      "max": 0.965
+    },
+    "wt_atp_nmn_within:atp_PG_terminal": {
+      "n": 36,
+      "median": 0.231,
+      "min": 0.119,
+      "max": 0.428
+    },
+    "wt_atp_nmn_within:atp_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.291,
+      "min": 0.128,
+      "max": 0.596
+    },
+    "wt_atp_nmn_within:nmn_CN_scaffold_RMSD_A": {
+      "n": 36,
+      "median": 0.206,
+      "min": 0.067,
+      "max": 0.367
+    },
+    "wt_atp_nmn_within:nmn_heavy_symmetry_RMSD_A": {
+      "n": 36,
+      "median": 0.513,
+      "min": 0.253,
+      "max": 0.857
+    },
+    "wt_atp_nmn_within:nmn_phosphate": {
+      "n": 36,
+      "median": 1.05,
+      "min": 0.441,
+      "max": 1.722
+    },
+    "wt_atp_nmn_within:protein_CA_RMSD_A": {
+      "n": 36,
+      "median": 0.528,
+      "min": 0.178,
+      "max": 0.822
+    }
+  },
+  "reference_reconstruction": [
+    {
+      "model": "crystal_1f9a_chainA",
+      "protein_CA_RMSD_A": 0.0,
+      "atp_heavy_RMSD_A": 0.0,
+      "atp_heavy_symmetry_RMSD_A": 0.0,
+      "mg_displacement_A": 0.0,
+      "atp_CN_scaffold_RMSD_A": 0.0,
+      "atp_PA_terminal": 0.0,
+      "atp_PG_terminal": 0.0,
+      "mg_O2B_A": 2.202,
+      "mg_O3A_A": 2.48,
+      "mg_O2G_A": 2.604,
+      "mg_O3B_A": 2.812
+    },
+    {
+      "model": "seed1_sample0",
+      "protein_CA_RMSD_A": 1.296,
+      "atp_heavy_RMSD_A": 1.441,
+      "atp_heavy_symmetry_RMSD_A": 0.885,
+      "atp_CN_scaffold_RMSD_A": 0.974,
+      "atp_PA_terminal": 0.724,
+      "atp_PG_terminal": 0.59,
+      "mg_displacement_A": 0.979,
+      "mg_O2B_A": 4.532,
+      "mg_O3A_A": 3.557,
+      "mg_O2G_A": 4.474,
+      "mg_O3B_A": 3.326
+    },
+    {
+      "model": "seed1_sample1",
+      "protein_CA_RMSD_A": 1.213,
+      "atp_heavy_RMSD_A": 1.715,
+      "atp_heavy_symmetry_RMSD_A": 1.548,
+      "atp_CN_scaffold_RMSD_A": 0.892,
+      "atp_PA_terminal": 0.711,
+      "atp_PG_terminal": 3.14,
+      "mg_displacement_A": 1.979,
+      "mg_O2B_A": 2.222,
+      "mg_O3A_A": 3.541,
+      "mg_O2G_A": 2.251,
+      "mg_O3B_A": 3.851
+    },
+    {
+      "model": "seed1_sample2",
+      "protein_CA_RMSD_A": 1.4,
+      "atp_heavy_RMSD_A": 1.253,
+      "atp_heavy_symmetry_RMSD_A": 0.931,
+      "atp_CN_scaffold_RMSD_A": 1.054,
+      "atp_PA_terminal": 0.799,
+      "atp_PG_terminal": 0.353,
+      "mg_displacement_A": 0.797,
+      "mg_O2B_A": 2.157,
+      "mg_O3A_A": 3.766,
+      "mg_O2G_A": 2.293,
+      "mg_O3B_A": 3.348
+    },
+    {
+      "model": "seed2_sample0",
+      "protein_CA_RMSD_A": 1.063,
+      "atp_heavy_RMSD_A": 1.304,
+      "atp_heavy_symmetry_RMSD_A": 0.783,
+      "atp_CN_scaffold_RMSD_A": 0.842,
+      "atp_PA_terminal": 0.837,
+      "atp_PG_terminal": 0.548,
+      "mg_displacement_A": 0.818,
+      "mg_O2B_A": 4.556,
+      "mg_O3A_A": 3.666,
+      "mg_O2G_A": 4.517,
+      "mg_O3B_A": 3.363
+    },
+    {
+      "model": "seed2_sample1",
+      "protein_CA_RMSD_A": 0.967,
+      "atp_heavy_RMSD_A": 1.363,
+      "atp_heavy_symmetry_RMSD_A": 0.771,
+      "atp_CN_scaffold_RMSD_A": 0.828,
+      "atp_PA_terminal": 0.723,
+      "atp_PG_terminal": 0.311,
+      "mg_displacement_A": 0.83,
+      "mg_O2B_A": 4.568,
+      "mg_O3A_A": 3.685,
+      "mg_O2G_A": 4.507,
+      "mg_O3B_A": 3.38
+    },
+    {
+      "model": "seed2_sample2",
+      "protein_CA_RMSD_A": 1.05,
+      "atp_heavy_RMSD_A": 1.072,
+      "atp_heavy_symmetry_RMSD_A": 0.869,
+      "atp_CN_scaffold_RMSD_A": 0.79,
+      "atp_PA_terminal": 0.735,
+      "atp_PG_terminal": 0.399,
+      "mg_displacement_A": 0.812,
+      "mg_O2B_A": 2.188,
+      "mg_O3A_A": 3.649,
+      "mg_O2G_A": 4.523,
+      "mg_O3B_A": 3.342
+    },
+    {
+      "model": "seed3_sample0",
+      "protein_CA_RMSD_A": 2.184,
+      "atp_heavy_RMSD_A": 8.472,
+      "atp_heavy_symmetry_RMSD_A": 8.435,
+      "atp_CN_scaffold_RMSD_A": 11.405,
+      "atp_PA_terminal": 3.958,
+      "atp_PG_terminal": 3.714,
+      "mg_displacement_A": 3.635,
+      "mg_O2B_A": 2.358,
+      "mg_O3A_A": 3.394,
+      "mg_O2G_A": 1.923,
+      "mg_O3B_A": 3.181
+    },
+    {
+      "model": "seed3_sample1",
+      "protein_CA_RMSD_A": 2.711,
+      "atp_heavy_RMSD_A": 3.376,
+      "atp_heavy_symmetry_RMSD_A": 3.334,
+      "atp_CN_scaffold_RMSD_A": 4.254,
+      "atp_PA_terminal": 1.72,
+      "atp_PG_terminal": 2.225,
+      "mg_displacement_A": 3.08,
+      "mg_O2B_A": 2.09,
+      "mg_O3A_A": 3.385,
+      "mg_O2G_A": 4.22,
+      "mg_O3B_A": 3.561
+    },
+    {
+      "model": "seed3_sample2",
+      "protein_CA_RMSD_A": 2.877,
+      "atp_heavy_RMSD_A": 3.064,
+      "atp_heavy_symmetry_RMSD_A": 2.938,
+      "atp_CN_scaffold_RMSD_A": 3.705,
+      "atp_PA_terminal": 1.511,
+      "atp_PG_terminal": 2.051,
+      "mg_displacement_A": 3.352,
+      "mg_O2B_A": 2.742,
+      "mg_O3A_A": 3.553,
+      "mg_O2G_A": 4.285,
+      "mg_O3B_A": 3.8
+    }
+  ],
+  "confidence": {
+    "models_with_summary_confidences": 27,
+    "models": 27,
+    "note": "archived CIF-only reruns have no pTM/ipTM; those fields are omitted rather than treated as zero"
+  },
+  "boundary": "AF3 models are independent diffusion samples, not experimental replicates or equilibrium populations. CIF output contains no water, so 2.8 A contacts are shared near-neighbour counts, not validated coordination shells or metal bridging. The 1F9A reference is a single-chain technical calibration against the observed crystal chain A and omits the unresolved terminal QTDK. AF3 and Boltz models are not paired by seed or sample, and no best pose is selected."
+}

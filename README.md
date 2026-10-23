@@ -102,6 +102,19 @@ natvqvae nmnat-md-analyze --config config/nmnat_md.yaml \
 
 `build` 用 Amber14SB、GAFF2/AM1-BCC、TIP3P、Li/Merz 12-6 Mg²⁺ 和 Na⁺ 中和，为 18 个联合模型各建一个体系；`md_initial_states.csv` 固定 9 个初态（noMg、Mg_NMNAT、Mg_Nudix 各 3 seed，取最低 model index），不按结果换组。`em` 以数值 Fmax 判定收敛。`run` 对每个初态用 2 个速度种子跑 100 ps NVT + 100 ps NPT + 1 ns production（合计 21.6 ns）；NVT/NPT 仅约束蛋白重原子，production 完全释放，ATP/NMN/Mg 全程无位置约束。`map` 写 `atom_mapping.json`（拓扑 atom index ↔ ACPYPE atom name ↔ CCD name，附 SMILES、CCD、参数和 CIF 哈希），后续几何不得按 GROMACS atom name 猜原子。`analyze` 只汇总已完成轨迹，按 PA 中心最小镜像、NMNAT 4–181 CA 配准、水/配体/蛋白氧分类统计，并分列跨配体全原子最小距离与两个磷酸端 O–O 最小距离。1 ns 只描述局部初始响应，不解释为平衡、Mg 交换、占有率或活性。
 
+`config/nmnat_af3.yaml` 用本地 AF3 3.0.4 对完整 WT 做 ATP+NMN 与 ATP+NMN+Mg 的无约束预测，并用 1F9A 单链做技术校准：
+
+```
+natvqvae nmnat-af3-build --config config/nmnat_af3.yaml \
+  --output data/results/evaluation/natv_nmnat_af3
+natvqvae nmnat-af3-run --config config/nmnat_af3.yaml \
+  --output data/results/evaluation/natv_nmnat_af3 --wait-gpu
+natvqvae nmnat-af3-analyze --config config/nmnat_af3.yaml \
+  --output data/results/evaluation/natv_nmnat_af3
+```
+
+`build` 使用既有 512 行 WT MSA、`run_data_pipeline=false`、`templates=[]` 和 3 seeds × 3 samples；`analyze` 保留三个 NMN 候选氧、ATP 链内连接、跨配体/蛋白接触、金属近邻，以及 AF3 与既有 Boltz 坐标的蛋白配准姿态比较（C/N 骨架与全重原子对称 RMSD）。`nmnat-af3-apo`（同一配置）另行把既有 BioEmu2 `predict-structure`/`sample-equilibrium` 帧按模式分层比较 102–105 环、锚点残基与 Nudix 域主链；它需要 bioemu2 环境的 mdtraj，结果在 `data/results/evaluation/natv_nmnat_af3/`。结果目录归档 27 个逐样本 CIF.gz（不含重复 best）、两套 apo 的未压缩 `topology.cif`/`samples.xtc` 小输入及 `build.json`/`identity.json`；因此只凭归档即可运行 `nmnat-af3-analyze`/`nmnat-af3-apo` 复算几何与 apo 比较，但归档不含逐样本 confidence，复算不包含 pTM/ipTM（缺失留空，不按 0 处理）。
+
 `nmnat-map`（`config/nmnat_mapping.yaml`）把 1F9A ATP/Mg、1NUS NMN/APC 和 2QJO NAD/POP 的实验接触刚性映射到与 A1–A3 同一 Boltz 运行的 WT 全长模型；只做接触、变换和空间冲突检查，不预测复合物。结果在 `data/results/evaluation/natv_nmnat_state_mapping/`。`nmnat-audit` 对 1F9A ATP/Mg 做原子/基团级化学分类和冲突分列，结果在 `data/results/evaluation/natv_nmnat_atp_audit/`。`epcr-nmnat`（`config/epcr_nmnat_environment.yaml`）复用既有 WT/NatV10/NatV89 9 个全长模型，在共同 WT0 的 NMNAT 框架中比较三种实验配体姿态下的突变侧链环境和接触状态；不重跑预测，不做 MD/对接。结果在 `data/results/evaluation/kvp40_epcr_nmnat_environment/`。输出目录必须为新目录或空目录；已有结果不会被覆盖，重跑请换新目录。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。

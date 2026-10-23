@@ -91,6 +91,12 @@ N1 NMNAT NAD⁺+PPi（2QJO）；N2 NMNAT NMN+ATP+Mg²⁺（1NUS 参照+独立建
 
 输入身份包括 CIF、参数与 CCD 的 SHA，以及 `atom_mapping.json` 中的 topology atom index ↔ ACPYPE name ↔ CCD name 映射；反应几何按 PA 中心最小镜像，配体比较按 NMNAT 4–181 CA 配准并保持蛋白/配体同像。分析区分水 O、ATP/NMN O、蛋白 O 与蛋白 N，不把 K104 NZ 当作合理氧供体。1 ns 只描述局部初始响应，不解释为平衡、Mg 交换、占有率、反应速率或催化活性；初态差异不单独归因于 Mg 或底物。实际结果与失败项见 `data/results/evaluation/kvp40_nmnat_md/`。
 
+## AF3 交叉评价与 BioEmu apo 参照（2026-10-24）
+
+本轮要回答的问题是：KVP40 WT NMNAT 的双底物联合占位，以及 Mg²⁺ 同时靠近两种底物的组织方式，是否具有超出 Boltz-2 先验和既有 MD 初始条件的证据。已执行范围是：用完整 WT 341 aa、既有 512 行 MSA、无模板与无口袋/距离约束运行 AF3 ATP+NMN 与 ATP+NMN+Mg 各 3 seeds × 3 samples，另用 1F9A 单链 ATP+Mg 做技术校准；复用既有 18 个 Boltz 联合模型和 16 个 BioEmu apo 帧做描述性比较。没有延长或新增 MD，没有运行变体、Protenix、OpenFold3 或 BioEmu 配体模式。AF3 与 Boltz 不是独立实验，样本数不解释为概率或占有率；金属组织仍未被确认为稳定态。结果与边界见 `data/results/evaluation/natv_nmnat_af3/REPORT.md`，不在本计划复制数值。
+
+如果后续出现能够区分金属组织与初始构象/参数效应的具体问题，可再评估同一 WT–ATP–NMN 起点下的受控金属比较；这不作为本轮预设的必需下一步。当前不以追加预测或延长轨迹替代对已有分歧的理解。
+
 ## NMNAT 底物共折叠与 A 类配对（2026-10-23）
 
 本轮路线：以完整 WT 为背景做独立配体共折叠，分别处理 ATP 蛋白侧、金属放置和 NMN 来源对应；在共同 ATP-only 状态下比较 A1/A2/A3 完整组合。实际执行、结果与证据边界见 [RESULTS.md](RESULTS.md)，方法与逐模型数值见对应结果目录的 `REPORT.md`。

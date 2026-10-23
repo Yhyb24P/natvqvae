@@ -1,0 +1,39 @@
+{
+  "af3_models": {
+    "wt_atp_nmn": 9,
+    "wt_atp_nmn_mg": 9
+  },
+  "boltz_models": {
+    "ATP_NMN_MG": 9,
+    "ATP_NMN": 9
+  },
+  "apo_sets": [
+    {
+      "label": "struct8",
+      "mode": "structure",
+      "directory": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nmnat_af3/apo_inputs/struct8",
+      "topology_sha256": "36cd6b494f5db6efd2ced1ace3ecdb7af62cde82d299e1619a91c1947528a7bc",
+      "samples_sha256": "b6cf9027880187a8621fc658c89e86a865e9faa19c01ac545b50bf5e9186a6dc",
+      "frames": 8,
+      "atoms": 2777,
+      "command": "/home/yhshy/miniconda3/envs/bioemu2/bin/bioemu2 predict-structure --system /mnt/e/bioemu2/outputs/natv_wt/system.yaml --num-samples 8 --batch-size 4 --seed 20261022 --checkpoint-path /mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt --out /mnt/e/bioemu2/outputs/natv_wt_struct8",
+      "system": "asym_id_to_author_id: {}\nbonds: []\nentities:\n- asym_ids:\n  - A\n  entity_type: protein\n  mods: []\n  sequence: MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI\nmode: structure",
+      "msa": null,
+      "boundary": "independent BioEmu samples, not a physical trajectory, equilibrium population, or probability; apo only; no ligand or metal inference"
+    },
+    {
+      "label": "eq8",
+      "mode": "equilibrium",
+      "directory": "/home/yhshy/git_files/natvqvae/data/results/evaluation/natv_nmnat_af3/apo_inputs/eq8",
+      "topology_sha256": "812b7dc070c3e0a2ce7b8b5a706550c4fe42054fac241e266b646eb7f0521c83",
+      "samples_sha256": "beca8daefe0476a1937f8cf5ef07e559d53143dc15a809df0bc2bd51f69b11f5",
+      "frames": 8,
+      "atoms": 2777,
+      "command": "/home/yhshy/miniconda3/envs/bioemu2/bin/bioemu2 sample-equilibrium --system /mnt/e/bioemu2/outputs/natv_wt/system.yaml --num-samples 8 --batch-size 4 --seed 20261022 --checkpoint-path /mnt/e/bioemu2/checkpoints/bioemu2-preview/checkpoint.ckpt --out /mnt/e/bioemu2/outputs/natv_wt_eq8",
+      "system": "asym_id_to_author_id: {}\nbonds: []\nentities:\n- asym_ids:\n  - A\n  entity_type: protein\n  mods: []\n  sequence: MSHAIFIGRFRPFHNGHLSAITQAFDALDLDKMTILIGSSNRHRSVKNPFVFEEVRDMMGVALPDHIRSKVRFVPLGDYAKDDVWQSNVRSRARGATHIVGYDKDESSYYLKLFPELKLFQPEPVKMYNKVISATDFRELYFSEILLNHPVMSGLIPKETMMFLDNWSKTEFFTEMKAEYDSSVREIEKFKDYPYQGHLNIACADNVVTCAGHVLLVERKFNPGKGCLALPGGHKHEKETFLDAAIRELQEETNIKVPEKVLRGSLVGEKMFDNPNRSYPHTRITMAYHLKVHPNPDNTFPKVKPADDAVSAKWYPLSEVRDMQERLYDDHYQIIQYFTGI\nmode: equilibrium",
+      "msa": null,
+      "boundary": "independent BioEmu samples, not a physical trajectory, equilibrium population, or probability; apo only; no ligand or metal inference"
+    }
+  ],
+  "model": "descriptive comparison only"
+}

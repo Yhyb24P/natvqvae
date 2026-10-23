@@ -1,0 +1,29 @@
+{
+  "code": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_af3.py",
+  "code_sha256": "ddc358d9563bec14d53ef8887d87008ebdafee55c757944371a4ff43da6e3575",
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_af3.yaml",
+  "config_sha256": "68037731433724574a88c8d95124969254338b2ae9c553b406edd2ff34deb3e4",
+  "target": "/home/yhshy/git_files/natvqvae/config/target.yaml",
+  "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+  "wt_msa": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_binding/inputs/WT.a3m",
+  "wt_msa_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "reference_cif": "/home/yhshy/git_files/natvqvae/data/raw/structures/nmnat/1F9A.cif",
+  "reference_cif_sha256": "439d19c0d3174ceaa64c31604e9a8ee857018bea21497af8e8998ad07be6766d",
+  "reference_sequence_length": 164,
+  "reference_canonical_length": 168,
+  "reference_omitted_terminal_aa": "QTDK",
+  "reference_boundary": "single chain A; observed residues 1-164 of canonical 168; native hexamer assembly ignored",
+  "af3": {
+    "python": "/home/yhshy/venvs/natv_af3_v3_0_4_20261008/bin/python",
+    "script": "/home/yhshy/models/alphafold3/src/run_alphafold.py",
+    "model_dir": "/mnt/e/models/alphafold3",
+    "db_dir": "/mnt/e/models/alphafold3/public_databases",
+    "buckets": 512,
+    "num_seeds": 3,
+    "num_diffusion_samples": 3,
+    "num_recycles": 10,
+    "memory_fraction": 0.35,
+    "min_free_gb": 8,
+    "jax_cache": "/tmp/jax_af3_cache"
+  }
+}

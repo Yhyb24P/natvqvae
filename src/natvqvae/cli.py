@@ -19,10 +19,11 @@ from .nmnat_binding import (build_nmnat_binding, run_nmnat_binding_boltz,
                             summarize_joint_binding, summarize_nmnat_binding,
                             write_fixed_pose_reference,
                             write_single_substrate_pose_comparison)
+from .nmnat_af3 import analyze_af3, build_af3_inputs, run_af3
+from .nmnat_apo import analyze_apo
 from .nmnat_mapping import audit_atp_contacts, build_nmnat_mapping
 from .nmnat_md import (build_nmnat_md, run_nmnat_md_em, run_nmnat_md_pilot,
                        write_atom_mapping)
-from .nmnat_md_analysis import analyze_nmnat_md
 from .nmnat_nmn import analyze_nmn_sources
 from .preprocessing import preprocess
 from .train import train
@@ -31,6 +32,11 @@ from .train import train
 def _candidate_structures(config, output):
     from .structure import sample_candidate_structures
     return sample_candidate_structures(config, output)
+
+
+def _analyze_nmnat_md(config, output):
+    from .nmnat_md_analysis import analyze_nmnat_md
+    return analyze_nmnat_md(config, output)
 
 
 def _result_output(value, category):
@@ -340,7 +346,7 @@ def build_parser():
         'nmnat-md-analyze', help='analyze completed WT ATP/NMN MD trajectories')
     nmnat_md_analyze.add_argument('--config', default='config/nmnat_md.yaml')
     nmnat_md_analyze.add_argument('--output', required=True)
-    nmnat_md_analyze.set_defaults(func=lambda args: analyze_nmnat_md(
+    nmnat_md_analyze.set_defaults(func=lambda args: _analyze_nmnat_md(
         args.config, _result_output(args.output, 'evaluation')))
 
     nmnat_nmn_sources = sub.add_parser(
@@ -348,6 +354,35 @@ def build_parser():
     nmnat_nmn_sources.add_argument('--config', default='config/nmnat_nmn_sources.yaml')
     nmnat_nmn_sources.add_argument('--output', required=True)
     nmnat_nmn_sources.set_defaults(func=lambda args: analyze_nmn_sources(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_af3_build = sub.add_parser(
+        'nmnat-af3-build', help='build AF3 inputs for the WT ATP/NMN joint pose check')
+    nmnat_af3_build.add_argument('--config', default='config/nmnat_af3.yaml')
+    nmnat_af3_build.add_argument('--output', required=True)
+    nmnat_af3_build.set_defaults(func=lambda args: build_af3_inputs(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_af3_run = sub.add_parser(
+        'nmnat-af3-run', help='run the AF3 WT ATP/NMN and 1F9A reference jobs')
+    nmnat_af3_run.add_argument('--config', default='config/nmnat_af3.yaml')
+    nmnat_af3_run.add_argument('--output', required=True)
+    nmnat_af3_run.add_argument('--wait-gpu', action='store_true')
+    nmnat_af3_run.set_defaults(func=lambda args: run_af3(
+        args.config, _result_output(args.output, 'evaluation'), args.wait_gpu))
+
+    nmnat_af3_analyze = sub.add_parser(
+        'nmnat-af3-analyze', help='analyze AF3 WT and 1F9A reference models')
+    nmnat_af3_analyze.add_argument('--config', default='config/nmnat_af3.yaml')
+    nmnat_af3_analyze.add_argument('--output', required=True)
+    nmnat_af3_analyze.set_defaults(func=lambda args: analyze_af3(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_af3_apo = sub.add_parser(
+        'nmnat-af3-apo', help='compare WT holo models with existing BioEmu apo frames')
+    nmnat_af3_apo.add_argument('--config', default='config/nmnat_af3.yaml')
+    nmnat_af3_apo.add_argument('--output', required=True)
+    nmnat_af3_apo.set_defaults(func=lambda args: analyze_apo(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

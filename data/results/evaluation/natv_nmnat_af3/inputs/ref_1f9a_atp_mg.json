@@ -1,0 +1,41 @@
+{
+  "name": "ref_1f9a_atp_mg",
+  "modelSeeds": [
+    1
+  ],
+  "sequences": [
+    {
+      "protein": {
+        "id": [
+          "A"
+        ],
+        "sequence": "LRGFIIGRFQPFHKGHLEVIKKIAEEVDEIIIGIGSAQKSHTLENPFTAGERILMITQSLKDYDLTYYPIPIKDIEFNSIWVSYVESLTPPFDIVYSGNPLVRVLFEERGYEVKRPEMFNRKEYSGTEIRRRMLNGEKWEHLVPKAVVDVIKEIKGVERLRKLA",
+        "templates": [],
+        "unpairedMsa": ">query\nLRGFIIGRFQPFHKGHLEVIKKIAEEVDEIIIGIGSAQKSHTLENPFTAGERILMITQSLKDYDLTYYPIPIKDIEFNSIWVSYVESLTPPFDIVYSGNPLVRVLFEERGYEVKRPEMFNRKEYSGTEIRRRMLNGEKWEHLVPKAVVDVIKEIKGVERLRKLA\n",
+        "pairedMsa": ""
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "B"
+        ],
+        "ccdCodes": [
+          "ATP"
+        ]
+      }
+    },
+    {
+      "ligand": {
+        "id": [
+          "C"
+        ],
+        "ccdCodes": [
+          "MG"
+        ]
+      }
+    }
+  ],
+  "dialect": "alphafold3",
+  "version": 1
+}
