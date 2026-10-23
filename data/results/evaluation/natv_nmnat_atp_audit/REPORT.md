@@ -15,6 +15,7 @@
   - 同残基侧链：同名原子，或明确列出的对称等价原子（Asp/Glu 羧基 O、Arg 胍基 NH1/NH2、Phe/Tyr 环对称对等）；
   - 跨残基：仅羧基 O（D↔E）、羟基 O（S/T/Y）、酰胺 O/N（N↔Q）、阳离子 N（K↔R）作为 role-equivalent；芳香/疏水侧链不做跨残基原子等价；
   - His NE2 不会用 CD2 代替；Thr OG1 不会用主链 N 代替；Pro 主链 N 单独标记。
+- `_sidechain_role` 是审计用简化角色表，不是完备化学分类器；芳香残基的所有侧链 C 都会被标为 `aromatic_C`（包括 PHE CB 等），当前 CE1 等是否真正环原子仅按实际结构证据解释。
 - `geometry_confidence` 只表示 TMalign/Kabsch 后的 CA 几何；`target_atom_match` 表示原子对应关系（same_name、symmetric_equivalent、backbone_same_name、role_equivalent、role_mismatch、missing）。
 - `local_flag`/`global_flag` 是距离标记（severe <2.0 Å、close <2.5 Å）；不是普适化学冲突裁决。
 - 汇总状态：`supported_consistent` = 3/3 支持且无 clash；`supported_majority` = 2/3 支持且无 clash；`model_dependent_supported` = 1/3 且无 clash；`supported_majority_with_model_clash` = 2/3 支持且第三模型 clash；`model_dependent_supported_with_clash` = 1/3 支持且其他模型 clash；`role_mismatch` = 当前映射/规则下没有可支持的对应原子/基团。
@@ -38,7 +39,7 @@
 - `role_mismatch`：14
 - `not_recovered`：11
 
-`supported_consistent` 是特定原子/基团接触候选，不是完整复合物或催化相互作用的验证。21 个中 16 个是主链–主链接触，5 个是侧链特异接触；不能把 21 当独立相互作用数。
+`supported_consistent` 是特定原子/基团接触候选，不是完整复合物或催化相互作用的验证。21 个中 16 个是主链–主链接触，5 个是侧链特异接触；不能把 21 当独立相互作用数。WT model0 对应的这 21 行中有 17 行 local/global close（2–2.5 Å；16 行 global close、1 行 both close、4 行 none）；角色构成为 backbone N 6、backbone C 5、backbone O 5、hydroxyl O 1、cationic N 1、imidazole N 3。该计数只是同角色+距离阈值邻近；5 个主链碳不是氢键证据，17 个 close 不能被“无 clash”掩盖；不等于 21 个合理物理相互作用或完整 ATP 口袋。
 
 ### 侧链特异的支持
 
