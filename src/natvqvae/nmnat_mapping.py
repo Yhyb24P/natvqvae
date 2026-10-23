@@ -728,3 +728,411 @@ def build_nmnat_mapping(config_path, output):
     }
     write_json(output / 'provenance.json', provenance)
     return output
+
+
+_AA3 = {
+    'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'CYS': 'C', 'GLN': 'Q',
+    'GLU': 'E', 'GLY': 'G', 'HIS': 'H', 'ILE': 'I', 'LEU': 'L', 'LYS': 'K',
+    'MET': 'M', 'PHE': 'F', 'PRO': 'P', 'SER': 'S', 'THR': 'T', 'TRP': 'W',
+    'TYR': 'Y', 'VAL': 'V',
+}
+_BACKBONE = {'N', 'CA', 'C', 'O', 'OXT'}
+_AROMATIC = {'F', 'Y', 'W', 'H'}
+_SYMMETRIC_GROUPS = {
+    'ASP': [{'OD1', 'OD2'}],
+    'GLU': [{'OE1', 'OE2'}],
+    'ARG': [{'NH1', 'NH2'}],
+    'PHE': [{'CD1', 'CD2'}, {'CE1', 'CE2'}],
+    'TYR': [{'CD1', 'CD2'}, {'CE1', 'CE2'}],
+    'LEU': [{'CD1', 'CD2'}],
+    'VAL': [{'CG1', 'CG2'}],
+}
+_ROLE_ATOMS = {
+    'carboxylate_O': {'ASP': {'OD1', 'OD2'}, 'GLU': {'OE1', 'OE2'}},
+    'hydroxyl_O': {'SER': {'OG'}, 'THR': {'OG1'}, 'TYR': {'OH'}},
+    'amide_O': {'ASN': {'OD1'}, 'GLN': {'OE1'}},
+    'amide_N': {'ASN': {'ND2'}, 'GLN': {'NE2'}},
+    'cationic_N': {'LYS': {'NZ'}, 'ARG': {'NH1', 'NH2', 'NE'}},
+}
+_ROLE_CHEMISTRY = {
+    'carboxylate_O': 'charge_conservative',
+    'cationic_N': 'charge_conservative',
+    'hydroxyl_O': 'polar_role_equivalent',
+    'amide_O': 'polar_role_equivalent',
+    'amide_N': 'polar_role_equivalent',
+}
+
+
+def _atom_region(atom_name):
+    return 'backbone' if atom_name in _BACKBONE else 'sidechain'
+
+
+def _sidechain_role(resname, atom_name, element):
+    aa = _AA3.get(resname, 'X')
+    if element == 'N':
+        if aa in {'K', 'R'}:
+            return 'cationic_N'
+        if aa == 'H':
+            return 'imidazole_N'
+        if aa in {'N', 'Q'}:
+            return 'amide_N'
+        if aa == 'W' and atom_name == 'NE1':
+            return 'indole_N'
+        return 'N_other'
+    if element == 'O':
+        if aa in {'D', 'E'}:
+            return 'carboxylate_O'
+        if aa in {'S', 'T', 'Y'}:
+            return 'hydroxyl_O'
+        if aa in {'N', 'Q'}:
+            return 'amide_O'
+        return 'O_other'
+    if element == 'S':
+        return 'sulfur'
+    if element == 'C' and aa in _AROMATIC:
+        return 'aromatic_C'
+    if element == 'C':
+        return 'hydrophobic_C'
+    return element or 'unknown'
+
+
+def _atom_role(resname, atom_name, element):
+    if _atom_region(atom_name) == 'backbone':
+        return f'backbone_{element}'
+    return _sidechain_role(resname, atom_name, element)
+
+
+def _target_atom_candidates(source_resname, source_atom_name, source_element, target_resname):
+    """Return target atom names and evidence class for the source atom's role."""
+    if _atom_region(source_atom_name) == 'backbone':
+        if source_atom_name == 'N' and (source_resname == 'PRO') != (target_resname == 'PRO'):
+            return [], 'backbone_proline_mismatch', 'role_mismatch'
+        return [source_atom_name], 'backbone_same_name', 'backbone_compatible'
+    source_role = _sidechain_role(source_resname, source_atom_name, source_element)
+    if source_resname == target_resname:
+        for group in _SYMMETRIC_GROUPS.get(source_resname, []):
+            if source_atom_name in group:
+                return sorted(group), 'symmetric_equivalent', 'symmetric_equivalent'
+        return [source_atom_name], 'same_name', 'identical'
+    candidates = _ROLE_ATOMS.get(source_role, {}).get(target_resname)
+    if not candidates:
+        return [], 'role_mismatch', 'role_mismatch'
+    chemistry = _ROLE_CHEMISTRY.get(source_role, 'role_mismatch')
+    if chemistry == 'role_mismatch':
+        return [], 'role_mismatch', 'role_mismatch'
+    return sorted(candidates), 'role_equivalent', chemistry
+
+
+def _distance_flag(distance, clash_cutoff, close_cutoff):
+    if distance is None:
+        return ''
+    if distance < clash_cutoff:
+        return 'severe'
+    if distance < close_cutoff:
+        return 'close'
+    return 'none'
+
+
+def _audit_status(mapping_confidence, distance, cutoff, local_flag, global_flag, chemistry):
+    if mapping_confidence == 'unmapped':
+        return 'unmapped'
+    if mapping_confidence == 'low':
+        return 'uncertain_mapping'
+    if distance is None or distance > cutoff:
+        return 'not_recovered'
+    if local_flag == 'severe' or global_flag == 'severe':
+        return 'clash'
+    if chemistry in {'identical', 'symmetric_equivalent', 'backbone_compatible',
+                     'charge_conservative', 'polar_role_equivalent'}:
+        return 'supported_candidate'
+    return 'geometric_only'
+
+
+def _summary_status(counts, n_models):
+    supported = counts.get('supported_candidate', 0)
+    clash = counts.get('clash', 0)
+    if supported == n_models:
+        return 'supported_consistent' if clash == 0 else 'mixed_uncertain'
+    if supported >= 2:
+        return 'supported_majority' if clash == 0 else 'supported_majority_with_model_clash'
+    if supported == 1:
+        return 'model_dependent_supported' if clash == 0 else 'model_dependent_supported_with_clash'
+    if counts.get('geometric_only', 0) and clash:
+        return 'mixed_geometric_clash'
+    if counts.get('geometric_only', 0):
+        return 'geometric_only'
+    if clash:
+        return 'clash'
+    if counts.get('role_mismatch', 0) == n_models:
+        return 'role_mismatch'
+    if counts.get('not_recovered', 0) == n_models:
+        return 'not_recovered'
+    if counts.get('unmapped', 0) == n_models:
+        return 'unmapped'
+    if counts.get('uncertain_mapping', 0):
+        return 'uncertain_mapping'
+    return 'mixed_uncertain'
+
+
+def audit_atp_contacts(config_path, output):
+    """Atom/group-level audit of the 1F9A ATP/Mg contacts on matched WT models."""
+    config = load_yaml(config_path)
+    source = config['sources']['1F9A']
+    output = Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(
+            f'NMNAT ATP audit output already exists: {output}. '
+            'Use a new --output run directory; existing results are not overwritten.')
+    output.mkdir(parents=True, exist_ok=True)
+    wt_paths = sorted(Path(path) for path in glob(config['wt']['glob']))
+    if len(wt_paths) != int(config['wt']['expected_models']):
+        raise FileNotFoundError('Matched WT model count differs from configuration')
+    tmalign = Path(config['alignment']['tmalign'])
+    if not tmalign.exists():
+        raise FileNotFoundError(f'TMalign executable not found: {tmalign}')
+    min_fit_pairs = int(config['alignment']['min_fit_pairs'])
+    contact_cutoff = float(source.get('contact_cutoff_A', 4.0))
+    metal_cutoff = float(source.get('metal_cutoff_A', contact_cutoff))
+    clash_cutoff = float(config['analysis']['clash_cutoff_A'])
+    close_cutoff = float(config['analysis']['close_cutoff_A'])
+    structure, model, protein, contacts = _source_contacts('1F9A', source)
+    ligands = _state_ligands(structure, source)
+    ligand_atoms = {
+        (ligand['chain'], ligand['resnum'], atom.name): atom
+        for ligand in ligands for atom in ligand['atoms']
+    }
+    rows = []
+    with tempfile.TemporaryDirectory() as temporary:
+        temporary = Path(temporary)
+        source_pdb = temporary / '1F9A_ATP_source.pdb'
+        _write_protein_pdb(structure, source['protein_chain'],
+                           source['protein_range'][0], source['protein_range'][1], source_pdb)
+        for wt_path in wt_paths:
+            wt_structure = _open_structure(wt_path)
+            wt_model = wt_structure[0]
+            target_residues = _protein_residues(wt_model['A'], 4, 181)
+            target_pdb = temporary / f'1F9A_{wt_path.stem}_target.pdb'
+            _write_protein_pdb(wt_structure, 'A', 4, 181, target_pdb)
+            parsed = _parse_tmalign(_run_tmalign(tmalign, source_pdb, target_pdb))
+            pairs = _alignment_pairs(protein, target_residues, parsed)
+            fit = _fit_from_pairs(pairs, min_fit_pairs)
+            rotation = np.asarray(fit['rotation'], dtype=float)
+            translation = np.asarray(fit['translation'], dtype=float)
+            mapping = _mapping_from_pairs(pairs, rotation, translation)
+            for contact in contacts:
+                info = mapping.get(int(contact['protein_resnum']))
+                ligand_atom = ligand_atoms[
+                    (contact['ligand_chain'], contact['ligand_resnum'], contact['ligand_atom'])]
+                point = _apply_transform([ligand_atom.coord], rotation, translation)[0]
+                global_best = _wt_min_distance(np.asarray([point]), wt_model)
+                global_flag = _distance_flag(global_best[0], clash_cutoff, close_cutoff)
+                target_atom = None
+                target_distance = None
+                target_region = ''
+                target_element = ''
+                target_atom_match = 'unmapped'
+                chemistry = 'unmapped'
+                source_role = ''
+                target_role = ''
+                source_residue = next(
+                    residue for residue in protein
+                    if int(residue.id[1]) == int(contact['protein_resnum']))
+                source_atom = source_residue[contact['protein_atom']]
+                source_element = source_atom.element.strip()
+                source_role = _atom_role(contact['protein_resname'], source_atom.name,
+                                         source_element)
+                if info is not None:
+                    target_residue = _wt_residue(wt_model, info['target_resnum'])
+                    if target_residue is not None:
+                        candidate_names, target_atom_match, chemistry = _target_atom_candidates(
+                            contact['protein_resname'], source_atom.name, source_element,
+                            info['target_resname'])
+                        target_candidates = [target_residue[name] for name in candidate_names
+                                             if name in target_residue]
+                        if target_candidates:
+                            target_atom = min(
+                                target_candidates,
+                                key=lambda atom: float(np.linalg.norm(point - atom.coord)))
+                            target_distance = float(np.linalg.norm(point - target_atom.coord))
+                            target_region = _atom_region(target_atom.name)
+                            target_element = target_atom.element.strip()
+                            target_role = _atom_role(info['target_resname'], target_atom.name,
+                                                     target_element)
+                        else:
+                            if target_atom_match == 'same_name':
+                                target_atom_match = 'target_atom_missing'
+                                chemistry = 'missing'
+                    else:
+                        target_atom_match = 'target_residue_missing'
+                        chemistry = 'missing'
+                cutoff = metal_cutoff if contact['ligand_resname'] in {'MG', 'MN'} else contact_cutoff
+                local_flag = _distance_flag(target_distance, clash_cutoff, close_cutoff)
+                mapping_confidence = info['confidence'] if info else 'unmapped'
+                status = _audit_status(mapping_confidence, target_distance, cutoff,
+                                       local_flag, global_flag, chemistry)
+                if target_atom_match in {'role_mismatch', 'backbone_proline_mismatch'}:
+                    status = 'role_mismatch'
+                uncertainties = []
+                if info and info['confidence'] in {'medium', 'low'}:
+                    uncertainties.append(f'mapping_{info["confidence"]}')
+                if info is None:
+                    uncertainties.append('no_aligned_kvp40_residue')
+                if local_flag == 'close' or global_flag == 'close':
+                    uncertainties.append('close_distance_flag_not_chemical_clash')
+                if (source_role in {'cationic_N', 'imidazole_N', 'amide_N', 'indole_N'}
+                        or target_role in {'cationic_N', 'imidazole_N', 'amide_N', 'indole_N'}):
+                    uncertainties.append('no_explicit_hydrogens_protonation_tautomer_unknown')
+                if target_atom_match == 'role_mismatch':
+                    uncertainties.append('target_atom_role_mismatch')
+                if target_atom_match == 'backbone_proline_mismatch':
+                    uncertainties.append('proline_backbone_N_not_equivalent')
+                if target_atom_match == 'target_atom_missing':
+                    uncertainties.append('corresponding_target_atom_missing')
+                if target_atom_match == 'symmetric_equivalent':
+                    uncertainties.append('symmetric_equivalent_atom')
+                if chemistry in {'charge_conservative', 'polar_role_equivalent'}:
+                    uncertainties.append('role_equivalent_not_identical')
+                if target_region == 'backbone' and chemistry != 'backbone_compatible':
+                    uncertainties.append('target_atom_is_backbone')
+                if ligand_atom.occupancy is not None and ligand_atom.occupancy < 1.0:
+                    uncertainties.append('partial_occupancy')
+                if ligand_atom.altloc not in (' ', ''):
+                    uncertainties.append('alternate_location')
+                if contact['ligand_resname'] in {'MG', 'MN'}:
+                    uncertainties.append('metal_distance_not_coordination')
+                rows.append({
+                    'contact_id': contact['contact_id'],
+                    'wt_model': wt_path.name,
+                    'source_resnum': contact['protein_resnum'],
+                    'source_resname': contact['protein_resname'],
+                    'source_atom': contact['protein_atom'],
+                    'ligand_resname': contact['ligand_resname'],
+                    'ligand_atom': contact['ligand_atom'],
+                    'source_distance_A': contact['distance_A'],
+                    'mapping_status': 'mapped' if info else 'unmapped',
+                    'kvp40_resnum': info['target_resnum'] if info else '',
+                    'kvp40_resname': info['target_resname'] if info else '',
+                    'mapping_match': info['match'] if info else '',
+                    'mapping_ca_distance_A': round(info['ca_distance_A'], 2)
+                    if info and info['ca_distance_A'] is not None else '',
+                    'geometry_confidence': mapping_confidence,
+                    'target_atom': target_atom.name if target_atom is not None else '',
+                    'target_atom_match': target_atom_match,
+                    'target_element': target_element,
+                    'target_region': target_region,
+                    'target_distance_A': round(target_distance, 2)
+                    if target_distance is not None else '',
+                    'local_flag': local_flag,
+                    'global_nearest': _format_residue(global_best[1], global_best[2]),
+                    'global_distance_A': round(global_best[0], 2),
+                    'global_flag': global_flag,
+                    'chemistry_class': chemistry,
+                    'source_role': source_role,
+                    'target_role': target_role,
+                    'contact_status': status,
+                    'uncertainty': ';'.join(uncertainties),
+                })
+    contact_fields = ['contact_id', 'wt_model', 'source_resnum', 'source_resname',
+                      'source_atom', 'ligand_resname', 'ligand_atom', 'source_distance_A',
+                      'mapping_status', 'kvp40_resnum', 'kvp40_resname', 'mapping_match',
+                      'mapping_ca_distance_A', 'geometry_confidence', 'target_atom',
+                      'target_atom_match', 'target_element', 'target_region', 'target_distance_A', 'local_flag',
+                      'global_nearest', 'global_distance_A', 'global_flag', 'chemistry_class',
+                      'source_role', 'target_role', 'contact_status', 'uncertainty']
+    _write_csv(output / 'atp_contacts.csv', rows, contact_fields)
+    summary = {}
+    for row in rows:
+        summary.setdefault(row['contact_id'], []).append(row)
+    summary_rows = []
+    for contact_id, group in summary.items():
+        statuses = [row['contact_status'] for row in group]
+        counts = {status: statuses.count(status) for status in
+                  ('supported_candidate', 'geometric_only', 'clash', 'not_recovered',
+                   'uncertain_mapping', 'unmapped', 'role_mismatch')}
+        supported_models = [row['wt_model'] for row in group
+                            if row['contact_status'] == 'supported_candidate']
+        chemistry = sorted({row['chemistry_class'] for row in group})
+        final_status = _summary_status(counts, len(group))
+        if (counts['supported_candidate'] == 0 and counts['role_mismatch']
+                and counts['not_recovered'] == len(group)):
+            final_status = 'role_mismatch'
+        first = group[0]
+        summary_rows.append({
+            'contact_id': contact_id,
+            'source_resnum': first['source_resnum'],
+            'source_resname': first['source_resname'],
+            'source_atom': first['source_atom'],
+            'ligand_resname': first['ligand_resname'],
+            'ligand_atom': first['ligand_atom'],
+            'n_models': len(group),
+            'n_supported': counts['supported_candidate'],
+            'n_geometric_only': counts['geometric_only'],
+            'n_clash': counts['clash'],
+            'n_not_recovered': counts['not_recovered'],
+            'n_uncertain_mapping': counts['uncertain_mapping'],
+            'n_unmapped': counts['unmapped'],
+            'n_role_mismatch': counts['role_mismatch'],
+            'supported_models': ';'.join(supported_models),
+            'chemistry_classes': ';'.join(chemistry),
+            'final_status': final_status,
+            'note': ';'.join(sorted({part for row in group
+                                     for part in row['uncertainty'].split(';') if part})),
+        })
+    summary_fields = ['contact_id', 'source_resnum', 'source_resname', 'source_atom',
+                      'ligand_resname', 'ligand_atom', 'n_models', 'n_supported',
+                      'n_geometric_only', 'n_clash', 'n_not_recovered', 'n_uncertain_mapping',
+                      'n_unmapped', 'n_role_mismatch', 'supported_models', 'chemistry_classes',
+                      'final_status', 'note']
+    _write_csv(output / 'atp_contact_summary.csv', summary_rows, summary_fields)
+    tmalign_version = next(
+        (line.strip() for line in subprocess.run(
+            [str(tmalign), '-v'], capture_output=True, text=True).stdout.splitlines()
+         if 'Version' in line), 'unknown')
+    provenance = {
+        'config': str(Path(config_path).resolve()),
+        'config_sha256': sha256_file(config_path),
+        'target_sequence_sha256': hashlib.sha256(Target.load(config['target']).sequence.encode()).hexdigest(),
+        'source': {
+            'pdb_id': source['pdb_id'],
+            'path': source['path'],
+            'sha256': sha256_file(source['path']),
+            'assembly_id': source['assembly_id'],
+            'protein_chain': source['protein_chain'],
+            'ligand_chains': source['ligand_chains'],
+            'ligands': source['ligands'],
+        },
+        'wt_models': [
+            {'path': str(path), 'sha256': sha256_file(path)}
+            for path in wt_paths
+        ],
+        'tmalign': {'path': str(tmalign), 'version': tmalign_version},
+        'software': {
+            'python': sys.version.split()[0],
+            'numpy': np.__version__,
+            'biopython': __import__('Bio').__version__,
+        },
+        'audit': {
+            'source': '1F9A',
+            'contact_cutoff_A': contact_cutoff,
+            'metal_cutoff_A': metal_cutoff,
+            'clash_cutoff_A': clash_cutoff,
+            'close_cutoff_A': close_cutoff,
+            'status_definitions': {
+                'supported_candidate': 'mapped, within cutoff, target atom role-compatible, no severe local/global clash',
+                'supported_consistent': 'supported_candidate in 3/3 models and no clash in any model',
+                'supported_majority': 'supported_candidate in 2/3 models and no clash in any model',
+                'supported_majority_with_model_clash': 'supported_candidate in 2/3 models but clash in the other model',
+                'model_dependent_supported': 'supported_candidate in exactly one model and no clash in any model',
+                'model_dependent_supported_with_clash': 'supported_candidate in exactly one model and clash in another model',
+                'geometric_only': 'mapped and within cutoff, but target atom role is not compatible',
+                'role_mismatch': 'no corresponding target atom/group for the source atom role',
+                'clash': 'local or global severe distance flag',
+                'not_recovered': 'mapped but the corresponding target atom distance exceeds the ligand-specific cutoff',
+                'uncertain_mapping': 'low geometry confidence; not used as support',
+                'unmapped': 'no aligned KVP40 residue',
+            },
+            'note': 'Distance thresholds are flags, not universal chemical clash judgments; no explicit hydrogens or protonation states.',
+        },
+    }
+    write_json(output / 'provenance.json', provenance)
+    return output

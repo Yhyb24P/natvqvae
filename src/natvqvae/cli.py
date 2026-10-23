@@ -14,7 +14,7 @@ from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summari
 from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
                                summarize_microenvironment)
-from .nmnat_mapping import build_nmnat_mapping
+from .nmnat_mapping import audit_atp_contacts, build_nmnat_mapping
 from .preprocessing import preprocess
 from .train import train
 
@@ -232,6 +232,13 @@ def build_parser():
     nmnat_map.add_argument('--config', default='config/nmnat_mapping.yaml')
     nmnat_map.add_argument('--output', required=True)
     nmnat_map.set_defaults(func=lambda args: build_nmnat_mapping(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_audit = sub.add_parser(
+        'nmnat-audit', help='atom/group-level audit of 1F9A ATP/Mg contacts on matched WT models')
+    nmnat_audit.add_argument('--config', default='config/nmnat_mapping.yaml')
+    nmnat_audit.add_argument('--output', required=True)
+    nmnat_audit.set_defaults(func=lambda args: audit_atp_contacts(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

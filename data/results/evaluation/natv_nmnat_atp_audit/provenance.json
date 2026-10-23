@@ -1,0 +1,64 @@
+{
+  "config": "/home/yhshy/git_files/natvqvae/config/nmnat_mapping.yaml",
+  "config_sha256": "7249b830ea5c21aafcb763a03d66ecaf772d9788cf3825e86b8c1782800d4176",
+  "target_sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "source": {
+    "pdb_id": "1F9A",
+    "path": "data/raw/structures/nmnat/1F9A.cif",
+    "sha256": "439d19c0d3174ceaa64c31604e9a8ee857018bea21497af8e8998ad07be6766d",
+    "assembly_id": "1",
+    "protein_chain": "A",
+    "ligand_chains": [
+      "A"
+    ],
+    "ligands": [
+      "ATP",
+      "MG"
+    ]
+  },
+  "wt_models": [
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_0.cif.gz",
+      "sha256": "a1b53ee58ba2a010375540da0c5c64502e128cf34343b52b4e62465c33a7b367"
+    },
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_1.cif.gz",
+      "sha256": "02f1ef0ed64fd06dbe2684353c1dd8716b98267bcf754ea00dc160982a19fe92"
+    },
+    {
+      "path": "data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_2.cif.gz",
+      "sha256": "8fc2e67f9ec9b17c306eea91418efadbbc061a2a4659a17a20bb127dd3dd95d3"
+    }
+  ],
+  "tmalign": {
+    "path": "/home/yhshy/miniconda3/bin/TMalign",
+    "version": "* TM-align (Version 20240303): protein and RNA structure alignment   *"
+  },
+  "software": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "biopython": "1.87"
+  },
+  "audit": {
+    "source": "1F9A",
+    "contact_cutoff_A": 4.0,
+    "metal_cutoff_A": 3.2,
+    "clash_cutoff_A": 2.0,
+    "close_cutoff_A": 2.5,
+    "status_definitions": {
+      "supported_candidate": "mapped, within cutoff, target atom role-compatible, no severe local/global clash",
+      "supported_consistent": "supported_candidate in 3/3 models and no clash in any model",
+      "supported_majority": "supported_candidate in 2/3 models and no clash in any model",
+      "supported_majority_with_model_clash": "supported_candidate in 2/3 models but clash in the other model",
+      "model_dependent_supported": "supported_candidate in exactly one model and no clash in any model",
+      "model_dependent_supported_with_clash": "supported_candidate in exactly one model and clash in another model",
+      "geometric_only": "mapped and within cutoff, but target atom role is not compatible",
+      "role_mismatch": "no corresponding target atom/group for the source atom role",
+      "clash": "local or global severe distance flag",
+      "not_recovered": "mapped but the corresponding target atom distance exceeds the ligand-specific cutoff",
+      "uncertain_mapping": "low geometry confidence; not used as support",
+      "unmapped": "no aligned KVP40 residue"
+    },
+    "note": "Distance thresholds are flags, not universal chemical clash judgments; no explicit hydrogens or protonation states."
+  }
+}
