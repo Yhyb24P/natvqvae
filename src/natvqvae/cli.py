@@ -16,7 +16,9 @@ from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
                                summarize_microenvironment)
 from .nmnat_binding import (build_nmnat_binding, run_nmnat_binding_boltz,
-                            summarize_nmnat_binding)
+                            summarize_joint_binding, summarize_nmnat_binding,
+                            write_fixed_pose_reference,
+                            write_single_substrate_pose_comparison)
 from .nmnat_mapping import audit_atp_contacts, build_nmnat_mapping
 from .nmnat_nmn import analyze_nmn_sources
 from .preprocessing import preprocess
@@ -276,6 +278,29 @@ def build_parser():
     nmnat_binding_summary.add_argument('--config', default='config/nmnat_binding.yaml')
     nmnat_binding_summary.add_argument('--output', required=True)
     nmnat_binding_summary.set_defaults(func=lambda args: summarize_nmnat_binding(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_joint_reference = sub.add_parser(
+        'nmnat-joint-reference',
+        help='combine fixed ATP-only and NMN-only poses in a common NMNAT frame')
+    nmnat_joint_reference.add_argument('--config', default='config/nmnat_joint.yaml')
+    nmnat_joint_reference.add_argument('--output', required=True)
+    nmnat_joint_reference.set_defaults(func=lambda args: write_fixed_pose_reference(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_joint_summary = sub.add_parser(
+        'nmnat-joint-summarize', help='summarize ATP+NMN joint co-folding models')
+    nmnat_joint_summary.add_argument('--config', default='config/nmnat_joint.yaml')
+    nmnat_joint_summary.add_argument('--output', required=True)
+    nmnat_joint_summary.set_defaults(func=lambda args: summarize_joint_binding(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    nmnat_joint_poses = sub.add_parser(
+        'nmnat-joint-poses',
+        help='compare joint ATP/NMN poses with same-seed single-substrate models')
+    nmnat_joint_poses.add_argument('--config', default='config/nmnat_joint.yaml')
+    nmnat_joint_poses.add_argument('--output', required=True)
+    nmnat_joint_poses.set_defaults(func=lambda args: write_single_substrate_pose_comparison(
         args.config, _result_output(args.output, 'evaluation')))
 
     nmnat_nmn_sources = sub.add_parser(

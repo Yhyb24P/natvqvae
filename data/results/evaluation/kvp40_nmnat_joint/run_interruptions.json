@@ -1,0 +1,29 @@
+{
+  "interruptions": [
+    {
+      "run": "kvp40_nmnat_joint",
+      "batch_started_local": "2026-10-24T02:37:00+08:00",
+      "interrupted_local": "2026-10-24T02:39:20+08:00",
+      "reason": "another project's ninfer-serve (PID 76427) restarted and shared the GPU; this session withdrew its own Boltz (PID 76683) and runner (PID 76434) to avoid memory contention",
+      "other_service": "PID 76427 was not signalled by this session; it exited on its own by 02:39:38",
+      "completed_inputs": [
+        {
+          "seed": 20261026,
+          "state": "ATP_NMN_MG",
+          "models": 3,
+          "model_indices": [0, 1, 2],
+          "preserved": "interrupted/seed20261026_resource_conflict_20261024T0239",
+          "preserved_log": "logs/interrupted_seed20261026_20261024T0239.log"
+        }
+      ],
+      "incomplete_inputs": [
+        {"seed": 20261026, "state": "ATP_NMN", "models": 0}
+      ],
+      "not_run": [
+        {"seed": 20261027, "states": ["ATP_NMN", "ATP_NMN_MG"]},
+        {"seed": 20261028, "states": ["ATP_NMN", "ATP_NMN_MG"]}
+      ],
+      "decision": "preserve the interrupted CIFs as a separate record and start a clean formal run from empty seed directories; the interrupted models are not counted in the formal 18"
+    }
+  ]
+}

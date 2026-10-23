@@ -1,0 +1,318 @@
+{
+  "config_sha256": "6e581b0adfc13d56f2567a492912f0c42e910a27738e67fe1df6aac584d4747c",
+  "source_sha256": "6eb737649a6d7bca301763009d1ada441dbf0c1713eeb8b9c713c9b89f1685c2",
+  "joint_run_identity": {
+    "config_sha256": "6e581b0adfc13d56f2567a492912f0c42e910a27738e67fe1df6aac584d4747c",
+    "build_sha256": "31e7b12de9b1e5bbc6e14f4c4ec053200ea1159965598f8e2af4566f61594993",
+    "code_sha256": "ff8e42609de714ee85a610c7f6b57c46a4028f3663f0bd054fb301a5794eac65",
+    "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "atp_run_identity": {
+    "config_sha256": "edc6c46f670f6cec68ec698776437c23385149eb1f37b44e944c451846d76c9f",
+    "build_sha256": "23fce5b616b36168b27aaeb4daef3c3d5301cc377f90669f6cb288370061b0dc",
+    "code_sha256": "5a527b75d7d0a0ac9acf7c1557749168610941a8a34675ad24247b61566866fa",
+    "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "nmn_run_identity": {
+    "config_sha256": "97e9b5ac0d07c84365d321824487281c82bcc210097077dc1aefccbc4fe1d1ec",
+    "build_sha256": "ba1d109c9ebe1956f14b74a8642f74e6e3b8ec084b1693d02ba6bf85f25f9b24",
+    "code_sha256": "dec237f48cb75032bc720552e312a0a7ded252855ef72eec1e2e1973bf4aa566",
+    "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "models": [
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "6b5f716a04ff7071995f4582be660f56d9e27f986abb71b3955ec7c8d7295e99"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "a70fae7e791dd35d50b2e177ed5c3928070cb56af4ef4705425401e3b12c6962"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "6b2be5a66809a59943cee1e9340c1d1dc03567c2ef1b1301c449ef32e5dcf44e"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "7fefba75fc61fb2a7ca7bfe17a846728537077ae76fe165146884fcf8db2decb"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "c437c75a7745c5a0194e7bf39edabab083288c7d1e59bef1b67071d40577539a"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "550c0357d97c9afe1cdfcba197d661041eaddb2b45ab2f214e79b8eafe137c87"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "b88f012b11dc0729f72db5921d2689cdbe46e480c3dee9c8ef8fe5c46443de35"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "18ec7406039af1f5ea134eaf482911a6a541200fb39f5e68ca8bd37cef0ed0ea"
+    },
+    {
+      "ligand": "ATP",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "a1a133612dc0301087a8ac0989c7d3d7161bef0cf15b89b20e2d995ec49643ec"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "ec2efe9bedf9ad6a24d67def54e097759a9b59dfecff84699155f1d74f5e2c65"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "46b253b685a82e532f25590ff29147fb11e1ab92dbd73e83f75be49d540ffeb2"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "4d0e5cfe795cb0d16230fd481abd4e950ff314b2fd861628ce1b3c0b00dfc409"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "8baebb316f7ea1be64205c4179a76f711fae2200e23c8647c804c89227399a26"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "ce7497ecc38dfd0885b025efa1fb1d3ea6ee1351793068cdf4cede158c1a4d77"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "2f26adaa1e8d1883fb113d94662d486983e4349871df0611763930f39924fc61"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "0b0f49ecc4131ba2e4b688339c2fca220995238a179386a0c76b99d1fdf27df6"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "9395a7531bbc8622b591715d6b14d40e0cf8457c0df46a63560e34f688f29411"
+    },
+    {
+      "ligand": "NMN",
+      "role": "single",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "e7f6fd2154f0974b1d37abf33b2d50340b6cd153ddab159b360b4aba75a940e1"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "664bd01d751851e3948ab324b10d911fdcedf9b38b566fe0b2effd896f3e53a3"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "0f542d3373b5e5b627bc1d6f456dfa5ead669a467cec7b89c34c38d06d33e817"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "df6fb94e6acc670ac7017d6d0290fb5b5023ddd55cab52865b5d7af21e0eca6b"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "96755492f1573a2271994ebed904f0a4b95c34de3e7f0fcf3c01b73ff9c9b97b"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "2e1c46e1c44cc01369f28eabc1a86be7a4ebef235a985753ac320f9df1767784"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "fb81c6e568605f0784e2ff2ad1886e804830414f6f3dbc5326389958de24c37f"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "6d19677300e15ec7d9675c8cbdf00b9443c79b4c0b1c5d3be582e8d4af79dc39"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "b456dacc002d71b80786080188685b9a5af2e80df19cc0a2dfdd7a947928b88b"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "0a70a52d05da3ee855c6badbf7b9e7089672f27e5f1e6a1bbdd64bc69cbfae36"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "4ecee6159e2fe53b8f8f22571ed4990873087bb507ec46125d3fc3ceb052b71b"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "27289c696073f6de09d83074b88e347bb29b87646eb241bb64a9d4f312e1471e"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261026,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "36a7fcad3f0f5db23e9e079bd7f756ea1192b9248daec3c9d2252c55a1ab3a38"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "859f938ceba7abb3c043413a16618e2a7b7496e3e031f90c48005f02c54abf34"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "540b4694861f7ca4c65568ef751be4d48175c411ef6acf48dc692234f6b0cb4c"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261027,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "8269ffa5d9af2ebe82d4ac03a6d476a51c1f12d9ac4679858019b1513f77baa6"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "658824525588f1797bb361e63d3641e68780805f3cb34b3dd283d4e1b30bc38f"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "87a5c20775322a0901721e2819fd7c04be0a22dde16b1c9af1e3ce46919afd6b"
+    },
+    {
+      "ligand": "",
+      "role": "ATP_NMN_MG",
+      "seed": 20261028,
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "01b09459196780b75e4558842675f03c86b2bf02016bf8fdc367b57106eb020d"
+    }
+  ]
+}

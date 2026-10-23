@@ -37,9 +37,12 @@ def _yaml_text(config, state, sequence, msa_path, mode):
     item = config['states'][state]
     lines = ['version: 1', 'sequences:', '  - protein:',
              '      id: A', f'      sequence: {sequence}', f'      msa: {msa_path.resolve()}']
-    lines += ['  - ligand:', '      id: B', f"      ccd: {item['ligand']}"]
+    ligands = list(item.get('ligands') or [item['ligand']])
+    for index, ligand in enumerate(ligands):
+        lines += ['  - ligand:', f'      id: {chr(66 + index)}', f'      ccd: {ligand}']
     for index, ion in enumerate(item.get('ions', [])):
-        lines += ['  - ligand:', f'      id: {chr(67 + index)}', f'      ccd: {ion}']
+        lines += ['  - ligand:', f'      id: {chr(66 + len(ligands) + index)}',
+                  f'      ccd: {ion}']
     if mode == 'anchor':
         contacts = ', '.join(f'[A, {position}]' for position in config['constraints'][state])
         lines += ['constraints:', '  - pocket:', '      binder: B', f'      contacts: [{contacts}]']
@@ -658,6 +661,640 @@ def _metal_global_min(structure, ligand_name):
                 name) for metal in metals for name, coord in oxygens)
     return {'metal_count': len(metals), 'global_min_A': round(best[0], 2),
             'global_atom': best[1]}
+
+
+def _angle_degrees(first, center, third):
+    left = first - center
+    right = third - center
+    denominator = float(np.linalg.norm(left) * np.linalg.norm(right))
+    if denominator == 0.0:
+        return None
+    cosine = float(np.dot(left, right) / denominator)
+    return round(float(np.degrees(np.arccos(np.clip(cosine, -1.0, 1.0)))), 1)
+
+
+def _reaction_from_atoms(atp_atoms, nmn_atoms):
+    atp = {name: coord for name, _, coord in atp_atoms}
+    nmn = {name: coord for name, _, coord in nmn_atoms}
+    result = {}
+    for key, names in (('PA_O3A', ('PA', 'O3A')), ('PA_O3B', ('PA', 'O3B')),
+                       ('O3A_PB', ('O3A', 'PB')), ('PB_O3B', ('PB', 'O3B')),
+                       ('PA_PB', ('PA', 'PB')), ('PA_O5prime', ('PA', "O5'"))):
+        if all(name in atp for name in names):
+            result[f'atp_{key}_A'] = round(float(np.linalg.norm(atp[names[0]] - atp[names[1]])), 3)
+        else:
+            result[f'atp_{key}_A'] = None
+    result['atp_PA_O3A_PB_deg'] = (
+        _angle_degrees(atp['PA'], atp['O3A'], atp['PB'])
+        if all(name in atp for name in ('PA', 'O3A', 'PB')) else None)
+    candidates = []
+    for atom in ('O1P', 'O2P', 'O3P'):
+        if atom not in nmn or 'PA' not in atp or 'O3A' not in atp:
+            continue
+        candidates.append({
+            'candidate_atom': atom,
+            'PA_Onuc_A': round(float(np.linalg.norm(atp['PA'] - nmn[atom])), 3),
+            'O3A_PA_Onuc_deg': _angle_degrees(atp['O3A'], atp['PA'], nmn[atom]),
+            'P_Onuc_A': round(float(np.linalg.norm(nmn['P'] - nmn[atom])), 3)
+            if 'P' in nmn else None,
+        })
+    result['nmn_candidate_count'] = len(candidates)
+    result['nmn_candidate_atoms'] = ';'.join(item['candidate_atom'] for item in candidates)
+    if 'P' in nmn and 'O5R' in nmn:
+        result['nmn_P_O5R_A'] = round(float(np.linalg.norm(nmn['P'] - nmn['O5R'])), 3)
+    else:
+        result['nmn_P_O5R_A'] = None
+    if candidates:
+        lowest = min(candidates, key=lambda item: item['PA_Onuc_A'])
+        result['lowest_distance_candidate'] = lowest['candidate_atom']
+        result['lowest_distance_PA_Onuc_A'] = lowest['PA_Onuc_A']
+        result['lowest_distance_angle_deg'] = lowest['O3A_PA_Onuc_deg']
+        result['closest_PA_P_A'] = round(float(np.linalg.norm(atp['PA'] - nmn['P'])), 3) \
+            if 'PA' in atp and 'P' in nmn else None
+    else:
+        result.update({'lowest_distance_candidate': '', 'lowest_distance_PA_Onuc_A': None,
+                       'lowest_distance_angle_deg': None, 'closest_PA_P_A': None})
+    return result, candidates
+
+
+def _cross_from_atoms(atoms_a, atoms_b, clash_cutoff):
+    rows = []
+    best = None
+    for name_a, element_a, coord_a in atoms_a:
+        for name_b, element_b, coord_b in atoms_b:
+            distance = float(np.linalg.norm(coord_a - coord_b))
+            item = (distance, name_a, name_b)
+            if best is None or item[0] < best[0]:
+                best = item
+            if distance <= 4.0:
+                rows.append({'atom_a': name_a, 'element_a': element_a,
+                             'atom_b': name_b, 'element_b': element_b,
+                             'distance_A': round(distance, 3),
+                             'severe': distance < clash_cutoff})
+    return ({'cross_min_A': round(best[0], 3) if best else None,
+             'cross_nearest': f'{best[1]}-{best[2]}' if best else '',
+             'cross_pairs_4A': len(rows),
+             'cross_severe': sum(1 for row in rows if row['severe'])}, rows)
+
+
+def _protein_pose_metrics(atoms, protein_atoms, clash_cutoff):
+    rows = []
+    best = None
+    for name, element, coord in atoms:
+        for residue, atom in protein_atoms:
+            distance = float(np.linalg.norm(coord - atom.coord))
+            item = (distance, f'{name}-{residue.resname}{residue.id[1]}:{atom.name}')
+            if best is None or item[0] < best[0]:
+                best = item
+            if distance <= 4.0:
+                rows.append((distance, item[1], distance < clash_cutoff))
+    return {'protein_min_A': round(best[0], 3) if best else None,
+            'protein_nearest': best[1] if best else '',
+            'protein_pairs_4A': len(rows),
+            'protein_severe': sum(1 for row in rows if row[2])}
+
+
+def _ccd_reaction_bonds(cache):
+    import pickle
+    result = {}
+    for ligand in ('ATP', 'NMN'):
+        path = Path(cache) / 'mols' / f'{ligand}.pkl'
+        if not path.exists():
+            continue
+        mol = pickle.load(open(path, 'rb'))
+        names = {atom.GetIdx(): atom.GetPropsAsDict().get('name') for atom in mol.GetAtoms()}
+        bonds = {tuple(sorted((names[bond.GetBeginAtomIdx()],
+                               names[bond.GetEndAtomIdx()]))) for bond in mol.GetBonds()}
+        if ligand == 'ATP':
+            checks = {'PA_O3A': ('PA', 'O3A'), 'PA_O3B': ('PA', 'O3B'),
+                      'PB_O3A': ('PB', 'O3A'), 'PB_O3B': ('PB', 'O3B')}
+        else:
+            checks = {'P_O1P': ('P', 'O1P'), 'P_O2P': ('P', 'O2P'),
+                      'P_O3P': ('P', 'O3P'), 'P_O5R': ('P', 'O5R')}
+        result[ligand] = {key: tuple(sorted(pair)) in bonds for key, pair in checks.items()}
+    return result
+
+
+def _joint_metal_metrics(structure, ligand_names, cutoff):
+    metals = [residue for residue in structure.get_residues()
+              if residue.id[0].startswith('H_') and residue.resname in ('MG', 'MN')]
+    if not metals:
+        return {'metal_count': 0}
+    metal = metals[0]
+    coord = metal['MG' if metal.resname == 'MG' else 'MN'].coord.astype(float)
+    ligand_rows = []
+    for ligand_name in ligand_names:
+        for atom_name, element, atom_coord in _ligand_atoms(structure, ligand_name)[1]:
+            ligand_rows.append((float(np.linalg.norm(coord - atom_coord)), ligand_name,
+                                atom_name, element))
+    protein_rows = [(float(np.linalg.norm(coord - atom.coord)),
+                     f'{residue.resname}{residue.id[1]}:{atom.name}',
+                     _domain(int(residue.id[1])))
+                    for residue, atom in _protein_atoms(structure)]
+    nearest_ligand = min(ligand_rows) if ligand_rows else None
+    nearest_oxygen = min((row for row in ligand_rows if row[3] == 'O'), default=None)
+    nearest_protein = min(protein_rows) if protein_rows else None
+    per_ligand = {}
+    for ligand_name in ligand_names:
+        values = [row[0] for row in ligand_rows if row[1] == ligand_name and row[3] == 'O']
+        per_ligand[f'metal_{ligand_name}_O_min_A'] = round(min(values), 2) if values else None
+    return {
+        'metal_count': len(metals),
+        'metal_nearest_ligand': nearest_ligand[1] if nearest_ligand else '',
+        'metal_nearest_atom': nearest_ligand[2] if nearest_ligand else '',
+        'metal_nearest_element': nearest_ligand[3] if nearest_ligand else '',
+        'metal_ligand_min_A': round(nearest_ligand[0], 2) if nearest_ligand else None,
+        'metal_ligand_O_min_A': round(nearest_oxygen[0], 2) if nearest_oxygen else None,
+        'metal_ligand_O_atom': f'{nearest_oxygen[1]}:{nearest_oxygen[2]}' if nearest_oxygen else '',
+        'metal_protein_min_A': round(nearest_protein[0], 2) if nearest_protein else None,
+        'metal_protein_atom': nearest_protein[1] if nearest_protein else '',
+        'metal_protein_domain': nearest_protein[2] if nearest_protein else '',
+        'protein_atoms_within_cutoff': sum(1 for row in protein_rows if row[0] <= cutoff),
+        **per_ligand,
+    }
+
+
+def write_joint_details(config_path, output, reference):
+    output = Path(output)
+    config = load_yaml(config_path)
+    records = [json.loads(line) for line in open(output / 'boltz_runs.jsonl')]
+    run_identity = json.load(open(output / 'run_identity.json')) \
+        if (output / 'run_identity.json').exists() else {}
+    clash_cutoff = float(config['analysis']['clash_cutoff_A'])
+    metric_rows, candidate_rows, cross_rows, metal_rows = [], [], [], []
+    models = []
+    for record in records:
+        if record.get('status') not in {'COMPLETED', 'SKIPPED_EXISTING'}:
+            continue
+        state, mode, name, seed = (record['state'], record['mode'],
+                                   record['sequence'], record['seed'])
+        ligands = list(config['states'][state].get('ligands')
+                       or [config['states'][state]['ligand']])
+        for path in _model_paths(record['output']):
+            if path.parent.name != Path(record['path']).stem:
+                continue
+            structure = _structure(path)
+            atp_atoms = _ligand_atoms(structure, 'ATP')[1]
+            nmn_atoms = _ligand_atoms(structure, 'NMN')[1]
+            atp_domain = _ligand_domain(structure, 'ATP')
+            nmn_domain = _ligand_domain(structure, 'NMN')
+            atp_contacts = _contacts(structure, 'ATP', 4.0, clash_cutoff)
+            nmn_contacts = _contacts(structure, 'NMN', 4.0, clash_cutoff)
+            cross, pairs = _cross_from_atoms(atp_atoms, nmn_atoms, clash_cutoff)
+            reaction, candidates = _reaction_from_atoms(atp_atoms, nmn_atoms)
+            metal = _joint_metal_metrics(structure, ('ATP', 'NMN'),
+                                         float(config['analysis']['metal_cutoff_A']))
+            anchors = _anchor_metrics(structure, 'ATP',
+                                      [int(value) for value in config['analysis']['anchors']],
+                                      clash_cutoff)
+            loop = _loop_metrics(structure, 'ATP',
+                                 [int(value) for value in config['analysis']['atp_loop']],
+                                 reference)
+            model = path.name
+            models.append({'path': str(path), 'sha256': sha256_file(path)})
+            metric_rows.append({
+                'state': state, 'mode': mode, 'sequence': name, 'seed': seed,
+                'model': model, 'ligands': ';'.join(ligands),
+                'atp_domain': atp_domain[0], 'atp_domain_resnum': atp_domain[1],
+                'nmn_domain': nmn_domain[0], 'nmn_domain_resnum': nmn_domain[1],
+                'both_in_nmnat': atp_domain[0] == 'NMNAT' and nmn_domain[0] == 'NMNAT',
+                'atp_contacts_4A': len(atp_contacts),
+                'atp_severe': sum(1 for row in atp_contacts if row['severe']),
+                'nmn_contacts_4A': len(nmn_contacts),
+                'nmn_severe': sum(1 for row in nmn_contacts if row['severe']),
+                **cross, **reaction, **metal, **loop,
+                'atp_anchor_contacts': ';'.join(
+                    f"{item['position']}:{item['sidechain_min_A']}:{item['protein_atom']}"
+                    f":{item['ligand_atom']}" for item in anchors),
+                'atp_anchor_severe': sum(1 for item in anchors if item['severe']),
+                **_confidence(path),
+            })
+            for candidate in candidates:
+                candidate_rows.append({
+                    'state': state, 'sequence': name, 'seed': seed, 'model': model,
+                    **candidate,
+                })
+            for pair in pairs:
+                cross_rows.append({'state': state, 'sequence': name, 'seed': seed,
+                                   'model': model, **pair})
+            for neighbor in _metal_neighbors(
+                    structure, float(config['analysis']['metal_cutoff_A'])):
+                metal_rows.append({'state': state, 'sequence': name, 'seed': seed,
+                                   'model': model, **neighbor})
+    metric_fields = ['state', 'mode', 'sequence', 'seed', 'model', 'ligands',
+                     'atp_domain', 'atp_domain_resnum', 'nmn_domain', 'nmn_domain_resnum',
+                     'both_in_nmnat', 'atp_contacts_4A', 'atp_severe',
+                     'nmn_contacts_4A', 'nmn_severe',
+                     'cross_min_A', 'cross_nearest', 'cross_pairs_4A', 'cross_severe',
+                     'atp_PA_O3A_A', 'atp_PA_O3B_A', 'atp_O3A_PB_A', 'atp_PB_O3B_A',
+                     'atp_PA_PB_A', 'atp_PA_O5prime_A', 'atp_PA_O3A_PB_deg', 'nmn_candidate_count', 'nmn_candidate_atoms',
+                     'nmn_P_O5R_A', 'lowest_distance_candidate', 'lowest_distance_PA_Onuc_A',
+                     'lowest_distance_angle_deg', 'closest_PA_P_A',
+                     'metal_count', 'metal_nearest_ligand', 'metal_nearest_atom',
+                     'metal_nearest_element', 'metal_ligand_min_A', 'metal_ligand_O_min_A',
+                     'metal_ligand_O_atom', 'metal_protein_min_A', 'metal_protein_atom',
+                     'metal_protein_domain', 'protein_atoms_within_cutoff',
+                     'metal_ATP_O_min_A', 'metal_NMN_O_min_A',
+                     'loop_min_A', 'loop_contact_atom_pairs_4A', 'loop_ca_displacement_A',
+                     'atp_anchor_contacts', 'atp_anchor_severe',
+                     'ptm', 'ligand_iptm', 'complex_plddt']
+    with (output / 'joint_metrics.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=metric_fields, extrasaction='ignore',
+                                lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(metric_rows)
+    candidate_fields = ['state', 'sequence', 'seed', 'model', 'candidate_atom',
+                        'PA_Onuc_A', 'O3A_PA_Onuc_deg', 'P_Onuc_A']
+    with (output / 'joint_reaction_candidates.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=candidate_fields, lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(candidate_rows)
+    cross_fields = ['state', 'sequence', 'seed', 'model', 'atom_a', 'element_a',
+                    'atom_b', 'element_b', 'distance_A', 'severe']
+    with (output / 'joint_cross_contacts.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=cross_fields, lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(cross_rows)
+    metal_fields = ['state', 'sequence', 'seed', 'model', 'metal_resnum', 'metal_resname',
+                    'neighbor_type', 'neighbor_resnum', 'neighbor_resname',
+                    'neighbor_atom', 'neighbor_element', 'distance_A', 'domain']
+    with (output / 'joint_metal_neighbors.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=metal_fields, lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(metal_rows)
+    identity = {
+        'config_sha256': sha256_file(config_path),
+        'build_sha256': sha256_file(output / 'build.json'),
+        'run_identity': run_identity,
+        'source_sha256': sha256_file(__file__),
+        'reference_apo_sha256': sha256_file(config['reference_apo']),
+        'ccd_pickle_sha256': _ccd_pickles(config),
+        'ccd_reaction_bonds': _ccd_reaction_bonds(config['boltz']['cache']),
+        'preliminary_runs': [],
+        'models': models,
+        'created_utc': datetime.now(timezone.utc).isoformat(),
+    }
+    write_json(output / 'analysis_identity.json', identity)
+    both = sum(1 for row in metric_rows if row['both_in_nmnat'])
+    summary = {'models': len(metric_rows), 'both_in_nmnat': both,
+               'cross_severe_models': sum(1 for row in metric_rows if row['cross_severe']),
+               'states': {}}
+    for state in sorted({row['state'] for row in metric_rows}):
+        rows = [row for row in metric_rows if row['state'] == state]
+        summary['states'][state] = {
+            'models': len(rows),
+            'both_in_nmnat': sum(1 for row in rows if row['both_in_nmnat']),
+            'cross_severe_models': sum(1 for row in rows if row['cross_severe']),
+            'mg_near_ligand_models': sum(
+                1 for row in rows if row.get('metal_ligand_min_A') is not None
+                and row['metal_ligand_min_A'] <= 3.2),
+        }
+    write_json(output / 'joint_summary.json', summary)
+    return summary
+
+
+def _ccd_pickles(config):
+    ccd_dir = Path(config['boltz']['cache']) / 'mols'
+    ligands = set()
+    for item in config['states'].values():
+        ligands.update(item.get('ligands') or [item['ligand']])
+        ligands.update(item.get('ions', []))
+    values = {}
+    for ligand in sorted(ligands):
+        path = ccd_dir / f'{ligand}.pkl'
+        if path.exists():
+            values[ligand] = {'path': str(path), 'sha256': sha256_file(path)}
+    return values
+
+
+def write_fixed_pose_reference(config_path, output):
+    output = Path(output)
+    config = load_yaml(config_path)
+    joint = config['joint']
+    atp_run = Path(joint['atp_run'])
+    nmn_run = Path(joint['nmn_run'])
+
+    def load_models(run, state, sequence):
+        with (run / 'detailed_metrics.csv').open(newline='') as handle:
+            metrics = [row for row in csv.DictReader(handle)
+                       if row['state'] == state and row['sequence'] == sequence]
+        identity = json.load(open(run / 'analysis_identity.json'))
+        paths = {Path(item['path']).name: item['path'] for item in identity['models']}
+        values = []
+        for row in metrics:
+            path = paths[row['model']]
+            structure = _structure(path)
+            ca = {int(residue.id[1]): residue['CA'].coord.astype(float)
+                  for residue in structure['A']
+                  if residue.id[0] == ' ' and 4 <= int(residue.id[1]) <= 181}
+            ligand_name = 'ATP' if state == joint['atp_state'] else 'NMN'
+            atoms = [(name, element, coord.astype(float))
+                     for name, element, coord in _ligand_atoms(structure, ligand_name)[1]]
+            values.append({'model': row['model'], 'path': str(path), 'sha256': sha256_file(path),
+                           'seed': int(row['seed']), 'ca': ca, 'atoms': atoms,
+                           'structure': structure})
+        return values
+
+    atp_models = load_models(atp_run, joint['atp_state'], joint['atp_sequence'])
+    nmn_models = load_models(nmn_run, joint['nmn_state'], joint['nmn_sequence'])
+    clash_cutoff = float(config['analysis']['clash_cutoff_A'])
+    rows, candidate_rows = [], []
+    for atp in atp_models:
+        atp_protein = _protein_atoms(atp['structure'])
+        atp_protein_metrics = _protein_pose_metrics(atp['atoms'], atp_protein, clash_cutoff)
+        for nmn in nmn_models:
+            keys = sorted(set(atp['ca']) & set(nmn['ca']))
+            rmsd, rotation, translation = _kabsch(
+                np.asarray([nmn['ca'][key] for key in keys]),
+                np.asarray([atp['ca'][key] for key in keys]))
+            nmn_atoms = [(name, element, coord @ rotation.T + translation)
+                         for name, element, coord in nmn['atoms']]
+            cross, _ = _cross_from_atoms(atp['atoms'], nmn_atoms, clash_cutoff)
+            reaction, candidates = _reaction_from_atoms(atp['atoms'], nmn_atoms)
+            nmn_protein = _protein_pose_metrics(nmn_atoms, atp_protein, clash_cutoff)
+            rows.append({
+                'atp_model': atp['model'], 'atp_seed': atp['seed'],
+                'nmn_model': nmn['model'], 'nmn_seed': nmn['seed'],
+                'registration_fit_rmsd_A': round(float(rmsd), 3),
+                **{f'atp_{key}': value for key, value in atp_protein_metrics.items()},
+                **{f'nmn_{key}': value for key, value in nmn_protein.items()},
+                'combined_protein_severe': (atp_protein_metrics['protein_severe']
+                                            + nmn_protein['protein_severe']),
+                **cross, **reaction,
+            })
+            for candidate in candidates:
+                candidate_rows.append({'atp_model': atp['model'], 'nmn_model': nmn['model'],
+                                       'registration_fit_rmsd_A': round(float(rmsd), 3),
+                                       **candidate})
+    fields = ['atp_model', 'atp_seed', 'nmn_model', 'nmn_seed',
+              'registration_fit_rmsd_A', 'atp_protein_min_A', 'atp_protein_nearest',
+              'atp_protein_pairs_4A', 'atp_protein_severe', 'nmn_protein_min_A',
+              'nmn_protein_nearest', 'nmn_protein_pairs_4A', 'nmn_protein_severe',
+              'combined_protein_severe', 'cross_min_A', 'cross_nearest', 'cross_pairs_4A',
+              'cross_severe', 'atp_PA_O3A_A', 'atp_PA_O3B_A', 'atp_O3A_PB_A', 'atp_PB_O3B_A',
+              'atp_PA_PB_A', 'atp_PA_O5prime_A', 'atp_PA_O3A_PB_deg', 'nmn_candidate_count',
+              'nmn_candidate_atoms', 'nmn_P_O5R_A', 'lowest_distance_candidate',
+              'lowest_distance_PA_Onuc_A', 'lowest_distance_angle_deg', 'closest_PA_P_A']
+    with (output / 'fixed_pose_compatibility.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction='ignore',
+                                lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(rows)
+    with (output / 'fixed_pose_reaction_candidates.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=['atp_model', 'nmn_model',
+                                                    'registration_fit_rmsd_A', 'candidate_atom',
+                                                    'PA_Onuc_A', 'O3A_PA_Onuc_deg',
+                                                    'P_Onuc_A'], lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(candidate_rows)
+    identity = {
+        'config_sha256': sha256_file(config_path),
+        'source_sha256': sha256_file(__file__),
+        'reference_apo_sha256': sha256_file(config['reference_apo']),
+        'atp_run': str(atp_run), 'nmn_run': str(nmn_run),
+        'atp_models': [{key: value for key, value in item.items()
+                        if key not in ('atoms', 'ca', 'structure')}
+                       for item in atp_models],
+        'nmn_models': [{key: value for key, value in item.items()
+                        if key not in ('atoms', 'ca', 'structure')}
+                       for item in nmn_models],
+        'ccd_reaction_bonds': _ccd_reaction_bonds(config['boltz']['cache']),
+        'pairs': len(rows),
+        'note': '81 pairs are 9 ATP-only x 9 NMN-only model combinations, not 81 independent '
+                'replicates. For each pair the ATP source protein and ATP pose stay fixed; '
+                'the NMN source protein is superposed on it by NMNAT 4-181 CA and its NMN is '
+                'moved into that frame. Cross-ligand clashes, ATP-protein clashes, and extra '
+                'NMN-protein clashes against the ATP source protein are reported separately; '
+                'the result is an initial hypothesis, not a predicted complex',
+        'created_utc': datetime.now(timezone.utc).isoformat(),
+    }
+    write_json(output / 'fixed_pose_identity.json', identity)
+    return {'atp_models': len(atp_models), 'nmn_models': len(nmn_models),
+            'pairs': len(rows)}
+
+
+def _nmnat_ca(structure):
+    return {int(residue.id[1]): residue['CA'].coord.astype(float)
+            for residue in structure['A']
+            if residue.id[0] == ' ' and 4 <= int(residue.id[1]) <= 181
+            and 'CA' in residue}
+
+
+def _pose_rmsd_from_coordinates(joint_ca, joint_ligand, single_ca, single_ligand,
+                                phosphate_atoms=()):
+    positions = sorted(set(joint_ca) & set(single_ca))
+    if len(positions) < 20:
+        raise ValueError('Too few shared NMNAT CA positions for pose alignment')
+    source = np.asarray([joint_ca[position] for position in positions], dtype=float)
+    target = np.asarray([single_ca[position] for position in positions], dtype=float)
+    ca_rmsd, rotation, translation = _kabsch(source, target)
+    names = sorted(set(joint_ligand) & set(single_ligand))
+    if not names:
+        raise ValueError('No shared ligand atom names')
+
+    def rmsd(selected):
+        aligned = np.asarray([joint_ligand[name] for name in selected]) @ rotation.T + translation
+        reference = np.asarray([single_ligand[name] for name in selected])
+        distances = np.linalg.norm(aligned - reference, axis=1)
+        return distances
+
+    distances = rmsd(names)
+    nonphosphate = [name for name in names if name not in set(phosphate_atoms)]
+    nonphosphate_distances = rmsd(nonphosphate) if nonphosphate else np.array([])
+    return {
+        'ca_count': len(positions),
+        'ca_rmsd_A': round(float(ca_rmsd), 3),
+        'ligand_atom_count': len(names),
+        'ligand_rmsd_A': round(float(np.sqrt(np.mean(distances ** 2))), 3),
+        'ligand_max_A': round(float(distances.max()), 3),
+        'ligand_min_A': round(float(distances.min()), 3),
+        'nonphosphate_atom_count': len(nonphosphate),
+        'nonphosphate_rmsd_A': round(float(np.sqrt(np.mean(nonphosphate_distances ** 2))), 3)
+        if len(nonphosphate_distances) else None,
+    }
+
+
+_PHOSPHATE_ATOMS = {
+    'ATP': {'PA', 'PB', 'PG', 'O1A', 'O2A', 'O3A',
+            'O1B', 'O2B', 'O3B', 'O1G', 'O2G', 'O3G'},
+    'NMN': {'P', 'O1P', 'O2P', 'O3P', 'O5R'},
+}
+
+
+def _pose_rmsd(joint, single, ligand):
+    joint_ligand = {name: coord for name, _, coord in _ligand_atoms(joint, ligand)[1]}
+    single_ligand = {name: coord for name, _, coord in _ligand_atoms(single, ligand)[1]}
+    return _pose_rmsd_from_coordinates(_nmnat_ca(joint), joint_ligand,
+                                       _nmnat_ca(single), single_ligand,
+                                       _PHOSPHATE_ATOMS[ligand])
+
+
+def _run_models_by_seed(run_dir, state, sequence):
+    result = {}
+    for record in (json.loads(line) for line in open(Path(run_dir) / 'boltz_runs.jsonl')):
+        if record.get('status') not in {'COMPLETED', 'SKIPPED_EXISTING'}:
+            continue
+        if record['state'] != state or record['sequence'] != sequence:
+            continue
+        for path in _model_paths(record['output']):
+            if path.parent.name == Path(record['path']).stem:
+                result.setdefault(int(record['seed']), []).append(path)
+    return {seed: sorted(paths) for seed, paths in result.items()}
+
+
+def write_single_substrate_pose_comparison(config_path, output):
+    config = load_yaml(config_path)
+    output = Path(output)
+    spec = config['joint']
+    single = {
+        'ATP': _run_models_by_seed(spec['atp_run'], spec['atp_state'], spec['atp_sequence']),
+        'NMN': _run_models_by_seed(spec['nmn_run'], spec['nmn_state'], spec['nmn_sequence']),
+    }
+    joint = {
+        state: _run_models_by_seed(output, state, 'WT')
+        for state in ('ATP_NMN', 'ATP_NMN_MG')
+    }
+    pair_rows, background_rows = [], []
+    for ligand in ('ATP', 'NMN'):
+        for state in ('ATP_NMN', 'ATP_NMN_MG'):
+            for seed in sorted(set(joint[state]) & set(single[ligand])):
+                for joint_path in joint[state][seed]:
+                    joint_structure = _structure(joint_path)
+                    for single_path in single[ligand][seed]:
+                        metrics = _pose_rmsd(joint_structure, _structure(single_path), ligand)
+                        pair_rows.append({
+                            'ligand': ligand, 'state': state, 'seed': seed,
+                            'joint_model': joint_path.name,
+                            'single_model': single_path.name, **metrics,
+                        })
+        for seed, paths in sorted(single[ligand].items()):
+            for first, second in combinations(paths, 2):
+                metrics = _pose_rmsd(_structure(first), _structure(second), ligand)
+                background_rows.append({
+                    'ligand': ligand, 'seed': seed,
+                    'model_a': first.name, 'model_b': second.name, **metrics,
+                })
+
+    pair_fields = ['ligand', 'state', 'seed', 'joint_model', 'single_model',
+                   'ca_count', 'ca_rmsd_A', 'ligand_atom_count',
+                   'ligand_rmsd_A', 'ligand_max_A', 'ligand_min_A',
+                   'nonphosphate_atom_count', 'nonphosphate_rmsd_A']
+    with (output / 'single_substrate_pose_pairs.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=pair_fields, lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(pair_rows)
+    background_fields = ['ligand', 'seed', 'model_a', 'model_b',
+                         'ca_count', 'ca_rmsd_A', 'ligand_atom_count',
+                         'ligand_rmsd_A', 'ligand_max_A', 'ligand_min_A',
+                         'nonphosphate_atom_count', 'nonphosphate_rmsd_A']
+    with (output / 'single_substrate_pose_background.csv').open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=background_fields, lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(background_rows)
+
+    def values(rows, key='ligand_rmsd_A'):
+        data = [float(row[key]) for row in rows if row.get(key) not in ('', None)]
+        return {'n': len(data), 'median_A': round(float(np.median(data)), 3),
+                'min_A': round(min(data), 3), 'max_A': round(max(data), 3)} if data else {}
+
+    summary = {
+        'pairs': {f'{ligand}:{state}': values(
+            [row for row in pair_rows if row['ligand'] == ligand and row['state'] == state])
+            for ligand in ('ATP', 'NMN') for state in ('ATP_NMN', 'ATP_NMN_MG')},
+        'np_pairs': {f'{ligand}:{state}': values(
+            [row for row in pair_rows if row['ligand'] == ligand and row['state'] == state],
+            'nonphosphate_rmsd_A')
+            for ligand in ('ATP', 'NMN') for state in ('ATP_NMN', 'ATP_NMN_MG')},
+        'by_seed': {f'{ligand}:{state}:{seed}': values(
+            [row for row in pair_rows if row['ligand'] == ligand
+             and row['state'] == state and row['seed'] == seed])
+            for ligand in ('ATP', 'NMN') for state in ('ATP_NMN', 'ATP_NMN_MG')
+            for seed in sorted({row['seed'] for row in pair_rows})},
+        'background': {ligand: values(
+            [row for row in background_rows if row['ligand'] == ligand])
+            for ligand in ('ATP', 'NMN')},
+        'np_background': {ligand: values(
+            [row for row in background_rows if row['ligand'] == ligand],
+            'nonphosphate_rmsd_A')
+            for ligand in ('ATP', 'NMN')},
+        'background_by_seed': {f'{ligand}:{seed}': values(
+            [row for row in background_rows if row['ligand'] == ligand
+             and row['seed'] == seed])
+            for ligand, seed in sorted({(row['ligand'], row['seed'])
+                                        for row in background_rows})},
+    }
+    write_json(output / 'single_substrate_pose_summary.json', summary)
+
+    used = []
+    for ligand in ('ATP', 'NMN'):
+        for seed, paths in sorted(single[ligand].items()):
+            used.extend({'ligand': ligand, 'role': 'single', 'seed': seed,
+                         'path': str(path), 'sha256': sha256_file(path)} for path in paths)
+    for state in ('ATP_NMN', 'ATP_NMN_MG'):
+        for seed, paths in sorted(joint[state].items()):
+            used.extend({'ligand': '', 'role': state, 'seed': seed,
+                         'path': str(path), 'sha256': sha256_file(path)} for path in paths)
+    identity = {
+        'config_sha256': sha256_file(config_path),
+        'source_sha256': sha256_file(__file__),
+        'joint_run_identity': json.load(open(output / 'run_identity.json')),
+        'atp_run_identity': json.load(open(Path(spec['atp_run']) / 'run_identity.json')),
+        'nmn_run_identity': json.load(open(Path(spec['nmn_run']) / 'run_identity.json')),
+        'models': used,
+    }
+    write_json(output / 'single_substrate_pose_identity.json', identity)
+    return summary
+
+
+def summarize_joint_binding(config_path, output):
+    output = Path(output)
+    config = load_yaml(config_path)
+    reference = _reference_ca(config.get('reference_apo'))
+    summary = write_joint_details(config_path, output, reference)
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    with (output / 'joint_metrics.csv').open(newline='') as handle:
+        rows = list(csv.DictReader(handle))
+    with (output / 'joint_reaction_candidates.csv').open(newline='') as handle:
+        candidates = list(csv.DictReader(handle))
+    states = sorted({row['state'] for row in rows})
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    panels = [('cross_min_A', 'ATP-NMN minimum heavy-atom distance (A)'),
+              ('atp_PA_O3A_A', 'ATP PA-O3A scissile-bond distance (A)'),
+              ('metal_ligand_min_A', 'Mg nearest ATP/NMN atom (A)')]
+    for ax, (key, title) in zip((axes[0, 0], axes[0, 1], axes[1, 1]), panels):
+        for index, state in enumerate(states):
+            values = [float(row[key]) for row in rows
+                      if row['state'] == state and row.get(key) not in ('', None)]
+            ax.scatter([index] * len(values), values, s=30, label=state)
+        ax.set_xticks(range(len(states)))
+        ax.set_xticklabels(states, rotation=15)
+        ax.set_title(title, fontsize=9)
+        ax.grid(axis='y', alpha=0.2)
+    axes[0, 0].legend(fontsize=7)
+    ax = axes[1, 0]
+    colors = {'O1P': 'tab:blue', 'O2P': 'tab:orange', 'O3P': 'tab:green'}
+    markers = {state: marker for state, marker in zip(states, ('o', '^', 's'))}
+    for state in states:
+        for atom in ('O1P', 'O2P', 'O3P'):
+            subset = [row for row in candidates
+                      if row['state'] == state and row['candidate_atom'] == atom]
+            ax.scatter([float(row['PA_Onuc_A']) for row in subset],
+                       [float(row['O3A_PA_Onuc_deg']) for row in subset],
+                       s=18, color=colors[atom], marker=markers[state],
+                       label=f'{state} {atom}')
+    ax.set_xlabel('PA-Onuc distance (A)', fontsize=8)
+    ax.set_ylabel('O3A-PA-Onuc angle (deg)', fontsize=8)
+    ax.set_title('all three NMN non-bridge O candidates', fontsize=9)
+    ax.legend(fontsize=5.5, ncol=2)
+    ax.grid(alpha=0.2)
+    fig.suptitle('WT ATP+NMN joint co-folding', fontsize=12)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    fig.savefig(output / 'joint_analysis.png', dpi=180)
+    plt.close(fig)
+    return summary
 
 
 def write_binding_details(config_path, output, reference):

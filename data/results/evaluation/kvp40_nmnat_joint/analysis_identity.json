@@ -1,0 +1,130 @@
+{
+  "config_sha256": "6e581b0adfc13d56f2567a492912f0c42e910a27738e67fe1df6aac584d4747c",
+  "build_sha256": "31e7b12de9b1e5bbc6e14f4c4ec053200ea1159965598f8e2af4566f61594993",
+  "run_identity": {
+    "config_sha256": "6e581b0adfc13d56f2567a492912f0c42e910a27738e67fe1df6aac584d4747c",
+    "build_sha256": "31e7b12de9b1e5bbc6e14f4c4ec053200ea1159965598f8e2af4566f61594993",
+    "code_sha256": "ff8e42609de714ee85a610c7f6b57c46a4028f3663f0bd054fb301a5794eac65",
+    "checkpoint_source": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+    "checkpoint": "/dev/shm/natvqvae_boltz2/boltz2_conf.ckpt",
+    "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+    "boltz": {
+      "binary": "/home/yhshy/miniconda3/envs/boltz2/bin/boltz",
+      "cache": "/mnt/e/models/boltz2",
+      "checkpoint": "/mnt/e/models/boltz2/boltz2_conf.ckpt",
+      "checkpoint_sha256": "090e82ac8c92f5e943fa1b39e7410a44027bea7243c0bbb3caa67a77fc1428e1",
+      "diffusion_samples": 3,
+      "sampling_steps": 200,
+      "recycling_steps": 3,
+      "output_format": "mmcif",
+      "num_workers": 2,
+      "timeout_seconds": 7200
+    }
+  },
+  "source_sha256": "ff8e42609de714ee85a610c7f6b57c46a4028f3663f0bd054fb301a5794eac65",
+  "reference_apo_sha256": "5cbf89a0709478c72f6446b8b833939a6c29be6256bc973d9681831680af6388",
+  "ccd_pickle_sha256": {
+    "ATP": {
+      "path": "/mnt/e/models/boltz2/mols/ATP.pkl",
+      "sha256": "71dee21ceaafa9d6aa856891f91e880ce34d4369bfaf60cf57f11ded68b5c1f1"
+    },
+    "MG": {
+      "path": "/mnt/e/models/boltz2/mols/MG.pkl",
+      "sha256": "fce685cb31077f9a5bfa853cc68c28902a8abdcb71a017c6ee582cff06749c0b"
+    },
+    "NMN": {
+      "path": "/mnt/e/models/boltz2/mols/NMN.pkl",
+      "sha256": "e24078cb4ff266bf624768c2ce5a87fac383c97e85596ea061d768312dd7f00d"
+    }
+  },
+  "ccd_reaction_bonds": {
+    "ATP": {
+      "PA_O3A": true,
+      "PA_O3B": false,
+      "PB_O3A": true,
+      "PB_O3B": true
+    },
+    "NMN": {
+      "P_O1P": true,
+      "P_O2P": true,
+      "P_O3P": true,
+      "P_O5R": true
+    }
+  },
+  "preliminary_runs": [],
+  "models": [
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "664bd01d751851e3948ab324b10d911fdcedf9b38b566fe0b2effd896f3e53a3"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "0f542d3373b5e5b627bc1d6f456dfa5ead669a467cec7b89c34c38d06d33e817"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_unconstrained_WT_seed20261026/ATP_NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "df6fb94e6acc670ac7017d6d0290fb5b5023ddd55cab52865b5d7af21e0eca6b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "4ecee6159e2fe53b8f8f22571ed4990873087bb507ec46125d3fc3ceb052b71b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "27289c696073f6de09d83074b88e347bb29b87646eb241bb64a9d4f312e1471e"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "36a7fcad3f0f5db23e9e079bd7f756ea1192b9248daec3c9d2252c55a1ab3a38"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "96755492f1573a2271994ebed904f0a4b95c34de3e7f0fcf3c01b73ff9c9b97b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "2e1c46e1c44cc01369f28eabc1a86be7a4ebef235a985753ac320f9df1767784"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_unconstrained_WT_seed20261027/ATP_NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "fb81c6e568605f0784e2ff2ad1886e804830414f6f3dbc5326389958de24c37f"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "859f938ceba7abb3c043413a16618e2a7b7496e3e031f90c48005f02c54abf34"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "540b4694861f7ca4c65568ef751be4d48175c411ef6acf48dc692234f6b0cb4c"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_NMN_MG_unconstrained_WT_seed20261027/ATP_NMN_MG_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "8269ffa5d9af2ebe82d4ac03a6d476a51c1f12d9ac4679858019b1513f77baa6"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "6d19677300e15ec7d9675c8cbdf00b9443c79b4c0b1c5d3be582e8d4af79dc39"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "b456dacc002d71b80786080188685b9a5af2e80df19cc0a2dfdd7a947928b88b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_unconstrained_WT_seed20261028/ATP_NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "0a70a52d05da3ee855c6badbf7b9e7089672f27e5f1e6a1bbdd64bc69cbfae36"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "658824525588f1797bb361e63d3641e68780805f3cb34b3dd283d4e1b30bc38f"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "87a5c20775322a0901721e2819fd7c04be0a22dde16b1c9af1e3ce46919afd6b"
+    },
+    {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_NMN_MG_unconstrained_WT_seed20261028/ATP_NMN_MG_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "01b09459196780b75e4558842675f03c86b2bf02016bf8fdc367b57106eb020d"
+    }
+  ],
+  "created_utc": "2026-10-23T18:45:25.263654+00:00"
+}

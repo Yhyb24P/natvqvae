@@ -1,0 +1,19 @@
+{
+  "models": 18,
+  "both_in_nmnat": 18,
+  "cross_severe_models": 0,
+  "states": {
+    "ATP_NMN": {
+      "models": 9,
+      "both_in_nmnat": 9,
+      "cross_severe_models": 0,
+      "mg_near_ligand_models": 0
+    },
+    "ATP_NMN_MG": {
+      "models": 9,
+      "both_in_nmnat": 9,
+      "cross_severe_models": 0,
+      "mg_near_ligand_models": 5
+    }
+  }
+}

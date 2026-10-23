@@ -1,0 +1,136 @@
+{
+  "config_sha256": "6e581b0adfc13d56f2567a492912f0c42e910a27738e67fe1df6aac584d4747c",
+  "source_sha256": "ff8e42609de714ee85a610c7f6b57c46a4028f3663f0bd054fb301a5794eac65",
+  "reference_apo_sha256": "5cbf89a0709478c72f6446b8b833939a6c29be6256bc973d9681831680af6388",
+  "atp_run": "data/results/evaluation/kvp40_nmnat_atp_variants",
+  "nmn_run": "data/results/evaluation/kvp40_nmnat_substrate_conformations",
+  "atp_models": [
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261026_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "6b5f716a04ff7071995f4582be660f56d9e27f986abb71b3955ec7c8d7295e99",
+      "seed": 20261026
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261026_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "a70fae7e791dd35d50b2e177ed5c3928070cb56af4ef4705425401e3b12c6962",
+      "seed": 20261026
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261026_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_ONLY_unconstrained_WT_seed20261026/ATP_ONLY_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "6b2be5a66809a59943cee1e9340c1d1dc03567c2ef1b1301c449ef32e5dcf44e",
+      "seed": 20261026
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261027_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "7fefba75fc61fb2a7ca7bfe17a846728537077ae76fe165146884fcf8db2decb",
+      "seed": 20261027
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261027_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "c437c75a7745c5a0194e7bf39edabab083288c7d1e59bef1b67071d40577539a",
+      "seed": 20261027
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261027_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261027/boltz_results_seed20261027/predictions/ATP_ONLY_unconstrained_WT_seed20261027/ATP_ONLY_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "550c0357d97c9afe1cdfcba197d661041eaddb2b45ab2f214e79b8eafe137c87",
+      "seed": 20261027
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261028_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "b88f012b11dc0729f72db5921d2689cdbe46e480c3dee9c8ef8fe5c46443de35",
+      "seed": 20261028
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261028_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "18ec7406039af1f5ea134eaf482911a6a541200fb39f5e68ca8bd37cef0ed0ea",
+      "seed": 20261028
+    },
+    {
+      "model": "ATP_ONLY_unconstrained_WT_seed20261028_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_atp_variants/runs/seed20261028/boltz_results_seed20261028/predictions/ATP_ONLY_unconstrained_WT_seed20261028/ATP_ONLY_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "a1a133612dc0301087a8ac0989c7d3d7161bef0cf15b89b20e2d995ec49643ec",
+      "seed": 20261028
+    }
+  ],
+  "nmn_models": [
+    {
+      "model": "NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_0.cif",
+      "sha256": "ec2efe9bedf9ad6a24d67def54e097759a9b59dfecff84699155f1d74f5e2c65",
+      "seed": 20261026
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_1.cif",
+      "sha256": "46b253b685a82e532f25590ff29147fb11e1ab92dbd73e83f75be49d540ffeb2",
+      "seed": 20261026
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261026/boltz_results_seed20261026/predictions/NMN_unconstrained_WT_seed20261026/NMN_unconstrained_WT_seed20261026_model_2.cif",
+      "sha256": "4d0e5cfe795cb0d16230fd481abd4e950ff314b2fd861628ce1b3c0b00dfc409",
+      "seed": 20261026
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_0.cif",
+      "sha256": "8baebb316f7ea1be64205c4179a76f711fae2200e23c8647c804c89227399a26",
+      "seed": 20261027
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_1.cif",
+      "sha256": "ce7497ecc38dfd0885b025efa1fb1d3ea6ee1351793068cdf4cede158c1a4d77",
+      "seed": 20261027
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261027/boltz_results_seed20261027/predictions/NMN_unconstrained_WT_seed20261027/NMN_unconstrained_WT_seed20261027_model_2.cif",
+      "sha256": "2f26adaa1e8d1883fb113d94662d486983e4349871df0611763930f39924fc61",
+      "seed": 20261027
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_0.cif",
+      "sha256": "0b0f49ecc4131ba2e4b688339c2fca220995238a179386a0c76b99d1fdf27df6",
+      "seed": 20261028
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_1.cif",
+      "sha256": "9395a7531bbc8622b591715d6b14d40e0cf8457c0df46a63560e34f688f29411",
+      "seed": 20261028
+    },
+    {
+      "model": "NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_substrate_conformations/runs/seed20261028/boltz_results_seed20261028/predictions/NMN_unconstrained_WT_seed20261028/NMN_unconstrained_WT_seed20261028_model_2.cif",
+      "sha256": "e7f6fd2154f0974b1d37abf33b2d50340b6cd153ddab159b360b4aba75a940e1",
+      "seed": 20261028
+    }
+  ],
+  "ccd_reaction_bonds": {
+    "ATP": {
+      "PA_O3A": true,
+      "PA_O3B": false,
+      "PB_O3A": true,
+      "PB_O3B": true
+    },
+    "NMN": {
+      "P_O1P": true,
+      "P_O2P": true,
+      "P_O3P": true,
+      "P_O5R": true
+    }
+  },
+  "pairs": 81,
+  "note": "81 pairs are 9 ATP-only x 9 NMN-only model combinations, not 81 independent replicates. For each pair the ATP source protein and ATP pose stay fixed; the NMN source protein is superposed on it by NMNAT 4-181 CA and its NMN is moved into that frame. Cross-ligand clashes, ATP-protein clashes, and extra NMN-protein clashes against the ATP source protein are reported separately; the result is an initial hypothesis, not a predicted complex",
+  "created_utc": "2026-10-23T18:12:27.284948+00:00"
+}

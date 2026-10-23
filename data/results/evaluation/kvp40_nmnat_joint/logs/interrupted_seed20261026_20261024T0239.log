@@ -1,0 +1,29 @@
+Seed set to 20261026
+Checking input data.
+Processing 2 inputs with 2 threads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [00:00<00:00,  1.60it/s]
+100%|██████████| 2/2 [00:00<00:00,  3.19it/s]
+Using bfloat16 Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/yhshy/miniconda3/envs/boltz2/lib/python3.12/site-packages/pytorch_lightning/trainer/connectors/logger_connector/logger_connector.py:76: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `pytorch_lightning` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+Running structure prediction for 2 inputs.
+/home/yhshy/miniconda3/envs/boltz2/lib/python3.12/site-packages/pytorch_lightning/utilities/migration/utils.py:56: The loaded checkpoint was produced with Lightning v2.5.0.post0, which is newer than your current Lightning version: v2.5.0
+You are using a CUDA device ('NVIDIA GeForce RTX 5090 D') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+Predicting: |          | 0/? [00:00<?, ?it/s]
+Predicting:   0%|          | 0/2 [00:00<?, ?it/s]
+Predicting DataLoader 0:   0%|          | 0/2 [00:00<?, ?it/s]Failed to get GPU information from pynvml: Not Supported. Using default values.
+/home/yhshy/miniconda3/envs/boltz2/lib/python3.12/site-packages/cuequivariance_ops_torch/triangle_attention.py:165: UserWarning: Non-SM100f kernel expects bias to be float32 so it's going to be cast to torch.float32. Check if you can change your code for maximum performance.
+  warnings.warn(
+[rank: 0] Received SIGTERM: 15
+GPU information: NVIDIA RTX A6000, 8, 6, 45, 84, 300, 2100
+
+Predicting DataLoader 0:  50%|█████     | 1/2 [01:14<01:14,  0.01it/s]
+Detected KeyboardInterrupt, attempting graceful shutdown ...
+
+Predicting DataLoader 0:  50%|█████     | 1/2 [01:31<01:31,  0.01it/s]Seed set to 20261026
