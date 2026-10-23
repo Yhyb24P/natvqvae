@@ -59,7 +59,7 @@
 ### 1F9A ATP/Mg
 
 - WT 与 NatV10 都保持 16 个 `supported_consistent`，接触集合几乎相同；NatV10 的 3/3 支持没有增加，也没有出现新的稳定接触。
-- NatV89 只剩 2 个 `supported_consistent`，32 个接触含 clash（11 个 2/3 支持但第三模型 clash，21 个 1/3 支持且其他模型 clash）。额外冲突集中在 ATP 的磷酸/核糖接触：KVP40 R9、A134、T135、R138、H17 附近（来源 1F9A R8、G126、T127、R130、H16）。这些位置不在 I21N/F137Y/I156T 的侧链上；F137Y 与 R138 相邻，且 NatV89 的 T135/R138 CA 相对 WT0 为 0.29/0.26 Å，因此“F137Y 局部 packing 影响 R138/T135 的 ATP 磷酸接触”是一个可检验假说，不是已证明的机制。
+- NatV89 只剩 2 个 `supported_consistent`，32 个接触含 clash（11 个 2/3 支持但第三模型 clash，21 个 1/3 支持且其他模型 clash）。额外冲突集中在 ATP 的磷酸/核糖接触：KVP40 R9、A134、T135、R138、H17 附近（来源 1F9A R8、G126、T127、R130、H16）。这些位置不在 I21N/F137Y/I156T 的侧链上；F137Y 与 R138 相邻，且 NatV89 的 T135/R138 CA 相对 WT0 为 0.29/0.26 Å，因此“F137Y 局部 packing 影响 R138/T135 的 ATP 磷酸接触”是一个可检验假说，不是已证明的机制。NatV89 是多突变克隆，当前数据不能把该模式归因于 I21N、F137Y 或 I156T 中的任一位点；F137Y 只是与冲突区域相邻的候选解释。
 - 该差异并非三模型一致：NatV89 model 0 在 1F9A 仅有 6 个支持接触，model 1 为 25，model 2 为 18；model 2 在多数上述接触上恢复为 `supported_candidate`。因此不能把 NatV89 的 ATP 接触计数当作稳定的克隆性质。
 
 ### 1NUS NMN/APC
