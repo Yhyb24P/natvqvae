@@ -39,6 +39,27 @@
     "numpy": "2.2.6",
     "biopython": "1.87"
   },
+  "source_code": {
+    "nmnat_mapping": {
+      "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_mapping.py",
+      "sha256": "95ac51779144ceaaa5a81a3edaa6ca005ec2f353ced0f157f83704cc3a7bf22b"
+    },
+    "cli": {
+      "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/cli.py",
+      "sha256": "5a220b22c6fdd2c68e832826af650cf180c1cc5b75debda61737fc0d26ba4a6a"
+    }
+  },
+  "invocation": {
+    "argv": [
+      "/home/yhshy/miniconda3/envs/nad_data/bin/natvqvae",
+      "nmnat-audit",
+      "--config",
+      "config/nmnat_mapping.yaml",
+      "--output",
+      "data/results/evaluation/natv_nmnat_atp_audit"
+    ],
+    "cwd": "/home/yhshy/git_files/natvqvae"
+  },
   "audit": {
     "source": "1F9A",
     "contact_cutoff_A": 4.0,

@@ -17,7 +17,7 @@
   - His NE2 不会用 CD2 代替；Thr OG1 不会用主链 N 代替；Pro 主链 N 单独标记。
 - `geometry_confidence` 只表示 TMalign/Kabsch 后的 CA 几何；`target_atom_match` 表示原子对应关系（same_name、symmetric_equivalent、backbone_same_name、role_equivalent、role_mismatch、missing）。
 - `local_flag`/`global_flag` 是距离标记（severe <2.0 Å、close <2.5 Å）；不是普适化学冲突裁决。
-- 汇总状态：`supported_consistent` = 3/3 支持且无 clash；`supported_majority` = 2/3 支持且无 clash；`model_dependent_supported` = 1/3 且无 clash；带 `_with_model_clash` 表示另一模型有 clash；`role_mismatch` 表示没有对应目标原子/基团。
+- 汇总状态：`supported_consistent` = 3/3 支持且无 clash；`supported_majority` = 2/3 支持且无 clash；`model_dependent_supported` = 1/3 且无 clash；`supported_majority_with_model_clash` = 2/3 支持且第三模型 clash；`model_dependent_supported_with_clash` = 1/3 支持且其他模型 clash；`role_mismatch` = 当前映射/规则下没有可支持的对应原子/基团。
 
 ## 结果
 
@@ -49,12 +49,12 @@
 
 ### Role mismatch 与映射不确定性
 
-- 14 个源接触没有对应目标原子/基团，主要是 1F9A R121 侧链（对应 KVP40 M127，与 A1 的 M127A 同区）、MET118 SD、VAL19 CB、ILE5 CD1 等；这些不能作为支持。
+- 在当前映射与原子角色规则下，14 个源接触未找到可支持的对应原子/基团，主要是 1F9A R121 侧链（对应 KVP40 M127，与 A1 的 M127A 同区）、MET118 SD、VAL19 CB、ILE5 CD1 等；这些不能作为支持。该结果不能证明真实口袋不可迁移。
 - 21 个低几何置信行全部同时为 role_mismatch；`atp_contacts.csv` 保留 `geometry_confidence=low`，但汇总状态优先显示 `role_mismatch`。不能把 role_mismatch 当高置信排除，也不能把低置信当支持。
 
 ### Mg 的边界
 
-- 1F9A 的 Mg 在 3.2 Å 内没有蛋白原子接触；审计表没有 MG–蛋白记录。其配位由 ATP 氧和未显式处理的水组织。
+- 1F9A 的 Mg 在 3.2 Å 内没有蛋白原子接触；审计表没有 MG–蛋白记录。审计未显式分析水，因此不能确定完整水配位层或 KVP40 金属位点。
 - 刚性迁移后 Mg–ATP 内部距离是变换不变量，不代表 KVP40 金属配位被恢复；迁移 Mg 与 WT 蛋白的近距离是姿态冲突，不是蛋白金属位点。
 
 ## 与 e1db337 的差异
@@ -69,7 +69,7 @@
 
 - 在原子/基团层面，H14/H17 的 NE2 到 ATP O1B/O2A、T135 的 OG1 到 O1G、R138 的 NH2 到 O3G，在当前几何/角色规则下是 3/3 支持候选；
 - 这些支持的多数是主链接触；侧链特异支持只有少数原子对；
-- 14 个源接触没有可靠的目标原子/基团对应，不能迁移。
+- 在当前规则下，14 个源接触未找到可支持的对应原子/基团；这是条件性结果，不能证明真实口袋不可迁移。
 
 不能说明：
 

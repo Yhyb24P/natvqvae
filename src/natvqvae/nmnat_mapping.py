@@ -1111,6 +1111,20 @@ def audit_atp_contacts(config_path, output):
             'numpy': np.__version__,
             'biopython': __import__('Bio').__version__,
         },
+        'source_code': {
+            'nmnat_mapping': {
+                'path': str(Path(__file__).resolve()),
+                'sha256': sha256_file(Path(__file__).resolve()),
+            },
+            'cli': {
+                'path': str(Path(__file__).with_name('cli.py')),
+                'sha256': sha256_file(Path(__file__).with_name('cli.py')),
+            },
+        },
+        'invocation': {
+            'argv': list(sys.argv),
+            'cwd': str(Path.cwd()),
+        },
         'audit': {
             'source': '1F9A',
             'contact_cutoff_A': contact_cutoff,

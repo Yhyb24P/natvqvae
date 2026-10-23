@@ -70,7 +70,7 @@
 - 变体位置选择：A3 A134G 在三种状态均有 direct 几何邻近（2.25–3.10 Å）；A3 Q86I 仅 1NUS direct；A1 L18I、A2 T22Q 为 motif 候选；其余未入选。未入选不代表低活性；三状态不是独立验证，没有性能优选。
 - 1F9A 原子/基团审计（`natv_nmnat_atp_audit/`，重做版）：61×3 记录中，逐模型 supported 24/28/34、role_mismatch 14/14/14、not_recovered 12/12/13、clash 11/7/0；跨模型 21 个 3/3 且无 clash 的 supported_consistent（16 主链–主链、5 侧链特异），8 个 2/3 支持但第三模型 clash，2 个单模型支持，5 个单模型支持且带 clash，14 个 role_mismatch，11 个 not_recovered。
 - 侧链特异支持：H13/H16（KVP40 H14/H17）NE2→ATP O1B/O2A 为 3/3；O3A/O5′/PA 为 2/3 且第三模型 clash；T127（T135）OG1→O1G 为 3/3，但 T127 主链 N→O3G 是独立主链接触，不能当羟基作用保留；R130（R138）NH2→O3G 为 3/3（目标 NH1 为对称等价胍基 N）。His 质子化/互变异构未定，不能称已证实氢键。
-- 14 个源接触为 role_mismatch（如 1F9A R121 侧链对应 KVP40 M127、MET118 SD、VAL19 CB、ILE5 CD1），不能作为支持；21 个低几何置信行全部同时为 role_mismatch，`atp_contacts.csv` 保留 low 与距离/冲突字段。1F9A 的 Mg 在 3.2 Å 内无蛋白接触，不能据此构造 KVP40 金属位点。
+- 在当前映射/原子角色规则下，14 个源接触为 role_mismatch（如 1F9A R121 侧链对应 KVP40 M127、MET118 SD、VAL19 CB、ILE5 CD1），不能作为支持；这是条件性结果，不证明真实口袋不可迁移。21 个低几何置信行全部同时为 role_mismatch，`atp_contacts.csv` 保留 low 与距离/冲突字段。1F9A 的 Mg 在 3.2 Å 内无蛋白接触；审计未显式分析水，不能确定完整水配位层或 KVP40 金属位点。
 - 旧 `e1db337` 中基于“最近任意重原子”的 T135/H17 侧链支持、旧 17 个计数、R9 chi/移植和 96–108 loop 临时数字均已撤回；loop/R9 没有正式实现，未进入本结论，也不启动 repacking/MD。
 - 边界：预测模型为 apo，刚性迁移的蛋白–配体冲突说明需要侧链/环区重排，不说明配体不能结合；fit RMSD 1.36–2.31 Å，单个近距离不能精确解释；没有实验验证。详见[映射报告](../data/results/evaluation/natv_nmnat_state_mapping/REPORT.md)和[ATP/Mg 审计](../data/results/evaluation/natv_nmnat_atp_audit/REPORT.md)。
 
