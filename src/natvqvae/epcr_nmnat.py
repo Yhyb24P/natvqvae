@@ -332,6 +332,104 @@ def _render_structure(reference_frame, models, states, config, coordinates, figu
     return structure_png, sidechain_png
 
 
+def _write_global_nearest_tables(rows, output):
+    pairs = {}
+    for row in rows:
+        if row['global_flag'] == 'none':
+            continue
+        key = (row['state'], row['clone'], row['model'], row['ligand_resname'],
+               row['ligand_atom'], row['global_nearest'])
+        entry = pairs.setdefault(key, {
+            'distances': [], 'global_flags': set(), 'local_flags': set(),
+            'contact_statuses': set(), 'contact_ids': set(),
+            'source_residues': set(), 'source_atoms': set(),
+        })
+        entry['distances'].append(float(row['global_distance_A']))
+        entry['global_flags'].add(row['global_flag'])
+        entry['local_flags'].add(row['local_flag'])
+        entry['contact_statuses'].add(row['contact_status'])
+        entry['contact_ids'].add(str(row['contact_id']))
+        entry['source_residues'].add(f"{row['source_resname']}{row['source_resnum']}")
+        entry['source_atoms'].add(row['source_atom'])
+    pair_rows = []
+    for key, entry in sorted(pairs.items()):
+        state, clone, model, ligand_resname, ligand_atom, nearest = key
+        pair_rows.append({
+            'state': state, 'clone': clone, 'model': model,
+            'ligand_resname': ligand_resname, 'ligand_atom': ligand_atom,
+            'global_nearest': nearest,
+            'global_distance_min_A': round(min(entry['distances']), 2),
+            'global_distance_max_A': round(max(entry['distances']), 2),
+            'global_flags': ';'.join(sorted(entry['global_flags'])),
+            'local_flags': ';'.join(sorted(entry['local_flags'])),
+            'contact_statuses': ';'.join(sorted(entry['contact_statuses'])),
+            'n_contact_records': len(entry['contact_ids']),
+            'source_contact_ids': ';'.join(sorted(entry['contact_ids'])),
+            'source_residues': ';'.join(sorted(entry['source_residues'])),
+            'source_atoms': ';'.join(sorted(entry['source_atoms'])),
+        })
+    _write_csv(output / 'global_nearest_pairs.csv', pair_rows,
+               ['state', 'clone', 'model', 'ligand_resname', 'ligand_atom',
+                'global_nearest', 'global_distance_min_A', 'global_distance_max_A',
+                'global_flags', 'local_flags', 'contact_statuses',
+                'n_contact_records', 'source_contact_ids', 'source_residues',
+                'source_atoms'])
+
+    summary = {}
+    for row in rows:
+        key = (row['state'], row['clone'], row['model'], row['ligand_resname'])
+        entry = summary.setdefault(key, {
+            'contact_rows': 0, 'clash_rows': 0, 'global_clash_rows': 0,
+            'pairs': set(), 'severe_pairs': set(), 'close_pairs': set(),
+            'clash_pairs': set(),
+        })
+        entry['contact_rows'] += 1
+        pair = (row['ligand_resname'], row['ligand_atom'], row['global_nearest'])
+        if row['global_flag'] != 'none':
+            entry['pairs'].add(pair)
+            if row['global_flag'] == 'severe':
+                entry['severe_pairs'].add(pair)
+            elif row['global_flag'] == 'close':
+                entry['close_pairs'].add(pair)
+        if row['contact_status'] == 'clash':
+            entry['clash_rows'] += 1
+            if row['global_flag'] != 'none':
+                entry['global_clash_rows'] += 1
+                entry['clash_pairs'].add(pair)
+    summary_rows = []
+    for key, entry in sorted(summary.items()):
+        state, clone, model, ligand_resname = key
+        residue_counts = {}
+        for _, _, nearest in entry['pairs']:
+            residue = nearest.split(':')[0]
+            residue_counts[residue] = residue_counts.get(residue, 0) + 1
+        clash_residue_counts = {}
+        for _, _, nearest in entry['clash_pairs']:
+            residue = nearest.split(':')[0]
+            clash_residue_counts[residue] = clash_residue_counts.get(residue, 0) + 1
+        def _format_counts(counts):
+            return ';'.join(f'{residue}:{count}' for residue, count in
+                            sorted(counts.items(), key=lambda item: (-item[1], item[0])))
+        summary_rows.append({
+            'state': state, 'clone': clone, 'model': model,
+            'ligand_resname': ligand_resname,
+            'contact_rows': entry['contact_rows'],
+            'global_pairs': len(entry['pairs']),
+            'global_severe_pairs': len(entry['severe_pairs']),
+            'global_close_pairs': len(entry['close_pairs']),
+            'clash_rows': entry['clash_rows'],
+            'global_clash_rows': entry['global_clash_rows'],
+            'clash_pairs': len(entry['clash_pairs']),
+            'residues_by_pair_count': _format_counts(residue_counts),
+            'clash_residues_by_pair_count': _format_counts(clash_residue_counts),
+        })
+    _write_csv(output / 'global_nearest_summary.csv', summary_rows,
+               ['state', 'clone', 'model', 'ligand_resname', 'contact_rows',
+                'global_pairs', 'global_severe_pairs', 'global_close_pairs',
+                'clash_rows', 'global_clash_rows', 'clash_pairs',
+                'residues_by_pair_count', 'clash_residues_by_pair_count'])
+
+
 def _plot_differences(environment_summary, figures):
     import matplotlib
     matplotlib.use('Agg')
@@ -633,6 +731,7 @@ def build_epcr_nmnat_environment(config_path, output):
                               'n_models_outside_wt_range', 'chemistry_classes',
                               'target_atom_matches']
     _write_csv(output / 'contact_summary.csv', summary_rows, contact_summary_fields)
+    _write_global_nearest_tables(rows, output)
 
     # Mutation and anchor local environments.
     union_mutations = {}

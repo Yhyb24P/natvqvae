@@ -24,16 +24,16 @@ disable lig_2QJO
 enable lig_1F9A
 color yellow, lig_1F9A
 show sticks, lig_1F9A
-png /tmp/tmpxkvaapam/state_1F9A.png
+png /tmp/tmp_81u3igf/state_1F9A.png
 disable lig_1F9A
 enable lig_1NUS
 color green, lig_1NUS
 show sticks, lig_1NUS
-png /tmp/tmpxkvaapam/state_1NUS.png
+png /tmp/tmp_81u3igf/state_1NUS.png
 disable lig_1NUS
 enable lig_2QJO
 color blue, lig_2QJO
 show sticks, lig_2QJO
-png /tmp/tmpxkvaapam/state_2QJO.png
+png /tmp/tmp_81u3igf/state_2QJO.png
 disable lig_2QJO
 quit

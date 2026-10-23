@@ -26,7 +26,7 @@ show sticks, NatV10_2 and resi 83
 color wheat, NatV10_2 and resi 83
 orient (wt and resi 83)
 zoom (wt and resi 83), 8
-png /tmp/tmpjzdwjvxy/sidechain_83.png
+png /tmp/tmpgz2ljiq3/sidechain_83.png
 hide everything
 show cartoon, wt
 set cartoon_transparency, 0.6, wt
@@ -41,7 +41,7 @@ show sticks, NatV10_2 and resi 162
 color wheat, NatV10_2 and resi 162
 orient (wt and resi 162)
 zoom (wt and resi 162), 8
-png /tmp/tmpjzdwjvxy/sidechain_162.png
+png /tmp/tmpgz2ljiq3/sidechain_162.png
 hide everything
 show cartoon, wt
 set cartoon_transparency, 0.6, wt
@@ -56,7 +56,7 @@ show sticks, NatV89_2 and resi 21
 color violet, NatV89_2 and resi 21
 orient (wt and resi 21)
 zoom (wt and resi 21), 8
-png /tmp/tmpjzdwjvxy/sidechain_21.png
+png /tmp/tmpgz2ljiq3/sidechain_21.png
 hide everything
 show cartoon, wt
 set cartoon_transparency, 0.6, wt
@@ -71,7 +71,7 @@ show sticks, NatV89_2 and resi 137
 color violet, NatV89_2 and resi 137
 orient (wt and resi 137)
 zoom (wt and resi 137), 8
-png /tmp/tmpjzdwjvxy/sidechain_137.png
+png /tmp/tmpgz2ljiq3/sidechain_137.png
 hide everything
 show cartoon, wt
 set cartoon_transparency, 0.6, wt
@@ -86,5 +86,5 @@ show sticks, NatV89_2 and resi 156
 color violet, NatV89_2 and resi 156
 orient (wt and resi 156)
 zoom (wt and resi 156), 8
-png /tmp/tmpjzdwjvxy/sidechain_156.png
+png /tmp/tmpgz2ljiq3/sidechain_156.png
 quit

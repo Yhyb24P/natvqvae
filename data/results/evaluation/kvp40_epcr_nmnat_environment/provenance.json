@@ -132,7 +132,7 @@
   "source_code": {
     "epcr_nmnat": {
       "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/epcr_nmnat.py",
-      "sha256": "cf6e1944ca6e4f4a1f252169d05d8600b9b487ecf76d54776ec5284b9119b997"
+      "sha256": "7c2a31a844726506338b9a5334bd5542beda6f3a5ea0a693db12e3b525d85f64"
     },
     "nmnat_mapping": {
       "path": "/home/yhshy/git_files/natvqvae/src/natvqvae/nmnat_mapping.py",

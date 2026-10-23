@@ -77,9 +77,10 @@
 ## ePCR 克隆的 NMNAT 底物环境（2026-10-23）
 
 - 使用既有 9 个 ePCR 全长模型（WT/NatV10/NatV89 各 3，seed 20261025），在共同 WT0 的 NMNAT 4–181 框架中，把 1F9A ATP/Mg、1NUS NMN/APC、2QJO NAD/POP 的实验姿态各迁移一次；不重跑预测，不做 MD/对接。结果在 `data/results/evaluation/kvp40_epcr_nmnat_environment/`。
-- 五个 NMNAT 突变的新增/丢失侧链原子均未直接接触迁移配体：D83V 羧基丢失但侧链距配体 7–21 Å；M162V 硫醚 19–20 Å；I21N ND2/OD1 7.5–7.8 Å；F137Y OH 7.5–8.7 Å；I156T OG1 10–11 Å。没有证据支持这些侧链直接改变底物环境。
-- 接触汇总（3/3 无 clash 的 `supported_consistent`）：1F9A ATP 为 WT 16、NatV10 16、NatV89 2；2QJO NAD 为 30/31/30，POP 为 1/5/0；1NUS APC 为 7/8/3。NatV89 在 ATP 和 POP 上出现更多模型依赖 clash（1F9A 32 个 with-clash；POP 20/24 至少一个模型 clash），但 1F9A 主要由 model 0 驱动、model 2 恢复较多，且不在突变侧链上。只能作为 F137Y 与 R138/T135 局部耦合的可检验假说，不是功能结论。
-- 1NUS 的全局对齐最弱（TM 0.58–0.68，TMalign RMSD 3.25 Å）；NMN 每个克隆有 24/31 个 role_mismatch、3 个 unmapped，不能判断 NMN 口袋。锚点 H14/H17/T135/R138 的 CA 变化均 <0.5 Å，没有重排证据；距离近不代表氢键或催化几何。
+- 五个 NMNAT 突变的新增/丢失侧链原子均未直接接触迁移配体：WT D83 的 OD1/OD2 在 1F9A/1NUS/2QJO 为 21.08/7.59/7.64 Å，变体最近侧链 21.30/7.37/8.53 Å；WT M162 SD 为 21.29/21.74/22.05 Å，变体最近侧链 19.08/19.55/19.93 Å；I21N ND2/OD1 7.5–7.8 Å；F137Y OH 7.5–8.7 Å；I156T OG1 10–11 Å。没有证据支持这些侧链直接改变底物环境。
+- 接触汇总（3/3 无 clash 的 `supported_consistent`）：1F9A ATP 为 WT 16、NatV10 16、NatV89 2；2QJO NAD 为 29/31/30，POP 为 1/5/0（2QJO 合计 30/36/30）；1NUS APC 为 7/8/3。NatV89 的 1F9A ATP 三个模型支持数为 6/25/18，不能归因于单一样本。
+- 实际 `global_nearest` 去重后，NatV89 ATP 的 55 个 clash 行是 29 个最近原子对，主要 TYR102/ASP103/LYS104/ASP105，另有 ALA134 N 一个；POP 的 44 行是 20 对，含 SER133/THR135、LYS104、ASP105。源接触对应的 R9/H17/R138 不是实际最近原子；据此撤回 F137Y→R138/T135 耦合的优先解释。WT 自身 ATP 也有 33 行→18 对、POP 26 行→13 对，不能以行数或对数判严重程度。
+- 1NUS 的全局对齐最弱（TM 0.58–0.68，TMalign RMSD 3.25 Å，非局部姿态误差）；NMN 每个克隆有 24/31 个 role_mismatch、3 个 unmapped，不能判断 NMN 口袋。锚点 H14/H17/T135/R138 的 CA 变化均 <0.5 Å，只说明未见大幅主链位移，不排除侧链/微环境重排；距离近不代表氢键或催化几何。
 - 边界：固定迁移姿态、3 个 diffusion 样本；WT 自身迁移姿态也有 clash；不能作活性/产量排名，不能说明真实结合姿态、顺序、限速步或金属配位。详见[ePCR NMNAT 环境报告](../data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md)。
 
 ## 证据边界
