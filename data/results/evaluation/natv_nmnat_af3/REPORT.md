@@ -190,9 +190,9 @@ PYTHONPATH=src /home/yhshy/miniconda3/envs/bioemu2/bin/python -m natvqvae.cli nm
 
 # 从零重跑预测时，build 必须指向新的空目录；不要把新结果写进已归档目录
 PYTHONPATH=src python -m natvqvae.cli nmnat-af3-build --config config/nmnat_af3.yaml \
-  --output data/results/evaluation/natv_nmnat_af3_new
+  --output data/results/evaluation/natv_nmnat_af3_reproduction
 PYTHONPATH=src python -m natvqvae.cli nmnat-af3-run --config config/nmnat_af3.yaml \
-  --output data/results/evaluation/natv_nmnat_af3_new --wait-gpu
+  --output data/results/evaluation/natv_nmnat_af3_reproduction --wait-gpu
 ```
 
 公开归档不含 `runs/` 和原 E 盘路径；`nmnat-af3-analyze` 会从 `cifs/` 读取坐标，`nmnat-af3-apo` 会从 `apo_inputs/` 读取小输入，因此上述两条复算命令可直接执行。该复算不包含 pTM/ipTM：这些值只存在于未归档的逐样本 `*_summary_confidences.json`，缺失时留空且不汇总，不按 0 处理。最后一条 apo 命令需要 bioemu2 环境中的 mdtraj；普通几何分析不需要 mdtraj。
