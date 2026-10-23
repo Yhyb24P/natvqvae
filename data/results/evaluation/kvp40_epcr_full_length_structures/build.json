@@ -1,0 +1,41 @@
+{
+  "config": "config/epcr_full_length.yaml",
+  "config_sha256": "a4dea2f57652ad16a177073b31f26e3957664f589a2af42d4511189496ab2825",
+  "target_sha256": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+  "wt_dna": "/mnt/c/Users/12087/Downloads/NatV.dna",
+  "wt_dna_sha256": "6c0559aabb8dfd7f6265103c3c9ff8742cca0c1d64e841fb5ae3591f0ae8d8c2",
+  "msa_source_sha256": "360babfaa9b5a1a8ac0fa36a630b171c14b328f0ffeb408b0f22347963508cc6",
+  "ab1_sha256": {
+    "NatV1-yicuo-F.ab1": "52b9a6041a3a93a9a89bce56b1a1a6db6926ae00913e05f1c9c0356723d64eb2",
+    "NatV1-yicuo-R.ab1": "4c50dd0a199f73413a624667dd52ab19feb26baa5bd85bb8989665185f5525c2",
+    "NatV10-yicuo-F.ab1": "5ee73081752ec541f65fd61c9e8dd75a950d5c65461c647f633df59f1d0aa64f",
+    "NatV10-yicuo-R.ab1": "ef7f35b0df77db2e40d52304f231414330d5ea045f39fdce2dca4d04e479f6fd",
+    "NatV2-yicuo-F.ab1": "1f85737a63489c7fb7b78315b5a14f68a90f9a1ce4482ceff7e5b23d3fe9e376",
+    "NatV2-yicuo-R.ab1": "839ecf8319de090e9f529d12ea3ba80ff5cd92b09a3068ede25840c0ff294606",
+    "NatV3-yicuo-F.ab1": "09549b522bd8a4ed5bd75f11c85e175cef05e928593d0e537c94a6ba45c43fbf",
+    "NatV3-yicuo-R.ab1": "a057d94c7eac3acc6a9ca7d5d25b667cf2e57c640f06286d694c09cea4d37617",
+    "NatV5-yicuo-F.ab1": "970d216d6811bf8d4bca6782cd052d5f3ee21646d4be4d9060601453128b20e6",
+    "NatV5-yicuo-R.ab1": "4bbf360eeea8a13a59abca8e0605300cab8d6f87cd29e46cc50d6e419132bfea",
+    "NatV6-yicuo-F.ab1": "f402f341edc012d6bb47ae85f891298b313f5c04995923467907369ece15856e",
+    "NatV6-yicuo-R.ab1": "72be47fe454b9b7d1248ac6c529cfa28c99fd6000cb8082ec59dae8893b6410f",
+    "NatV89-yicuo-F.ab1": "f7eeb43e30e526dbaecc6c4b58ff602ceb5eb020e8a93be7f9137bda62a394f4",
+    "NatV89-yicuo-R.ab1": "dd3cafd4036a467ca3f584bf0d94687127f3605097ac1836e3953168a53ead22"
+  },
+  "variants": {
+    "WT": {
+      "protein_edits": "none",
+      "dna_edits": "none",
+      "sequence_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8"
+    },
+    "NatV10": {
+      "protein_edits": "D83V;M162V;L317P;M323K",
+      "dna_edits": "248a>t;484a>g;950t>c;968t>a",
+      "sequence_sha256": "745b6f218b5ba3e982e28f82355f321195d0091cad10cdca8c5629d9a65b122a"
+    },
+    "NatV89": {
+      "protein_edits": "I21N;F137Y;I156T;P301S;V320E",
+      "dna_edits": "62t>a;410t>a;467t>c;561c>t;901c>t;959t>a",
+      "sequence_sha256": "dc25990d2ba46937ddb02cce0613b34ef26abf997422f79ada15c3fdde3c6dfd"
+    }
+  }
+}

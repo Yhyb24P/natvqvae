@@ -1,0 +1,35 @@
+task: kvp40_epcr_full_length_structures
+paths:
+  target: config/target.yaml
+  wt_dna: /mnt/c/Users/12087/Downloads/NatV.dna
+  ab1_dir: data/raw/wetlab/kvp40_epcr_20261009/sanger
+  msa_source: data/results/generation/natv_dual_domain_design/source_msa_WT_512.a3m
+  output: data/results/evaluation/kvp40_epcr_full_length_structures
+sequences: [WT, NatV10, NatV89]
+variants:
+  NatV10:
+    - {position: 248, ref: a, alt: t, protein: D83V}
+    - {position: 484, ref: a, alt: g, protein: M162V}
+    - {position: 950, ref: t, alt: c, protein: L317P}
+    - {position: 968, ref: t, alt: a, protein: M323K}
+  NatV89:
+    - {position: 62, ref: t, alt: a, protein: I21N}
+    - {position: 410, ref: t, alt: a, protein: F137Y}
+    - {position: 467, ref: t, alt: c, protein: I156T}
+    - {position: 561, ref: c, alt: t, protein: I187I}
+    - {position: 901, ref: c, alt: t, protein: P301S}
+    - {position: 959, ref: t, alt: a, protein: V320E}
+msa_rows: 512
+domains:
+  full: [1, 341]
+  NMNAT: [4, 181]
+  Nudix: [204, 338]
+boltz:
+  binary: /home/yhshy/miniconda3/envs/boltz2/bin/boltz
+  cache: /mnt/e/models/boltz2
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  seed: 20261025
+  output_format: mmcif
+  num_workers: 2

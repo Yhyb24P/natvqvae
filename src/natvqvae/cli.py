@@ -9,6 +9,7 @@ from . import __version__
 from .auxiliary import generate_aux, train_aux
 from .data import PopulationData, load_yaml, sha256_file
 from .design import build_design, run_boltz, summarize_design
+from .epcr import build_epcr, run_epcr_boltz, summarize_epcr
 from .evaluate import evaluate, evaluate_auxiliary, summarize_auxiliary, summarize_transfer
 from .generate import generate
 from .microenvironment import (build_microenvironment, run_microenvironment_boltz,
@@ -202,6 +203,27 @@ def build_parser():
     microenv_summary.add_argument('--config', default='config/microenvironment.yaml')
     microenv_summary.add_argument('--output', required=True)
     microenv_summary.set_defaults(func=lambda args: summarize_microenvironment(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    epcr_build = sub.add_parser('epcr-build',
+                                help='build full-length NatV10/NatV89 inputs from Sanger calls')
+    epcr_build.add_argument('--config', default='config/epcr_full_length.yaml')
+    epcr_build.add_argument('--output', required=True)
+    epcr_build.set_defaults(func=lambda args: build_epcr(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    epcr_boltz = sub.add_parser('epcr-boltz',
+                                help='run ligand-free full-length structures for WT/NatV10/NatV89')
+    epcr_boltz.add_argument('--config', default='config/epcr_full_length.yaml')
+    epcr_boltz.add_argument('--output', required=True)
+    epcr_boltz.set_defaults(func=lambda args: run_epcr_boltz(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    epcr_summary = sub.add_parser('epcr-summarize',
+                                  help='compare WT/NatV10/NatV89 full-length structures')
+    epcr_summary.add_argument('--config', default='config/epcr_full_length.yaml')
+    epcr_summary.add_argument('--output', required=True)
+    epcr_summary.set_defaults(func=lambda args: summarize_epcr(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 

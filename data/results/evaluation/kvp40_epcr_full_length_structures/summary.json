@@ -1,0 +1,829 @@
+{
+  "status": "COMPLETED",
+  "variants": {
+    "WT": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+    "NatV10": "745b6f218b5ba3e982e28f82355f321195d0091cad10cdca8c5629d9a65b122a",
+    "NatV89": "dc25990d2ba46937ddb02cce0613b34ef26abf997422f79ada15c3fdde3c6dfd"
+  },
+  "pairs": [
+    {
+      "variant": "NatV10",
+      "region": "full",
+      "median_rmsd_A": 0.8669459201412605,
+      "min_rmsd_A": 0.3798091443883982,
+      "max_rmsd_A": 1.333909672330081,
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV10",
+      "region": "NMNAT",
+      "median_rmsd_A": 0.9964549905531443,
+      "min_rmsd_A": 0.20840676871135919,
+      "max_rmsd_A": 1.4189858280277377,
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV10",
+      "region": "Nudix",
+      "median_rmsd_A": 0.4830376242330562,
+      "min_rmsd_A": 0.33158061927563226,
+      "max_rmsd_A": 0.510739025699977,
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "region": "full",
+      "median_rmsd_A": 0.8390221834542033,
+      "min_rmsd_A": 0.28766616350483276,
+      "max_rmsd_A": 1.1496108917621557,
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "region": "NMNAT",
+      "median_rmsd_A": 0.7437650207795692,
+      "min_rmsd_A": 0.23014688890482,
+      "max_rmsd_A": 1.2938185349059947,
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "region": "Nudix",
+      "median_rmsd_A": 0.4192592089484518,
+      "min_rmsd_A": 0.31444571412245653,
+      "max_rmsd_A": 0.5280907586531647,
+      "model_pairs": 9
+    }
+  ],
+  "self_rmsd": [
+    {
+      "name": "WT",
+      "region": "full",
+      "median_rmsd_A": 1.0261801520895837,
+      "min_rmsd_A": 0.7670080596139031,
+      "max_rmsd_A": 1.1467085031544595,
+      "model_pairs": 3
+    },
+    {
+      "name": "WT",
+      "region": "NMNAT",
+      "median_rmsd_A": 1.1155527539454657,
+      "min_rmsd_A": 0.7269963955180734,
+      "max_rmsd_A": 1.176677299054936,
+      "model_pairs": 3
+    },
+    {
+      "name": "WT",
+      "region": "Nudix",
+      "median_rmsd_A": 0.4113379689238649,
+      "min_rmsd_A": 0.30782361027319494,
+      "max_rmsd_A": 0.4319283509131452,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV10",
+      "region": "full",
+      "median_rmsd_A": 1.0775193144677173,
+      "min_rmsd_A": 0.7306208493276363,
+      "max_rmsd_A": 1.27779885752076,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV10",
+      "region": "NMNAT",
+      "median_rmsd_A": 1.2030919868282197,
+      "min_rmsd_A": 0.6865280844759749,
+      "max_rmsd_A": 1.3865795597691055,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV10",
+      "region": "Nudix",
+      "median_rmsd_A": 0.2682111939885423,
+      "min_rmsd_A": 0.23575232626461257,
+      "max_rmsd_A": 0.28361440618632583,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV89",
+      "region": "full",
+      "median_rmsd_A": 0.6866278426463556,
+      "min_rmsd_A": 0.6750400340239437,
+      "max_rmsd_A": 0.8007637899243213,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV89",
+      "region": "NMNAT",
+      "median_rmsd_A": 0.5834877822063331,
+      "min_rmsd_A": 0.5717190760921993,
+      "max_rmsd_A": 0.6763655951226724,
+      "model_pairs": 3
+    },
+    {
+      "name": "NatV89",
+      "region": "Nudix",
+      "median_rmsd_A": 0.24485094823163647,
+      "min_rmsd_A": 0.2434170276491634,
+      "max_rmsd_A": 0.3271614502580529,
+      "model_pairs": 3
+    }
+  ],
+  "mutation_local": [
+    {
+      "variant": "NatV10",
+      "edit": "D83V",
+      "position": 83,
+      "domain": "NMNAT",
+      "ca_displacement_median_A": 0.6411069997293395,
+      "ca_displacement_range_A": [
+        0.3049710059412767,
+        1.4290056898407515
+      ],
+      "neighborhood_rmsd_median_A": 0.650943728745012,
+      "neighborhood_rmsd_range_A": [
+        0.28828680752071617,
+        1.2675224808671142
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV10",
+      "edit": "M162V",
+      "position": 162,
+      "domain": "NMNAT",
+      "ca_displacement_median_A": 0.15069653987581377,
+      "ca_displacement_range_A": [
+        0.08777680988388746,
+        0.2961538633685638
+      ],
+      "neighborhood_rmsd_median_A": 0.14675232263090715,
+      "neighborhood_rmsd_range_A": [
+        0.1153012214293641,
+        0.31394329414242306
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV10",
+      "edit": "L317P",
+      "position": 317,
+      "domain": "Nudix",
+      "ca_displacement_median_A": 1.1707427369763934,
+      "ca_displacement_range_A": [
+        1.0992940407479777,
+        1.3092527466004096
+      ],
+      "neighborhood_rmsd_median_A": 0.8564842463462112,
+      "neighborhood_rmsd_range_A": [
+        0.6872977292486911,
+        0.9753225525546955
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV10",
+      "edit": "M323K",
+      "position": 323,
+      "domain": "Nudix",
+      "ca_displacement_median_A": 1.1257983018499291,
+      "ca_displacement_range_A": [
+        0.8135049464979495,
+        1.4530747074116799
+      ],
+      "neighborhood_rmsd_median_A": 0.8473650880413096,
+      "neighborhood_rmsd_range_A": [
+        0.663123907939306,
+        1.0307649850607676
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "edit": "I21N",
+      "position": 21,
+      "domain": "NMNAT",
+      "ca_displacement_median_A": 0.23087141609195755,
+      "ca_displacement_range_A": [
+        0.044207396724392424,
+        0.3055170599311278
+      ],
+      "neighborhood_rmsd_median_A": 0.1775656046631059,
+      "neighborhood_rmsd_range_A": [
+        0.10259663322551013,
+        0.24631649499231806
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "edit": "F137Y",
+      "position": 137,
+      "domain": "NMNAT",
+      "ca_displacement_median_A": 0.31709723816900404,
+      "ca_displacement_range_A": [
+        0.24823562256907136,
+        0.6515436203864082
+      ],
+      "neighborhood_rmsd_median_A": 0.2866836637684408,
+      "neighborhood_rmsd_range_A": [
+        0.17449881681738272,
+        0.5799870565148418
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "edit": "I156T",
+      "position": 156,
+      "domain": "NMNAT",
+      "ca_displacement_median_A": 0.5385150484007919,
+      "ca_displacement_range_A": [
+        0.43609674320587855,
+        0.6568242250013346
+      ],
+      "neighborhood_rmsd_median_A": 0.5488443757789601,
+      "neighborhood_rmsd_range_A": [
+        0.47453499201387467,
+        0.7336086454050197
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "edit": "P301S",
+      "position": 301,
+      "domain": "Nudix",
+      "ca_displacement_median_A": 0.24095395949896534,
+      "ca_displacement_range_A": [
+        0.169663444900587,
+        0.32331525788656895
+      ],
+      "neighborhood_rmsd_median_A": 0.22748038559275607,
+      "neighborhood_rmsd_range_A": [
+        0.17741971567350578,
+        0.4944837777623058
+      ],
+      "model_pairs": 9
+    },
+    {
+      "variant": "NatV89",
+      "edit": "V320E",
+      "position": 320,
+      "domain": "Nudix",
+      "ca_displacement_median_A": 1.4991597410450692,
+      "ca_displacement_range_A": [
+        1.2203542999286203,
+        1.7728049691326402
+      ],
+      "neighborhood_rmsd_median_A": 0.9962615647783062,
+      "neighborhood_rmsd_range_A": [
+        0.8931081251661703,
+        1.171645201485639
+      ],
+      "model_pairs": 9
+    }
+  ],
+  "mutation_local_baseline": [
+    {
+      "name": "WT",
+      "position": 21,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.15865269497970355,
+      "self_ca_displacement_range_A": [
+        0.11795886045739726,
+        0.16962077736584244
+      ],
+      "self_neighborhood_rmsd_median_A": 0.1869064992159673,
+      "self_neighborhood_rmsd_range_A": [
+        0.116488753473864,
+        0.1884072281176386
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 83,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.8960080136027389,
+      "self_ca_displacement_range_A": [
+        0.8507183130514094,
+        1.1295022853042878
+      ],
+      "self_neighborhood_rmsd_median_A": 1.0247882185756234,
+      "self_neighborhood_rmsd_range_A": [
+        0.6702444113589346,
+        1.0494788218046298
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 137,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.1886551029563236,
+      "self_ca_displacement_range_A": [
+        0.1333548927417569,
+        0.22742281399785347
+      ],
+      "self_neighborhood_rmsd_median_A": 0.25102855003101754,
+      "self_neighborhood_rmsd_range_A": [
+        0.20178487037371665,
+        0.26643313900418447
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 156,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.1425574469843376,
+      "self_ca_displacement_range_A": [
+        0.14118535911233193,
+        0.17284851188794265
+      ],
+      "self_neighborhood_rmsd_median_A": 0.20866333813776256,
+      "self_neighborhood_rmsd_range_A": [
+        0.19605285917255033,
+        0.25934074895699566
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 162,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.18639892757114954,
+      "self_ca_displacement_range_A": [
+        0.12998054295516925,
+        0.24644792088146275
+      ],
+      "self_neighborhood_rmsd_median_A": 0.19453964410084756,
+      "self_neighborhood_rmsd_range_A": [
+        0.1297427297654936,
+        0.24171070662198826
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 301,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.1585801935689233,
+      "self_ca_displacement_range_A": [
+        0.14076609391787367,
+        0.22993635849477095
+      ],
+      "self_neighborhood_rmsd_median_A": 0.2812066194195174,
+      "self_neighborhood_rmsd_range_A": [
+        0.21603843586798066,
+        0.4052267874283162
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 317,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.15451670660467628,
+      "self_ca_displacement_range_A": [
+        0.1064534047880843,
+        0.18990283263708904
+      ],
+      "self_neighborhood_rmsd_median_A": 0.277325947232263,
+      "self_neighborhood_rmsd_range_A": [
+        0.17958864684955383,
+        0.281281641249777
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 320,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.26282838338120085,
+      "self_ca_displacement_range_A": [
+        0.0963266262001009,
+        0.3279179893056386
+      ],
+      "self_neighborhood_rmsd_median_A": 0.4163673488481882,
+      "self_neighborhood_rmsd_range_A": [
+        0.2063951751847007,
+        0.43091356515918694
+      ]
+    },
+    {
+      "name": "WT",
+      "position": 323,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.4879722834659472,
+      "self_ca_displacement_range_A": [
+        0.3436497119689425,
+        0.5061274567925239
+      ],
+      "self_neighborhood_rmsd_median_A": 0.43416376978478133,
+      "self_neighborhood_rmsd_range_A": [
+        0.23875068810347636,
+        0.43499210312920655
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 21,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.23626376259893667,
+      "self_ca_displacement_range_A": [
+        0.2101818867515188,
+        0.41662231508300285
+      ],
+      "self_neighborhood_rmsd_median_A": 0.24857671860020308,
+      "self_neighborhood_rmsd_range_A": [
+        0.24629096265865866,
+        0.43707398307693235
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 83,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.7838284314266534,
+      "self_ca_displacement_range_A": [
+        0.3711429588251494,
+        0.9292078858690729
+      ],
+      "self_neighborhood_rmsd_median_A": 0.6515349032673634,
+      "self_neighborhood_rmsd_range_A": [
+        0.595749996856201,
+        1.068506197547175
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 137,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.3041805268879366,
+      "self_ca_displacement_range_A": [
+        0.15430680630556226,
+        0.4332186574685496
+      ],
+      "self_neighborhood_rmsd_median_A": 0.3881399283903189,
+      "self_neighborhood_rmsd_range_A": [
+        0.15636748441833173,
+        0.49526387181006554
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 156,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.11037400016391703,
+      "self_ca_displacement_range_A": [
+        0.07563347552610714,
+        0.1227738324135312
+      ],
+      "self_neighborhood_rmsd_median_A": 0.16886219587213835,
+      "self_neighborhood_rmsd_range_A": [
+        0.15681963140218458,
+        0.1951294216677004
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 162,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.14894018151327862,
+      "self_ca_displacement_range_A": [
+        0.07076116514125777,
+        0.21282475212438007
+      ],
+      "self_neighborhood_rmsd_median_A": 0.17788429984306506,
+      "self_neighborhood_rmsd_range_A": [
+        0.10784046914853579,
+        0.22332274228451884
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 301,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.1966286708457643,
+      "self_ca_displacement_range_A": [
+        0.1075000425849403,
+        0.2309333451458547
+      ],
+      "self_neighborhood_rmsd_median_A": 0.25983983095217233,
+      "self_neighborhood_rmsd_range_A": [
+        0.24970575857860294,
+        0.4076391645932688
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 317,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.22390644404958235,
+      "self_ca_displacement_range_A": [
+        0.22078861580874484,
+        0.369492393366482
+      ],
+      "self_neighborhood_rmsd_median_A": 0.23136383694252188,
+      "self_neighborhood_rmsd_range_A": [
+        0.2140584553537961,
+        0.26238329161505125
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 320,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.1313432833074953,
+      "self_ca_displacement_range_A": [
+        0.1286646247751837,
+        0.15858385185185786
+      ],
+      "self_neighborhood_rmsd_median_A": 0.2649379017878235,
+      "self_neighborhood_rmsd_range_A": [
+        0.25891938936955144,
+        0.31364171428108684
+      ]
+    },
+    {
+      "name": "NatV10",
+      "position": 323,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.20705724161848302,
+      "self_ca_displacement_range_A": [
+        0.15706754662628478,
+        0.3146150391982699
+      ],
+      "self_neighborhood_rmsd_median_A": 0.2790721283975861,
+      "self_neighborhood_rmsd_range_A": [
+        0.25095546488183434,
+        0.28967341637729355
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 21,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.23609680832825908,
+      "self_ca_displacement_range_A": [
+        0.1993133208429416,
+        0.27203313531189965
+      ],
+      "self_neighborhood_rmsd_median_A": 0.2249927738788108,
+      "self_neighborhood_rmsd_range_A": [
+        0.12665959901642165,
+        0.24795071483242917
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 83,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.4268784376602942,
+      "self_ca_displacement_range_A": [
+        0.3317159670981827,
+        0.6143393182755789
+      ],
+      "self_neighborhood_rmsd_median_A": 0.43064038056468384,
+      "self_neighborhood_rmsd_range_A": [
+        0.4002939595245365,
+        0.5333246828804288
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 137,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.2913174670169342,
+      "self_ca_displacement_range_A": [
+        0.25473420536030345,
+        0.5334793644968144
+      ],
+      "self_neighborhood_rmsd_median_A": 0.3232177085135391,
+      "self_neighborhood_rmsd_range_A": [
+        0.26792783469338255,
+        0.5504488728668687
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 156,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.17746293010257533,
+      "self_ca_displacement_range_A": [
+        0.13678080164655604,
+        0.259360671176405
+      ],
+      "self_neighborhood_rmsd_median_A": 0.24370638328146035,
+      "self_neighborhood_rmsd_range_A": [
+        0.21264878306781956,
+        0.2572489782125632
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 162,
+      "domain": "NMNAT",
+      "self_ca_displacement_median_A": 0.2474785726182831,
+      "self_ca_displacement_range_A": [
+        0.11226940595977748,
+        0.2892654011340761
+      ],
+      "self_neighborhood_rmsd_median_A": 0.25073041695691434,
+      "self_neighborhood_rmsd_range_A": [
+        0.16973898019728462,
+        0.3046397247166687
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 301,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.1945113046847598,
+      "self_ca_displacement_range_A": [
+        0.05327638578271227,
+        0.2077132749723343
+      ],
+      "self_neighborhood_rmsd_median_A": 0.23117294147006887,
+      "self_neighborhood_rmsd_range_A": [
+        0.17038689545230698,
+        0.3328240579623934
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 317,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.15805019085067665,
+      "self_ca_displacement_range_A": [
+        0.11782990643330092,
+        0.26163677638744004
+      ],
+      "self_neighborhood_rmsd_median_A": 0.24743634958577068,
+      "self_neighborhood_rmsd_range_A": [
+        0.2158171981976018,
+        0.32220606304644994
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 320,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.42402324556500115,
+      "self_ca_displacement_range_A": [
+        0.10051057340543829,
+        0.4281903535521727
+      ],
+      "self_neighborhood_rmsd_median_A": 0.2848074182321658,
+      "self_neighborhood_rmsd_range_A": [
+        0.2399721339562138,
+        0.36680262455873097
+      ]
+    },
+    {
+      "name": "NatV89",
+      "position": 323,
+      "domain": "Nudix",
+      "self_ca_displacement_median_A": 0.28936398877834385,
+      "self_ca_displacement_range_A": [
+        0.2685433623537889,
+        0.3696518515812979
+      ],
+      "self_neighborhood_rmsd_median_A": 0.291664625480329,
+      "self_neighborhood_rmsd_range_A": [
+        0.24365198911106944,
+        0.3766048315446067
+      ]
+    }
+  ],
+  "domain_geometry": [
+    {
+      "name": "WT",
+      "model": "WT_model_0.cif",
+      "domain_centroid_distance_A": 31.625453500843047
+    },
+    {
+      "name": "WT",
+      "model": "WT_model_1.cif",
+      "domain_centroid_distance_A": 31.299573483742762
+    },
+    {
+      "name": "WT",
+      "model": "WT_model_2.cif",
+      "domain_centroid_distance_A": 31.493989904623866
+    },
+    {
+      "name": "NatV10",
+      "model": "NatV10_model_0.cif",
+      "domain_centroid_distance_A": 31.606095947425935
+    },
+    {
+      "name": "NatV10",
+      "model": "NatV10_model_1.cif",
+      "domain_centroid_distance_A": 31.422693576662105
+    },
+    {
+      "name": "NatV10",
+      "model": "NatV10_model_2.cif",
+      "domain_centroid_distance_A": 31.70421577513578
+    },
+    {
+      "name": "NatV89",
+      "model": "NatV89_model_0.cif",
+      "domain_centroid_distance_A": 31.4404996948476
+    },
+    {
+      "name": "NatV89",
+      "model": "NatV89_model_1.cif",
+      "domain_centroid_distance_A": 31.328597439610395
+    },
+    {
+      "name": "NatV89",
+      "model": "NatV89_model_2.cif",
+      "domain_centroid_distance_A": 31.468978293892544
+    }
+  ],
+  "confidence": [
+    {
+      "name": "WT",
+      "metric": "ptm",
+      "median": 0.9014876484870911,
+      "min": 0.9012662172317505,
+      "max": 0.9174692034721375
+    },
+    {
+      "name": "WT",
+      "metric": "iptm",
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    {
+      "name": "WT",
+      "metric": "complex_plddt",
+      "median": 0.9217029809951782,
+      "min": 0.9127313494682312,
+      "max": 0.9221004247665405
+    },
+    {
+      "name": "WT",
+      "metric": "confidence_score",
+      "median": 0.9179335832595825,
+      "min": 0.9104825854301453,
+      "max": 0.9208561778068542
+    },
+    {
+      "name": "NatV10",
+      "metric": "ptm",
+      "median": 0.9068728685379028,
+      "min": 0.9060303568840027,
+      "max": 0.9196522235870361
+    },
+    {
+      "name": "NatV10",
+      "metric": "iptm",
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    {
+      "name": "NatV10",
+      "metric": "complex_plddt",
+      "median": 0.916938066482544,
+      "min": 0.913446843624115,
+      "max": 0.9169647097587585
+    },
+    {
+      "name": "NatV10",
+      "metric": "confidence_score",
+      "median": 0.9147564768791199,
+      "min": 0.9121320843696594,
+      "max": 0.917502224445343
+    },
+    {
+      "name": "NatV89",
+      "metric": "ptm",
+      "median": 0.8930447697639465,
+      "min": 0.8898945450782776,
+      "max": 0.8939005732536316
+    },
+    {
+      "name": "NatV89",
+      "metric": "iptm",
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    {
+      "name": "NatV89",
+      "metric": "complex_plddt",
+      "median": 0.9068630337715149,
+      "min": 0.9052317142486572,
+      "max": 0.9106448888778687
+    },
+    {
+      "name": "NatV89",
+      "metric": "confidence_score",
+      "median": 0.9040994048118591,
+      "min": 0.9021642804145813,
+      "max": 0.9072960019111633
+    }
+  ],
+  "figure": "rmsd_summary.svg",
+  "caveat": "CA-based structural comparison only; no activity or stability inference"
+}
