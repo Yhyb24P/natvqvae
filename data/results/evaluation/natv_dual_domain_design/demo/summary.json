@@ -555,14 +555,14 @@
   },
   "source_structure_summary": "data/results/evaluation/natv_dual_domain_design/structure_summary.json",
   "source_structure_summary_sha256": "f5224ae108d0e11021a707667c1b9243621bbf9d48a21a0c92fa87caff8961a4",
-  "git_head": "51f2304df20d3b550f93edc7d6fdd9b791dc6280",
+  "git_head": "6c7b8190da1a92457989da8a727f1e82d310809e",
   "module_sha256": "e40c748f262a6aecf55447d062de1f741fa1c9942348b6c1aaf01476cb2ee774",
-  "config_sha256": "6acd6d629cb9a133dde0ed72a6adfb392bb96000046713a710ee37a39f220b3d",
+  "config_sha256": "10b83458529ec04de9f6ff770c91ae8ba02dce7392cf104ccca70ea3d056284a",
   "notes": {
     "structures": "Predicted Boltz-2 monomers; no ligands in design models; no new predictions.",
     "A2": "NMNAT self-dispersion is model uncertainty, not flexibility or elimination evidence.",
     "A3": "A134G rigid template transfer has severe clashes; proximity is not a real contact.",
     "B1_B2": "Metal-environment hypotheses; not proof of reduced hydrolysis or NAD+ net accumulation.",
-    "NMNAT_joint": "Boltz-2 predicted co-occupancy; not a productive catalytic state or experimental complex."
+    "NMNAT_joint": "Boltz-2 predicted co-occupancy; productive catalytic geometry not established; not an experimental complex."
   }
 }

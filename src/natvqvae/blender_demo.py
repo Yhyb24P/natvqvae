@@ -32,6 +32,13 @@ OUTPUTS = {
     'identity': 'render_identity.json',
 }
 
+TEXT_DARK = (0.02, 0.022, 0.026, 1.0)
+BACKGROUND = (3.00, 2.92, 2.78, 1.0)
+BOLD_FONT = next((path for path in (
+    Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'),
+    Path('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf'),
+) if path.is_file()), None)
+
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -95,9 +102,21 @@ def setup_render(render, device_preference='GPU'):
 def set_world():
     world = bpy.data.worlds.new('World')
     world.use_nodes = True
-    background = world.node_tree.nodes['Background']
-    background.inputs[0].default_value = (0.025, 0.03, 0.045, 1.0)
-    background.inputs[1].default_value = 0.9
+    nodes = world.node_tree.nodes
+    nodes.clear()
+    output = nodes.new('ShaderNodeOutputWorld')
+    camera_background = nodes.new('ShaderNodeBackground')
+    camera_background.inputs['Color'].default_value = BACKGROUND
+    camera_background.inputs['Strength'].default_value = 1.0
+    lighting_background = nodes.new('ShaderNodeBackground')
+    lighting_background.inputs['Color'].default_value = (0.55, 0.55, 0.55, 1.0)
+    lighting_background.inputs['Strength'].default_value = 0.25
+    light_path = nodes.new('ShaderNodeLightPath')
+    mix = nodes.new('ShaderNodeMixShader')
+    world.node_tree.links.new(light_path.outputs['Is Camera Ray'], mix.inputs['Fac'])
+    world.node_tree.links.new(lighting_background.outputs['Background'], mix.inputs[1])
+    world.node_tree.links.new(camera_background.outputs['Background'], mix.inputs[2])
+    world.node_tree.links.new(mix.outputs['Shader'], output.inputs['Surface'])
     bpy.context.scene.world = world
 
 
@@ -268,10 +287,10 @@ def add_marker(location, color, radius=0.11, label=None):
                                          radius=radius, location=location)
     marker = bpy.context.object
     marker.name = f'marker_{label or "site"}'
-    marker.data.materials.append(material(f'marker_{label or "site"}', (*color[:3], 1.0), 0.5))
+    marker.data.materials.append(material(f'marker_{label or "site"}', (*color[:3], 1.0), 0.9))
 
 
-def add_leader(start, end, color, label=None, radius=0.018):
+def add_leader(start, end, color, label=None, radius=0.02):
     direction = Vector(end) - Vector(start)
     length = direction.length
     if length <= 1e-6:
@@ -282,35 +301,26 @@ def add_leader(start, end, color, label=None, radius=0.018):
     leader.name = f'leader_{label or "site"}'
     leader.rotation_mode = 'QUATERNION'
     leader.rotation_quaternion = direction.to_track_quat('Z', 'Y')
-    leader.data.materials.append(material(f'leader_{label or "site"}', (*color[:3], 1.0), 0.6))
+    leader.data.materials.append(material(f'leader_{label or "site"}', (*color[:3], 1.0), 0.9))
 
 
-def add_text(text, location, color, size, camera, name=None):
+def add_text(text, location, color, size, camera, name=None, align_x='CENTER', bold=False):
     curve = bpy.data.curves.new(name or text, type='FONT')
     curve.body = text
     curve.size = size
-    curve.align_x = 'CENTER'
+    curve.align_x = align_x
     curve.align_y = 'CENTER'
+    if bold and BOLD_FONT is not None:
+        curve.font = bpy.data.fonts.load(str(BOLD_FONT), check_existing=True)
     obj = bpy.data.objects.new(name or text, curve)
     bpy.context.scene.collection.objects.link(obj)
     obj.location = location
-    obj.data.materials.append(material(f'text_{name or text}', (*color[:3], 1.0), 1.5))
+    obj.data.materials.append(material(f'text_{name or text}', (*color[:3], 1.0), 1.0))
     look_at(obj, camera, track_axis='TRACK_Z')
     return obj
 
 
-def mutation_label_shift(position):
-    shifts = {
-        18: (-0.4, -0.2, 0.4), 22: (0.4, -0.2, -0.4),
-        57: (-0.6, -0.2, 0.4), 60: (0.6, -0.2, 0.4), 61: (-0.4, -0.2, -0.5),
-        86: (0.3, -0.2, 0.5), 94: (0.4, -0.2, 0.4), 111: (0.4, -0.2, -0.4),
-        127: (0.2, -0.2, -0.5), 134: (0.4, -0.2, -0.5),
-        248: (-1.2, -0.3, 0.8), 308: (-0.8, -0.3, -0.5),
-    }
-    return shifts.get(position, (0.0, 0.0, 0.0))
-
-
-def add_site(obj, position, color, label, camera, centre, size=0.2, label_shift=(0.0, 0.0, 0.0),
+def add_site(obj, position, color, label, camera, centre, size=0.30, label_shift=(0.0, 0.0, 0.0),
              label_depth=6.0):
     ca = ca_map(obj, position, position)
     if position not in ca:
@@ -338,8 +348,8 @@ def add_ligand_label(center, text, camera, color, offset, size=0.2, label_y=None
 
 def add_color_legend(camera, center, size, colors, corner='lower_left', z_position=None):
     names = ('NMNAT', 'linker', 'Nudix')
-    text_size = max(0.2, size * 0.012)
-    radius = max(0.06, size * 0.004)
+    text_size = max(0.32, size * 0.018)
+    radius = max(0.07, size * 0.0045)
     if corner == 'upper_left':
         x = center.x - size * 0.42
         z = center.z + 5.0
@@ -350,13 +360,28 @@ def add_color_legend(camera, center, size, colors, corner='lower_left', z_positi
         y = center.y - size * 0.8
     if z_position is not None:
         z = z_position
-    step = max(0.32, size * 0.02)
+    step = max(0.40, size * 0.026)
     for index, name in enumerate(names):
         location = Vector((x, y, z - index * step))
         add_marker(location, colors[name], radius=radius, label=f'legend_{name}')
-        add_text(name, location + Vector((0.22, 0.0, 0.0)),
-                 (0.92, 0.92, 0.92, 1.0), text_size, camera,
+        add_text(name, location + Vector((0.36, 0.0, 0.0)),
+                 TEXT_DARK, text_size, camera, align_x='LEFT', bold=True,
                  name=f'legend_text_{name}')
+
+
+def add_candidate_legend(camera, center, size, config):
+    x = center.x - size * 0.85
+    z = center.z + size * 0.25
+    y = center.y - size * 0.8
+    step = max(0.40, size * 0.026)
+    text_size = max(0.28, size * 0.016)
+    for index, name in enumerate(('A1', 'A2', 'A3', 'B1', 'B2')):
+        color = config['marker_colors'][name]
+        location = Vector((x, y, z - index * step))
+        add_marker(location, color, radius=max(0.07, size * 0.0045), label=f'legend_group_{name}')
+        add_text(f'{name} {config["candidate_edits"][name]}',
+                 location + Vector((0.46, 0.0, 0.0)), TEXT_DARK, text_size, camera,
+                 align_x='LEFT', bold=True, name=f'legend_group_text_{name}')
 
 
 def combined_bounds(objects):
@@ -438,16 +463,16 @@ def build_wt(config, render):
     centre, size = centre_of(wt)
     camera, _ = make_camera(centre, size, ortho=True, ortho_factor=1.5)
     add_lights(centre, size)
-    add_text('WT design sites | labels: WT -> designed', centre + Vector((0.0, -size * 0.8, size * 0.55)),
-             (0.95, 0.95, 0.95, 1.0), 0.30, camera, name='wt_title')
+    add_text('WT design sites | candidate-group colors', centre + Vector((0.0, -size * 0.8, size * 0.66)),
+             TEXT_DARK, 0.32, camera, name='wt_title')
     add_color_legend(camera, centre, size, config['colors'], corner='lower_left')
+    add_candidate_legend(camera, centre, size, config)
     for mutation in config['mutations']:
         group = mutation['candidates'][0][:2]
         color = config['marker_colors'].get(group, (0.9, 0.9, 0.9, 1.0))
-        add_site(wt, int(mutation['position']), color,
-                 f"{mutation['wt']}{mutation['position']}{mutation['alt']}",
-                 camera, centre, size=0.2,
-                 label_shift=mutation_label_shift(int(mutation['position'])))
+        ca = ca_map(wt, int(mutation['position']), int(mutation['position']))
+        add_marker(ca[int(mutation['position'])], color, radius=0.12,
+                   label=f"{mutation['wt']}{mutation['position']}{mutation['alt']}_{wt.name}")
     bpy.context.scene.render.filepath = config['outputs']['wt_overview']
     bpy.ops.render.render(write_still=True)
     if not render.get('skip_animation', False):
@@ -492,7 +517,7 @@ def build_a_class(config):
                      z_position=centre.z - 6.0)
     add_text('A1/A2/A3 aligned to the same WT NMNAT C-alpha frame',
              Vector((centre.x, centre.y, centre.z + 6.5)),
-             (0.95, 0.95, 0.95, 1.0), 0.5, camera, name='panel_title')
+             TEXT_DARK, 0.5, camera, name='panel_title')
     for obj in objects:
         names = domain_attributes(obj, config['domains'])
         remove_default_style(obj)
@@ -503,15 +528,13 @@ def build_a_class(config):
             if obj.name not in mutation['candidates']:
                 continue
             color = config['marker_colors'].get(obj.name, (0.9, 0.9, 0.9, 1.0))
-            add_site(obj, int(mutation['position']), color,
-                     f"{mutation['wt']}{mutation['position']}{mutation['alt']}",
-                     camera, obj_centre, size=0.26,
-                     label_shift=mutation_label_shift(int(mutation['position'])),
-                     label_depth=8.0)
+            ca = ca_map(obj, int(mutation['position']), int(mutation['position']))
+            add_marker(ca[int(mutation['position'])], color, radius=0.1,
+                       label=f"{mutation['wt']}{mutation['position']}{mutation['alt']}_{obj.name}")
         edits = config['candidate_edits'][obj.name]
         add_text(f'{obj.name}  {edits}',
                  Vector((obj.matrix_world.translation.x, centre.y, obj_centre.z + 4.0)),
-                 (0.95, 0.95, 0.95, 1.0), 0.38, camera, name=f'panel_{obj.name}')
+                 TEXT_DARK, 0.50, camera, name=f'panel_{obj.name}')
     bpy.context.scene.render.filepath = config['outputs']['a_class_panels']
     bpy.ops.render.render(write_still=True)
 
@@ -537,17 +560,17 @@ def build_nudix(config):
         shift = (-0.7, -0.8, 0.5) if mutation['position'] == 248 else (0.0, -0.8, -0.6)
         add_site(wt, int(mutation['position']), color,
                  f"{mutation['wt']}{mutation['position']}{mutation['alt']}",
-                 camera, centre, size=0.2, label_shift=shift,
+                 camera, centre, size=0.30, label_shift=shift,
                  label_depth=max(3.0, size * 1.2))
     for reference in config.get('references', []):
-        add_site(wt, int(reference['position']), (0.95, 0.95, 0.95, 1.0),
+        add_site(wt, int(reference['position']), TEXT_DARK,
                  reference['wt'] + str(reference['position']) + ' ref',
-                 camera, centre, size=0.18, label_shift=(0.6, -1.0, 0.8))
+                 camera, centre, size=0.20, label_shift=(-0.7, -1.0, 0.8))
     add_text('Nudix apo WT', centre + Vector((0.0, 0.0, size * 0.75)),
-             (0.95, 0.95, 0.95, 1.0), 0.34, camera, name='nudix_title')
+             TEXT_DARK, 0.34, camera, name='nudix_title')
     add_text('E248Q (B1), E252 reference, D308N (B2)\nmetal/hydrolysis mechanism unresolved',
              centre + Vector((0.0, 0.0, size * 0.62)),
-             (0.8, 0.8, 0.8, 1.0), 0.2, camera, name='nudix_note')
+             TEXT_DARK, 0.24, camera, name='nudix_note')
     bpy.context.scene.render.filepath = config['outputs']['nudix_site']
     bpy.ops.render.render(write_still=True)
 
@@ -556,7 +579,7 @@ def build_nmnat_inset(config):
     joint = import_molecule(config['joint']['cif'], 'WT_joint')
     remove_default_style(joint)
     domains = domain_attributes(joint, config['domains'])
-    add_style(joint, 'cartoon', domains['NMNAT'], (0.55, 0.58, 0.65, 1.0), name='NMNAT')
+    add_style(joint, 'cartoon', domains['NMNAT'], (0.30, 0.32, 0.38, 1.0), name='NMNAT')
     ligands = config['joint'].get('ligands', [])
     mg_centres = [Vector(item['center_blender_units']) for item in ligands if item['name'] == 'MG']
     mg_center = mg_centres[0] if mg_centres else None
@@ -579,17 +602,17 @@ def build_nmnat_inset(config):
     camera, _ = make_camera(centre, size, ortho=True, ortho_factor=1.9)
     add_lights(centre, size)
     if atp is not None:
-        add_ligand_label(atp, 'ATP', camera, (0.95, 0.75, 0.2, 1.0),
-                         (0.4, 0.0, -0.6), size=0.22, label_y=centre.y - size * 1.2)
+        add_ligand_label(atp, 'ATP', camera, (0.62, 0.42, 0.0, 1.0),
+                         (0.4, 0.0, -0.6), size=0.30, label_y=centre.y - size * 1.2)
     if nmn is not None:
-        add_ligand_label(nmn, 'NMN', camera, (0.4, 0.9, 0.5, 1.0),
-                         (-0.9, 0.0, 0.6), size=0.22, label_y=centre.y - size * 1.2)
+        add_ligand_label(nmn, 'NMN', camera, (0.0, 0.42, 0.18, 1.0),
+                         (-0.9, 0.0, 0.6), size=0.30, label_y=centre.y - size * 1.2)
     add_text('NMNAT ATP/NMN predicted co-occupancy',
              centre + Vector((0.0, 0.0, size * 0.72)),
-             (0.95, 0.95, 0.95, 1.0), 0.34, camera, name='nmnat_title')
-    add_text('one joint model; input includes 1 Mg\nthis model places Mg in Nudix, outside this view\nnot a productive catalytic state',
+             TEXT_DARK, 0.34, camera, name='nmnat_title')
+    add_text('one joint model; input includes 1 Mg\nthis model places Mg in Nudix, outside this view\nproductive catalytic geometry not established',
              centre + Vector((0.0, 0.0, size * 0.58)),
-             (0.8, 0.8, 0.8, 1.0), 0.16, camera, name='nmnat_note')
+             TEXT_DARK, 0.24, camera, name='nmnat_note', bold=True)
     bpy.context.scene.render.filepath = config['outputs']['nmnat_inset']
     bpy.ops.render.render(write_still=True)
 

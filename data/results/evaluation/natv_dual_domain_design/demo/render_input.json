@@ -125,59 +125,59 @@
   },
   "colors": {
     "NMNAT": [
-      0.1,
-      0.35,
-      0.95,
+      0.04,
+      0.22,
+      0.7,
       1.0
     ],
     "linker": [
-      0.95,
-      0.75,
-      0.1,
+      0.62,
+      0.42,
+      0.02,
       1.0
     ],
     "Nudix": [
-      0.1,
-      0.8,
-      0.35,
+      0.02,
+      0.5,
+      0.18,
       1.0
     ],
     "other": [
-      0.65,
-      0.65,
-      0.65,
+      0.35,
+      0.35,
+      0.35,
       1.0
     ]
   },
   "marker_colors": {
     "A1": [
-      0.9,
-      0.1,
-      0.6,
+      0.55,
+      0.0,
+      0.22,
       1.0
     ],
     "A2": [
-      1.0,
-      0.45,
+      0.65,
+      0.18,
       0.0,
       1.0
     ],
     "A3": [
       0.0,
-      0.8,
-      0.9,
+      0.3,
+      0.45,
       1.0
     ],
     "B1": [
-      0.9,
-      0.1,
-      0.1,
+      0.55,
+      0.0,
+      0.0,
       1.0
     ],
     "B2": [
-      0.6,
-      0.1,
-      0.9,
+      0.28,
+      0.02,
+      0.5,
       1.0
     ]
   },
@@ -351,7 +351,7 @@
   "joint": {
     "cif": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif",
     "label": "WT ATP+NMN+1 Mg, seed 20261026 model 0",
-    "source": "Boltz-2 predicted co-occupancy; not a productive catalytic state or experimental complex.",
+    "source": "Boltz-2 predicted co-occupancy; productive catalytic geometry not established; not an experimental complex.",
     "ligands": [
       {
         "name": "ATP",
@@ -385,14 +385,14 @@
   "render": {
     "width": 1280,
     "height": 720,
-    "samples": 24,
+    "samples": 32,
     "engine": "CYCLES",
     "device": "GPU",
-    "animation_width": 960,
-    "animation_height": 540,
-    "animation_samples": 16,
+    "animation_width": 1920,
+    "animation_height": 1080,
+    "animation_samples": 10,
     "fps": 24,
-    "frames": 120,
+    "frames": 144,
     "ffmpeg": "/usr/bin/ffmpeg"
   },
   "outputs": {

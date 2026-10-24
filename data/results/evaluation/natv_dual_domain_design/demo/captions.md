@@ -1,6 +1,6 @@
 # NatV 双域候选结构 demo
 
-本目录把已有的 NatV 双域 Boltz-2 预测整理为可复现的结构展示，不新增预测，也不把结构相似性、模型置信度或配体位置解释为酶学活性、稳定性或结合证据。
+本目录把已有的 NatV 双域 Boltz-2 预测整理为可复现的结构展示，不新增预测，也不把结构相似性、模型置信度或配体位置解释为酶学活性、稳定性或结合证据。展示采用浅白背景和深色文字/标签；候选交接的序列入口、亲本比较、功能读数含义和双方待确认事项见 [`candidate_handoff.md`](candidate_handoff.md)；这些材料可用于实验团队评估与实施准备。
 
 查看资料：[WT 总览](wt_overview.png)、[A 类比较](a_class_panels.png)、[亲本比较](parent_comparison.png)、[演示视频](demo.mp4)、[Blender 场景](demo.blend)。场景及其 `demo.blend.MNSession` 会话文件一同保存；原始坐标继续保存在各研究的输入及坐标归档目录，不在本目录重复复制。
 
@@ -16,19 +16,19 @@
 
 ### `wt_overview.png` — WT 设计位点
 
-全长 WT（`model_0`）卡通模型；NMNAT 蓝色、linker 金色、Nudix 绿色。标题注明 `labels: WT -> designed`。12 个设计位点用小球和引线标注：小球位于真实 Cα，标签经引线移到结构前方；A1 的 4 个编辑为洋红，A2 的 3 个为橙色，A3 的 3 个为青色，B1 的 E248Q 为红色，B2 的 D308N 为紫色。颜色只表示所属候选组，不表示效应方向或证据强度。左下角为结构域颜色图例。
+全长 WT（`model_0`）卡通模型；NMNAT 蓝色、linker 金色、Nudix 绿色。标题注明 `candidate-group colors`。12 个设计位点用组色小球标在真实 Cα；左侧候选组图例列出 A1/A2/A3/B1/B2 的编辑，颜色只表示所属候选组，不表示效应方向或证据强度。为在 1280 宽下避免逐点文字互相遮挡，静态总览不再放 12 个逐点文字标签；具体逐点编辑见 `mutation_map.csv` 和 A 类 panel 标题。左下角为结构域颜色图例。静帧为 1280×720。
 
 ### `a_class_panels.png` — A1/A2/A3 同帧比较
 
-三个 A 类候选并排显示，均以 WT 的 NMNAT Cα 4–181 做刚体叠合后放入同一坐标框架；场景中没有 WT 参考对象，避免把参考结构误读为额外候选。每个 panel 标注该候选携带的 A 类编辑及 marker 颜色；该图只显示叠合后的静态构象，不提供动力学或柔性证据。
+三个 A 类候选并排显示，均以 WT 的 NMNAT Cα 4–181 做刚体叠合后放入同一坐标框架；场景中没有 WT 参考对象，避免把参考结构误读为额外候选。每个 panel 的标题列出该候选携带的 A 类编辑，组色 marker 显示真实 Cα 位置；为避免缩小后文字互相遮挡，不在 panel 内重复逐点文字标签。该图只显示叠合后的静态构象，不提供动力学或柔性证据。
 
 ### `nudix_site.png` — Nudix 位点
 
-Nudix 结构域（apo WT）的局部视图，标出 E248Q（B1，红色）、E252 参考位点（白色；不是设计突变）和 D308N（B2，紫色）。图中没有放置 NAD⁺ 或 Mg 配体；同源位点的金属/水解假设尚未在 KVP40 中得到功能验证。
+Nudix 结构域（apo WT）的局部视图，标出 E248Q（B1，红色）、E252 参考位点（深灰；不是设计突变）和 D308N（B2，紫色）。图中没有放置 NAD⁺ 或 Mg 配体；同源位点的金属/水解假设尚未在 KVP40 中得到功能验证。
 
 ### `nmnat_inset.png` — 联合模型的 NMNAT 局部
 
-来自 `ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif` 的单个 Boltz-2 联合模型；只显示 NMNAT 域（灰色）和 ATP/NMN 的 ball-and-stick，标出两个配体。输入包含 1 个 Mg，但该模型把 Mg 放在 Nudix 一侧，位于本视图之外；图没有移动或重新选择 Mg，也不能据此判断 Mg 的催化位置。该模型不是实验复合物，也不代表 productive catalytic state。
+来自 `ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif` 的单个 Boltz-2 联合模型；只显示 NMNAT 域（灰色）和 ATP/NMN 的 ball-and-stick，标出两个配体。输入包含 1 个 Mg，但该模型把 Mg 放在 Nudix 一侧，位于本视图之外；图没有移动或重新选择 Mg，也不能据此判断 Mg 的催化位置。该模型不是实验复合物，其生产性催化几何尚未建立。
 
 ### `parent_comparison.png` — A+B 与 parent A
 
@@ -36,7 +36,7 @@ Nudix 结构域（apo WT）的局部视图，标出 E248Q（B1，红色）、E25
 
 ### `demo.mp4` — WT 转台
 
-960×540、24 fps、120 帧、5 s 的 H.264 视频。相机固定，WT 结构组（含位点 marker）绕竖直轴匀速旋转一周；标题和图例固定在画面内。为保持动画清晰，`label_*` 与 `leader_*` 只在渲染中隐藏，marker 随结构一起旋转。旋转仅用于展示三维形状，不是构象变化模拟。`render_identity.json` 记录 `motion: static camera; 360 deg turntable`。
+1920×1080、24 fps、144 帧、6 s 的 H.264 视频（Cycles CUDA、10 samples，开启降噪），浅白背景、深色标题图例。相机固定，WT 结构组（含位点 marker）绕竖直轴匀速旋转一周；标题、结构域图例和候选组图例固定在画面内。为保持动画清晰，WT 动画只显示 marker、标题和图例，不使用逐点文字标签；marker 随结构一起旋转。旋转仅用于展示三维形状，不是构象变化模拟。`render_identity.json` 记录 `motion: static camera; 360 deg turntable`。
 
 ## 复现与检查
 
@@ -56,7 +56,7 @@ summary 会拒绝已有文件的输出目录；两条命令必须使用同一个
 
 `structure-demo-render` 会先清除旧的 `render_identity.json` 和旧渲染输出，再调用 Blender 5.2.3 LTS + Molecular Nodes 520.2.0；只有 7 项输出都存在时才写入身份文件。身份文件不包含自身哈希，记录输入、`blender_demo.py` 与各输出的 SHA-256；读取端会校验哈希、模式（full/stills-only）和输出清单，拒绝陈旧或不完整结果。`--stills-only` 可跳过动画，但本目录交付的是 full 模式。
 
-打开 `demo.blend` 可检查固定相机、`WT_Rotation` 空物体和 1–120 帧范围（关键帧在第 1 与第 121 帧）；文件保存于动画状态，`label_*`/`leader_*` 的 `hide_render` 为真。要查看带标签的静态构图，使用 `wt_overview.png`，或在 Blender 中临时恢复这些对象的渲染可见性。
+打开 `demo.blend` 可检查固定相机、`WT_Rotation` 空物体和 1–144 帧范围（关键帧在第 1 与第 145 帧）；文件保存于动画状态。WT 场景没有逐点文字标签，marker 随 `WT_Rotation` 旋转，标题与两组图例固定。要查看带位点位置的静态构图，使用 `wt_overview.png`。
 
 ## 证据边界
 
