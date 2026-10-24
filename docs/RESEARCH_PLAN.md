@@ -107,4 +107,4 @@ N1 NMNAT NAD⁺+PPi（2QJO）；N2 NMNAT NMN+ATP+Mg²⁺（1NUS 参照+独立建
 
 后续只在出现能够区分竞争解释、且输入足以支持解释的具体问题时追加计算；共享 MSA、模板或预测样本间的一致性不构成独立验证。NatV10/NatV89 仍只作独立实验克隆证据。
 
-A 类多编辑是有效研究对象，不是设计缺陷；它只限制单点归因。A1/A2/A3 的可追溯事实、假说与可区分功能结果见 `data/results/evaluation/natv_dual_domain_design/REPORT.md` 的 A 类设计依据表；L18I/A134G 的 motif 邻近、T22Q 的 N 端邻近均未被证明有利，不能被当作接触或活性证据。
+A 类多编辑是有效研究对象，不是设计缺陷；它只限制单点归因。A1/A2/A3 的可追溯事实、假说与可区分功能结果见 `data/results/evaluation/natv_dual_domain_design/REPORT.md` 的 A 类设计依据表，逐编辑的来源观察与生成行为见同报告的“各编辑的来源观察与生成行为”；L18I/A134G 的 motif 邻近、T22Q 的 N 端邻近均未被证明有利，不能被当作接触或活性证据。
