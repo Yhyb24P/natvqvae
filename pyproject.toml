@@ -9,6 +9,8 @@ description = "Computational design of KVP40 NatV variants for net NAD+ synthesi
 requires-python = ">=3.10"
 dependencies = [
     "biopython>=1.81",
+    "gemmi>=0.7",
+    "matplotlib>=3.7",
     "numpy>=1.24",
     "torch>=2.1",
     "transformers>=4.40",

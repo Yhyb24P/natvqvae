@@ -1,0 +1,138 @@
+task: natv_structure_demo
+target: config/target.yaml
+design_root: data/results/evaluation/natv_dual_domain_design
+candidates: data/results/generation/natv_dual_domain_design/candidates.csv
+structure_pairs: data/results/evaluation/natv_dual_domain_design/structure_pairs.csv
+structure_summary: data/results/evaluation/natv_dual_domain_design/structure_summary.json
+output: data/results/evaluation/natv_dual_domain_design/demo
+model_index: 0
+
+domains:
+  NMNAT: [4, 181]
+  linker: [182, 203]
+  Nudix: [204, 338]
+
+colors:
+  NMNAT: [0.10, 0.35, 0.95, 1.0]
+  linker: [0.95, 0.75, 0.10, 1.0]
+  Nudix: [0.10, 0.80, 0.35, 1.0]
+  other: [0.65, 0.65, 0.65, 1.0]
+
+marker_colors:
+  A1: [0.90, 0.10, 0.60, 1.0]
+  A2: [1.00, 0.45, 0.00, 1.0]
+  A3: [0.00, 0.80, 0.90, 1.0]
+  B1: [0.90, 0.10, 0.10, 1.0]
+  B2: [0.60, 0.10, 0.90, 1.0]
+
+mutations:
+  - position: 18
+    wt: L
+    alt: I
+    domain: NMNAT
+    candidates: [A1, A1B1, A1B2]
+    hypothesis: "N-terminal motif-adjacent to ATP; not a direct contact."
+    caveat: "7-8 A from 1F9A ATP N3; motif proximity is not catalytic evidence."
+  - position: 57
+    wt: D
+    alt: S
+    domain: NMNAT
+    candidates: [A1, A1B1, A1B2]
+    hypothesis: "No direct substrate-contact hypothesis."
+    caveat: "14.2-14.6 A from mapped ATP; no functional evidence."
+  - position: 94
+    wt: R
+    alt: N
+    domain: NMNAT
+    candidates: [A1, A1B1, A1B2]
+    hypothesis: "No direct substrate-contact hypothesis."
+    caveat: "13.9-17.9 A from mapped ligands; no functional evidence."
+  - position: 127
+    wt: M
+    alt: A
+    domain: NMNAT
+    candidates: [A1, A1B1, A1B2]
+    hypothesis: "No direct substrate-contact hypothesis."
+    caveat: "7.0-7.4 A; 1F9A maps to R121, so an Arg contact cannot be transferred."
+  - position: 22
+    wt: T
+    alt: Q
+    domain: NMNAT
+    candidates: [A2, A2B1, A2B2]
+    hypothesis: "N-terminal sequence-adjacent; not a catalytic motif edit."
+    caveat: "9.35-10.8 A from mapped ligands; not a direct contact."
+  - position: 60
+    wt: G
+    alt: L
+    domain: NMNAT
+    candidates: [A2, A2B1, A2B2]
+    hypothesis: "Side-chain volume/hydrophobicity change only; direction undetermined."
+    caveat: "13.8-14.1 A from mapped ligands; no direct contact."
+  - position: 111
+    wt: L
+    alt: K
+    domain: NMNAT
+    candidates: [A2, A2B1, A2B2]
+    hypothesis: "Charge change may affect local environment; no direct substrate-contact evidence."
+    caveat: "5.1-6.6 A; source-side carboxyl role is not equivalent to KVP40 Leu."
+  - position: 61
+    wt: V
+    alt: H
+    domain: NMNAT
+    candidates: [A3, A3B1, A3B2]
+    hypothesis: "No direct substrate-contact hypothesis."
+    caveat: "15.95-16.30 A; distant from the mapped ligands."
+  - position: 86
+    wt: Q
+    alt: I
+    domain: NMNAT
+    candidates: [A3, A3B1, A3B2]
+    hypothesis: "May affect the NMN nicotinamide/ribose region; not established."
+    caveat: "3.37-3.82 A only after rigid 1NUS transfer; not a KVP40 direct contact."
+  - position: 134
+    wt: A
+    alt: G
+    domain: NMNAT
+    candidates: [A3, A3B1, A3B2]
+    hypothesis: "May affect ATP-phosphate/ribose or NMN local geometry; not established."
+    caveat: "1F9A/1NUS/2QJO rigid transfers have severe clashes; geometry proximity is not a real contact."
+  - position: 248
+    wt: E
+    alt: Q
+    domain: Nudix
+    candidates: [B1, A1B1, A2B1, A3B1]
+    hypothesis: "Metal-environment perturbation / charge-loss hypothesis."
+    caveat: "Homolog E250 contacts AMP/ADPR/metal; not proof that KVP40 hydrolysis decreases."
+  - position: 308
+    wt: D
+    alt: N
+    domain: Nudix
+    candidates: [B2, A1B2, A2B2, A3B2]
+    hypothesis: "Metal-coordination perturbation / charge-loss hypothesis."
+    caveat: "Homolog D308 coordinates metal; not proof of coordination loss or reduced hydrolysis."
+
+references:
+  - position: 252
+    wt: E
+    label: "E252 reference (not a design mutation)"
+
+joint:
+  cif: data/results/evaluation/kvp40_nmnat_joint/runs/seed20261026/boltz_results_seed20261026/predictions/ATP_NMN_MG_unconstrained_WT_seed20261026/ATP_NMN_MG_unconstrained_WT_seed20261026_model_0.cif
+  label: "WT ATP+NMN+1 Mg, seed 20261026 model 0"
+  source: "Boltz-2 predicted co-occupancy; not a productive catalytic state or experimental complex."
+
+render:
+  width: 1280
+  height: 720
+  samples: 24
+  engine: CYCLES
+  device: GPU
+  animation_width: 960
+  animation_height: 540
+  animation_samples: 16
+  fps: 24
+  frames: 120
+  ffmpeg: /usr/bin/ffmpeg
+
+blender:
+  executable: /home/yhshy/bio_tools/bin/blender

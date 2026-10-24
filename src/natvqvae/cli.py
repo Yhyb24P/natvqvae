@@ -39,6 +39,16 @@ def _analyze_nmnat_md(config, output):
     return analyze_nmnat_md(config, output)
 
 
+def _structure_demo_summary(config, output):
+    from .structure_demo import summarize_structure_demo
+    return summarize_structure_demo(config, output)
+
+
+def _structure_demo_render(config, output):
+    from .structure_demo import render_structure_demo
+    return render_structure_demo(config, output)
+
+
 def _result_output(value, category):
     path = Path(value).resolve()
     root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
@@ -383,6 +393,21 @@ def build_parser():
     nmnat_af3_apo.add_argument('--config', default='config/nmnat_af3.yaml')
     nmnat_af3_apo.add_argument('--output', required=True)
     nmnat_af3_apo.set_defaults(func=lambda args: analyze_apo(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    demo_summary = sub.add_parser(
+        'structure-demo-summary',
+        help='summarize existing design structures and write render inputs')
+    demo_summary.add_argument('--config', default='config/structure_demo.yaml')
+    demo_summary.add_argument('--output', required=True)
+    demo_summary.set_defaults(func=lambda args: _structure_demo_summary(
+        args.config, _result_output(args.output, 'evaluation')))
+
+    demo_render = sub.add_parser(
+        'structure-demo-render', help='render the Blender structure demo')
+    demo_render.add_argument('--config', default='config/structure_demo.yaml')
+    demo_render.add_argument('--output', required=True)
+    demo_render.set_defaults(func=lambda args: _structure_demo_render(
         args.config, _result_output(args.output, 'evaluation')))
     return parser
 
