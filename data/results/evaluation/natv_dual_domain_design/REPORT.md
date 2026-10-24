@@ -102,7 +102,7 @@ A1/A2/A3 是 QVAE 生成的完整多编辑组合；多编辑本身不是设计�
 
 ### 多编辑组合的来源与训练侧共现
 
-计数口径：aux 侧取 PF01467 `records.csv` 中 `aux_eligible` 的 6,477 条来源记录（train 4,450 / val 1,821 / excluded_risk 206 条带 split 标签的来源记录；对应唯一 aux_uid 为 train 2,407 / val 1,686 / risk 116 条辅助域条目），映射取各记录的 `wt_residues_json`。NatV 侧用项目自带 `stable_alignment`（BLOSUM62 局部比对，gap −10/−0.5，`max_optimal=16`）把 341 aa WT 的 NMNAT 4–181（`WT[3:181]`）与 `data/results/preprocessing/natv_family/{train,validation}.csv` 给出的域边界 `nmnat_cdd_from/to` 切片（序列取 `data/raw/sequences/natv_population.fasta`）对齐；逐位残基计数与归档 `new_single_events.csv` 的 `current_train_count` 完全一致（按位点 18/22/57/60/61/86/94/111/127/134 顺序为 29/9/22/83/0/423/16/0/8/1），说明口径复现；train/val 中该位有稳定映射的记录分别为 1,148/180 条。
+计数口径：aux 侧取 PF01467 `records.csv` 中 `aux_eligible` 的 6,477 条来源记录（train 4,450 / val 1,821 / excluded_risk 206 条带 split 标签的来源记录；对应唯一 aux_uid 为 train 2,407 / val 1,686 / risk 116 条辅助域条目），映射取各记录的 `wt_residues_json`。NatV 侧用项目自带 `stable_alignment`（BLOSUM62 局部比对，gap −10/−0.5，`max_optimal=16`）把 341 aa WT 的 NMNAT 4–181（`WT[3:181]`）与 `data/results/preprocessing/natv_family/{train,validation}.csv` 给出的域边界 `nmnat_cdd_from/to` 切片（序列取 `data/raw/sequences/natv_population.fasta`）对齐；逐位残基计数与归档 `new_single_events.csv` 的 `current_train_count` 完全一致（按位点 18/22/57/60/61/86/94/111/127/134 顺序为 29/9/22/83/0/423/16/0/8/1），说明口径复现；train/val 中 NMNAT 域内至少有一个位置可稳定映射的序列数为 1,148/180 条，各位点自身的分母以表中数字为准。
 
 | 编辑 | 来源标记 train（唯一 aux_uid / 来源记录） | 来源标记 val（唯一 aux_uid / 来源记录） | 现役 NatV 训练（出现 / 该位稳定映射记录） |
 | --- | --- | --- | --- |
