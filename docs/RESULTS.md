@@ -111,14 +111,13 @@
 
 ## AF3 跨模型评价与 BioEmu apo 参照（2026-10-24）
 
-- 本地 AF3 3.0.4、完整 WT 341 aa、既有 512 行 MSA、`run_data_pipeline=false`、`templates=[]`、3 seeds × 3 samples；ATP+NMN 与 ATP+NMN+Mg 各 9 个模型，另有 1F9A 参照 9 个模型。无约束；未新增 MD、变体、Protenix 或 BioEmu 配体模式。逐样本坐标、身份和 apo 复算输入归档在结果目录，`nmnat-af3-analyze`/`nmnat-af3-apo` 可直接从归档复算几何与 apo 比较；归档不含 confidence，复算不含 pTM/ipTM。结果在 `data/results/evaluation/natv_nmnat_af3/`。
-- 两个状态均 9/9 把 ATP 和 NMN 放在 NMNAT；跨配体最近重原子 2.207–3.620 Å（无 Mg，中位 2.633）与 2.352–3.452 Å（Mg，中位 2.949）；ATP PA–O3A–PB 9/9 完整，无蛋白 severe，pTM/ipTM 中位 0.94/0.96。这是结构预测层面的联合占位相容性，不是实验结合证据。
-- Mg 组 9/9 金属在 NMNAT，Mg–ATP O 中位 2.089 Å、Mg–NMN O 中位 3.360 Å，但仅 2/9 同时 ≤2.8 Å 接触两种底物；2.8 Å 内蛋白 O 均为 0、蛋白 N 0–1 个。AF3 主要把 Mg 放在 ATP 磷酸一侧，没有独立复现 Boltz/MD 的持续双底物桥接；CIF 无水，不能评价水合壳。
-- 反应候选三氧全保留：无 Mg 组最低 PA–Onuc 中位 3.926 Å、角中位 92.4°；Mg 组 3.995 Å、137.9°。Mg 组角度更钝但没有更短；未预定义生产性阈值，不能判催化或“更接近反应态”。
-- 跨模型（NMNAT 4–181 CA 配准，AF3/Boltz 不按 seed 配对，81 对不是独立样本）：蛋白 CA 中位 0.644/0.782 Å，ATP 全重原子对称 RMSD 中位 0.545/0.563 Å，NMN 0.940/0.989 Å；组内背景分别约 0.25–0.53、0.29–0.51、0.49–0.77 Å。NMN 姿态与磷酸端基的模型依赖明显高于 ATP 放置；不挑选最佳姿态。
-- 1F9A 技术校准：6/9 模型 ATP C/N 骨架 0.79–1.05 Å、全重原子对称 RMSD 0.771–1.548 Å、Mg 位移 0.80–1.98 Å；但固定的 O3A 桥氧近邻未复现（预测 3.4–3.8 Å，晶体 2.480 Å），O3B 也未稳定保持晶体 2.812 Å。端基氧 O2B/O2G 的同名距离受等价标号置换影响，只作原始原子名附表，不据此判断整个磷酸端基是否离开。seed3 的 3 个模型整体失败（ATP 对称 RMSD 2.938–8.435 Å，Mg 位移 3.08–3.64 Å）。AF3 可用于配体占位/口袋校准，不能裁定金属配位。
-- BioEmu apo 按模式分层（各 8 帧，非 16 个同分布样本）：`predict-structure` 下 102–105 环+锚点局部 CA RMSD 中位 1.35–1.48 Å、Nudix 1.05–2.47 Å；`sample-equilibrium` 下 2.89–4.15 Å、3.17–4.34 Å。只说明现有 apo 帧中存在大致相容的主链，不证明诱导契合或构象概率。BioEmu 使用 ColabFold `use_env=true` 缓存（8170 行，A3M SHA-256 `cdf8f657…`），不是 AF3/Boltz 的 512 行 MSA；现存缓存按完整 WT 序列匹配，两次运行实际使用的 MSA 版本未单独记录，原始检索数据库版本也未记录。
-- 结论：AF3 增强了“ATP+NMN 可同时占据 NMNAT”这一结构假说的跨模型支持，但没有增强 Mg 双底物桥接；NMN 朝向仍有明显模型依赖，AF3 对 1F9A 金属配位的重建只部分成功。镁的具体组织仍未被本轮确认为稳定态；只有出现能区分初始构象/参数效应的具体问题时，同起点受控金属比较才是可选方法，不是预设的下一步。不能据此对 A1/A2/A3 排序。完整数值与复现见[报告](../data/results/evaluation/natv_nmnat_af3/REPORT.md)。
+- 本地 AF3 3.0.4、完整 WT 341 aa、既有 512 行 MSA、无模板/口袋约束；ATP+NMN 与 ATP+NMN+Mg 各 3 seeds × 3 samples，共 18 个 WT 模型，另 1F9A 参考 9 个。逐样本坐标、身份和 apo 复算输入归档在结果目录；归档不含 confidence，复算不含 pTM/ipTM。详细 IQR、原子对、CCD 表示与复现见[报告](../data/results/evaluation/natv_nmnat_af3/REPORT.md)。
+- 两个状态均 9/9 把 ATP 和 NMN 放在 NMNAT；ATP PA–O3A–PB 9/9 完整，无蛋白 severe，pTM/ipTM 中位 0.94/0.96。ATP 跨模型全重原子对称 RMSD 中位 0.545/0.563 Å；NMN 0.940/0.989 Å、NMN 磷酸 1.486/1.549 Å。NMN 跨模型差异与各自组内范围广泛重叠（无 Mg 磷酸 1.486 vs Boltz 组内中位 1.410 Å；IQR 也大部分重叠），只能说精确朝向尚未达到模型间一致，不能称两种生理结合模式或显著超出背景；ATP 放置相对一致也只是描述性的。
+- Mg 组 9/9 金属在 NMNAT，Mg–ATP O 中位 2.089 Å、Mg–NMN O 中位 3.360 Å，但仅 2/9 同时 ≤2.8 Å 接触两种底物；AF3 主要把 Mg 放在 ATP 磷酸一侧，没有独立复现 Boltz/MD 的持续双底物桥接。CIF 无水，不能评价水合壳。
+- 短接触：无 Mg 6/9、Mg 2/9 模型有 <2.8 Å 跨配体磷酸 O–O（最低 2.207/2.352 Å）；2.8 Å 是筛查值，不是通用 O–O 碰撞硬阈值。AF3/Boltz CCD 中 ATP 总电荷 0（O2A/O2B/O2G/O3G 质子化）、NMN +1（烟酰胺 N1），不是 MD 的 ATP−4/NMN−1；短 O–O 不能直接当去质子化阴离子排斥判“不可能”，也不能因 CCD 中性或高 pTM 判物理合理，需显式氢键/质子化/金属/溶剂检验。该原子类型结论只适用于短接触子集，不外推到 Boltz 全部最近对。
+- 1F9A 技术校准：seed1、seed2 的 6 个样本保留口袋与 ATP 位置，seed3 的 3 个样本严重偏离；这是两个 seed 好、一个 seed 坏，不是 6 次独立成功。即使保留口袋，O3A/O3B 桥氧近邻与 Mg–O 也未复现；参考只用单链 164 aa 和 query-only MSA，晶体无完整水合壳。AF3 不能裁定金属配位。
+- BioEmu apo 按模式分层（各 8 帧，非 16 个同分布样本）：`predict-structure` 下 102–105 环+锚点局部 CA RMSD 中位 1.35–1.48 Å、Nudix 1.05–2.47 Å；`sample-equilibrium` 下 2.89–4.15 Å、3.17–4.34 Å。只说明现有 apo 帧中存在大致相容的主链，不证明诱导契合或构象概率。BioEmu 使用 ColabFold `use_env=true` 缓存（8170 行），不是 AF3/Boltz 的 512 行 MSA；实际运行 MSA 版本未单独记录。
+- 结论：AF3 增强了“ATP+NMN 可同时占据 NMNAT”的跨模型支持；NMN 原子级姿态尚未达到模型间一致，Mg 双底物桥接未被增强，1F9A 金属配位重建只部分成功。本轮作为 WT NMNAT 多模型结构研究的审阅节点：暂停追加同类预测，不启动 Protenix/OpenFold3/BioEmu 配体/更长 MD；下一步回到 A1/A2/A3 设计依据与可区分功能假说，不以结构预测排序。
 
 ## 证据边界
 
