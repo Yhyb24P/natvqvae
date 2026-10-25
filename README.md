@@ -1,6 +1,6 @@
 # NatV QVAE
 
-研究噬菌体 KVP40 的 341 aa NMNAT–Nudix 双域 NatV。利用天然序列和演化信息训练条件 Categorical QVAE，从条件先验生成完整变体，再以序列、结构和化学环境证据辅助选择。计算指标不能代替实测酶活性或 NAD⁺ 净积累。
+研究噬菌体 KVP40 的 341 aa NMNAT–Nudix 双域 NatV。利用天然序列和演化信息训练条件 Categorical QVAE，从条件先验生成完整变体，再以序列、结构和化学环境证据辅助选择。计算指标不能代替实测酶活性或 NAD⁺ 净积累。湿实验交付对象、文件角色和缺口见 [docs/DELIVERY.md](docs/DELIVERY.md)。
 
 ## 目录
 
