@@ -1,0 +1,42 @@
+task: kvp40_epcr_clone_demo
+models:
+  WT: data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/WT_model_0.pdb
+  NatV10: data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV10_model_0.pdb
+  NatV89: data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb
+reference:
+  clone: WT
+  model: 0
+  alignment: NMNAT 4-181 CA to WT model_0; coordinates are the existing aligned PDBs
+  source_report: data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md
+  source_variants: data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv
+domains:
+  NMNAT: [4, 181]
+  linker: [182, 203]
+  Nudix: [204, 338]
+mutations:
+  NatV10:
+    - {name: D83V, position: 83, from: D, to: V}
+    - {name: M162V, position: 162, from: M, to: V}
+    - {name: L317P, position: 317, from: L, to: P}
+    - {name: M323K, position: 323, from: M, to: K}
+  NatV89:
+    - {name: I21N, position: 21, from: I, to: N}
+    - {name: F137Y, position: 137, from: F, to: Y}
+    - {name: I156T, position: 156, from: I, to: T}
+    - {name: P301S, position: 301, from: P, to: S}
+    - {name: V320E, position: 320, from: V, to: E}
+colors:
+  domains:
+    NMNAT: [0.04, 0.22, 0.70]
+    linker: [0.62, 0.42, 0.02]
+    Nudix: [0.02, 0.50, 0.18]
+    other: [0.55, 0.55, 0.55]
+  clones:
+    WT: [0.55, 0.55, 0.55]
+    NatV10: [0.65, 0.18, 0.00]
+    NatV89: [0.55, 0.00, 0.45]
+plot:
+  pymol: /home/yhshy/bio_tools/bin/pymol
+  width: 1600
+  height: 1200
+  dpi: 200

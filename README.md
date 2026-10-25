@@ -53,6 +53,10 @@ natvqvae epcr-nmnat \
   --config config/epcr_nmnat_environment.yaml \
   --output data/results/evaluation/kvp40_epcr_nmnat_environment
 
+natvqvae epcr-demo \
+  --config config/epcr_clone_demo.yaml \
+  --output data/results/evaluation/kvp40_epcr_clone_demo
+
 natvqvae nmnat-binding-build --config config/nmnat_binding.yaml \
   --output data/results/evaluation/kvp40_nmnat_substrate_conformations
 natvqvae nmnat-binding-run --config config/nmnat_binding.yaml \
@@ -116,5 +120,7 @@ natvqvae nmnat-af3-analyze --config config/nmnat_af3.yaml \
 `build` 使用既有 512 行 WT MSA、`run_data_pipeline=false`、`templates=[]` 和 3 seeds × 3 samples；`analyze` 保留三个 NMN 候选氧、ATP 链内连接、跨配体/蛋白接触、金属近邻，以及 AF3 与既有 Boltz 坐标的蛋白配准姿态比较（C/N 骨架与全重原子对称 RMSD）。`nmnat-af3-apo`（同一配置）另行把既有 BioEmu2 `predict-structure`/`sample-equilibrium` 帧按模式分层比较 102–105 环、锚点残基与 Nudix 域主链；它需要 bioemu2 环境的 mdtraj，结果在 `data/results/evaluation/natv_nmnat_af3/`。结果目录归档 27 个逐样本 CIF.gz（不含重复 best）、两套 apo 的未压缩 `topology.cif`/`samples.xtc` 小输入及 `build.json`/`identity.json`；因此只凭归档即可运行 `nmnat-af3-analyze`/`nmnat-af3-apo` 复算几何与 apo 比较，但归档不含逐样本 confidence，复算不包含 pTM/ipTM（缺失留空，不按 0 处理）。
 
 `nmnat-map`（`config/nmnat_mapping.yaml`）把 1F9A ATP/Mg、1NUS NMN/APC 和 2QJO NAD/POP 的实验接触刚性映射到与 A1–A3 同一 Boltz 运行的 WT 全长模型；只做接触、变换和空间冲突检查，不预测复合物。结果在 `data/results/evaluation/natv_nmnat_state_mapping/`。`nmnat-audit` 对 1F9A ATP/Mg 做原子/基团级化学分类和冲突分列，结果在 `data/results/evaluation/natv_nmnat_atp_audit/`。`epcr-nmnat`（`config/epcr_nmnat_environment.yaml`）复用既有 WT/NatV10/NatV89 9 个全长模型，在共同 WT0 的 NMNAT 框架中比较三种实验配体姿态下的突变侧链环境和接触状态；不重跑预测，不做 MD/对接。结果在 `data/results/evaluation/kvp40_epcr_nmnat_environment/`。输出目录必须为新目录或空目录；已有结果不会被覆盖，重跑请换新目录。
+
+`epcr-demo`（`config/epcr_clone_demo.yaml`）从上述已按 NMNAT 4–181 Cα 对齐的 WT/NatV10/NatV89 model_0 PDB 生成两张独立静图：三 panel 全长总览（域色、各克隆编辑与真实 CA 投影标记）和全长叠合。它不重算指标、不做动画；结果在 `data/results/evaluation/kvp40_epcr_clone_demo/`，同样要求新目录或空目录。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。

@@ -1,0 +1,32 @@
+{
+  "status": "COMPLETED",
+  "mode": "static",
+  "render_input_sha256": "fe1dc578a4f358347683ab2e7dbdc0e80e01f87a1db1f99eea038de8f7bb9816",
+  "script_sha256": "a68117334eb44b62ddc11d3c1482853833ead2ccd2e7fa85ea2e0e3923dcb03f",
+  "source_variants": {
+    "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv",
+    "sha256": "b441cbce6b934069cfa2c8df03d578b9cb060fb767a46f45bc62bd42f535588b"
+  },
+  "pymol": {
+    "executable": "/home/yhshy/bio_tools/bin/pymol",
+    "version": "3.1.0"
+  },
+  "outputs": {
+    "clone_overview": {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_clone_demo/clone_overview.png",
+      "sha256": "e0e8ca07d91d69e082affd99904a4cc4ed551621b3d8332826ef168026aefeb8"
+    },
+    "clone_overlay": {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_clone_demo/clone_overlay.png",
+      "sha256": "d3f41616f815899b2534233a23319d8e4ccfcf7179ced1aa0339dcce4076e9fe"
+    }
+  },
+  "auxiliary": {
+    "mutation_sites": {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_clone_demo/mutation_sites.csv",
+      "sha256": "a0629cb4ba0f9325367d9bebb43996d979559c6c778b2dbd826003167832744c"
+    }
+  },
+  "generated_utc": "2026-10-25T06:34:17.948016+00:00",
+  "limits": "Predicted full-length monomers; NMNAT 4-181 alignment; no activity, stability, expression, or ranking claim."
+}

@@ -49,6 +49,11 @@ def _structure_demo_render(config, output):
     return render_structure_demo(config, output)
 
 
+def _epcr_clone_demo(config, output):
+    from .epcr_demo import render_epcr_clone_demo
+    return render_epcr_clone_demo(config, _result_output(output, 'evaluation'))
+
+
 def _result_output(value, category):
     path = Path(value).resolve()
     root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
@@ -272,6 +277,12 @@ def build_parser():
     epcr_nmnat.add_argument('--output', required=True)
     epcr_nmnat.set_defaults(func=lambda args: build_epcr_nmnat_environment(
         args.config, _result_output(args.output, 'evaluation')))
+
+    epcr_demo = sub.add_parser(
+        'epcr-demo', help='render independent WT/NatV10/NatV89 clone comparison')
+    epcr_demo.add_argument('--config', default='config/epcr_clone_demo.yaml')
+    epcr_demo.add_argument('--output', required=True)
+    epcr_demo.set_defaults(func=lambda args: _epcr_clone_demo(args.config, args.output))
 
     nmnat_binding_build = sub.add_parser(
         'nmnat-binding-build', help='build NMNAT substrate co-folding inputs')
