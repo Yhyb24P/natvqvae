@@ -1,0 +1,10 @@
+clone,edit,position,from,to,domain,ca_x,ca_y,ca_z,source_pdb
+NatV10,D83V,83,D,V,NMNAT,-3.707,17.478,4.056,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV10_model_0.pdb
+NatV10,M162V,162,M,V,NMNAT,-9.364,-16.127,-12.098,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV10_model_0.pdb
+NatV10,L317P,317,L,P,Nudix,13.906,15.180,-9.069,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV10_model_0.pdb
+NatV10,M323K,323,M,K,Nudix,9.975,6.312,-10.424,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV10_model_0.pdb
+NatV89,I21N,21,I,N,NMNAT,-20.527,-1.694,-3.287,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb
+NatV89,F137Y,137,F,Y,NMNAT,-6.392,-12.792,1.674,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb
+NatV89,I156T,156,I,T,NMNAT,-14.105,-13.977,-3.390,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb
+NatV89,P301S,301,P,S,Nudix,30.262,13.820,-3.623,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb
+NatV89,V320E,320,V,E,Nudix,11.074,11.761,-8.023,/home/yhshy/git_files/natvqvae/data/results/evaluation/kvp40_epcr_nmnat_environment/coordinates/NatV89_model_0.pdb

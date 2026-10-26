@@ -1,0 +1,124 @@
+task: natv_candidate_delivery
+sources:
+  design_candidates: data/results/generation/natv_dual_domain_design/candidates.csv
+  design_fasta: data/results/generation/natv_dual_domain_design/candidates.fasta
+  clone_variants: data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv
+  clone_sanger: data/results/evaluation/kvp40_epcr_full_length_structures/sanger_verification.json
+  clone_build: data/results/evaluation/kvp40_epcr_full_length_structures/build.json
+  design_report: data/results/evaluation/natv_dual_domain_design/REPORT.md
+  full_length_report: data/results/evaluation/kvp40_epcr_full_length_structures/REPORT.md
+  nmnat_environment_report: data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md
+  clone_source_run: kvp40_epcr_20261009
+evidence:
+  - package: evidence/design_candidates_original.csv
+    source: data/results/generation/natv_dual_domain_design/candidates.csv
+    description: original 12-design candidate table before unification
+  - package: evidence/design.json
+    source: data/results/generation/natv_dual_domain_design/design.json
+    description: design batch provenance
+  - package: evidence/design.yaml
+    source: config/design.yaml
+    description: historical design configuration
+  - package: evidence/random_seed8301_generation.json
+    source: data/results/generation/natv_transfer/random_seed8301/generation.json
+    description: random_seed8301 generation provenance
+  - package: evidence/random_seed8303_generation.json
+    source: data/results/generation/natv_transfer/random_seed8303/generation.json
+    description: random_seed8303 generation provenance
+  - package: evidence/clone_variants.csv
+    source: data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv
+    description: ePCR WT/NatV10/NatV89 sequences, edits and SHA
+  - package: evidence/clone_sanger_verification.json
+    source: data/results/evaluation/kvp40_epcr_full_length_structures/sanger_verification.json
+    description: tracked Sanger verification records
+  - package: evidence/clone_build.json
+    source: data/results/evaluation/kvp40_epcr_full_length_structures/build.json
+    description: ePCR build provenance and AB1 SHA manifest
+coordinates:
+  - candidate: WT
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/WT_WT_model_{model}.cif.gz
+  - candidate: A1
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A1_A1_model_{model}.cif.gz
+  - candidate: A2
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A2_A2_model_{model}.cif.gz
+  - candidate: A3
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A3_A3_model_{model}.cif.gz
+  - candidate: B1
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/B1_B1_model_{model}.cif.gz
+  - candidate: B2
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/B2_B2_model_{model}.cif.gz
+  - candidate: A1B1
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A1B1_A1B1_model_{model}.cif.gz
+  - candidate: A1B2
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A1B2_A1B2_model_{model}.cif.gz
+  - candidate: A2B1
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A2B1_A2B1_model_{model}.cif.gz
+  - candidate: A2B2
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A2B2_A2B2_model_{model}.cif.gz
+  - candidate: A3B1
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A3B1_A3B1_model_{model}.cif.gz
+  - candidate: A3B2
+    batch: design_boltz2_seed20261022
+    source_pattern: data/results/evaluation/natv_dual_domain_design/coordinates/A3B2_A3B2_model_{model}.cif.gz
+  - candidate: NatV10
+    batch: epcr_boltz2_seed20261025
+    source_pattern: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV10_NatV10_model_{model}.cif.gz
+  - candidate: NatV89
+    batch: epcr_boltz2_seed20261025
+    source_pattern: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/NatV89_NatV89_model_{model}.cif.gz
+reference_coordinates:
+  - name: epcr_WT
+    batch: epcr_boltz2_seed20261025
+    description: ePCR-batch WT diffusion samples; same sequence as the unified WT but a different prediction batch; extra comparison reference only, not a new protein identity and not a replacement for the design-batch WT
+    source_pattern: data/results/evaluation/kvp40_epcr_full_length_structures/coordinates/WT_WT_model_{model}.cif.gz
+attachments:
+  - package: attachments/design_wt_overview.png
+    source: data/results/evaluation/natv_dual_domain_design/demo/wt_overview.png
+    description: 12 条设计候选在 WT 上的位点总览
+  - package: attachments/design_a_class_panels.png
+    source: data/results/evaluation/natv_dual_domain_design/demo/a_class_panels.png
+    description: A1/A2/A3 同框架比较
+  - package: attachments/design_nudix_site.png
+    source: data/results/evaluation/natv_dual_domain_design/demo/nudix_site.png
+    description: Nudix 位点局部图
+  - package: attachments/design_nmnat_inset.png
+    source: data/results/evaluation/natv_dual_domain_design/demo/nmnat_inset.png
+    description: NMNAT ATP/NMN 联合模型局部图
+  - package: attachments/design_parent_comparison.png
+    source: data/results/evaluation/natv_dual_domain_design/demo/parent_comparison.png
+    description: A+B 对 parent A 的 RMSD 描述图
+  - package: attachments/clone_overview.png
+    source: data/results/evaluation/kvp40_epcr_clone_demo/clone_overview.png
+    description: WT/NatV10/NatV89 三 panel 总览
+  - package: attachments/clone_overlay.png
+    source: data/results/evaluation/kvp40_epcr_clone_demo/clone_overlay.png
+    description: WT/NatV10/NatV89 全长叠合（NMNAT 4-181 配准）
+  - package: attachments/design_mutation_map.csv
+    source: data/results/evaluation/natv_dual_domain_design/demo/mutation_map.csv
+    description: 设计位点映射
+  - package: attachments/design_candidate_structure_summary.csv
+    source: data/results/evaluation/natv_dual_domain_design/demo/candidate_structure_summary.csv
+    description: 设计候选结构汇总
+  - package: attachments/design_comparison_summary.csv
+    source: data/results/evaluation/natv_dual_domain_design/demo/comparison_summary.csv
+    description: 设计候选比较表
+  - package: attachments/clone_mutation_sites.csv
+    source: data/results/evaluation/kvp40_epcr_clone_demo/mutation_sites.csv
+    description: 克隆编辑位点和 aligned CA 坐标
+  - package: attachments/clone_rmsd_summary.png
+    source: data/results/evaluation/kvp40_epcr_full_length_structures/rmsd_summary.png
+    description: ePCR 克隆全长/域内局部位移汇总
+  - package: attachments/clone_nmnat_environment.png
+    source: data/results/evaluation/kvp40_epcr_nmnat_environment/figures/epcr_nmnat_structure.png
+    description: ePCR 克隆 NMNAT 环境比较图

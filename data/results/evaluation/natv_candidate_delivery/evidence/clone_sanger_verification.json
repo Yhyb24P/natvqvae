@@ -1,0 +1,202 @@
+{
+  "NatV10": [
+    {
+      "clone": "NatV10",
+      "read": "F",
+      "position": 248,
+      "protein": "D83V",
+      "covered": true,
+      "base": "t",
+      "quality": 52,
+      "orientation": "forward",
+      "alignment_score": 1414.0
+    },
+    {
+      "clone": "NatV10",
+      "read": "F",
+      "position": 484,
+      "protein": "M162V",
+      "covered": true,
+      "base": "g",
+      "quality": 52,
+      "orientation": "forward",
+      "alignment_score": 1414.0
+    },
+    {
+      "clone": "NatV10",
+      "read": "F",
+      "position": 950,
+      "protein": "L317P",
+      "covered": false
+    },
+    {
+      "clone": "NatV10",
+      "read": "F",
+      "position": 968,
+      "protein": "M323K",
+      "covered": false
+    },
+    {
+      "clone": "NatV10",
+      "read": "R",
+      "position": 248,
+      "protein": "D83V",
+      "covered": false
+    },
+    {
+      "clone": "NatV10",
+      "read": "R",
+      "position": 484,
+      "protein": "M162V",
+      "covered": true,
+      "base": "g",
+      "quality": 55,
+      "orientation": "reverse",
+      "alignment_score": 1467.0
+    },
+    {
+      "clone": "NatV10",
+      "read": "R",
+      "position": 950,
+      "protein": "L317P",
+      "covered": true,
+      "base": "c",
+      "quality": 55,
+      "orientation": "reverse",
+      "alignment_score": 1467.0
+    },
+    {
+      "clone": "NatV10",
+      "read": "R",
+      "position": 968,
+      "protein": "M323K",
+      "covered": true,
+      "base": "a",
+      "quality": 40,
+      "orientation": "reverse",
+      "alignment_score": 1467.0
+    }
+  ],
+  "NatV89": [
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 62,
+      "protein": "I21N",
+      "covered": true,
+      "base": "a",
+      "quality": 52,
+      "orientation": "forward",
+      "alignment_score": 1404.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 410,
+      "protein": "F137Y",
+      "covered": true,
+      "base": "a",
+      "quality": 55,
+      "orientation": "forward",
+      "alignment_score": 1404.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 467,
+      "protein": "I156T",
+      "covered": true,
+      "base": "c",
+      "quality": 52,
+      "orientation": "forward",
+      "alignment_score": 1404.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 561,
+      "protein": "I187I",
+      "covered": true,
+      "base": "t",
+      "quality": 55,
+      "orientation": "forward",
+      "alignment_score": 1404.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 901,
+      "protein": "P301S",
+      "covered": false
+    },
+    {
+      "clone": "NatV89",
+      "read": "F",
+      "position": 959,
+      "protein": "V320E",
+      "covered": false
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 62,
+      "protein": "I21N",
+      "covered": false
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 410,
+      "protein": "F137Y",
+      "covered": true,
+      "base": "a",
+      "quality": 52,
+      "orientation": "reverse",
+      "alignment_score": 1481.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 467,
+      "protein": "I156T",
+      "covered": true,
+      "base": "c",
+      "quality": 45,
+      "orientation": "reverse",
+      "alignment_score": 1481.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 561,
+      "protein": "I187I",
+      "covered": true,
+      "base": "t",
+      "quality": 52,
+      "orientation": "reverse",
+      "alignment_score": 1481.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 901,
+      "protein": "P301S",
+      "covered": true,
+      "base": "t",
+      "quality": 40,
+      "orientation": "reverse",
+      "alignment_score": 1481.0
+    },
+    {
+      "clone": "NatV89",
+      "read": "R",
+      "position": 959,
+      "protein": "V320E",
+      "covered": true,
+      "base": "a",
+      "quality": 45,
+      "orientation": "reverse",
+      "alignment_score": 1481.0
+    }
+  ]
+}

@@ -54,6 +54,11 @@ def _epcr_clone_demo(config, output):
     return render_epcr_clone_demo(config, _result_output(output, 'evaluation'))
 
 
+def _candidate_delivery(config, output):
+    from .delivery import build_candidate_delivery
+    return build_candidate_delivery(config, _result_output(output, 'evaluation'))
+
+
 def _result_output(value, category):
     path = Path(value).resolve()
     root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
@@ -283,6 +288,12 @@ def build_parser():
     epcr_demo.add_argument('--config', default='config/epcr_clone_demo.yaml')
     epcr_demo.add_argument('--output', required=True)
     epcr_demo.set_defaults(func=lambda args: _epcr_clone_demo(args.config, args.output))
+
+    delivery_build = sub.add_parser(
+        'delivery-build', help='build unified 14-protein NatV handoff package')
+    delivery_build.add_argument('--config', default='config/natv_candidate_delivery.yaml')
+    delivery_build.add_argument('--output', required=True)
+    delivery_build.set_defaults(func=lambda args: _candidate_delivery(args.config, args.output))
 
     nmnat_binding_build = sub.add_parser(
         'nmnat-binding-build', help='build NMNAT substrate co-folding inputs')

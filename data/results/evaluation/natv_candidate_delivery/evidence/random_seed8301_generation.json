@@ -1,0 +1,12 @@
+{
+  "status": "COMPLETED",
+  "checkpoint": "data/weights/qvae/random_seed8301/best.pt",
+  "checkpoint_sha256": "417dede1de05d3917fc11ec23f63b5f48e8d46be8426ecdfe90e663946a2862a",
+  "target_sha256": "8804bca153eceb5063f1d8a879d4daeff327964d5d1c9cd693d217fb4f86a7e8",
+  "esm_model": "data/weights/esm2",
+  "device": "cuda",
+  "groups": 48,
+  "draws_per_mask": 64,
+  "attempts": 3072,
+  "seconds": 0.9707949879957596
+}

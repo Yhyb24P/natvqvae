@@ -1,0 +1,62 @@
+task: natv_dual_domain_design
+target: config/target.yaml
+pool_root: data/results/generation/natv_transfer
+msa_source: data/results/evaluation/kvp40_auxiliary_structures/WT/input.a3m
+msa_rows: 512
+candidates_output: data/results/generation/natv_dual_domain_design
+structures_output: data/results/evaluation/natv_dual_domain_design
+
+a:
+  - id: A1
+    run: random_seed8301
+    candidate_id: QVAE_s8301_NMNAT_m08_r11_d14
+    reason: "L18I motif-adjacent; no anchor change"
+  - id: A2
+    run: random_seed8301
+    candidate_id: QVAE_s8301_NMNAT_m08_r02_d22
+    reason: "T22Q N-terminal motif-adjacent; no anchor change"
+  - id: A3
+    run: random_seed8303
+    candidate_id: QVAE_s8303_NMNAT_m08_r12_d30
+    reason: "A134G SXTXXR motif; no anchor change"
+
+b:
+  - id: B1
+    position: 248
+    wt: E
+    alt: Q
+    mechanism: "E250 homolog AMP/ADPR-metal local contact; charge-loss hypothesis"
+  - id: B2
+    position: 308
+    wt: D
+    alt: N
+    mechanism: "D308 homolog metal-coordination local contact; charge-loss hypothesis"
+
+source_structures:
+  2QJO:
+    path: data/raw/structures/2QJO.cif
+    ref_chain: A
+    other_chains: [B, C]
+    ligands: [APR, NAD, POP, SO4]
+  2QJT:
+    path: data/raw/structures/2QJT.cif
+    ref_chain: B
+    other_chains: [A]
+    ligands: [AMP, MN, MG]
+  2R5W:
+    path: data/raw/structures/2R5W.cif
+    ref_chain: B
+    other_chains: [A]
+    ligands: [AMP, MN, MG]
+
+boltz:
+  executable: /home/yhshy/miniconda3/envs/boltz2/bin/boltz
+  cache: /mnt/e/models/boltz2
+  checkpoint: /mnt/e/models/boltz2/boltz2_conf.ckpt
+  diffusion_samples: 3
+  sampling_steps: 200
+  recycling_steps: 3
+  seed: 20261022
+  output_format: mmcif
+  num_workers: 2
+  timeout_seconds: 7200

@@ -1,0 +1,13 @@
+position,wt,alt,domain,candidates,hypothesis,caveat
+18,L,I,NMNAT,A1;A1B1;A1B2,N-terminal motif-adjacent to ATP; not a direct contact.,7-8 A from 1F9A ATP N3; motif proximity is not catalytic evidence.
+57,D,S,NMNAT,A1;A1B1;A1B2,No direct substrate-contact hypothesis.,14.2-14.6 A from mapped ATP; no functional evidence.
+94,R,N,NMNAT,A1;A1B1;A1B2,No direct substrate-contact hypothesis.,13.9-17.9 A from mapped ligands; no functional evidence.
+127,M,A,NMNAT,A1;A1B1;A1B2,No direct substrate-contact hypothesis.,"7.0-7.4 A; 1F9A maps to R121, so an Arg contact cannot be transferred."
+22,T,Q,NMNAT,A2;A2B1;A2B2,N-terminal sequence-adjacent; not a catalytic motif edit.,9.35-10.8 A from mapped ligands; not a direct contact.
+60,G,L,NMNAT,A2;A2B1;A2B2,Side-chain volume/hydrophobicity change only; direction undetermined.,13.8-14.1 A from mapped ligands; no direct contact.
+111,L,K,NMNAT,A2;A2B1;A2B2,Charge change may affect local environment; no direct substrate-contact evidence.,5.1-6.6 A; source-side carboxyl role is not equivalent to KVP40 Leu.
+61,V,H,NMNAT,A3;A3B1;A3B2,No direct substrate-contact hypothesis.,15.95-16.30 A; distant from the mapped ligands.
+86,Q,I,NMNAT,A3;A3B1;A3B2,May affect the NMN nicotinamide/ribose region; not established.,3.37-3.82 A only after rigid 1NUS transfer; not a KVP40 direct contact.
+134,A,G,NMNAT,A3;A3B1;A3B2,May affect ATP-phosphate/ribose or NMN local geometry; not established.,1F9A/1NUS/2QJO rigid transfers have severe clashes; geometry proximity is not a real contact.
+248,E,Q,Nudix,B1;A1B1;A2B1;A3B1,Metal-environment perturbation / charge-loss hypothesis.,Homolog E250 contacts AMP/ADPR/metal; not proof that KVP40 hydrolysis decreases.
+308,D,N,Nudix,B2;A1B2;A2B2;A3B2,Metal-coordination perturbation / charge-loss hypothesis.,Homolog D308 coordinates metal; not proof of coordination loss or reduced hydrolysis.

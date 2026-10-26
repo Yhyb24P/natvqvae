@@ -57,6 +57,10 @@ natvqvae epcr-demo \
   --config config/epcr_clone_demo.yaml \
   --output data/results/evaluation/kvp40_epcr_clone_demo
 
+natvqvae delivery-build \
+  --config config/natv_candidate_delivery.yaml \
+  --output data/results/evaluation/natv_candidate_delivery
+
 natvqvae nmnat-binding-build --config config/nmnat_binding.yaml \
   --output data/results/evaluation/kvp40_nmnat_substrate_conformations
 natvqvae nmnat-binding-run --config config/nmnat_binding.yaml \
@@ -122,5 +126,7 @@ natvqvae nmnat-af3-analyze --config config/nmnat_af3.yaml \
 `nmnat-map`（`config/nmnat_mapping.yaml`）把 1F9A ATP/Mg、1NUS NMN/APC 和 2QJO NAD/POP 的实验接触刚性映射到与 A1–A3 同一 Boltz 运行的 WT 全长模型；只做接触、变换和空间冲突检查，不预测复合物。结果在 `data/results/evaluation/natv_nmnat_state_mapping/`。`nmnat-audit` 对 1F9A ATP/Mg 做原子/基团级化学分类和冲突分列，结果在 `data/results/evaluation/natv_nmnat_atp_audit/`。`epcr-nmnat`（`config/epcr_nmnat_environment.yaml`）复用既有 WT/NatV10/NatV89 9 个全长模型，在共同 WT0 的 NMNAT 框架中比较三种实验配体姿态下的突变侧链环境和接触状态；不重跑预测，不做 MD/对接。结果在 `data/results/evaluation/kvp40_epcr_nmnat_environment/`。输出目录必须为新目录或空目录；已有结果不会被覆盖，重跑请换新目录。
 
 `epcr-demo`（`config/epcr_clone_demo.yaml`）从上述已按 NMNAT 4–181 Cα 对齐的 WT/NatV10/NatV89 model_0 PDB 生成两张独立静图：三 panel 全长总览（域色、各克隆编辑与真实 CA 投影标记）和全长叠合。它不重算指标、不做动画；结果在 `data/results/evaluation/kvp40_epcr_clone_demo/`，同样要求新目录或空目录。
+
+`delivery-build`（`config/natv_candidate_delivery.yaml`）把 12 条设计候选与 2 条 ePCR 克隆合并成 14 条唯一蛋白的交接包，包含统一 CSV/FASTA、来源/身份清单、42 个候选 PDB、3 个 ePCR 批次 WT 参照和必要结构附件；不重算结构或指标。结果在 `data/results/evaluation/natv_candidate_delivery/`，要求新目录或空目录。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。
