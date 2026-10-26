@@ -1,12 +1,12 @@
 {
   "package": "natv_candidate_delivery",
   "description": "Unified handoff snapshot of 12 design candidates and 2 ePCR clones with one shared WT reference; no new predictions or functional claims.",
-  "generated_utc": "2026-10-26T10:56:26.067528+00:00",
-  "source_data_commit": "29907d042c4b567b1aff62ccf5695e917429b2a9",
+  "generated_utc": "2026-10-26T11:17:14.010880+00:00",
+  "source_data_commit": "a9afa30c0f9d87421b24745e51982c6f1aaa5782",
   "source_data_commit_note": "commit of the tracked source files listed in sources/evidence; not the packaging code version",
   "packaging": {
     "module": "src/natvqvae/delivery.py",
-    "module_sha256": "ccdf2e808dc0da78164e43b3b6517c071f0f6ac4e395398e54379ebd9e2c6812",
+    "module_sha256": "979d8b6ea8002b3ee8af0c53998e3ead0c8640c3e92800de6ba80972cf4791d2",
     "coordinate_module": "src/natvqvae/delivery_coordinates.py",
     "coordinate_module_sha256": "ae31daa32cf7a1b946390ac2f992f4d8dbe891fe760e6b3da6b78c95a01e992d",
     "config": "config/natv_candidate_delivery.yaml",
@@ -868,7 +868,7 @@
     }
   ],
   "files": {
-    "README.md": "4eea5fcd02bade90d54904e3d9d1bcddf218346dd0a35431f2ef1d5c394d21a9",
+    "README.md": "3c05ef5235ac5c6527c0f6385a049be5b3ee15b7f3c829481a9f77ee4d024536",
     "attachments/clone_mutation_sites.csv": "a0629cb4ba0f9325367d9bebb43996d979559c6c778b2dbd826003167832744c",
     "attachments/clone_nmnat_environment.png": "e0b455364ff5edea3eb06b152596eb9c0e30dfb2d684511409c56d57797ff470",
     "attachments/clone_overlay.png": "d3f41616f815899b2534233a23319d8e4ccfcf7179ced1aa0339dcce4076e9fe",
