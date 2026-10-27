@@ -2,7 +2,10 @@ task: natv_candidate_delivery
 sources:
   design_candidates: data/results/generation/natv_dual_domain_design/candidates.csv
   design_fasta: data/results/generation/natv_dual_domain_design/candidates.fasta
+  design_metrics: data/results/evaluation/natv_dual_domain_design/demo/candidate_structure_summary.csv
+  design_comparisons: data/results/evaluation/natv_dual_domain_design/demo/comparison_summary.csv
   clone_variants: data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv
+  clone_summary: data/results/evaluation/kvp40_epcr_full_length_structures/summary.json
   clone_sanger: data/results/evaluation/kvp40_epcr_full_length_structures/sanger_verification.json
   clone_build: data/results/evaluation/kvp40_epcr_full_length_structures/build.json
   design_report: data/results/evaluation/natv_dual_domain_design/REPORT.md

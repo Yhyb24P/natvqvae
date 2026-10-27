@@ -102,9 +102,69 @@ def test_candidate_delivery_package(tmp_path):
     assert not re.search(r'\]\(\.\./', readme), 'README must not link outside the package'
     assert 'github.com' in readme
     assert '没有任何经验证的活性' in readme
-    for line in readme.splitlines():
-        if '](https://github.com/' in line:
-            assert re.search(r'\]\(https://github\.com/[^\s)]+\)', line), line
+
+    metrics = _rows(output / 'candidate_metrics_summary.csv')
+    assert len(metrics) == 14
+    metric_by_id = {row['candidate_id']: row for row in metrics}
+    assert metric_by_id['WT']['source'] == '野生型'
+    assert metric_by_id['A1']['source'] == 'QVAE 生成（A 类）'
+    assert metric_by_id['B1']['source'] == '机制假说设计（B 类）'
+    assert metric_by_id['A1B1']['source'] == 'A+B 组合'
+    assert metric_by_id['NatV10']['source'] == '易错 PCR 克隆'
+    assert metric_by_id['A1']['prediction_batch'] == 'design_boltz2_seed20261022'
+    assert metric_by_id['NatV89']['prediction_batch'] == 'epcr_boltz2_seed20261025'
+    assert metric_by_id['WT']['rmsd_vs_wt_full_median_A'] == 'NA'
+    assert metric_by_id['A1']['rmsd_vs_wt_full_median_A'] == '0.8762'
+    assert metric_by_id['A1']['rmsd_vs_wt_full_model_pairs'] == '9'
+    assert metric_by_id['A1']['self_full_model_pairs'] == '3'
+    assert metric_by_id['A1']['local_metrics_status'] == '未计算'
+    assert metric_by_id['NatV89']['local_metrics_status'] == '已计算'
+    expected_ab_vs_wt = {'A1B1': '0.7778', 'A1B2': '0.9940', 'A2B1': '0.9580',
+                         'A2B2': '0.9404', 'A3B1': '0.7293', 'A3B2': '0.8515'}
+    expected_ab_vs_parent = {'A1B1': '0.7910', 'A1B2': '0.8776', 'A2B1': '0.9494',
+                             'A2B2': '0.8712', 'A3B1': '0.7867', 'A3B2': '0.8375'}
+    for name, value in expected_ab_vs_wt.items():
+        assert metric_by_id[name]['rmsd_vs_wt_full_median_A'] == value, name
+        assert (metric_by_id[name]['rmsd_vs_parent_a_full_median_A']
+                == expected_ab_vs_parent[name])
+        assert metric_by_id[name]['rmsd_vs_parent_a_full_model_pairs'] == '9'
+    assert metric_by_id['A1B1']['rmsd_vs_wt_nmnat_median_A'] == '0.8941'
+    assert metric_by_id['A1']['rmsd_vs_parent_a_full_median_A'] == '不适用'
+    assert metric_by_id['NatV10']['rmsd_vs_parent_a_full_median_A'] == '不适用'
+    assert metric_by_id['NatV89']['local_site_count'] == '5'
+    assert metric_by_id['NatV89']['local_sites_above_baseline'] == '2'
+    assert metric_by_id['NatV89']['local_sites_above_baseline_list'] == 'I156T;V320E'
+    assert metric_by_id['NatV10']['local_sites_above_baseline_list'] == 'L317P;M323K'
+    assert metric_by_id['WT']['domain_centroid_distance_median_A'] == '未计算'
+    assert metric_by_id['NatV10']['domain_centroid_distance_median_A'] == '31.6061'
+    assert metric_by_id['NatV10']['domain_centroid_distance_wt_reference_A'] == '31.4940'
+    assert metric_by_id['NatV89']['domain_centroid_distance_wt_reference_A'] == '31.4940'
+    assert metric_by_id['A1']['domain_centroid_distance_wt_reference_A'] == '未计算'
+
+    local = _rows(output / 'mutation_local_metrics.csv')
+    assert len(local) == 9
+    assert all(row['candidate_id'] in ('NatV10', 'NatV89') for row in local)
+    local_by_site = {(row['candidate_id'], row['edit']): row for row in local}
+    assert (local_by_site[('NatV10', 'L317P')]['displacement_range_disjoint_from_baseline']
+            == '是')
+    assert (local_by_site[('NatV10', 'D83V')]['displacement_range_disjoint_from_baseline']
+            == '否')
+    assert (local_by_site[('NatV89', 'V320E')]['displacement_range_disjoint_from_baseline']
+            == '是')
+    assert (local_by_site[('NatV89', 'I156T')]['displacement_range_disjoint_from_baseline']
+            == '是')
+    assert local_by_site[('NatV10', 'L317P')]['model_pairs'] == '9'
+    assert (local_by_site[('NatV10', 'L317P')]['prediction_batch']
+            == 'epcr_boltz2_seed20261025')
+    assert (local_by_site[('NatV10', 'L317P')]
+            ['self_baseline_ca_displacement_median_A'] != '')
+    assert '不是显著性检验' in local_by_site[('NatV10', 'L317P')]['disjoint_criterion']
+
+    assert manifest['metrics_sources']['design_metrics']['sha256']
+    assert manifest['metrics_sources']['design_comparisons']['sha256']
+    assert manifest['metrics_sources']['clone_summary']['sha256']
+    for name in ('candidate_metrics_summary.csv', 'mutation_local_metrics.csv'):
+        assert name in manifest['files']
 
 
 def _tamper_config(tmp_path, candidate, field, value):

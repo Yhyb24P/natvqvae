@@ -31,6 +31,8 @@ A1–A3 的生成记录、B1/B2 的设计依据以及两条克隆的 Sanger 测�
 |---|---|
 | `candidates.csv` | 14 条完整序列、所有氨基酸替换、来源、亲本和序列校验值（SHA-256） |
 | `candidates.fasta` | 同一组 14 条序列，可导入序列分析软件 |
+| `candidate_metrics_summary.csv` | 14 条候选的置信度、与 WT 的全长/分域 RMSD、A+B 另列对亲本 A 的 RMSD、自身预测离散、结构域质心距离（克隆含 ePCR 批次 WT 参照）和局部差异汇总，含来源类别与预测批次 |
+| `mutation_local_metrics.csv` | NatV10/NatV89 各位点的 Cα 位移、邻域 RMSD、同序列自身离散基准，以及“位移范围与自身基准是否不重叠”的描述性筛选 |
 | `coordinates/` | 每条蛋白 3 个预测结构，共 42 个 PDB 文件 |
 | `references/` | 易错 PCR 研究中另外预测的 3 个 WT 结构，供复算该批比较结果 |
 | `evidence/` | 原始序列表、生成和设计记录、Sanger 测序核查记录 |
@@ -75,7 +77,7 @@ RMSD 表示相应区域的 Cα 原子经刚体叠合后的位置差异，单位�
 
 ## 需要详细方法时查阅
 
-- [设计与结构比较](https://github.com/Yhyb24P/natvqvae/blob/a9afa30c0f9d87421b24745e51982c6f1aaa5782/data/results/evaluation/natv_dual_domain_design/REPORT.md)
-- [NatV10/NatV89 全长结构比较](https://github.com/Yhyb24P/natvqvae/blob/a9afa30c0f9d87421b24745e51982c6f1aaa5782/data/results/evaluation/kvp40_epcr_full_length_structures/REPORT.md)
-- [NatV10/NatV89 的 NMNAT 底物环境](https://github.com/Yhyb24P/natvqvae/blob/a9afa30c0f9d87421b24745e51982c6f1aaa5782/data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md)
+- [设计与结构比较](https://github.com/Yhyb24P/natvqvae/blob/2382c88171eaa193c5349e6442a6fd4ba148d65c/data/results/evaluation/natv_dual_domain_design/REPORT.md)
+- [NatV10/NatV89 全长结构比较](https://github.com/Yhyb24P/natvqvae/blob/2382c88171eaa193c5349e6442a6fd4ba148d65c/data/results/evaluation/kvp40_epcr_full_length_structures/REPORT.md)
+- [NatV10/NatV89 的 NMNAT 底物环境](https://github.com/Yhyb24P/natvqvae/blob/2382c88171eaa193c5349e6442a6fd4ba148d65c/data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md)
 - [功能比较的说明](https://github.com/Yhyb24P/natvqvae/blob/main/data/results/evaluation/natv_dual_domain_design/demo/candidate_handoff.md)

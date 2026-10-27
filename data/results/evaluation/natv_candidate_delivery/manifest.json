@@ -1,16 +1,16 @@
 {
   "package": "natv_candidate_delivery",
   "description": "Unified handoff snapshot of 12 design candidates and 2 ePCR clones with one shared WT reference; no new predictions or functional claims.",
-  "generated_utc": "2026-10-26T11:17:14.010880+00:00",
-  "source_data_commit": "a9afa30c0f9d87421b24745e51982c6f1aaa5782",
+  "generated_utc": "2026-10-27T01:56:16.231796+00:00",
+  "source_data_commit": "2382c88171eaa193c5349e6442a6fd4ba148d65c",
   "source_data_commit_note": "commit of the tracked source files listed in sources/evidence; not the packaging code version",
   "packaging": {
     "module": "src/natvqvae/delivery.py",
-    "module_sha256": "979d8b6ea8002b3ee8af0c53998e3ead0c8640c3e92800de6ba80972cf4791d2",
+    "module_sha256": "906286b7b3177fb75d8124ad6aa855a70ae00313ae5af3a56afc6817c30cedfe",
     "coordinate_module": "src/natvqvae/delivery_coordinates.py",
     "coordinate_module_sha256": "ae31daa32cf7a1b946390ac2f992f4d8dbe891fe760e6b3da6b78c95a01e992d",
     "config": "config/natv_candidate_delivery.yaml",
-    "config_sha256": "67b39bdbc39825f134dc79e6818f435ad4cc9b25736f45011cd84b557177bb79",
+    "config_sha256": "080d8c67a2ed25d933970f180997ba7ab8180ecb716d7d6d824685fdd47ddf87",
     "command": "natvqvae delivery-build --config config/natv_candidate_delivery.yaml --output /home/yhshy/git_files/natvqvae/data/results/evaluation/natv_candidate_delivery"
   },
   "counts": {
@@ -47,9 +47,21 @@
       "path": "data/results/generation/natv_dual_domain_design/candidates.fasta",
       "sha256": "cbcc57a26ecb2e296b74b048a397beeb7a73b0429a200512466e0baf803285e8"
     },
+    "design_metrics": {
+      "path": "data/results/evaluation/natv_dual_domain_design/demo/candidate_structure_summary.csv",
+      "sha256": "04a9d25444e0280f699eb70ddc4ec5a0b45c96b2e6df5225c58d7e9e6d834d78"
+    },
+    "design_comparisons": {
+      "path": "data/results/evaluation/natv_dual_domain_design/demo/comparison_summary.csv",
+      "sha256": "6c9f720d2dff3801e4c65827f6306ddab300cc38f20f1b590465b1d84c16318f"
+    },
     "clone_variants": {
       "path": "data/results/evaluation/kvp40_epcr_full_length_structures/variants.csv",
       "sha256": "b441cbce6b934069cfa2c8df03d578b9cb060fb767a46f45bc62bd42f535588b"
+    },
+    "clone_summary": {
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/summary.json",
+      "sha256": "c9a73fa8a00b5003e8dc500ced768b7603491245bdd885a6a9c1c307e6746d2d"
     },
     "clone_sanger": {
       "path": "data/results/evaluation/kvp40_epcr_full_length_structures/sanger_verification.json",
@@ -71,6 +83,21 @@
       "path": "data/results/evaluation/kvp40_epcr_nmnat_environment/REPORT.md",
       "sha256": "dc6e7d6d8346668b901e012196d793dac165241734f93fe2ff0e76557c1fc67d"
     }
+  },
+  "metrics_sources": {
+    "design_metrics": {
+      "path": "data/results/evaluation/natv_dual_domain_design/demo/candidate_structure_summary.csv",
+      "sha256": "04a9d25444e0280f699eb70ddc4ec5a0b45c96b2e6df5225c58d7e9e6d834d78"
+    },
+    "design_comparisons": {
+      "path": "data/results/evaluation/natv_dual_domain_design/demo/comparison_summary.csv",
+      "sha256": "6c9f720d2dff3801e4c65827f6306ddab300cc38f20f1b590465b1d84c16318f"
+    },
+    "clone_summary": {
+      "path": "data/results/evaluation/kvp40_epcr_full_length_structures/summary.json",
+      "sha256": "c9a73fa8a00b5003e8dc500ced768b7603491245bdd885a6a9c1c307e6746d2d"
+    },
+    "note": "candidate_metrics_summary.csv and mutation_local_metrics.csv are compiled from these existing result files; no new computation. A+B rows carry two independent comparisons: rmsd_vs_wt_* is the A+B-versus-WT supplementary comparison and rmsd_vs_parent_a_* is the A+B-versus-parent-A primary comparison; A/B candidates have rmsd_vs_parent_a_* marked 不适用. Local per-site displacement exists only for the ePCR clones; design candidates are marked 未计算. displacement_range_disjoint_from_baseline is a descriptive screen using the criterion: the minimum cross-sequence displacement is larger than the maximum same-clone self-baseline displacement at that position. It is not a significance test; the 9 cross-sequence model pairs and 3 self model pairs are statistically dependent, and the baseline is the variant's own sample dispersion, not a common WT-plus-variant upper bound. domain_centroid_distance_wt_reference_A is the ePCR-batch WT median (31.494 A, range 31.300-31.625 A over 3 models) for the clone rows."
   },
   "derivation": {
     "WT": "candidates.csv:WT, cross-checked against variants.csv:WT",
@@ -868,7 +895,7 @@
     }
   ],
   "files": {
-    "README.md": "3c05ef5235ac5c6527c0f6385a049be5b3ee15b7f3c829481a9f77ee4d024536",
+    "README.md": "89b625185e14546aaf9aebd8f06e8c8f1b3dff599fb65cc8bcbf5c008b0d523f",
     "attachments/clone_mutation_sites.csv": "a0629cb4ba0f9325367d9bebb43996d979559c6c778b2dbd826003167832744c",
     "attachments/clone_nmnat_environment.png": "e0b455364ff5edea3eb06b152596eb9c0e30dfb2d684511409c56d57797ff470",
     "attachments/clone_overlay.png": "d3f41616f815899b2534233a23319d8e4ccfcf7179ced1aa0339dcce4076e9fe",
@@ -882,6 +909,7 @@
     "attachments/design_nudix_site.png": "3445177b8cecc0df896f7693637f1d1518655a943d0f50e88113c7b09d5e3ebf",
     "attachments/design_parent_comparison.png": "0a702ff8d1672c6237fa9878e418cfb2327facdb37112ab65d63e3d8b40d2258",
     "attachments/design_wt_overview.png": "3be3e45f3fc90acf4598db88ecda71b87f197db969554175c73c099c2bd05092",
+    "candidate_metrics_summary.csv": "07bb7eb11b92c1422414e6281b13c9c895010fb2448405b6b3fae7c67a8dee5e",
     "candidates.csv": "595e41bcef48d6626e31365521cddcf387ad8997f809d6886bf9fb93e0e7cfb9",
     "candidates.fasta": "8f61fa6f425906465ac7f8fd0ab9c93bde024cb4e6bbd27cfc1a75fdaa33818e",
     "coordinates/A1B1_model_0.pdb": "c4bc39f92b6a756a4c36c6ceecfa1e0d8761c3f6d6f35a36e81a5e8112f109dd",
@@ -934,6 +962,7 @@
     "evidence/design_candidates_original.csv": "38950bddb3e470509655d7e1fe2f90fddf06bc1121f108f229402e825f8384a2",
     "evidence/random_seed8301_generation.json": "55400be980fd4fcacc1c01c8c1e9311fd052855ed24856a471002e2facc56626",
     "evidence/random_seed8303_generation.json": "734327d5384e1d7558062d6e1e3ae9c03f74b0c47cc86f3fac8c91c9ab4118e2",
+    "mutation_local_metrics.csv": "a9db4a63a602128aad02f4b39a03213da820f6591a7e33b733c520e20447384f",
     "references/epcr_WT_model_0.pdb": "ac01ab5cf9bc125edb53a3955f8026a94acfed4b2d89bf124747ab75c7f4850a",
     "references/epcr_WT_model_1.pdb": "68dd608c0ad930aaa12f88d11a0fc7480f45deba854e96d638be7f11d05d8abc",
     "references/epcr_WT_model_2.pdb": "54833d96345203ce74a2bc1b14cda33195c7264dbca7cdbb3d9b14699595d477"

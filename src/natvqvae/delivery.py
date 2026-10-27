@@ -97,6 +97,249 @@ def _github_url(commit, path):
     return f'{REPO_URL}/blob/{commit}/{path}' if commit else f'{REPO_URL}/blob/main/{path}'
 
 
+METRIC_FIELDS = (
+    'candidate_id', 'source', 'prediction_batch', 'comparison_reference',
+    'plddt_median_0_1', 'ptm_median_0_1',
+    'rmsd_vs_wt_full_median_A', 'rmsd_vs_wt_full_min_A', 'rmsd_vs_wt_full_max_A',
+    'rmsd_vs_wt_full_model_pairs',
+    'rmsd_vs_wt_nmnat_median_A', 'rmsd_vs_wt_nmnat_min_A', 'rmsd_vs_wt_nmnat_max_A',
+    'rmsd_vs_wt_nmnat_model_pairs',
+    'rmsd_vs_wt_nudix_median_A', 'rmsd_vs_wt_nudix_min_A', 'rmsd_vs_wt_nudix_max_A',
+    'rmsd_vs_wt_nudix_model_pairs',
+    'rmsd_vs_parent_a_full_median_A', 'rmsd_vs_parent_a_full_min_A',
+    'rmsd_vs_parent_a_full_max_A', 'rmsd_vs_parent_a_full_model_pairs',
+    'rmsd_vs_parent_a_nmnat_median_A', 'rmsd_vs_parent_a_nmnat_min_A',
+    'rmsd_vs_parent_a_nmnat_max_A', 'rmsd_vs_parent_a_nmnat_model_pairs',
+    'rmsd_vs_parent_a_nudix_median_A', 'rmsd_vs_parent_a_nudix_min_A',
+    'rmsd_vs_parent_a_nudix_max_A', 'rmsd_vs_parent_a_nudix_model_pairs',
+    'self_full_median_A', 'self_full_min_A', 'self_full_max_A', 'self_full_model_pairs',
+    'self_nmnat_median_A', 'self_nmnat_min_A', 'self_nmnat_max_A',
+    'self_nmnat_model_pairs',
+    'self_nudix_median_A', 'self_nudix_min_A', 'self_nudix_max_A',
+    'self_nudix_model_pairs',
+    'domain_centroid_distance_median_A', 'domain_centroid_distance_wt_reference_A',
+    'local_site_count', 'local_sites_above_baseline',
+    'local_sites_above_baseline_list', 'max_local_ca_displacement_A',
+    'max_local_site', 'baseline_ca_displacement_at_max_local_site_A',
+    'local_metrics_status',
+)
+LOCAL_FIELDS = (
+    'candidate_id', 'edit', 'position', 'domain', 'prediction_batch',
+    'ca_displacement_median_A', 'ca_displacement_min_A', 'ca_displacement_max_A',
+    'neighborhood_rmsd_median_A', 'neighborhood_rmsd_min_A',
+    'neighborhood_rmsd_max_A',
+    'self_baseline_ca_displacement_median_A',
+    'self_baseline_ca_displacement_min_A',
+    'self_baseline_ca_displacement_max_A',
+    'self_baseline_neighborhood_rmsd_median_A',
+    'displacement_range_disjoint_from_baseline', 'disjoint_criterion', 'model_pairs',
+)
+NOT_APPLICABLE = '不适用'
+ABOVE_BASELINE_CRITERION = ('位移范围与自身基准不重叠：跨序列位移最小值大于同序列同位置'
+                            '自身基准最大值；仅为描述性筛选，不是显著性检验')
+NOT_COMPUTED = '未计算'
+
+
+def _fmt(value, digits=4):
+    if value is None or value == '':
+        return ''
+    try:
+        return f'{float(value):.{digits}f}'
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def _metrics_tables(config, sources, batch_by_candidate):
+    design_rows = _read_csv(sources['design_metrics']['path'])
+    design_by_name = {row['candidate']: row for row in design_rows}
+    comparison_rows = _read_csv(sources['design_comparisons']['path'])
+    comparison_by_key = {(row['left'], row['right'], row['region']): row
+                         for row in comparison_rows}
+    clone_summary = json.loads(Path(sources['clone_summary']['path']).read_text())
+
+    clone_pairs = {(item['variant'], item['region']): item
+                   for item in clone_summary['pairs']}
+    clone_self = {(item['name'], item['region']): item
+                  for item in clone_summary['self_rmsd']}
+    clone_confidence = {(item['name'], item['metric']): item
+                        for item in clone_summary['confidence']}
+    clone_geometry = {}
+    for item in clone_summary['domain_geometry']:
+        clone_geometry.setdefault(item['name'], []).append(
+            item['domain_centroid_distance_A'])
+    local_rows = {(item['variant'], item['position']): item
+                  for item in clone_summary['mutation_local']}
+    baseline_rows = {(item['name'], item['position']): item
+                     for item in clone_summary['mutation_local_baseline']}
+
+    def _comparison_columns(row, left, right, prefix):
+        for region in ('full', 'NMNAT', 'Nudix'):
+            key_region = region.lower()
+            item = comparison_by_key.get((left, right, region))
+            if item is None:
+                for suffix in ('median_A', 'min_A', 'max_A'):
+                    row[f'{prefix}_{key_region}_{suffix}'] = ''
+                row[f'{prefix}_{key_region}_model_pairs'] = ''
+                continue
+            row[f'{prefix}_{key_region}_median_A'] = _fmt(item['median_rmsd_A'])
+            row[f'{prefix}_{key_region}_min_A'] = _fmt(item['min_rmsd_A'])
+            row[f'{prefix}_{key_region}_max_A'] = _fmt(item['max_rmsd_A'])
+            row[f'{prefix}_{key_region}_model_pairs'] = item['model_pairs']
+
+    def _not_applicable(row, prefix):
+        for region in ('full', 'nmnat', 'nudix'):
+            for suffix in ('median_A', 'min_A', 'max_A', 'model_pairs'):
+                row[f'{prefix}_{region}_{suffix}'] = NOT_APPLICABLE
+
+    source_labels = {'WT': '野生型', 'A': 'QVAE 生成（A 类）', 'B': '机制假说设计（B 类）',
+                     'AB': 'A+B 组合', 'ePCR': '易错 PCR 克隆'}
+    rows = []
+    local_table = []
+    for name in ('WT', *DESIGN_NAMES[1:], *CLONE_NAMES):
+        batch = batch_by_candidate[name]
+        if name in design_by_name:
+            design = design_by_name[name]
+            group = design['group']
+            if group in ('AB', 'A+B'):
+                group = 'AB'
+                parent_a = name[:2]
+            row = {
+                'candidate_id': name,
+                'source': source_labels[group],
+                'prediction_batch': batch,
+                'comparison_reference': '自身（WT 为基准）' if name == 'WT' else 'WT',
+                'plddt_median_0_1': _fmt(design['plddt_median_0_1']),
+                'ptm_median_0_1': _fmt(design['ptm_median_0_1']),
+                'domain_centroid_distance_median_A': NOT_COMPUTED,
+                'domain_centroid_distance_wt_reference_A': NOT_COMPUTED,
+                'local_metrics_status': NOT_COMPUTED,
+            }
+            if name == 'WT':
+                for region in ('full', 'nmnat', 'nudix'):
+                    for statistic in ('median', 'min', 'max'):
+                        row[f'rmsd_vs_wt_{region}_{statistic}_A'] = _fmt(
+                            design[f'comparison_{region}_{statistic}_A'])
+                    row[f'rmsd_vs_wt_{region}_model_pairs'] = design[
+                        f'comparison_{region}_model_pairs']
+            elif group == 'AB':
+                _comparison_columns(row, name, 'WT', 'rmsd_vs_wt')
+                _comparison_columns(row, name, parent_a, 'rmsd_vs_parent_a')
+            else:
+                _comparison_columns(row, name, 'WT', 'rmsd_vs_wt')
+                _not_applicable(row, 'rmsd_vs_parent_a')
+            for region in ('full', 'nmnat', 'nudix'):
+                for statistic in ('median', 'min', 'max'):
+                    row[f'self_{region}_{statistic}_A'] = _fmt(
+                        design[f'self_{region}_{statistic}_A'])
+                row[f'self_{region}_model_pairs'] = design[f'self_{region}_model_pairs']
+            for key in ('local_site_count', 'local_sites_above_baseline',
+                        'local_sites_above_baseline_list', 'max_local_ca_displacement_A',
+                        'max_local_site',
+                        'baseline_ca_displacement_at_max_local_site_A'):
+                row[key] = NOT_COMPUTED if key in ('local_site_count',
+                                                   'local_sites_above_baseline',
+                                                   'local_sites_above_baseline_list') else ''
+        else:
+            confidence_ptm = clone_confidence.get((name, 'ptm'))
+            confidence_plddt = clone_confidence.get((name, 'complex_plddt'))
+            row = {
+                'candidate_id': name,
+                'source': source_labels['ePCR'],
+                'prediction_batch': batch,
+                'comparison_reference': 'WT',
+                'plddt_median_0_1': _fmt(confidence_plddt['median']) if confidence_plddt else '',
+                'ptm_median_0_1': _fmt(confidence_ptm['median']) if confidence_ptm else '',
+            }
+            for region in ('full', 'NMNAT', 'Nudix'):
+                pair = clone_pairs.get((name, region))
+                self_row = clone_self.get((name, region))
+                key_region = region.lower()
+                if pair is not None:
+                    row[f'rmsd_vs_wt_{key_region}_median_A'] = _fmt(pair['median_rmsd_A'])
+                    row[f'rmsd_vs_wt_{key_region}_min_A'] = _fmt(pair['min_rmsd_A'])
+                    row[f'rmsd_vs_wt_{key_region}_max_A'] = _fmt(pair['max_rmsd_A'])
+                    row[f'rmsd_vs_wt_{key_region}_model_pairs'] = pair['model_pairs']
+                if self_row is not None:
+                    row[f'self_{key_region}_median_A'] = _fmt(self_row['median_rmsd_A'])
+                    row[f'self_{key_region}_min_A'] = _fmt(self_row['min_rmsd_A'])
+                    row[f'self_{key_region}_max_A'] = _fmt(self_row['max_rmsd_A'])
+                    row[f'self_{key_region}_model_pairs'] = self_row['model_pairs']
+            _not_applicable(row, 'rmsd_vs_parent_a')
+            distances = clone_geometry.get(name, [])
+            wt_distances = clone_geometry.get('WT', [])
+            row['domain_centroid_distance_median_A'] = (
+                _fmt(sorted(distances)[len(distances) // 2]) if distances else '')
+            row['domain_centroid_distance_wt_reference_A'] = (
+                _fmt(sorted(wt_distances)[len(wt_distances) // 2]) if wt_distances else '')
+
+            sites = [item for (variant, _), item in local_rows.items() if variant == name]
+            above = []
+            maximum = None
+            for site in sites:
+                position = site['position']
+                baseline = baseline_rows.get((name, position))
+                baseline_median = (baseline['self_ca_displacement_median_A']
+                                   if baseline else None)
+                baseline_max = (baseline['self_ca_displacement_range_A'][1]
+                                if baseline else None)
+                displacement = site['ca_displacement_median_A']
+                displacement_min = site['ca_displacement_range_A'][0]
+                is_above = baseline_max is not None and displacement_min > baseline_max
+                if is_above:
+                    above.append(site['edit'])
+                if maximum is None or displacement > maximum[0]:
+                    maximum = (displacement, site['edit'], baseline_median)
+                local_table.append({
+                    'candidate_id': name,
+                    'edit': site['edit'],
+                    'position': position,
+                    'domain': site['domain'],
+                    'prediction_batch': batch,
+                    'ca_displacement_median_A': _fmt(displacement),
+                    'ca_displacement_min_A': _fmt(displacement_min),
+                    'ca_displacement_max_A': _fmt(site['ca_displacement_range_A'][1]),
+                    'neighborhood_rmsd_median_A': _fmt(site['neighborhood_rmsd_median_A']),
+                    'neighborhood_rmsd_min_A': _fmt(site['neighborhood_rmsd_range_A'][0]),
+                    'neighborhood_rmsd_max_A': _fmt(site['neighborhood_rmsd_range_A'][1]),
+                    'self_baseline_ca_displacement_median_A': _fmt(baseline_median),
+                    'self_baseline_ca_displacement_min_A': _fmt(
+                        baseline['self_ca_displacement_range_A'][0]) if baseline else '',
+                    'self_baseline_ca_displacement_max_A': _fmt(baseline_max),
+                    'self_baseline_neighborhood_rmsd_median_A': _fmt(
+                        baseline['self_neighborhood_rmsd_median_A']) if baseline else '',
+                    'displacement_range_disjoint_from_baseline': '是' if is_above else '否',
+                    'disjoint_criterion': ABOVE_BASELINE_CRITERION,
+                    'model_pairs': site['model_pairs'],
+                })
+            row['local_site_count'] = len(sites)
+            row['local_sites_above_baseline'] = len(above)
+            row['local_sites_above_baseline_list'] = ';'.join(sorted(above))
+            row['max_local_ca_displacement_A'] = _fmt(maximum[0]) if maximum else ''
+            row['max_local_site'] = maximum[1] if maximum else ''
+            row['baseline_ca_displacement_at_max_local_site_A'] = (
+                _fmt(maximum[2]) if maximum and maximum[2] is not None else '')
+            row['local_metrics_status'] = '已计算'
+        rows.append({field: row.get(field, '') for field in METRIC_FIELDS})
+    local_table.sort(key=lambda item: (item['candidate_id'], item['position']))
+    return rows, local_table
+
+
+def _write_metrics(rows, local_table, output):
+    summary_path = output / 'candidate_metrics_summary.csv'
+    with summary_path.open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(METRIC_FIELDS),
+                                lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(rows)
+    local_path = output / 'mutation_local_metrics.csv'
+    with local_path.open('w', newline='') as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(LOCAL_FIELDS),
+                                lineterminator='\n')
+        writer.writeheader()
+        writer.writerows(local_table)
+    return summary_path, local_path
+
+
 def _readme(rows, attachments, commit):
     lines = [
         '# NatV 蛋白序列与结构资料',
@@ -138,6 +381,11 @@ def _readme(rows, attachments, commit):
         '|---|---|',
         '| `candidates.csv` | 14 条完整序列、所有氨基酸替换、来源、亲本和序列校验值（SHA-256） |',
         '| `candidates.fasta` | 同一组 14 条序列，可导入序列分析软件 |',
+        '| `candidate_metrics_summary.csv` | 14 条候选的置信度、与 WT 的全长/分域 RMSD、'
+        'A+B 另列对亲本 A 的 RMSD、自身预测离散、结构域质心距离（克隆含 ePCR 批次 WT 参照）'
+        '和局部差异汇总，含来源类别与预测批次 |',
+        '| `mutation_local_metrics.csv` | NatV10/NatV89 各位点的 Cα 位移、邻域 RMSD、'
+        '同序列自身离散基准，以及“位移范围与自身基准是否不重叠”的描述性筛选 |',
         '| `coordinates/` | 每条蛋白 3 个预测结构，共 42 个 PDB 文件 |',
         '| `references/` | 易错 PCR 研究中另外预测的 3 个 WT 结构，供复算该批比较结果 |',
         '| `evidence/` | 原始序列表、生成和设计记录、Sanger 测序核查记录 |',
@@ -386,6 +634,12 @@ def build_candidate_delivery(config_path, output):
     fasta_path = output / 'candidates.fasta'
     _write_fasta(rows, fasta_path)
 
+    batch_by_candidate = {item['candidate']: item['batch'] for item in coordinate_entries}
+    metric_rows, local_table = _metrics_tables(config, sources, batch_by_candidate)
+    if len(metric_rows) != 14:
+        raise ValueError(f'Expected 14 metric rows, got {len(metric_rows)}')
+    metrics_path, local_metrics_path = _write_metrics(metric_rows, local_table, output)
+
     copied = []
     for item in [*config.get('evidence', []), *config.get('attachments', [])]:
         copied.append(_copy_item(item, output))
@@ -434,6 +688,28 @@ def build_candidate_delivery(config_path, output):
         },
         'schema': list(FIELDS),
         'sources': sources,
+        'metrics_sources': {
+            'design_metrics': sources['design_metrics'],
+            'design_comparisons': sources['design_comparisons'],
+            'clone_summary': sources['clone_summary'],
+            'note': 'candidate_metrics_summary.csv and mutation_local_metrics.csv are '
+                    'compiled from these existing result files; no new computation. '
+                    'A+B rows carry two independent comparisons: rmsd_vs_wt_* is the '
+                    'A+B-versus-WT supplementary comparison and rmsd_vs_parent_a_* is '
+                    'the A+B-versus-parent-A primary comparison; A/B candidates have '
+                    'rmsd_vs_parent_a_* marked 不适用. '
+                    'Local per-site displacement exists only for the ePCR clones; '
+                    'design candidates are marked 未计算. '
+                    'displacement_range_disjoint_from_baseline is a descriptive screen '
+                    'using the criterion: the minimum cross-sequence displacement is '
+                    'larger than the maximum same-clone self-baseline displacement at '
+                    'that position. It is not a significance test; the 9 cross-sequence '
+                    'model pairs and 3 self model pairs are statistically dependent, and '
+                    'the baseline is the variant\'s own sample dispersion, not a common '
+                    'WT-plus-variant upper bound. '
+                    'domain_centroid_distance_wt_reference_A is the ePCR-batch WT median '
+                    '(31.494 A, range 31.300-31.625 A over 3 models) for the clone rows.',
+        },
         'derivation': {
             'WT': 'candidates.csv:WT, cross-checked against variants.csv:WT',
             'computational_design': '11 non-WT design rows; protein edits and sequence SHA '
