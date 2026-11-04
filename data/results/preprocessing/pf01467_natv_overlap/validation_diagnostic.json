@@ -1,0 +1,28 @@
+{
+  "status": "post_hoc_fixed_model_diagnostic_not_retraining",
+  "score": "NMNAT prior joint NLL per target residue; auxiliary minus random",
+  "excluded_components": [
+    "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+  ],
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 8802,
+  "all_components": {
+    "components": 44,
+    "mean": -0.04900095051790036,
+    "ci95": [
+      -0.06025225572346953,
+      -0.03758172975605085
+    ],
+    "negative_components": 42
+  },
+  "without_exact_overlap_components": {
+    "components": 43,
+    "mean": -0.048395318249232766,
+    "ci95": [
+      -0.05962204525352611,
+      -0.03712000787369552
+    ],
+    "negative_components": 41
+  },
+  "limit": "Does not remove information from fitted weights or undo validation-based selection."
+}

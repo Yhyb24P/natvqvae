@@ -1,0 +1,38 @@
+question: Does external homologous-fragment pretraining improve NatV prediction relative to matched fragments from NatV training proteins?
+preparation: config/fragment_pretraining.yaml
+auxiliary_configs:
+  external: config/fragment_aux_external.yaml
+  self: config/fragment_aux_self.yaml
+downstream_config: config/transfer.yaml
+sources: config/sources.yaml
+target: config/target.yaml
+seed_pairs:
+  - {auxiliary: 9101, downstream: 9201}
+  - {auxiliary: 9102, downstream: 9202}
+  - {auxiliary: 9103, downstream: 9203}
+conditions: [random, self, external]
+auxiliary_checkpoint: last
+auxiliary_updates: 750
+auxiliary_selection: fixed_updates_without_validation
+downstream_checkpoint: best_by_existing_nmnat_validation_rule
+training_output: data/results/training/natv_fragment_transfer
+evaluation_output: data/results/evaluation/natv_fragment_transfer
+primary_comparison: external_minus_self
+primary_metric: NMNAT_prior_joint_nll_per_target_residue
+additional_comparisons: [self_minus_random, external_minus_random, each_minus_frozen_esm2]
+uncertainty:
+  unit: NatV_component_v2
+  averaging: average_pipeline_seed_differences_within_group_then_equal_group_mean
+  bootstrap_repeats: 2000
+  bootstrap_seed: 8802
+  interpretation: conditional_on_the_three_fitted_pipeline_replicates
+test_scoring:
+  status: not_started
+  rule: use_the_same_selected_checkpoints_and_masks_without_test_based_model_selection
+notes:
+  - All three downstream initializations use the same frozen ESM-2 and full NatV training data.
+  - Both pretraining conditions share pair order, masked WT positions, actual target counts and loss weights.
+  - Pretraining uses complete external fragments and approximate-length self fragments; visible contexts are not identical.
+  - Equal update counts do not imply equal total computation; random has no auxiliary training.
+  - The external pool differs from the original 2395-fragment experiment.
+  - Three paired pipeline seeds do not separately estimate auxiliary and downstream seed variance.

@@ -1,0 +1,28 @@
+sources:
+  roles:
+    path: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet
+    sha256: 2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce
+  population:
+    path: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/source_population.parquet
+    sha256: a01bdcc6ba986f16fc2b4c0ef1abc900f6aad9a1198adad51122b1da4a77ffc7
+  cdd:
+    path: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/population_cdd_domains.parquet
+    sha256: 07d612faf7aa8f74d54215e4279866ea55c2e6bde7f3b7bf97392d115e173586
+current:
+  population: data/raw/sequences/natv_population.fasta
+  splits:
+    training: data/results/preprocessing/natv_family/train.csv
+    validation: data/results/preprocessing/natv_family/validation.csv
+    test: data/results/preprocessing/natv_family/test.csv
+expected_counts:
+  training: 1644
+  validation: 227
+  test: 231
+cdd_models:
+  nmnat:
+    accession: cd02168
+    short_name: NMNAT_Nudix
+  nudix:
+    accession: cd18873
+    short_name: NUDIX_NadM_like
+output: data/results/preprocessing/natv_test_recovered

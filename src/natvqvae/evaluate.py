@@ -13,14 +13,14 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from .data import PopulationData, sha256_file, stable_seed, write_json
+from .data import PopulationData, mask_panels, sha256_file, stable_seed, write_json
 from .model import (FrozenEncoder, build_model, categorical_kl, categorical_log_prob,
                     categorical_samples, load_checkpoint, reconstruction_nll, target_tensors)
 
 
 @torch.no_grad()
 def conditional_scores(model, context_features, full_features, valid, mask, labels,
-                       sample_count, generator, chunk_size=16):
+                       sample_count, generator, chunk_size=16, return_site_log_probs=False):
     """Score the actual categorical mixture, separately from expected CE.
 
     Returned NLLs sum target sites for each input. Posterior IS and direct-prior
@@ -61,7 +61,7 @@ def conditional_scores(model, context_features, full_features, valid, mask, labe
     logw = (post_logp + categorical_log_prob(prior, codes_post)
             - categorical_log_prob(posterior, codes_post))
     normalized_weights = logw.softmax(0)
-    return {
+    result = {
         'sites': sites,
         'prior_joint_nll': -(torch.logsumexp(prior_logp, 0) - math.log(sample_count)),
         'posterior_joint_nll': -(torch.logsumexp(logw, 0) - math.log(sample_count)),
@@ -73,12 +73,17 @@ def conditional_scores(model, context_features, full_features, valid, mask, labe
         'ess': normalized_weights.square().sum(0).reciprocal(),
         'max_weight': normalized_weights.max(0).values,
     }
+    if return_site_log_probs:
+        result['prior_site_marginal_log_probs'] = torch.logsumexp(prior_site_logp, 0) - math.log(sample_count)
+    return result
 
 
 def evaluate(config_path, sources_path, target_path, checkpoint, output, device=None,
-             split='validation', limit=None):
-    if split != 'validation':
-        raise ValueError('Only the validation split is evaluated; test remains sealed')
+             split='validation', limit=None, test_data=None):
+    if split not in ('validation', 'test'):
+        raise ValueError('Evaluation supports validation and explicitly recovered test data')
+    if (split == 'test') != (test_data is not None):
+        raise ValueError('Test evaluation requires --test-data; validation must not use it')
     output = Path(output)
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f'Evaluation output already contains files: {output}')
@@ -91,8 +96,14 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
         raise ValueError('Evaluation requires a QVAE checkpoint')
     model = build_model(payload, device=device)
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
-    queries = data.validation_queries()
-    component_sizes = Counter(record.component for record in data.validation)
+    if split == 'test':
+        from .test_data import load_recovered_test
+        records = load_recovered_test(data, test_data)
+        queries = [{'record': record, 'panel': panel} for record in records
+                   for panel in mask_panels(record, study['training']['mask_seed'])]
+    else:
+        records, queries = data.validation, data.validation_queries()
+    component_sizes = Counter(record.component for record in records)
     if limit is not None:
         queries = queries[:int(limit)]
     totals = []
@@ -100,6 +111,29 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
     batch_size = int(config['batch_size'])
     sample_count = int(config['sample_count'])
     repeats = int(config['repeats'])
+    if batch_size < 1 or sample_count < 1 or repeats < 1:
+        raise ValueError('Evaluation requires positive batch size, sample count and repeats')
+    output.mkdir(parents=True, exist_ok=True)
+    input_paths = [config_path, sources_path, target_path, checkpoint, data.sources['population'],
+                   data.sources['splits']['training'], data.sources['splits']['validation'],
+                   data.sources['splits']['test']]
+    if test_data is not None:
+        input_paths.extend(Path(test_data) / name for name in ('test.csv', 'test.fasta', 'manifest.json'))
+    esm_path = Path(data.sources['esm_model'])
+    write_json(output / 'identity.json', {
+        'split': split, 'test_data': str(test_data) if test_data is not None else None,
+        'input_sha256': {str(path): sha256_file(path) for path in input_paths},
+        'esm_files_sha256': {path.name: sha256_file(path) for path in sorted(esm_path.iterdir())
+                             if path.suffix in {'.json', '.safetensors'} or path.name == 'vocab.txt'},
+        'code_sha256': {name: sha256_file(Path(__file__).with_name(name))
+                       for name in ('evaluate.py', 'model.py', 'data.py') +
+                       (('test_data.py',) if split == 'test' else ())},
+        'git_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'config': config, 'mask_seed': study['training']['mask_seed'],
+        'limit': limit, 'sequences': len(records), 'groups': len(component_sizes),
+        'precision': 'bfloat16 forward, float32 probabilities' if device.type == 'cuda' else 'float32',
+        'amino_acid_output_count': 20,
+    })
     for start in range(0, len(queries), batch_size):
         batch = queries[start:start + batch_size]
         with torch.no_grad(), torch.autocast(device_type=device.type, dtype=torch.bfloat16,
@@ -109,13 +143,14 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
                 generator = torch.Generator(device=device.type)
                 generator.manual_seed(stable_seed(config['seed'], 'evaluation', start, repeat))
                 scores = conditional_scores(model, context, full, valid, mask, labels,
-                                            sample_count, generator)
+                                            sample_count, generator, return_site_log_probs=True)
                 for index, query in enumerate(batch):
                     sites = int(scores['sites'][index].item())
                     item = {
                         'sequence_id': query['record'].sequence_id,
                         'component': query['record'].component,
                         'panel': query['panel']['panel'],
+                        'positions_0based': query['panel']['positions'],
                         'repeat': repeat,
                         'weight': float(query['panel']['weight']) /
                                   component_sizes[query['record'].component],
@@ -124,12 +159,15 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
                     for name, values in scores.items():
                         if name == 'sites' or values is None:
                             continue
+                        if name == 'prior_site_marginal_log_probs':
+                            item[name] = values[index, :sites].float().cpu().tolist()
+                            continue
                         value = float(values[index].item())
                         item[name + '_per_residue' if name.endswith('nll') else name] = (
                             value / sites if name.endswith('nll') else value)
                     totals.append(item)
     if not totals:
-        raise ValueError('No validation queries evaluated')
+        raise ValueError('No queries evaluated')
     weighted = sum(item['weight'] for item in totals)
     summary = {
         'status': 'COMPLETED', 'split': split, 'checkpoint': str(checkpoint),

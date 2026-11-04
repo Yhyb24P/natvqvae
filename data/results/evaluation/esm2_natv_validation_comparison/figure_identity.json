@@ -1,0 +1,11 @@
+{
+  "source": "/home/yhshy/git_files/natvqvae/data/results/evaluation/esm2_natv_validation_comparison/comparison.json",
+  "source_sha256": "3b4fc36b8542a0c210d72dbfe0ed6e77e70a77de711d780c069488351f9406f8",
+  "implementation_sha256": "9ab1979b2cafc9bf821ac36d08e9759c2702ffd5252498ced2d280cc1788fcd5",
+  "matplotlib": "3.10.8",
+  "interval": "95% group bootstrap, conditional on the three fitted training seeds",
+  "outputs": {
+    "esm_comparison.pdf": "e773ee18e040f7d63ec4fe041fbfb69e3ae67322bc3ea5170a116808bcfd6eff",
+    "esm_comparison.png": "dc36a014e8cc504471a49b8f4d622d30ab03ffd17b2b84ccf4d99838e0ac7f04"
+  }
+}

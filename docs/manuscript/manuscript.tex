@@ -1,0 +1,256 @@
+% Working manuscript. Results refer to the original development analyses.
+% Do not describe these numbers as independent-test or cleaned-training results.
+\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}
+\usepackage{amsmath,amssymb,booktabs,graphicx}
+\usepackage{array}
+\raggedbottom
+\newcommand{\pending}[1]{\textbf{[Author information required: #1]}}
+\begin{document}
+\title[Homologous-fragment pretraining for NatV]{Auxiliary pretraining on homologous sequence fragments for conditional modeling of NatV}
+\author{\fnm{Author list} \sur{pending confirmation}}
+\affil{\orgname{Affiliations and corresponding author pending confirmation}}
+\abstract{\doublespacing\unboldmath\noindent\textbf{Background:} Related protein fragments may provide additional training information for family-specific sequence models built on frozen protein language representations. We studied whether such auxiliary pretraining changes masked-residue prediction and conditional sequence generation for the bifunctional NMNAT--Nudix protein NatV.
+\par\noindent\textbf{Results:} A categorical conditional variational autoencoder was trained on 1,644 NatV sequences, with or without initialization from pretraining on 2,395 homologous fragments. Both conditions used frozen ESM-2 representations and three downstream training seeds. In the original development evaluation of 227 sequences in 44 groups, auxiliary initialization reduced NMNAT negative log likelihood by 0.0490 nats per target residue. The paired group-bootstrap interval was $[-0.0603,-0.0376]$, conditional on the trained models. Subsequent sequence comparison identified a 124-residue auxiliary training fragment exactly contained in two validation proteins. Excluding their entire group from the existing scores left a difference of $-0.0484$, but this sensitivity analysis did not remove exposure during pretraining or model selection. For 9,216 generation attempts per condition in the KVP40 wild-type context, mean substitutions decreased from 13.4048 to 13.2122, whereas unique sequence counts were 9,201 and 9,196. The frozen ESM-2 prediction head yielded a lower NMNAT NLL of 1.7248, compared with 1.8664 and 1.8174 for the two task-model conditions. These measurements describe sequence distributions, not enzyme function.
+\par\noindent\textbf{Conclusions:} Auxiliary initialization improved the task model's development score without surpassing the frozen ESM-2 head on the NMNAT masks. Independent predictive improvement remains unestablished. Fragment containment must be checked explicitly when auxiliary fragments are compared with longer evaluation proteins. Determining the contribution of external information requires matched pretraining comparisons and evaluation that accounts for prior data use.}
+\keywords{protein sequence modeling, auxiliary pretraining, conditional generation, variational autoencoder, NatV, sequence overlap}
+\maketitle
+
+\noindent\textbf{Working draft, 4 November 2026.} This manuscript describes completed development analyses, a subsequently confirmed data-overlap problem, and the preparation of a new comparison. The new training runs are not complete. The designated test sequences have prior evaluation history, including use of a subset in method selection. Author information and declarations remain to be supplied.
+
+\section{Background}
+Protein sequence generators can be evaluated at several levels: the probabilities assigned to natural sequences, the distribution of generated substitutions, and the properties of experimentally produced proteins. These are different outcomes. Variational autoencoders have generated experimentally functional protein variants, but those functional claims relied on measurements of the designed proteins \cite{hawkins2021}. A temporal variational autoencoder has also been combined with property prediction to search for variants \cite{li2023}. Thus, using a variational model to produce sequences is an established approach; a family-specific application needs to explain what additional information its training procedure supplies.
+
+Conditional generation makes that question more precise. Domain-to-domain translation has been used to generate a partner domain from another domain, including comparisons of paired and shuffled domain information \cite{meynard2023}. ProtWave-VAE combines latent conditioning with autoregressive generation and supports diversification of a sequence region while retaining another \cite{praljak2023}. ProT-VAE places a family-specific variational model between pretrained protein transformer encoder and decoder modules \cite{sevgen2025}. These studies establish that both conditional generation and the combination of pretrained protein representations with variational models have precedents. Here, most residues of the target protein remain visible, and the model predicts or replaces selected positions within that context. The question is what related external fragments add to this prediction task after general protein representations are already available.
+
+KVP40 NatV is a 341-residue bifunctional protein containing an N-terminal nicotinamide mononucleotide adenylyltransferase (NMNAT) region and a C-terminal Nudix hydrolase region. Purified wild-type NatV has NMNAT activity and hydrolyzes NAD$^+$, NADH and ADP-ribose \cite{lee2017}. This makes the protein relevant to sequence design, but also complicates functional interpretation: NAD$^+$ accumulation reflects both synthesis and consumption. Neither sequence probability nor a predicted fold establishes the balance of these activities.
+
+We examine auxiliary sequence learning on top of fixed ESM-2 representations \cite{lin2023}. The auxiliary material consists mainly of homologous local cores associated with PF01467, rather than experimentally confirmed, intact NMNAT enzymes. The scientific question is whether these fragments add useful information to a conditional NatV model beyond its existing representations and NatV training sequences. We distinguish this question from the benefit of a shared latent variable and from the functional value of generated variants. Comparisons of probabilistic protein models have shown why statistical properties of generated sequences require explicit evaluation rather than inference from model architecture \cite{mcgee2021}.
+
+\section{Methods}
+\subsection{Sequence collections and the conditional prediction task}
+The original downstream modeling collection contains 1,871 NatV sequences: 1,644 training sequences in 47 similarity groups and 227 development-validation sequences in 44 groups. The groups are sequence clusters, not independent protein families. A separate list of 231 test sequence identifiers in 44 groups was retained but was not scored in the QVAE experiments reported here. We recovered all 231 test sequences by matching their sequence SHA-256 hashes against the original collections: 225 from the 13,972-sequence file and six additional sequences from an earlier corrected NatV collection. Together, the three splits contain 2,102 sequences.
+
+The inherited downstream groups are undirected connected components of recorded sequence alignments satisfying at least 70\% identical residues over the alignment and alignment spans covering at least 80\% of both full-length proteins. After separately retaining components connected to previously reserved evaluation or reference sequences, complete eligible components were assigned toward an 80\%/10\%/10\% sequence split. Components were initially assigned from largest to smallest and then moved to reduce the deviation from these proportions. Records with conflicting source annotations were subsequently excluded without redefining component membership. The current sequence IDs and component assignments were checked against the archived training-role table. Connected membership does not require every pair within a component to meet the edge thresholds.
+
+The designated test set had previously been evaluated in the earlier project. Archived per-sequence outputs show that all 231 sequences were scored on 7 October 2026 by one frozen ESM-2 evaluation and five training seeds each of two other model classes, giving 11 evaluations in total. A subset of 39 sequences had also participated in a six-condition, five-seed comparison on 4 October that informed method selection. The later full-set evaluation did not select checkpoints, but this does not undo the earlier use. These sequences are excluded from the present training sets and checkpoint selection; they cannot be described as never-used test data. The current preparation used them for sequence-overlap screening, without calculating new prediction scores.
+
+For KVP40, the modeled regions are NMNAT residues 4--181, the intervening region 182--203, and Nudix residues 204--338. Homolog-specific annotated intervals define corresponding masking tasks. The downstream task defines 27 fixed masking panels per sequence. Three randomly distributed panels mask 8\%, 15\%, or 30\% of the full sequence and together receive weight 0.25. The remaining 24 panels receive weight 0.75 and cover four regions: the annotated two-domain interval, NMNAT, Nudix, and the intervening region. Each region has three mask sizes and two size rules, fixed counts or counts scaled by relative region length. NMNAT, Nudix, and the two-domain interval use nominal counts of 8, 16, and 32; the intervening region uses 4, 8, and 16. During training, one panel is sampled per protein per epoch using these weights; final evaluation uses all 27. We distinguish a mask over the two-domain interval from the weighted average over all 27 panels.
+
+The original upstream sequence file contains 13,972 unique proteins. Its profile annotations identify 8,849 proteins with PF01467 but without the required Nudix profile. Fragment extraction and deduplication produced 4,164 auxiliary sequences. Of these, 2,395 sequences in 152 groups were used for training, 1,684 in 38 groups for auxiliary validation, and 85 were separately flagged for partial-sequence or multiple-profile-hit risks. The training set comprises 2,267 local cores and 128 more broadly mapped fragments. Functional annotations are heterogeneous and were not treated as activity labels.
+
+Fragments were mapped to KVP40 NMNAT using local BLOSUM62 alignments with gap-opening and extension scores of $-10$ and $-0.5$. A reliable position had to retain the same residue correspondence across all optimal alignments; no reliable positions were assigned when more than 16 optimal alignments existed. The broader fragments span the local alignment of the original protein to KVP40, requiring at least 80\% target coverage, 30\% identity, and ten reliable positions. Otherwise, the original PF01467 core was retained if it met the identity and reliable-position criteria. The original auxiliary task defines three fixed masks per fragment with actual target counts $\min(m,n-1)$, where $m\in\{8,16,32\}$ and $n$ is the number of usable mapped positions. One mask is sampled uniformly per fragment per epoch.
+
+Auxiliary fragments and NatV NMNAT intervals were originally clustered together with MMseqs2 \cite{steinegger2017}, using 50\% sequence identity and 80\% coverage of both sequences. Groups containing downstream training or validation members were excluded from auxiliary training. This rule does not exclude every contained fragment: an exact 124-residue match covers only 68.1\% of a 182-residue domain. We therefore distinguish the original cluster separation from the direct fragment-containment examination described below.
+
+\subsection{Conditional model and the role of the latent variable}
+The model uses frozen, 1,280-dimensional representations from a 33-layer ESM-2 encoder \cite{lin2023}. Target residues are replaced by mask tokens \emph{before} ESM-2 is evaluated. The context encoder therefore does not receive the target amino acids through their unmasked representations. A separate posterior path receives full-sequence representations during variational training and importance-sampling evaluation.
+
+The trainable context model projects features to 256 dimensions and applies two transformer layers with four attention heads. The categorical latent variable has 16 factors with eight states each. Its one-hot representation conditions two positionwise residual decoder blocks through feature-wise linear modulation \cite{perez2018}. A 20-class output predicts amino acids at the masked positions. The repository calls this categorical conditional variational autoencoder QVAE. The variational formulation follows latent-variable modeling \cite{kingma2014}; no quantum computation is used in the implemented model.
+
+Let $M$ denote the masked positions and $c$ the visible sequence. The predictive distribution is
+\begin{equation}
+ p_\theta(x_M\mid c,M)=\sum_z p_\theta(z\mid c,M)
+       \prod_{i\in M}p_\theta(x_i\mid c,M,z).
+\label{eq:joint}
+\end{equation}
+Outputs are conditionally independent given $c$, $M$, and $z$, but need not be independent after summing over $z$. This is an architectural capacity, not evidence that useful residue dependencies were learned. Visible Nudix residues can influence the context representations regardless of whether the latent mixture improves joint prediction.
+
+Training uses eight posterior samples and a leave-one-out score-function estimator for the categorical posterior \cite{kool2019}, with an analytic Kullback--Leibler term. For each sampled latent state, the baseline is the mean reconstruction loss of the other seven samples for the same input. AdamW uses a learning rate of $1.5\times10^{-4}$, weight decay 0.01, batch size 32, and gradient clipping at 1.0. The learning rate and divergence weight increase over the first five and ten epochs, respectively.
+
+Training weights each sequence inversely to the size of its similarity group, normalized to a mean weight of one. The reconstruction loss sums over masked residues before applying the sequence weight; it is not first divided by the number of masked sites. The per-target-residue scores reported below are evaluation quantities, rather than the exact training objective.
+
+\subsection{Auxiliary initialization and model selection}
+We compared random initialization of the trainable task model with initialization from auxiliary fragment pretraining. Both conditions retain the same frozen ESM-2 encoder. Thus, ``random initialization'' does not mean that the entire system learns protein sequences from scratch.
+
+Auxiliary training used seed 8601 and ran for 3,000 updates. The transferred parameters came from the selected epoch-10 checkpoint, after 750 updates. Three downstream training seeds, 8301--8303, were then used in each condition, with 2,704 updates per run. All auxiliary-initialized runs share that one pretrained checkpoint. The downstream budgets are matched, but the total optimization histories and total computation are not.
+
+Auxiliary checkpoint selection used 128 validation fragments selected by cycling across auxiliary groups. Each received its nominal 16-position mask and 16 prior samples. The selection score was evaluated initially, every five epochs, and at completion; the lowest prior NLL determined the checkpoint. This score sums negative log probabilities across queries and divides by their total target count. It therefore weights by target count, unlike the downstream group-balanced selection score.
+
+Downstream model selection used 128 development sequences covering all 44 validation groups and three NMNAT masks of 8, 16, and 32 residues, giving 384 queries. The selection score was evaluated using 16 prior samples initially, every five epochs, and at the end. The lowest group-balanced prior negative log likelihood (NLL), with a minimum improvement of $10^{-4}$, determined the selected checkpoint. Randomly initialized models were selected at epochs 20, 15, and 20; auxiliary-initialized models at epochs 20, 15, and 15. These correspond to 1,040 or 780 downstream updates. The final development evaluation includes the sequences and masks used for selection, so it is not an independent estimate of generalization.
+
+\subsection{Predictive scores and uncertainty}
+For each sequence and mask, the primary score is the negative logarithm of the joint conditional probability, divided by the number of target residues. Direct prior Monte Carlo estimates use $K=64$ samples:
+\begin{equation}
+ \widehat{\ell}_{\rm joint}=-\frac{1}{|M|}\log\left[
+ \frac{1}{K}\sum_{k=1}^{K}\prod_{i\in M}
+ p_\theta(x_i\mid c,M,z_k)\right],\qquad z_k\sim p_\theta(z\mid c,M).
+\end{equation}
+A posterior importance-sampling estimate targets the same predictive probability. The model's own marginal reference averages each site's probability over the same prior samples before multiplying across sites. It removes shared-latent dependence while retaining the model's context-dependent single-site predictions. Finite Monte Carlo estimates followed by logarithms can be biased; agreement between estimators does not identify the mechanism of a training effect.
+
+Each final development evaluation comprises 227 sequences, 27 panels, and four Monte Carlo repeats. The 24,516 recorded rows are repeated scores, not independent biological samples. Scores are averaged within similarity groups. For each region, we calculate auxiliary-minus-random differences within each group and training-seed pair, average the three seed differences within each group, and bootstrap the 44 group averages 2,000 times with seed 8802. The reported percentile intervals condition on the fitted models. They do not include auxiliary-pretraining seed variation or correct the reuse of validation data for selection.
+
+\subsection{Frozen ESM-2 prediction reference}
+We applied the existing ESM-2 masked-amino-acid head to the same 6,129 sequence--mask queries used for development evaluation. All target positions were masked together before encoding. Logits were restricted to the same 20 amino acids as the task model and normalized before scoring the observed residues. The ESM score is the mean negative log probability over target positions, equivalent to the per-residue log score of its factorized conditional distribution. It is not an autoregressive sequence likelihood or an unmasked pseudo-likelihood. The shared-latent QVAE joint score and its product-of-marginals reference were compared separately with this ESM distribution.
+
+Query identifiers, group membership, target counts, and weights were checked across the six original task-model evaluations and the ESM evaluation. Historical query files did not store individual masked positions; these were reconstructed from the matching configuration and input-sequence hashes and checked against the positions saved in the ESM run. The current ESM weight checksum was recorded, but no checksum of the ESM file used during the historical runs was available. Both implementations used BF16 forward calculations on the GPU and float32 log-probability normalization. Differences were aggregated by group and training condition using the same bootstrap procedure as above.
+
+\subsection{Direct sequence-overlap examination}
+We compared every complete auxiliary training fragment with downstream full-length sequences using exact string containment, retaining sequence identifiers, group identifiers, and match coordinates. Auxiliary sequence and split-file hashes were compared with the recorded training inputs. This test detects exact containment irrespective of the longer sequence's coverage. It does not exclude approximate matches. After identifying an affected validation group, we repeated the existing group-bootstrap calculation after removing that entire group. The model parameters and selected checkpoints were unchanged; only the affected validation group was excluded from score aggregation.
+
+We also searched the 2,395 auxiliary training fragments against all 2,102 downstream sequences using MMseqs2 version 18.8cc5c. The thresholds were 50\% identity across the local alignment, coverage of at least 80\% of the auxiliary query fragment, and E-value at most 0.001, with sensitivity 7.5. There was no minimum coverage requirement for the full-length NatV target. These criteria examine the effect of fragment length on sequence separation; a match is evidence of local homology, not necessarily duplication. This heuristic search does not establish the absence of more distant homologs.
+
+\subsection{Preparation of the external-versus-self fragment comparison}
+For the new comparison, we examined all 4,079 original auxiliary training and validation fragments; the 85 previously flagged fragments remained excluded. A graph connected fragments through their original auxiliary groups, exact containment, or a detected local alignment with at least 50\% identity, 80\% coverage of the shorter fragment, and E-value at most 0.001. An entire connected component was excluded if any member matched a NatV validation or test protein under the fragment-to-protein criteria above. Connected membership is a conservative exclusion rule; it does not imply that every excluded fragment is itself a close match to an evaluation protein.
+
+Each retained external fragment was paired with a fragment drawn solely from a NatV training protein. We recomputed reliable residue mappings to KVP40 within the annotated NMNAT intervals. A pair had to share at least 80\% of the external fragment's reliably mapped, standard-amino-acid columns. The external fragment was kept complete. The self fragment covered the common columns and was extended toward the external length within its NMNAT interval; its length could differ by at most 20\% of the external length. Eligible source proteins were selected by the least accumulated pair weight, first across NatV groups and then across proteins. Additional visible context was not required to have a one-to-one alignment correspondence.
+
+Both conditions use identical target columns, actual masked counts, pair order, and pair weights. A pair's weight is inversely proportional to its original external-group size and normalized to mean one. Nominal masks of 8, 16, and 32 columns retain at least one common column visible. The auxiliary models use paired seeds 9101--9103, 750 updates, batch size 32, eight latent samples, and no auxiliary-validation selection. Learning-rate and divergence warmups span 375 and 750 updates, respectively. The last auxiliary checkpoint initializes downstream training with paired seeds 9201--9203. Random initialization provides a third condition with no auxiliary stage. Downstream training and checkpoint selection retain the original settings. Equal auxiliary update counts do not imply equal total computation or identical visible contexts.
+
+The specified primary contrast is external minus self NMNAT joint NLL. The same selected checkpoints will be evaluated on the recovered held-out sequences, with no new selection based on their scores and explicit reporting of their historical use. As in the development comparison, uncertainty is estimated by resampling sequence groups after averaging paired pipeline-seed differences. The three pipeline replicates do not separately identify auxiliary and downstream seed variation. This comparison is still running; the preparation results below do not include its predictive scores.
+
+\subsection{Conditional generation}
+Generation used the full KVP40 wild-type context and NMNAT masks of 8, 16, and 32 positions. For each size, 16 position sets and 64 draws per set gave 3,072 proposals per trained model, or 9,216 per initialization condition. The two conditions shared mask definitions and random-number seeds for prior and amino-acid sampling. Different learned probabilities can still produce different latent states and amino acids under shared random numbers.
+
+We counted unique full-length sequences and substitutions from wild type, and recorded whether a proposal edited predefined NMNAT conserved positions. This set comprises H14, H17, T135, and R138; its editing frequency is the fraction of proposals that change at least one of these four positions. These are descriptive sequence measurements. Nudix residues are unchanged by construction because they are outside the generation mask. The subset with equal substitution counts in a paired draw was analyzed separately; this is a subset selected after generation, not the full generated population.
+
+For a fixed context and mask, the expected number of substitutions satisfies
+\begin{equation}
+ \mathbb{E}[D\mid c,M]=\sum_{i\in M}\left[1-p_i(x_i^{\rm WT}\mid c,M)\right].
+\label{eq:hamming}
+\end{equation}
+Consequently, the shared-latent model and its exact product-of-marginals reference have the same expected substitution count. Their differences, if present, concern joint substitution patterns or higher-order statistics. Pooling distinct masks can itself induce apparent dependencies, so comparisons of such dependencies must keep context and mask fixed.
+
+\subsection{Use of AI-assisted tools}
+AI-assisted tools were used to inspect code and study records, implement sequence-overlap checks, and prepare this working draft. Numerical results were calculated from the specified inputs by the analysis code. \pending{verify and complete the account of AI-assisted work and author verification before submission.}
+
+\section{Results}
+\subsection{Original development prediction differences}
+Auxiliary initialization reduced NMNAT development NLL in all three downstream seed pairs, with differences of $-0.04121$, $-0.04081$, and $-0.06498$ nats per target residue. Their group-balanced mean was $-0.04900$ (Table~\ref{tab:prediction}). The weighted average over all 27 masking panels decreased by 0.01338. Nudix and intervening-region intervals included zero. These regional differences should be interpreted alongside the NMNAT-specific selection objective; they do not by themselves establish a domain-specific transfer mechanism.
+
+\begin{table}[htbp]
+\caption{Original development prediction differences.}\label{tab:prediction}
+\centering
+\begin{tabular}{lrr}
+\toprule
+Mask region & Mean $\Delta$NLL & Conditional 95\% interval \\
+\midrule
+Two-domain interval & $-0.01705$ & $[-0.02681,-0.00701]$ \\
+NMNAT & $-0.04900$ & $[-0.06025,-0.03758]$ \\
+Nudix & $+0.00672$ & $[-0.00626,+0.01976]$ \\
+Intervening region & $+0.01359$ & $[-0.01231,+0.03876]$ \\
+Random positions & $-0.01922$ & $[-0.02789,-0.01099]$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip\small Differences are auxiliary initialization minus random initialization, in nats per target residue. Intervals resample 44 validation groups after averaging three training-seed differences. They are conditional on the trained models and include an identified group with exact auxiliary-fragment overlap.
+\end{table}
+
+\subsection{The frozen prediction head had lower NMNAT development NLL}
+The frozen ESM-2 head achieved an NMNAT NLL of 1.72483, compared with three-seed means of 1.86644 for random task-model initialization and 1.81744 for auxiliary initialization. Task-model-minus-ESM differences were $+0.14161$ (conditional 95\% interval $[+0.10267,+0.18050]$) and $+0.09261$ ($[+0.05808,+0.12777]$), respectively. Lower NLL is better. Replacing the QVAE joint score with its product-of-marginals score produced nearly identical differences, $+0.14169$ and $+0.09263$.
+
+For Nudix, the task-model mean NLLs were lower than ESM by 0.05206 and 0.04534, but the corresponding intervals, $[-0.12353,+0.02358]$ and $[-0.11602,+0.02665]$, included zero. The weighted averages across all masking panels also had intervals spanning zero. Thus, auxiliary initialization improved the task model's NMNAT development score, but neither task-model condition outperformed the frozen prediction head on that task.
+
+Figure~\ref{fig:esm} distinguishes these regional results.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{../../data/results/evaluation/esm2_natv_validation_comparison/esm_comparison.pdf}
+\caption{Development prediction relative to frozen ESM-2. Points show task-model-minus-ESM negative log likelihood per target residue; positive values favor ESM-2. Bars are 95\% percentile intervals from 2,000 resamples of 44 validation groups, after averaging the three trained-model differences within each group. These intervals condition on the fitted models. All masks denotes the predefined weighted average over 27 masking panels. Both task-model initializations used frozen ESM-2 representations.}\label{fig:esm}
+\end{figure}
+
+\subsection{A contained training fragment affected validation separation}
+One 124-residue auxiliary training fragment was exactly present at residues 10--133 of two validation proteins, of lengths 352 and 353 residues. Both proteins belong to the same validation group. No complete auxiliary training fragment was exactly contained in the 1,644 downstream training proteins. The two validation NMNAT intervals each span 182 residues, explaining why the original 80\% bidirectional coverage rule could miss this complete fragment match.
+
+No complete auxiliary training fragment was exactly contained in the 231 recovered test proteins. The local similarity search nevertheless found matches to 37 validation proteins in 12 groups and 25 test proteins in 10 groups (Table~\ref{tab:overlap}). The test alignments had 50.0--56.8\% identity and should not be described as exact copies or full-length near duplicates. Across validation and test, 19 distinct auxiliary training fragments had at least one qualifying match. These findings identify sequence relationships that the original grouping did not exclude; they do not quantify their effect on prediction.
+
+\begin{table}[htbp]
+\caption{Auxiliary training fragments matched to downstream proteins.}\label{tab:overlap}
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+Split & Auxiliary fragments & NatV proteins & Groups & Pairs \\
+\midrule
+Training & 12 & 623/1,644 & 21/47 & 642 \\
+Validation & 13 & 37/227 & 12/44 & 54 \\
+Test & 8 & 25/231 & 10/44 & 34 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\small Local alignments meet 50\% identity, 80\% coverage of the auxiliary fragment, and E-value $\leq0.001$. The two exact validation matches are included. Auxiliary fragments can match multiple splits, so their counts cannot be added across rows.
+\end{table}
+
+Removing the group with exact containment from the existing scores left 43 groups and 209 validation sequences. The NMNAT difference was then $-0.04840$ with a conditional interval of $[-0.05962,-0.03712]$; 41 of 43 group-averaged differences favored auxiliary initialization, compared with 42 of 44 originally. The average development difference is therefore not attributable solely to that group's scores. However, the pretrained weights already include the fragment, and the original validation procedure already influenced checkpoint selection. This calculation did not remove the other groups with local similarity matches and is not a result from retraining with separated data.
+
+\subsection{Generation changed substitution counts without establishing design quality}
+The original generation experiment produced 9,201 unique sequences among 9,216 random-initialization proposals and 9,196 among 9,216 auxiliary-initialization proposals. Uniqueness was nearly saturated in both conditions. Mean substitutions decreased from 13.4048 to 13.2122 across the three trained models (Table~\ref{tab:generation}). The magnitude of this change varied by seed.
+
+\begin{table}[htbp]
+\caption{Generation in the fixed KVP40 wild-type context.}\label{tab:generation}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Downstream seed & Random & Auxiliary & Difference \\
+\midrule
+8301 & 13.2370 & 13.0313 & $-0.2057$ \\
+8302 & 13.6087 & 13.2559 & $-0.3529$ \\
+8303 & 13.3688 & 13.3496 & $-0.0192$ \\
+Mean & 13.4048 & 13.2122 & $-0.1926$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip\small Entries are mean amino-acid substitutions from wild type among 3,072 proposals per condition and seed, pooled over the same 48 masks. They are not measurements of activity or fitness.
+\end{table}
+
+The equal-substitution subsets contained 1,404, 1,239, and 976 paired draws for seeds 8301--8303. Conserved-position editing was lower after auxiliary initialization in the first two subsets but higher in the third. Thus, even the direction of this local descriptor was not uniform. More edits at a pocket or conserved position would not inherently constitute an improvement.
+
+Predictive NLL was measured across 227 natural sequence backgrounds, whereas these generation statistics use one KVP40 background. The two measurements therefore cannot establish a general relationship between predictive improvement and generation quality. They show a development-score difference and a modest change in conditional substitution behavior under the particular experiments performed.
+
+\subsection{Prepared fragments for the controlled comparison}
+Of 4,079 auxiliary fragments, 81 directly matched a validation or test protein. Excluding their connected components removed 2,642 fragments in total, leaving 1,437 external sequences from 78 original auxiliary groups. All retained fragments could be paired under the specified criteria (Figure~\ref{fig:fragments}). Their self counterparts comprise 665 unique fragment sequences drawn from 250 NatV training proteins in 42 groups. Reused source proteins and overlapping fragments are therefore not independent observations. Median lengths were 197 and 183 residues for external and self fragments, and the median common-column fraction was 0.926. Masks of nominal size 16 were reduced in 53 pairs and masks of size 32 in 298 pairs; actual counts remained identical between conditions.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{../../data/results/preprocessing/natv_matched_fragment_pretraining/fragment_matching.pdf}
+\caption{Matched external and NatV training fragments. A: Lengths of the 1,437 selected pairs; the dashed line indicates equality and the shaded band shows the allowed 20\% difference relative to external length. B: Fraction of each external fragment's reliable KVP40 alignment columns also mapped in its paired NatV fragment. Counts describe selected pairs without training weights. The self fragments originate from 250 training proteins, so the 1,437 pairs are not independent proteins.}\label{fig:fragments}
+\end{figure}
+
+\section{Discussion}
+\subsection{What the current evidence can establish}
+The original experiments identify a repeatable development-score difference between two task-model initialization procedures. They do not yet isolate the contribution of external homologous information. Exact fragment overlap, reuse of validation sequences for model selection, a single auxiliary-pretraining seed, and unmatched optimization histories all affect that interpretation. The group-removal analysis shows that one identified group does not account for the mean difference, but cannot repair those design limitations.
+
+A suitable comparison should distinguish a randomly initialized task model, pretraining on fragments extracted only from downstream training proteins, and pretraining on external homologous fragments after evaluation-related sequences have been excluded. The two pretraining conditions need comparable fragment lengths, mask opportunities, sampling weights, update budgets, and checkpoint-selection rules. Otherwise, an apparent information benefit may also reflect easier prediction tasks or different training histories. Held-out sequences must be included in overlap screening before new scores are examined. Their earlier use also matters: relabeling previously evaluated sequences as a test split does not establish independence from method development. The new training comparison has not been completed and is not represented by the predictive results above.
+
+The ESM-2 comparison changes the interpretation of the original initialization effect: improvement relative to a randomly initialized task model is not improvement over the pretrained prediction head. This finding concerns the evaluated NMNAT masks and development sequences; it does not identify why the trainable head scores worse or establish the ordering on independent test sequences. The corrected comparison should retain ESM-2 as a reference without changing the task in response to this result.
+
+\subsection{Latent dependence, context, and biological compatibility}
+Equation~\ref{eq:joint} separates shared-latent dependence among masked outputs from their dependence on visible context. A small joint-versus-marginal score difference does not show that Nudix context is unused. Conversely, supplying the full NatV sequence does not establish that the model learned functional coordination between its domains. Domain-to-domain translation provides a relevant precedent for explicitly testing conditional information \cite{meynard2023}, but the present sparse-mask task does not test whole-domain generation.
+
+Context comparisons would require recomputing ESM-2 features from the altered input; deleting Nudix vectors only after encoding would leave potentially relevant information in the NMNAT representations. A model trained and tested with matched domain-local context would be more interpretable than a model suddenly deprived of a whole domain at inference. Even a benefit from true domain pairing could include shared evolutionary history and would not by itself identify physical interactions.
+
+Generated sequences also require comparisons suited to the claim. Expected substitution counts depend only on single-site marginals (Equation~\ref{eq:hamming}), and unique-sequence counts near the sample size offer little discrimination. Joint substitution patterns can differ while these summaries remain nearly unchanged. Statistical sequence-model evaluation \cite{mcgee2021} and functional measurements \cite{hawkins2021,praljak2023} address distinct aspects of this problem.
+
+\subsection{Scope of the protein-design application}
+The wider NatV project includes three generated multi-substitution NMNAT candidates, two substitutions proposed from Nudix mechanistic evidence, their combinations, and two separately sequenced error-prone-PCR clones. The three generated candidates came from randomly initialized task models, so their existence cannot demonstrate an auxiliary-pretraining benefit. The experimental clones are not validation examples generated by this model.
+
+Structure predictions and short molecular simulations provide descriptions of selected sequence or ligand hypotheses, but do not measure synthesis, hydrolysis, or NAD$^+$ accumulation. They are not used here to assign activity labels or rank candidate performance. The present manuscript concerns conditional sequence statistics. Establishing improved enzyme function would require different evidence and a different claim.
+
+\section{Conclusions}
+Auxiliary fragment pretraining was associated with lower development NLL and a small reduction in substitutions generated in the KVP40 context. Both task-model conditions had higher NMNAT development NLL than the frozen ESM-2 head. An exact training-fragment match to validation proteins further limits the interpretation of the initialization effect. The remaining evidence supports a controlled evaluation of homologous-fragment information, with explicit containment checks, comparable pretraining procedures, and a clear account of evaluation-data history. It does not yet establish improved generalization or improved NatV activity.
+
+\section*{Abbreviations}
+ESM: evolutionary scale modeling; NMNAT: nicotinamide mononucleotide adenylyltransferase; NLL: negative log likelihood; VAE: variational autoencoder; WT: wild type.
+
+\section*{Declarations}
+\subsection*{Ethics approval and consent to participate}
+Not applicable. This manuscript analyzes protein sequences and computational results, with no human participants or animal experiments.
+\subsection*{Consent for publication}
+Not applicable.
+\subsection*{Availability of data and materials}
+The NatV source code, configurations, selected result summaries, and generated-candidate records are available in the project repository \cite{natvrepo}. The starting version for this draft is commit \texttt{87071c0}. Complete model weights and per-query evaluations are retained locally and have not yet been deposited as a complete manuscript-associated release. The data-availability statement must be updated with the actual deposited materials and persistent identifier before submission.
+
+\begin{itemize}
+\item Project name: NatV QVAE (Python package \texttt{natvqvae}, version 0.0.1).
+\item Project home page: the repository cited above \cite{natvrepo}.
+\item Archived version: \pending{persistent identifier for the manuscript-associated data and code release.}
+\item Operating system: Linux for the reported local analyses; portability has not been established.
+\item Programming language: Python 3.10 or later.
+\item Requirements: PyTorch 2.1 or later, Transformers 4.40 or later, NumPy 1.24 or later, Biopython 1.81 or later, Gemmi 0.7 or later, Matplotlib 3.7 or later, Safetensors 0.4 or later, and PyYAML 6 or later, as declared in \texttt{pyproject.toml}. The fragment search reported here used MMseqs2 18.8cc5c.
+\item License and restrictions on use: \pending{the inspected repository version contains no project license file; the authors must specify the license and any restrictions.}
+\end{itemize}
+\subsection*{Competing interests}
+\pending{confirm the declarations of all authors.}
+\subsection*{Funding}
+\pending{funding sources, grant numbers, and funder roles.}
+\subsection*{Authors' contributions}
+\pending{names and actual contributions; authorship order and corresponding author.}
+\subsection*{Acknowledgements}
+\pending{acknowledgements and consent of any named individuals, or Not applicable.}
+
+\bibliography{references}
+\end{document}

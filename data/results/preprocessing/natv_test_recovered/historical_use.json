@@ -1,0 +1,265 @@
+{
+  "status": "previously_evaluated",
+  "test_sequence_count": 231,
+  "test_sequence_ids_sha256": "b6d6ae50f238b8d58d006350b4ee2d0063fa338481d0a798ba3bd91a9fa3d23f",
+  "sequence_ids_hash_definition": "UTF-8 sorted sequence IDs, joined by newline, including final newline",
+  "prior_h1_sequence_count": 39,
+  "prior_evaluations": [
+    {
+      "name": "nad_qvae_h1_confirmation_20261004",
+      "membership": "prior_H1_39",
+      "sequence_count": 39,
+      "model_evaluations": 30,
+      "models": [
+        {
+          "arm": "ESM2",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        },
+        {
+          "arm": "S",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        },
+        {
+          "arm": "SE",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        },
+        {
+          "arm": "SE-null",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        },
+        {
+          "arm": "SEG",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        },
+        {
+          "arm": "SEG-null",
+          "seeds": [
+            20261021,
+            20261022,
+            20261023,
+            20261024,
+            20261025
+          ]
+        }
+      ],
+      "model_description": "Frozen ESM2 and no-latent residual sequence/evolution/structure models, including correspondence controls; old labels are unrelated to current pretraining S/A labels.",
+      "started_utc": "2026-10-04T03:17:56.480563+00:00",
+      "execution_status": "COMPLETE",
+      "use_metadata": {
+        "route_actions": {
+          "S": "ADOPT",
+          "E": "ADOPT",
+          "G": "PARK"
+        },
+        "automatic_rescue_tuning": false
+      },
+      "source_files": {
+        "report": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_h1_confirmation_formal_v1_evaluation_attempt3/REPORT.md",
+          "sha256": "7274d4fec3ebae1eed434e672fb0ebe878d463d8b21558daa2b8571d5af7e92c",
+          "bytes": 8391
+        },
+        "summary": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_h1_confirmation_formal_v1_evaluation_attempt3/confirmation/summary.json",
+          "sha256": "442cb88a1bcf31b1da17ce9b7195dcec59288a9b850c3e24c0f6d681e188abfd",
+          "bytes": 11221
+        },
+        "job_status": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_h1_confirmation_formal_v1_evaluation_attempt3/confirmation/job_status.json",
+          "sha256": "03bba59661b1f497f9d264579c077b8a363dcbe7ed09b82d07f12cbe3080d5a3",
+          "bytes": 200
+        }
+      },
+      "per_sequence_metrics": [
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_h1_confirmation_formal_v1_evaluation_attempt3/confirmation/sequence_metrics.csv",
+          "sha256": "ab07eec8b15ee86684202e4381aa90ce5e401cd66eb98bcad6730b1b12397089",
+          "bytes": 216329
+        }
+      ],
+      "sequence_ids_sha256": "9abd61ebecb3002142219a34d844c85e46befe06db19f89800246e20fc1e88ec"
+    },
+    {
+      "name": "nad_qvae_descriptive_test_20261007",
+      "membership": "all_test",
+      "sequence_count": 231,
+      "model_evaluations": 11,
+      "models": [
+        {
+          "arm": "ESM2",
+          "seeds": [
+            null
+          ]
+        },
+        {
+          "arm": "S",
+          "seeds": [
+            20261081,
+            20261082,
+            20261083,
+            20261084,
+            20261085
+          ]
+        },
+        {
+          "arm": "SE",
+          "seeds": [
+            20261081,
+            20261082,
+            20261083,
+            20261084,
+            20261085
+          ]
+        }
+      ],
+      "model_description": "Frozen ESM2 baseline and five seeds each of no-latent residual sequence-only (S) and sequence-plus-query-specific-evolution (SE) models.",
+      "started_utc": "2026-10-06T21:03:35.275185+00:00",
+      "execution_status": "COMPLETE",
+      "use_metadata": {
+        "checkpoint_selection_calls": 0,
+        "test_evaluation_rounds": 1,
+        "route_changed_by_test": false,
+        "H1_reconfirmation": false,
+        "pristine_claim": false,
+        "prior_H1_39": 39,
+        "evidence": "DESCRIPTIVE_CURRENT_PROTOCOL_HOLDOUT"
+      },
+      "source_files": {
+        "report": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/REPORT.md",
+          "sha256": "8b32e7ac997a0c9f58ded40b027db5d1b69e4642702ec638daf2b56e5f4cdf77",
+          "bytes": 2574
+        },
+        "summary": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/summary.json",
+          "sha256": "0db4ac97a3c2e4111ca019336a8014cc9bb4369c2385640ed4f4e1139212e324",
+          "bytes": 1977
+        },
+        "job_status": {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/job_status.json",
+          "sha256": "a0d2d83edd6f4d5a3bbe7b9bd67086f575f3f06dc85949a506233d5fb70be872",
+          "bytes": 231
+        }
+      },
+      "per_sequence_metrics": [
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/ESM2_None_sequence_metrics.csv",
+          "sha256": "42cda80b2f04f21e277f467d3372e7c92b85d2ceece27b4d9385869f880b3255",
+          "bytes": 46188
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/SE_20261081_sequence_metrics.csv",
+          "sha256": "8640d6be0dbc8a1a1bfaf8ac9968d3e89c2350a75782e43b826a8f536335997b",
+          "bytes": 46251
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/SE_20261082_sequence_metrics.csv",
+          "sha256": "05c4474edafcbadae6d3a1dadb43003ac1980cfdb7a8286be8941fff91cb71a3",
+          "bytes": 46255
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/SE_20261083_sequence_metrics.csv",
+          "sha256": "bde123f28a5274dbe8c373a09e0b3980ca966c9f61b0b43e0c47ec84b7815eed",
+          "bytes": 46257
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/SE_20261084_sequence_metrics.csv",
+          "sha256": "d6e12a0e766134e6d6b722e028e8eaebadf0bba0af378f2c301c8e3c376eddcf",
+          "bytes": 46222
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/SE_20261085_sequence_metrics.csv",
+          "sha256": "8fb49a22c0c119d62bb8284ea6dbfa7f1fb47d7b64473ab4ba6f6f144dd2a196",
+          "bytes": 46276
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/S_20261081_sequence_metrics.csv",
+          "sha256": "c287d4250a4bb554ffdda04937b1b4a0ef9e41a1288f1927efc949f2d1ec80c2",
+          "bytes": 46226
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/S_20261082_sequence_metrics.csv",
+          "sha256": "955d6e0a327d5fb40dff4acc49968a7a97d01397d5ffb06af656ce9a5e2ec041",
+          "bytes": 46214
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/S_20261083_sequence_metrics.csv",
+          "sha256": "93454dd3526901612463c73cfccc5b8f96d662255cbebb585aa426289466b61a",
+          "bytes": 46251
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/S_20261084_sequence_metrics.csv",
+          "sha256": "579a06836233c0011b1ba0f8ea646d197ca1b368e23410d4c228dc36d91bfdc2",
+          "bytes": 46237
+        },
+        {
+          "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/S_20261085_sequence_metrics.csv",
+          "sha256": "e17f52a82d1f2e2c70934e25a4bd23d7fbc4ec3984d5c9da591217078a08d1ce",
+          "bytes": 46256
+        }
+      ],
+      "sequence_ids_sha256": "b6d6ae50f238b8d58d006350b4ee2d0063fa338481d0a798ba3bd91a9fa3d23f"
+    }
+  ],
+  "current_test": {
+    "path": "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_family/test.csv",
+    "sha256": "49278f009e15571687e2775a37132634be5bb2448974eb3cfa10c87331741bee",
+    "bytes": 30055
+  },
+  "historical_membership": {
+    "path": "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_formal_holdout_v1_attempt1/test_members_and_exposure.csv",
+    "sha256": "7e4f02ab910dd853ead472e87357589e7b1d6c7a9d6292056174db6f60d8c4de",
+    "bytes": 122829
+  },
+  "recovery_manifest": {
+    "path": "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_test_recovered/manifest.json",
+    "sha256": "c56af5e37ff7c5f64353cc05f0598f1b04af64ef1a044c99c3d28d6117c62366"
+  },
+  "config": {
+    "path": "config/natv_test_history.yaml",
+    "sha256": "5230e6494ded5daafcccb8696d2ad9f826114f57534034d84b7dbab200c19f4c"
+  },
+  "code_sha256": "89a078d25448f84a41df8c58a4469d42e7b289d610386f5248af4518af4cf3f6",
+  "flags": {
+    "historically_pristine": false,
+    "new_model_scoring_performed": false,
+    "historical_score_values_interpreted": false,
+    "recovery_files_changed": false
+  },
+  "limitations": [
+    "Membership and completed-execution artifacts establish previous evaluation; score correctness was not reassessed.",
+    "These sources do not establish an exhaustive history of sequence use or PLM pretraining exposure.",
+    "Old S/SE model labels describe residual sequence/evolution models, not the current self/external pretraining conditions.",
+    "Exclusion from current fitting and checkpoint selection does not make this a historically unused test set."
+  ]
+}

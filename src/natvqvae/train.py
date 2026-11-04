@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import math
+import platform
+import subprocess
 import time
 from pathlib import Path
 
@@ -140,6 +142,23 @@ def train(config_path, sources_path, target_path, output, device=None,
             checkpoint_root.exists() and any(checkpoint_root.iterdir())):
         raise FileExistsError(f'Run output or weights already exist: {output.name}')
     output.mkdir(parents=True, exist_ok=True)
+    input_paths = [config_path, sources_path, target_path, data.sources['population'],
+                   data.sources['splits']['training'], data.sources['splits']['validation']]
+    if init_checkpoint:
+        input_paths.append(init_checkpoint)
+    esm_path = Path(data.sources['esm_model'])
+    write_json(output / 'run_identity.json', {
+        'input_sha256': {str(path): sha256_file(path) for path in input_paths},
+        'esm_files_sha256': {path.name: sha256_file(path) for path in sorted(esm_path.iterdir())
+                             if path.suffix in {'.json', '.safetensors'} or path.name == 'vocab.txt'},
+        'code_sha256': {name: sha256_file(Path(__file__).with_name(name))
+                       for name in ('train.py', 'model.py', 'data.py', 'evaluate.py')},
+        'git_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'git_status': subprocess.check_output(['git', 'status', '--porcelain'], text=True).splitlines(),
+        'python': platform.python_version(), 'torch': torch.__version__,
+        'effective_training': config, 'seed_override': seed, 'device': str(device),
+        'initialization': str(init_checkpoint) if init_checkpoint else 'random',
+    })
     torch.manual_seed(int(config['seed']))
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
     model = ConditionalModel('QVAE', **study['model']).to(device).train()

@@ -1,0 +1,14 @@
+{
+  "input_sha256": {
+    "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_matched_fragment_pretraining/pair_manifest.csv": "350aa5246729d995c8232947a7206a367417bbabba9a90931b99526c196ae4cf",
+    "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_matched_fragment_pretraining/summary.json": "8b43592631828d6dfb3f084ae467b61f47c7607f50542889f59331ff9eaad141"
+  },
+  "implementation_sha256": "f1310271b59f2ac0b8d447e2c3e86c1e6cfbe0e5b180b50115bb9a740a12f238",
+  "result_sha256": {
+    "fragment_matching.pdf": "3cc43dace96f9049fed29d2ab877c36f56c42386ba0afa89500c1f49cf8c5abb",
+    "fragment_matching.png": "60ecb7bf86984e9f19c6acb550e4b3d82ac891020755f3627d99f332a3078262"
+  },
+  "pairs": 1437,
+  "self_source_proteins": 250,
+  "note": "Unweighted descriptive counts of prepared pairs, not independent protein observations."
+}

@@ -5,12 +5,15 @@ import csv
 import hashlib
 import json
 import math
+import platform
+import subprocess
 import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
 import torch
+from Bio import SeqIO
 from torch.nn.utils import clip_grad_norm_
 
 from .data import (Target, load_auxiliary_inputs, load_yaml, sha256_file, stable_seed,
@@ -29,6 +32,14 @@ class AuxiliaryData:
         self.target = Target.load(paths['target'])
         self.study = self.config
         self.sources = paths
+        if 'pair_manifest' in paths:
+            self._paired_inputs(paths)
+            return
+        self.input_paths = {key: paths[key] for key in ('domains', 'masks', 'split', 'target')}
+        for key, name in [('domains', 'aux_domains.fasta'), ('masks', 'aux_masks.json'),
+                          ('split', 'aux_split.csv')]:
+            if Path(paths[key]).resolve() != (Path(paths['domains']).parent / name).resolve():
+                raise ValueError(f'Auxiliary {key} path differs from the actual input filename')
         validated = load_auxiliary_inputs(Path(paths['domains']).parent)
         self.domains = validated['domains']
         self.masks = validated['masks']
@@ -53,6 +64,86 @@ class AuxiliaryData:
         self.panels = {}
         for record in self.train + self.validation:
             self.panels[record['uid']] = self._make_panels(record)
+            if not self.panels[record['uid']]:
+                raise ValueError(f'No valid masking panel for auxiliary record {record["uid"]}')
+
+    def _paired_inputs(self, paths):
+        condition = self.config.get('fragment_condition')
+        if condition not in ('external', 'self'):
+            raise ValueError('Paired fragments require external or self condition')
+        self.input_paths = {key: paths[key] for key in
+                            ('pair_manifest', 'pair_panels', 'a_fragments', 's_fragments', 'target')}
+        arm = 'a' if condition == 'external' else 's'
+        domains = {side: {uid: str(record.seq).upper() for uid, record in
+                          SeqIO.to_dict(SeqIO.parse(paths[f'{side}_fragments'], 'fasta')).items()}
+                   for side in ('a', 's')}
+        for side in domains:
+            for uid, sequence in domains[side].items():
+                if not sequence or uid.split(':', 1)[-1] != hashlib.sha256(sequence.encode()).hexdigest():
+                    raise ValueError(f'Paired fragment sequence identity differs: {uid}')
+        with open(paths['pair_manifest']) as handle:
+            rows = list(csv.DictReader(handle))
+        panels = json.loads(Path(paths['pair_panels']).read_text())
+        self.domains, self.masks, self.split, self.panels = domains[arm], {}, {}, {}
+        self.train, self.validation = [], []
+        lower, upper = self.target.domains['NMNAT']
+        for row in sorted(rows, key=lambda item: item['pair_id']):
+            uid = row['pair_id']
+            if uid in self.split or uid not in panels:
+                raise ValueError(f'Duplicate pair or missing panels: {uid}')
+            weight = float(row['weight'])
+            if not np.isfinite(weight) or weight <= 0:
+                raise ValueError(f'Invalid paired weight: {uid}')
+            item = panels[uid]
+            columns = item['common_wt_columns']
+            if (len(columns) < 2 or columns != sorted(set(columns)) or
+                    min(columns) < lower or max(columns) > upper or
+                    len(columns) != int(row['common_count'])):
+                raise ValueError(f'Invalid common WT columns: {uid}')
+            for side in ('a', 's'):
+                sequence = domains[side][row[f'{side}_sequence_id']]
+                if (hashlib.sha256(sequence.encode()).hexdigest() != row[f'{side}_sequence_sha256'] or
+                        len(sequence) != int(row[f'{side}_length'])):
+                    raise ValueError(f'Paired sequence does not match manifest: {uid}, {side}')
+                positions = item[f'{side}_common_positions']
+                if (len(positions) != len(columns) or positions != sorted(set(positions)) or
+                        min(positions) < 0 or max(positions) >= len(sequence) or
+                        any(sequence[position] not in AA for position in positions)):
+                    raise ValueError(f'Invalid paired target mapping: {uid}, {side}')
+            saved = item['panels']
+            nominal = list(self.config['training']['mask_sizes'])
+            if [panel['nominal_size'] for panel in saved] != nominal:
+                raise ValueError(f'Panel sizes differ from training configuration: {uid}')
+            for panel in saved:
+                count = min(int(panel['nominal_size']), len(columns) - 1)
+                wt_columns = panel['wt_columns']
+                if (count < 1 or panel['actual_size'] != count or
+                        len(wt_columns) != count or wt_columns != sorted(set(wt_columns)) or
+                        not set(wt_columns) <= set(columns) or
+                        panel['panel'] != f'mask_{panel["nominal_size"]}'):
+                    raise ValueError(f'Invalid paired masking panel: {uid}')
+                for side in ('a', 's'):
+                    mapping = dict(zip(columns, item[f'{side}_common_positions']))
+                    if panel[f'{side}_positions'] != [mapping[w] for w in wt_columns]:
+                        raise ValueError(f'Paired mask does not use the same WT columns: {uid}, {side}')
+            sequence = domains[arm][row[f'{arm}_sequence_id']]
+            pairs = list(zip(item[f'{arm}_common_positions'], columns))
+            self.train.append({'uid': uid, 'sequence': sequence, 'pairs': pairs,
+                               'kind': condition, 'weight': weight,
+                               'fragment_id': row[f'{arm}_sequence_id']})
+            self.split[uid] = row
+            self.masks[uid] = {'pairs': pairs}
+            self.panels[uid] = [{'panel': p['panel'], 'positions': p[f'{arm}_positions']}
+                                for p in saved]
+        if not rows or set(panels) != set(self.split):
+            raise ValueError('Empty pairs or panel identities differ from manifest')
+        if not np.isclose(np.mean([r['weight'] for r in self.train]), 1., rtol=1e-8):
+            raise ValueError('Paired training weights must have mean one')
+        self.train_ids, self.validation_ids = set(self.split), set()
+        self.training_weights = {r['uid']: r['weight'] for r in self.train}
+        self.nonstandard_domains = sum(any(residue not in AA for residue in seq)
+                                       for seq in self.domains.values())
+        self.excluded_masked_positions = 0
 
     def _records(self, split):
         output = []
@@ -219,11 +310,45 @@ def _score_validation(model, data, encoder, queries, device, sample_count, seed)
     return summary, rows
 
 
-def train_aux(config_path, output, device=None):
+def _aux_schedule(training, update, epoch):
+    """Use update-based warmup when declared, otherwise preserve historical epochs."""
+    if update < 1 or epoch < 1:
+        raise ValueError('Updates and epochs are one-based')
+    step_keys = ('learning_rate_warmup_steps', 'beta_warmup_steps')
+    if any(key in training for key in step_keys):
+        if not all(key in training for key in step_keys):
+            raise ValueError('Both update-based warmup lengths are required')
+        if any(int(training[key]) < 0 for key in step_keys):
+            raise ValueError('Warmup lengths must be nonnegative')
+        lr = _learning_rate_at_epoch(float(training['learning_rate']), update,
+                                     int(training[step_keys[0]]))
+        beta = _beta_at_epoch(update, int(training[step_keys[1]]))
+    else:
+        lr = _learning_rate_at_epoch(float(training['learning_rate']), epoch,
+                                     int(training['learning_rate_warmup_epochs']))
+        beta = _beta_at_epoch(epoch, int(training['beta_warmup_epochs']))
+    return lr, beta
+
+
+def train_aux(config_path, output, device=None, seed=None):
     data = AuxiliaryData(config_path)
     study = data.config
-    training = study['training']
-    selection_config = training['selection']
+    training = dict(study['training'])
+    if seed is not None:
+        training['seed'] = int(seed)
+    # AuxiliaryData also uses this seed for query ordering and panel selection.
+    study['training'] = training
+    fixed = training.get('checkpoint_selection') == 'fixed_updates'
+    if training.get('checkpoint_selection') not in (None, 'fixed_updates'):
+        raise ValueError('Unknown auxiliary checkpoint selection rule')
+    if fixed and training.get('selection') is not None:
+        raise ValueError('Fixed updates cannot also select a checkpoint using validation')
+    selection_config = None if fixed else training['selection']
+    if not data.train or int(training['max_steps']) < 1 or int(training['batch_size']) < 1:
+        raise ValueError('Training requires records, positive updates and batch size')
+    if not fixed and not data.validation:
+        raise ValueError('Validation checkpoint selection requires validation records')
+    _aux_schedule(training, 1, 1)
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
     output = Path(output)
     if output.exists() and any(output.iterdir()):
@@ -234,20 +359,39 @@ def train_aux(config_path, output, device=None):
                 for path in paths.values() if path.exists()]
     if existing:
         raise FileExistsError(f'Auxiliary checkpoint already exists: {existing}')
+    if fixed:
+        for paths in planned_checkpoints.values():
+            del paths['best']
     output.mkdir(parents=True, exist_ok=True)
-    encoder = FrozenEncoder(study['paths']['esm_model'], device=device)
-    selected_records, selection_queries = data.validation_selection(
-        int(selection_config['records']), selection_config['panel'])
-    write_json(output / 'validation_selection.json', {
-        'rule': f'round-robin by {study["generation"]["balance_key"]} over sorted validation records',
-        'panel': selection_config['panel'], 'records': len(selected_records),
-        'items': [{'uid': record['uid'],
-                   'cluster': data.split[record['uid']][study['generation']['balance_key']],
-                   'weight': record['weight'],
-                   'panel': query['panel']['panel'],
-                   'positions': query['panel']['positions']}
-                  for record, query in zip(selected_records, selection_queries)],
+    input_hashes = {key: sha256_file(path) for key, path in data.input_paths.items()}
+    input_hashes['config'] = sha256_file(config_path)
+    esm_path = Path(study['paths']['esm_model'])
+    write_json(output / 'run_identity.json', {
+        'input_sha256': input_hashes,
+        'esm_files_sha256': {path.name: sha256_file(path) for path in sorted(esm_path.iterdir())
+                             if path.suffix in {'.json', '.safetensors'} or path.name == 'vocab.txt'},
+        'code_sha256': {name: sha256_file(Path(__file__).with_name(name))
+                       for name in ('auxiliary.py', 'train.py', 'model.py', 'data.py')},
+        'git_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'git_status': subprocess.check_output(['git', 'status', '--porcelain'], text=True).splitlines(),
+        'python': platform.python_version(), 'torch': torch.__version__,
+        'effective_training': training, 'seed_override': seed, 'device': str(device),
+        'checkpoint_rule': 'fixed_updates' if fixed else 'auxiliary_validation',
     })
+    encoder = FrozenEncoder(study['paths']['esm_model'], device=device)
+    selected_records, selection_queries = [], []
+    if not fixed:
+        selected_records, selection_queries = data.validation_selection(
+            int(selection_config['records']), selection_config['panel'])
+        write_json(output / 'validation_selection.json', {
+            'rule': f'round-robin by {study["generation"]["balance_key"]} over sorted validation records',
+            'panel': selection_config['panel'], 'records': len(selected_records),
+            'items': [{'uid': record['uid'],
+                       'cluster': data.split[record['uid']][study['generation']['balance_key']],
+                       'weight': record['weight'], 'panel': query['panel']['panel'],
+                       'positions': query['panel']['positions']}
+                      for record, query in zip(selected_records, selection_queries)],
+        })
     summaries = {}
     for arm in training['arms']:
         started = time.monotonic()
@@ -259,35 +403,53 @@ def train_aux(config_path, output, device=None):
         max_epochs = math.ceil(int(training['max_steps']) / steps_per_epoch)
         metrics_path = output / f'{arm}_metrics.jsonl'
         curve_path = output / f'{arm}_validation_curve.jsonl'
-        step = 0
-        curve = []
-        initial_scores, _ = _score_validation(
-            model, data, encoder, selection_queries, device,
-            int(selection_config['sample_count']),
-            stable_seed(training['seed'], arm, 'selection', 0))
+        step, curve = 0, []
+        initial_scores = None
+        if not fixed:
+            initial_scores, _ = _score_validation(
+                model, data, encoder, selection_queries, device,
+                int(selection_config['sample_count']),
+                stable_seed(training['seed'], arm, 'selection', 0))
+            _save_checkpoint(planned_checkpoints[arm]['best'], model, arm,
+                             training['seed'], 0, 0, study['model'], training, initial_scores)
+            curve.append({'stage': 'initial', 'epoch': 0, 'step': 0, **initial_scores})
+            curve_path.write_text(json.dumps(curve[0], ensure_ascii=False) + '\n')
         _save_checkpoint(planned_checkpoints[arm]['initial'], model, arm,
                          training['seed'], 0, 0, study['model'], training, initial_scores)
-        _save_checkpoint(planned_checkpoints[arm]['best'], model, arm,
-                         training['seed'], 0, 0, study['model'], training, initial_scores)
-        curve.append({'stage': 'initial', 'epoch': 0, 'step': 0, **initial_scores})
-        best_scores, best_epoch = initial_scores, 0
+        best_scores, best_epoch = initial_scores, None if fixed else 0
         last_scores = initial_scores
         evaluated_epochs = {0}
-        with metrics_path.open('w') as metrics, curve_path.open('w') as curve_file:
-            curve_file.write(json.dumps(curve[0], ensure_ascii=False) + '\n')
-            curve_file.flush()
+
+        def score_epoch(epoch, stage):
+            nonlocal best_scores, best_epoch, last_scores
+            scores, _ = _score_validation(
+                model, data, encoder, selection_queries, device,
+                int(selection_config['sample_count']),
+                stable_seed(training['seed'], arm, 'selection', epoch))
+            entry = {'stage': stage, 'epoch': epoch, 'step': step, **scores}
+            curve.append(entry)
+            with curve_path.open('a') as curve_file:
+                curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
+            last_scores = scores
+            evaluated_epochs.add(epoch)
+            if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
+                best_scores, best_epoch = scores, epoch
+                _save_checkpoint(planned_checkpoints[arm]['best'], model, arm,
+                                 training['seed'], step, epoch, study['model'], training, scores)
+
+        with metrics_path.open('w') as metrics:
             for epoch in range(1, max_epochs + 1):
-                lr = _learning_rate_at_epoch(float(training['learning_rate']), epoch,
-                                             int(training['learning_rate_warmup_epochs']))
-                beta = _beta_at_epoch(epoch, int(training['beta_warmup_epochs']))
-                for group in optimizer.param_groups:
-                    group['lr'] = lr
                 queries = data.training_queries(epoch - 1, int(training['seed']))
+                if not queries:
+                    raise ValueError('Training epoch produced no queries')
                 for start in range(0, len(queries), int(training['batch_size'])):
                     if step >= int(training['max_steps']):
                         break
+                    lr, beta = _aux_schedule(training, step + 1, epoch)
+                    for group in optimizer.param_groups:
+                        group['lr'] = lr
                     batch = queries[start:start + int(training['batch_size'])]
-                    weights = torch.tensor([data.training_weights[q['record']['uid']] for q in batch],
+                    weights = torch.tensor([q['weight'] for q in batch],
                                            dtype=torch.float32, device=device)
                     generator = torch.Generator(device=device.type)
                     generator.manual_seed(stable_seed(training['seed'], arm, 'latent', step)
@@ -310,79 +472,51 @@ def train_aux(config_path, output, device=None):
                                               'learning_rate': lr, **values},
                                              ensure_ascii=False) + '\n')
                     metrics.flush()
-                interval = int(selection_config['interval_epochs'])
-                if interval > 0 and epoch % interval == 0:
-                    scores, _ = _score_validation(
-                        model, data, encoder, selection_queries, device,
-                        int(selection_config['sample_count']),
-                        stable_seed(training['seed'], arm, 'selection', epoch))
-                    entry = {'stage': 'epoch', 'epoch': epoch, 'step': step, **scores}
-                    curve.append(entry)
-                    curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
-                    curve_file.flush()
-                    last_scores = scores
-                    evaluated_epochs.add(epoch)
-                    if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
-                        best_scores, best_epoch = scores, epoch
-                        _save_checkpoint(planned_checkpoints[arm]['best'], model, arm,
-                                         training['seed'], step, epoch, study['model'],
-                                         training, best_scores)
+                if not fixed:
+                    interval = int(selection_config['interval_epochs'])
+                    if interval > 0 and epoch % interval == 0:
+                        score_epoch(epoch, 'epoch')
                 if step >= int(training['max_steps']):
                     break
-            if epoch not in evaluated_epochs:
-                scores, _ = _score_validation(
-                    model, data, encoder, selection_queries, device,
-                    int(selection_config['sample_count']),
-                    stable_seed(training['seed'], arm, 'selection', epoch))
-                entry = {'stage': 'last', 'epoch': epoch, 'step': step, **scores}
-                curve.append(entry)
-                curve_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
-                curve_file.flush()
-                last_scores = scores
-                if scores['prior_joint_nll_per_residue'] < best_scores['prior_joint_nll_per_residue']:
-                    best_scores, best_epoch = scores, epoch
-                    _save_checkpoint(planned_checkpoints[arm]['best'], model, arm,
-                                     training['seed'], step, epoch, study['model'],
-                                     training, best_scores)
+            if not fixed and epoch not in evaluated_epochs:
+                score_epoch(epoch, 'last')
+        if step != int(training['max_steps']):
+            raise RuntimeError(f'Training ended at {step}, expected {training["max_steps"]}')
         _save_checkpoint(planned_checkpoints[arm]['last'], model, arm,
                          training['seed'], step, epoch, study['model'], training, last_scores)
-        checkpoints = {kind: str(path)
-                       for kind, path in planned_checkpoints[arm].items()}
         summaries[arm] = {
             'steps': step, 'epochs': epoch, 'seconds': time.monotonic() - started,
-            'selection_metric': 'prior_joint_nll_per_residue',
+            'selection_metric': None if fixed else 'prior_joint_nll_per_residue',
+            'checkpoint_rule': 'fixed_updates' if fixed else 'auxiliary_validation',
             'initial_validation': initial_scores, 'best_validation': best_scores,
             'best_epoch': best_epoch, 'last_validation': last_scores,
-            'checkpoints': {kind: {'path': path, 'sha256': sha256_file(path)}
-                            for kind, path in checkpoints.items()},
+            'checkpoints': {kind: {'path': str(path), 'sha256': sha256_file(path)}
+                            for kind, path in planned_checkpoints[arm].items()},
             'validation_curve': curve,
         }
         del model
         torch.cuda.empty_cache()
     summary = {
         'status': 'COMPLETED', 'device': str(device), 'seed': int(training['seed']),
-        'train_sequences': len(data.train), 'validation_sequences': len(data.validation),
+        'train_records': len(data.train),
+        'train_sequences': len({r['sequence'] for r in data.train}),
+        'validation_sequences': len(data.validation),
         'train_panels': sum(len(data.panels[record['uid']]) for record in data.train),
         'validation_panels': sum(len(data.panels[record['uid']]) for record in data.validation),
         'nonstandard_domains': data.nonstandard_domains,
         'excluded_masked_positions': data.excluded_masked_positions,
         'mask_sizes': list(training['mask_sizes']), 'K': int(training['K']),
         'steps_per_arm': int(training['max_steps']), 'arms': summaries,
-        'selection': {'records': len(selected_records),
-                      'queries': len(selection_queries),
-                      'panel': selection_config['panel'],
-                      'sample_count': int(selection_config['sample_count']),
-                      'interval_epochs': int(selection_config['interval_epochs']),
-                      'balance_key': study['generation']['balance_key']},
-        'input_domains': study['paths']['domains'], 'input_masks': study['paths']['masks'],
-        'input_split': study['paths']['split'], 'esm_model': study['paths']['esm_model'],
-        'input_sha256': {
-            'domains': sha256_file(study['paths']['domains']),
-            'masks': sha256_file(study['paths']['masks']),
-            'split': sha256_file(study['paths']['split']),
-            'target': sha256_file(study['paths']['target']),
-            'config': sha256_file(config_path),
-        },
+        'selection': {'method': 'fixed_updates', 'updates': int(training['max_steps'])} if fixed else {
+            'records': len(selected_records), 'queries': len(selection_queries),
+            'panel': selection_config['panel'], 'sample_count': int(selection_config['sample_count']),
+            'interval_epochs': int(selection_config['interval_epochs']),
+            'balance_key': study['generation']['balance_key']},
+        'input_paths': data.input_paths,
+        'input_domains': study['paths'].get('domains'), 'input_masks': study['paths'].get('masks'),
+        'input_split': study['paths'].get('split'), 'esm_model': study['paths']['esm_model'],
+        'fragment_condition': study.get('fragment_condition'),
+        'input_sha256': input_hashes,
     }
     write_json(output / 'training_summary.json', summary)
     return summary

@@ -1,0 +1,746 @@
+{
+  "status": "COMPLETED",
+  "difference": "QVAE minus ESM; positive means higher QVAE NLL",
+  "units": "nats per target residue",
+  "validation": {
+    "sequences": 227,
+    "groups": 44,
+    "queries": 6129,
+    "mask_seed": 7401
+  },
+  "bootstrap": {
+    "unit": "sequence-similarity component",
+    "replicates": 2000,
+    "seed": 8802,
+    "scope": "resample groups after averaging the fixed three training seeds; not a training-seed bootstrap or independent biological seed replicates"
+  },
+  "pairing": {
+    "esm": {
+      "queries": 6129,
+      "recorded_rows": 6129,
+      "rows_with_stored_positions": 6129,
+      "repeats_per_query": 1
+    },
+    "historical_positions": "not saved per query; reconstructed from SHA-matched inputs",
+    "query_key": [
+      "sequence_id",
+      "panel"
+    ],
+    "checked_fields": [
+      "component",
+      "sites",
+      "weight",
+      "repeats",
+      "positions when recorded"
+    ]
+  },
+  "estimators": {
+    "ESM": "product of 20AA site probabilities for the jointly masked input",
+    "prior_joint_nll_per_residue": "QVAE shared-latent joint, mean of four MC NLL scores",
+    "marginal_nll_per_residue": "product of QVAE site marginals, mean of four MC NLL scores"
+  },
+  "training_performed": false,
+  "test_scoring": false,
+  "runs": {
+    "random_seed8301": {
+      "arm": "random",
+      "seed": 8301,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.13726346565722225,
+            "ci95": [
+              0.09552398830272142,
+              0.1795428410728462
+            ],
+            "model_mean": 1.8620908952565758,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 7,
+            "groups_model_higher": 37
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.07654545396041562,
+            "ci95": [
+              -0.14795914084995335,
+              -0.0018618744610026453
+            ],
+            "model_mean": 1.4803539294597234,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 26,
+            "groups_model_higher": 18
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.03587238995358236,
+            "ci95": [
+              -0.013849317548470267,
+              0.08735235214157762
+            ],
+            "model_mean": 1.759935649954481,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.13730187078365955,
+            "ci95": [
+              0.09551873283379025,
+              0.17958172063005381
+            ],
+            "model_mean": 1.8621293003830133,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 7,
+            "groups_model_higher": 37
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.07645894554898924,
+            "ci95": [
+              -0.1478891433466613,
+              -0.0018006356220479091
+            ],
+            "model_mean": 1.4804404378711498,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 26,
+            "groups_model_higher": 18
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.035940849746407585,
+            "ci95": [
+              -0.013791268612419432,
+              0.08743614033117834
+            ],
+            "model_mean": 1.7600041097473067,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        }
+      }
+    },
+    "random_seed8302": {
+      "arm": "random",
+      "seed": 8302,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.1409336095601961,
+            "ci95": [
+              0.10016026285271884,
+              0.18168350322693294
+            ],
+            "model_mean": 1.8657610391595498,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 7,
+            "groups_model_higher": 37
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.04068437938351215,
+            "ci95": [
+              -0.11138622922185039,
+              0.03011153192733073
+            ],
+            "model_mean": 1.516215004036627,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 24,
+            "groups_model_higher": 20
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.03809780282337651,
+            "ci95": [
+              -0.008263800511968414,
+              0.0858463574284444
+            ],
+            "model_mean": 1.7621610628242754,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 17,
+            "groups_model_higher": 27
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.1409959844896508,
+            "ci95": [
+              0.10021303657372539,
+              0.1817690575827324
+            ],
+            "model_mean": 1.8658234140890044,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 7,
+            "groups_model_higher": 37
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.040604813861653204,
+            "ci95": [
+              -0.11130069522360371,
+              0.030179242206500822
+            ],
+            "model_mean": 1.5162945695584862,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 24,
+            "groups_model_higher": 20
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.038173350115536214,
+            "ci95": [
+              -0.008198183003047917,
+              0.08592169225395631
+            ],
+            "model_mean": 1.7622366101164353,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 17,
+            "groups_model_higher": 27
+          }
+        }
+      }
+    },
+    "random_seed8303": {
+      "arm": "random",
+      "seed": 8303,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.14663901551881456,
+            "ci95": [
+              0.10825359409809018,
+              0.1845566676786194
+            ],
+            "model_mean": 1.8714664451181684,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 6,
+            "groups_model_higher": 38
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.0389618589485175,
+            "ci95": [
+              -0.11759319560039976,
+              0.043932151937798994
+            ],
+            "model_mean": 1.5179375244716218,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 23,
+            "groups_model_higher": 21
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.050736078461352155,
+            "ci95": [
+              0.00202201857534661,
+              0.09739281133998555
+            ],
+            "model_mean": 1.774799338462251,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 17,
+            "groups_model_higher": 27
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.14676298595217815,
+            "ci95": [
+              0.1083905514824984,
+              0.1846898007703529
+            ],
+            "model_mean": 1.871590415551532,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 6,
+            "groups_model_higher": 38
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.03883296527886382,
+            "ci95": [
+              -0.11748423154368282,
+              0.04405196749428732
+            ],
+            "model_mean": 1.5180664181412753,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 23,
+            "groups_model_higher": 21
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.05094097395750583,
+            "ci95": [
+              0.0022236382492248946,
+              0.09761746110655446
+            ],
+            "model_mean": 1.7750042339584047,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 17,
+            "groups_model_higher": 27
+          }
+        }
+      }
+    },
+    "auxinit_seed8301": {
+      "arm": "auxinit",
+      "seed": 8301,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.09605401658922323,
+            "ci95": [
+              0.058591105851577036,
+              0.13559641261353123
+            ],
+            "model_mean": 1.8208814461885772,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 9,
+            "groups_model_higher": 35
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.07783377137723634,
+            "ci95": [
+              -0.14870462469222573,
+              -0.0035449514439150134
+            ],
+            "model_mean": 1.4790656120429029,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 27,
+            "groups_model_higher": 17
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.01669740558439551,
+            "ci95": [
+              -0.02845719379265904,
+              0.061819251061730904
+            ],
+            "model_mean": 1.7407606655852943,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 19,
+            "groups_model_higher": 25
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.09606406832574864,
+            "ci95": [
+              0.058580697408093935,
+              0.13561404325790594
+            ],
+            "model_mean": 1.8208914979251027,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 9,
+            "groups_model_higher": 35
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.07777642245194262,
+            "ci95": [
+              -0.14865355648373146,
+              -0.003538456136546552
+            ],
+            "model_mean": 1.4791229609681964,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 27,
+            "groups_model_higher": 17
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.016747031941190423,
+            "ci95": [
+              -0.028414909882209478,
+              0.06188760822938737
+            ],
+            "model_mean": 1.7408102919420896,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 19,
+            "groups_model_higher": 25
+          }
+        }
+      }
+    },
+    "auxinit_seed8302": {
+      "arm": "auxinit",
+      "seed": 8302,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.10012138463066228,
+            "ci95": [
+              0.0629422834957272,
+              0.13611142299477877
+            ],
+            "model_mean": 1.824948814230016,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 10,
+            "groups_model_higher": 34
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.04222368344201943,
+            "ci95": [
+              -0.11219963520305644,
+              0.02905181892383406
+            ],
+            "model_mean": 1.5146756999781197,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 22,
+            "groups_model_higher": 22
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.02836091231845367,
+            "ci95": [
+              -0.01646187109857353,
+              0.0756490330425649
+            ],
+            "model_mean": 1.7524241723193525,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 19,
+            "groups_model_higher": 25
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.1001515797096717,
+            "ci95": [
+              0.06297921501064148,
+              0.1361778454891685
+            ],
+            "model_mean": 1.8249790093090255,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 10,
+            "groups_model_higher": 34
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.042147631015353015,
+            "ci95": [
+              -0.11210757079910623,
+              0.0291161357102332
+            ],
+            "model_mean": 1.5147517524047858,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 22,
+            "groups_model_higher": 22
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.02844122252061756,
+            "ci95": [
+              -0.016399813442821386,
+              0.07573237166565219
+            ],
+            "model_mean": 1.7525044825215164,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 19,
+            "groups_model_higher": 25
+          }
+        }
+      }
+    },
+    "auxinit_seed8303": {
+      "arm": "auxinit",
+      "seed": 8303,
+      "pairing": {
+        "queries": 6129,
+        "recorded_rows": 24516,
+        "rows_with_stored_positions": 0,
+        "repeats_per_query": 4
+      },
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.08165783796264635,
+            "ci95": [
+              0.049771592016238354,
+              0.11371423267669226
+            ],
+            "model_mean": 1.8064852675619998,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 11,
+            "groups_model_higher": 33
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.015976331633863937,
+            "ci95": [
+              -0.09024116519408575,
+              0.05667606149004741
+            ],
+            "model_mean": 1.5409230517862758,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 20,
+            "groups_model_higher": 24
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.03950267900216995,
+            "ci95": [
+              -0.006832805968707935,
+              0.0852311312687571
+            ],
+            "model_mean": 1.763565939003069,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 20,
+            "groups_model_higher": 24
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.08167945313095176,
+            "ci95": [
+              0.049796807821836424,
+              0.11373106844366641
+            ],
+            "model_mean": 1.8065068827303057,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 11,
+            "groups_model_higher": 33
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.0158680392196314,
+            "ci95": [
+              -0.09010995166712633,
+              0.056815822995440954
+            ],
+            "model_mean": 1.5410313442005077,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 20,
+            "groups_model_higher": 24
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.03962373697239569,
+            "ci95": [
+              -0.006725064638856605,
+              0.08537800450655306
+            ],
+            "model_mean": 1.7636869969732947,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 20,
+            "groups_model_higher": 24
+          }
+        }
+      }
+    }
+  },
+  "arms": {
+    "random": {
+      "seeds": [
+        8301,
+        8302,
+        8303
+      ],
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.14161203024541094,
+            "ci95": [
+              0.1026654020799106,
+              0.18050091306395205
+            ],
+            "model_mean": 1.8664394598447644,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 8,
+            "groups_model_higher": 36
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.052063897430815104,
+            "ci95": [
+              -0.12352570831752699,
+              0.02358198379306103
+            ],
+            "model_mean": 1.5048354859893238,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 24,
+            "groups_model_higher": 20
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.041568757079437024,
+            "ci95": [
+              -0.006847667113644068,
+              0.08891966423089605
+            ],
+            "model_mean": 1.7656320170803357,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.14168694707516283,
+            "ci95": [
+              0.10274013139048034,
+              0.18056331873096623
+            ],
+            "model_mean": 1.8665143766745163,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 8,
+            "groups_model_higher": 36
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.0519655748965021,
+            "ci95": [
+              -0.12342104168508236,
+              0.02368255646054515
+            ],
+            "model_mean": 1.5049338085236372,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 24,
+            "groups_model_higher": 20
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.041685057939816555,
+            "ci95": [
+              -0.00673708145883442,
+              0.0890542411872382
+            ],
+            "model_mean": 1.765748317940715,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        }
+      }
+    },
+    "auxinit": {
+      "seeds": [
+        8301,
+        8302,
+        8303
+      ],
+      "comparisons": {
+        "prior_joint_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.0926110797275106,
+            "ci95": [
+              0.058081969124038596,
+              0.1277676897349634
+            ],
+            "model_mean": 1.8174385093268646,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 11,
+            "groups_model_higher": 33
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.045344595484373244,
+            "ci95": [
+              -0.11602428132911152,
+              0.02665328282096125
+            ],
+            "model_mean": 1.5115547879357663,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 23,
+            "groups_model_higher": 21
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.02818699896833973,
+            "ci95": [
+              -0.016190872972121604,
+              0.07320092675995504
+            ],
+            "model_mean": 1.7522502589692386,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        },
+        "marginal_nll_per_residue": {
+          "NMNAT": {
+            "groups": 44,
+            "mean": 0.0926317003887907,
+            "ci95": [
+              0.058116135499687784,
+              0.12774938921064224
+            ],
+            "model_mean": 1.8174591299881444,
+            "esm_mean": 1.7248274295993538,
+            "groups_model_lower": 11,
+            "groups_model_higher": 33
+          },
+          "Nudix": {
+            "groups": 44,
+            "mean": -0.04526403089564234,
+            "ci95": [
+              -0.11595720813964179,
+              0.026750775892405192
+            ],
+            "model_mean": 1.5116353525244968,
+            "esm_mean": 1.5568993834201394,
+            "groups_model_lower": 23,
+            "groups_model_higher": 21
+          },
+          "all_panels": {
+            "groups": 44,
+            "mean": 0.028270663811401187,
+            "ci95": [
+              -0.01612048170380135,
+              0.07329612774757595
+            ],
+            "model_mean": 1.7523339238122995,
+            "esm_mean": 1.7240632600008992,
+            "groups_model_lower": 18,
+            "groups_model_higher": 26
+          }
+        }
+      }
+    }
+  }
+}

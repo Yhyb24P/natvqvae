@@ -1,0 +1,135 @@
+{
+  "status": "complete_all_targets",
+  "inputs_sha256": {
+    "config/fragment_overlap.yaml": "043fc90b54671b1685fe1c4cd07aa3b273dddb2f73809f85230b4fa33e702e56",
+    "data/results/preprocessing/pf01467_8849/aux_domains.fasta": "18a59ebe26bf797fd8f64e06a98d9eb8b3cec9e9b76f02a03343c6125ffebd55",
+    "data/results/preprocessing/pf01467_8849/aux_split.csv": "5cba23475e42209c618251e38df26920701629d6b3f1efeb688bdb471df25061",
+    "data/results/preprocessing/pf01467_8849/aux_masks.json": "b1d1eb8d43257f8e92511830db39676f3b3d9e94cd3e36ff01702f4b20de247c",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/preprocessing/natv_family/test.csv": "49278f009e15571687e2775a37132634be5bb2448974eb3cfa10c87331741bee",
+    "/home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/stage3_accepted_sequences.fasta": "2277e217904f8ecba748527e673c0f12ce3ff49dfc8ab9528769faac49a46e29",
+    "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_family_corpus_p0a_v1/corrected_a_recluster_all_seqs.fasta": "305d0552e7b7299d55bf6dbce44bc6f8af791a13125e9e367ae79a7d7f30576f",
+    "data/results/evaluation/natv_transfer/paired_summary.json": "6c08ed50b7b014e482ad8ef0b7b697be924c8dbd70614e0941f4e3cca6acd054",
+    "data/results/training/aux_qvae_seed8601/training_summary.json": "51bfa2262cbf782cc854032775af6abca868bf59ea31e24c9619f58072418cc1"
+  },
+  "implementation_sha256": "2efc1d0ee785b47f3447aab7dc4ff8b0e1a1f3acb226cf0938e892041fbbd0d7",
+  "git_revision": "87071c0979f26a88a0a8645cb1c10baac4cdceed",
+  "git_status": [
+    " M .gitignore",
+    " M src/natvqvae/cli.py",
+    "?? config/fragment_overlap.yaml",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.html\"",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.md\"",
+    "?? docs/manuscript/",
+    "?? src/natvqvae/fragment_overlap.py",
+    "?? tests/test_fragment_overlap.py"
+  ],
+  "auxiliary_training_sequences": 2395,
+  "requested_targets": {
+    "training": 1644,
+    "validation": 227,
+    "test": 231
+  },
+  "available_targets": {
+    "training": 1644,
+    "validation": 227,
+    "test": 231
+  },
+  "source_read_counts": {
+    "data/raw/sequences/natv_population.fasta": {
+      "records": 1871,
+      "nonempty_records": 1871,
+      "empty_records_skipped": 0,
+      "duplicate_nonempty_ids": 0
+    },
+    "/home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/stage3_accepted_sequences.fasta": {
+      "records": 13972,
+      "nonempty_records": 13972,
+      "empty_records_skipped": 0,
+      "duplicate_nonempty_ids": 0
+    },
+    "/home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_family_corpus_p0a_v1/corrected_a_recluster_all_seqs.fasta": {
+      "records": 48,
+      "nonempty_records": 46,
+      "empty_records_skipped": 2,
+      "duplicate_nonempty_ids": 0
+    }
+  },
+  "missing_targets": [],
+  "exact_hits": {
+    "test": {
+      "hit_rows": 0,
+      "auxiliary_sequences": 0,
+      "target_sequences": 0,
+      "target_components": 0
+    },
+    "training": {
+      "hit_rows": 0,
+      "auxiliary_sequences": 0,
+      "target_sequences": 0,
+      "target_components": 0
+    },
+    "validation": {
+      "hit_rows": 2,
+      "auxiliary_sequences": 1,
+      "target_sequences": 2,
+      "target_components": 1
+    }
+  },
+  "model_fitting_or_scoring": false,
+  "similarity_search": {
+    "command": [
+      "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs",
+      "easy-search",
+      "/home/yhshy/git_files/natvqvae/data/results/preprocessing/pf01467_natv_overlap/auxiliary_training.fasta",
+      "/home/yhshy/git_files/natvqvae/data/results/preprocessing/pf01467_natv_overlap/available_natv.fasta",
+      "/home/yhshy/git_files/natvqvae/data/results/preprocessing/pf01467_natv_overlap/similarity_hits.tsv",
+      "/home/yhshy/git_files/natvqvae/data/results/preprocessing/pf01467_natv_overlap/mmseqs_tmp",
+      "--min-seq-id",
+      "0.5",
+      "--cov-mode",
+      "2",
+      "-c",
+      "0.8",
+      "-e",
+      "0.001",
+      "-s",
+      "7.5",
+      "--max-seqs",
+      "2102",
+      "--alignment-mode",
+      "3",
+      "--seq-id-mode",
+      "0",
+      "--threads",
+      "8",
+      "--format-output",
+      "query,target,fident,qcov,tcov,qstart,qend,tstart,tend,qlen,tlen,alnlen,evalue,bits"
+    ],
+    "version": "18.8cc5c",
+    "counts": {
+      "test": {
+        "hit_rows": 34,
+        "auxiliary_sequences": 8,
+        "target_sequences": 25,
+        "target_components": 10
+      },
+      "training": {
+        "hit_rows": 642,
+        "auxiliary_sequences": 12,
+        "target_sequences": 623,
+        "target_components": 21
+      },
+      "validation": {
+        "hit_rows": 54,
+        "auxiliary_sequences": 13,
+        "target_sequences": 37,
+        "target_components": 12
+      }
+    },
+    "limit": "Heuristic local alignment search, not exhaustive detection of all homologous fragments.",
+    "coverage": "Fraction of the auxiliary query covered; no target coverage requirement."
+  }
+}

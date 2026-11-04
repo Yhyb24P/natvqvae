@@ -196,6 +196,19 @@ class FrozenEncoder:
         valid = torch.arange(width, device=self.device)[None] < sizes[:, None]
         return h, valid, mask
 
+    @torch.no_grad()
+    def amino_acid_log_probs(self, sequences, positions):
+        """Use the frozen MLM head on the same masked inputs, normalized over AA."""
+        h, valid, mask = self(sequences, positions)
+        token_ids = self.tokenizer.convert_tokens_to_ids(list(AA))
+        if (len(set(token_ids)) != len(AA) or
+                self.tokenizer.convert_ids_to_tokens(token_ids) != list(AA)):
+            raise ValueError('ESM vocabulary does not map the 20 amino acids uniquely')
+        with torch.autocast(device_type=self.device.type, dtype=torch.bfloat16,
+                            enabled=self.device.type == 'cuda'):
+            logits = self.model.lm_head(h)
+        return logits[..., token_ids].float().log_softmax(-1), valid, mask
+
 
 def load_checkpoint(path, device='cpu'):
     payload = torch.load(path, map_location=device, weights_only=True)

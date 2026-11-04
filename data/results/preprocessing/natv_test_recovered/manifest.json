@@ -1,0 +1,169 @@
+{
+  "status": "COMPLETED",
+  "method": "restore archived sequence and CDD fields; no new annotation",
+  "sources": {
+    "roles": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/family_training_roles_v2.parquet",
+      "sha256": "2b26e53cf30270d792aecdbca061c0bf30cdedd41b28fba9fde4dcef2bda6bce",
+      "bytes": 603885
+    },
+    "population": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/source_population.parquet",
+      "sha256": "a01bdcc6ba986f16fc2b4c0ef1abc900f6aad9a1198adad51122b1da4a77ffc7",
+      "bytes": 561920
+    },
+    "cdd": {
+      "path": "/home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/population_cdd_domains.parquet",
+      "sha256": "07d612faf7aa8f74d54215e4279866ea55c2e6bde7f3b7bf97392d115e173586",
+      "bytes": 2324867
+    }
+  },
+  "current_inputs": {
+    "training": {
+      "path": "data/results/preprocessing/natv_family/train.csv",
+      "sha256": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+      "columns_checked": [
+        "sequence_id",
+        "component_v2",
+        "length",
+        "nmnat_cdd_from",
+        "nmnat_cdd_to",
+        "nudix_cdd_from",
+        "nudix_cdd_to"
+      ]
+    },
+    "validation": {
+      "path": "data/results/preprocessing/natv_family/validation.csv",
+      "sha256": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+      "columns_checked": [
+        "sequence_id",
+        "component_v2",
+        "length",
+        "nmnat_cdd_from",
+        "nmnat_cdd_to",
+        "nudix_cdd_from",
+        "nudix_cdd_to"
+      ]
+    },
+    "test": {
+      "path": "data/results/preprocessing/natv_family/test.csv",
+      "sha256": "49278f009e15571687e2775a37132634be5bb2448974eb3cfa10c87331741bee",
+      "columns_checked": [
+        "sequence_id",
+        "component_v2"
+      ]
+    },
+    "population": {
+      "path": "data/raw/sequences/natv_population.fasta",
+      "sha256": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a"
+    }
+  },
+  "config": {
+    "path": "config/natv_test_recovery.yaml",
+    "sha256": "cab1acc260dc5576e43160860ab0fbd0b7131eb5cfd3a1158c6236408fc88128"
+  },
+  "code_sha256": "c61d11c4e1469d9009df5fed286f4dcad0a8d96897cf735442a47eb319f19a3d",
+  "git_revision": "87071c0979f26a88a0a8645cb1c10baac4cdceed",
+  "column_sources": {
+    "sequence_id": "current split ID; must equal SHA256 of the full amino-acid sequence",
+    "sequence": "roles.sequence, independently matched to population.sequence",
+    "component_v2": "current split component, verified against roles.component_v2",
+    "length": "roles.length, verified against sequence length and population.length",
+    "nmnat_cdd_from/nmnat_cdd_to": "roles fields of the same name; verified against original CDD query_from/query_to",
+    "nudix_cdd_from/nudix_cdd_to": "roles fields of the same name; verified against original CDD query_from/query_to",
+    "split": "current split membership, roles.training_role_v2 and roles.split_v2 must agree"
+  },
+  "coordinate_system": "CDD sequence coordinates are 1-based inclusive",
+  "cdd_models": {
+    "nmnat": {
+      "accession": "cd02168",
+      "short_name": "NMNAT_Nudix"
+    },
+    "nudix": {
+      "accession": "cd18873",
+      "short_name": "NUDIX_NadM_like"
+    }
+  },
+  "checked_splits": {
+    "training": {
+      "sequences": 1644,
+      "groups": 47,
+      "fields_checked_against_current_csv": [
+        "sequence_id",
+        "component_v2",
+        "length",
+        "nmnat_cdd_from",
+        "nmnat_cdd_to",
+        "nudix_cdd_from",
+        "nudix_cdd_to"
+      ],
+      "unique_original_cdd_hits": 3288,
+      "cdd_specificity": {
+        "nmnat": {
+          "Non-specific": 1609,
+          "Specific": 35
+        },
+        "nudix": {
+          "Specific": 1641,
+          "Non-specific": 3
+        }
+      }
+    },
+    "validation": {
+      "sequences": 227,
+      "groups": 44,
+      "fields_checked_against_current_csv": [
+        "sequence_id",
+        "component_v2",
+        "length",
+        "nmnat_cdd_from",
+        "nmnat_cdd_to",
+        "nudix_cdd_from",
+        "nudix_cdd_to"
+      ],
+      "unique_original_cdd_hits": 454,
+      "cdd_specificity": {
+        "nmnat": {
+          "Non-specific": 227
+        },
+        "nudix": {
+          "Specific": 214,
+          "Non-specific": 13
+        }
+      }
+    },
+    "test": {
+      "sequences": 231,
+      "groups": 44,
+      "fields_checked_against_current_csv": [
+        "sequence_id",
+        "component_v2"
+      ],
+      "unique_original_cdd_hits": 462,
+      "cdd_specificity": {
+        "nmnat": {
+          "Non-specific": 217,
+          "Specific": 14
+        },
+        "nudix": {
+          "Specific": 226,
+          "Non-specific": 5
+        }
+      }
+    }
+  },
+  "test_original_csv_had_cdd": false,
+  "test_prediction_scoring": false,
+  "training_performed": false,
+  "historical_wt_alignment_used": false,
+  "outputs": {
+    "test.csv": {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_test_recovered/test.csv",
+      "sha256": "f3fff9880359b24e1e0ddeb500db9f8b382371ef8d3f82bc57184d6b51a370b2"
+    },
+    "test.fasta": {
+      "path": "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_test_recovered/test.fasta",
+      "sha256": "26cc91e8fe2cc9f3259043817215658357ef02038e384b8fc019d18c1af0fa2c"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-11-04T06:57:15.847602+00:00",
+  "checks": {
+    "all_A_sequences_equal_complete_retained_inputs": true,
+    "all_S_sequences_reconstructed_from_current_training_full_sequences": true,
+    "all_S_intervals_within_recorded_NMNAT_CDD_boundaries": true,
+    "common_WT_columns_and_both_coordinates_match_original_A_masks_and_saved_S_mapping": true,
+    "all_panels_share_WT_columns_and_actual_counts_between_arms": true,
+    "all_panels_obey_nominal_limit_and_leave_at_least_one_common_column_visible": true,
+    "all_pair_weights_match_original_A_group_formula": true,
+    "all_78_original_A_groups_have_equal_total_pair_weight": true
+  },
+  "counts": {
+    "pairs": 1437,
+    "A_original_groups": 78,
+    "unique_S_source_proteins": 250,
+    "S_source_components": 42,
+    "unique_S_fragment_sequences": 665,
+    "panels": 4311
+  },
+  "actual_mask_count_by_nominal_and_actual": {
+    "16:10": 2,
+    "16:11": 10,
+    "16:12": 6,
+    "16:13": 3,
+    "16:14": 9,
+    "16:15": 15,
+    "16:16": 1384,
+    "16:8": 1,
+    "16:9": 7,
+    "32:10": 2,
+    "32:11": 10,
+    "32:12": 6,
+    "32:13": 3,
+    "32:14": 9,
+    "32:15": 15,
+    "32:16": 7,
+    "32:17": 8,
+    "32:18": 17,
+    "32:19": 42,
+    "32:20": 4,
+    "32:21": 6,
+    "32:22": 7,
+    "32:23": 13,
+    "32:24": 10,
+    "32:25": 25,
+    "32:26": 20,
+    "32:27": 13,
+    "32:28": 46,
+    "32:29": 11,
+    "32:30": 8,
+    "32:31": 8,
+    "32:32": 1139,
+    "32:8": 1,
+    "32:9": 7,
+    "8:8": 1437
+  },
+  "max_pair_weight_absolute_error": 0,
+  "max_group_total_weight_absolute_error": 1.3855583347321954e-13,
+  "input_sha256": {
+    "pairs": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/pair_manifest.csv",
+      "sha256": "350aa5246729d995c8232947a7206a367417bbabba9a90931b99526c196ae4cf"
+    },
+    "panels": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/pair_panels.json",
+      "sha256": "68517ac10a8faff284c97ccce5d4e79e6fef769ebafd6ef94166450443491f36"
+    },
+    "a_fasta": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/a_fragments.fasta",
+      "sha256": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48"
+    },
+    "s_fasta": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/s_fragments.fasta",
+      "sha256": "4051e49373a5019c01437c433b6ea5bcd6c7ffec0c1187d7cfeafb25359aad33"
+    },
+    "s_mapping": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/natv_training_mappings.csv",
+      "sha256": "12b47dc498a627f6961b8b2a1737be57ed8436c014e424475f349ada334a4867"
+    },
+    "training": {
+      "path": "data/results/preprocessing/natv_family/train.csv",
+      "sha256": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167"
+    },
+    "population": {
+      "path": "data/raw/sequences/natv_population.fasta",
+      "sha256": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a"
+    },
+    "retained_a": {
+      "path": "data/results/preprocessing/pf01467_fragment_relations/retained_aux_domains.fasta",
+      "sha256": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48"
+    },
+    "original_a_masks": {
+      "path": "data/results/preprocessing/pf01467_8849/aux_masks.json",
+      "sha256": "b1d1eb8d43257f8e92511830db39676f3b3d9e94cd3e36ff01702f4b20de247c"
+    },
+    "summary": {
+      "path": "data/results/preprocessing/natv_matched_fragment_pretraining/summary.json",
+      "sha256": "8b43592631828d6dfb3f084ae467b61f47c7607f50542889f59331ff9eaad141"
+    }
+  },
+  "scope": "Coordinate, sequence identity, panel and weight checks only. Uses saved stable mappings; does not rerun alignments, MMseqs, training, or model scoring."
+}

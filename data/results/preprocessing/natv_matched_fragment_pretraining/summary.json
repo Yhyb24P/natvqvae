@@ -1,0 +1,211 @@
+{
+  "status": "prepared_not_trained",
+  "input_sha256": {
+    "config/fragment_pretraining.yaml": "d7a598ba12ae123a46fdbb8172fa0062cd5808c283800faa9e41c52f18760339",
+    "data/results/preprocessing/pf01467_fragment_relations/retained_aux_domains.fasta": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48",
+    "data/results/preprocessing/pf01467_fragment_relations/retained_aux_masks.json": "a0ce2438b320f9a957cea65665a558148e6c3cf327dc72e65c4585cf1ab8dc59",
+    "data/results/preprocessing/pf01467_fragment_relations/retained_auxiliary.csv": "727ce24350b7eda8da9daf43be42c95ccdbb68be2abe20ef47e4eeb81fb342ab",
+    "data/results/preprocessing/pf01467_fragment_relations/summary.json": "8cd057faf4bb50699c8ade269a894f0acf4e1087e590fae555dcf7905ca50112",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553"
+  },
+  "implementation_sha256": {
+    "/home/yhshy/git_files/natvqvae/src/natvqvae/fragment_pretraining.py": "fcfc8f35b57bdb51d0c3d0a802706eb46f352b98944127d68eb2359af363ab44",
+    "/home/yhshy/git_files/natvqvae/src/natvqvae/preprocessing.py": "fa32f3b02b2932bfc08e94a73dddd6679af6ee417bfad977359280acfa0310a5",
+    "/home/yhshy/git_files/natvqvae/src/natvqvae/fragment_overlap.py": "fe1c4d761d7d7c01436748c6c33c6edece331bc4c16a8bf0f4cef7b34da41f1d",
+    "/home/yhshy/git_files/natvqvae/src/natvqvae/data.py": "4cb18f0b9d1cc0f45c695fa5e972ccb0743c36f4d168043fb4174f00541c68ee"
+  },
+  "git_revision": "87071c0979f26a88a0a8645cb1c10baac4cdceed",
+  "git_status": [
+    " M .gitignore",
+    " M data/results/evaluation/natv_transfer/REPORT.md",
+    " M docs/RESEARCH_PLAN.md",
+    " M docs/RESULTS.md",
+    " M src/natvqvae/auxiliary.py",
+    " M src/natvqvae/cli.py",
+    " M src/natvqvae/model.py",
+    " M src/natvqvae/train.py",
+    "?? config/fragment_aux_external.yaml",
+    "?? config/fragment_aux_self.yaml",
+    "?? config/fragment_overlap.yaml",
+    "?? config/fragment_pretraining.yaml",
+    "?? config/pf01467_fragment_relations.yaml",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.html\"",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.md\"",
+    "?? docs/manuscript/",
+    "?? src/natvqvae/esm_baseline.py",
+    "?? src/natvqvae/fragment_overlap.py",
+    "?? src/natvqvae/fragment_pretraining.py",
+    "?? tests/test_auxiliary_training.py",
+    "?? tests/test_esm_baseline.py",
+    "?? tests/test_fragment_overlap.py",
+    "?? tests/test_fragment_pretraining.py"
+  ],
+  "versions": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "biopython": "1.87"
+  },
+  "selection": {
+    "min_shared_fraction": 0.8,
+    "relative_length_tolerance": 0.2,
+    "max_optimal_alignments": 16,
+    "seed": 20261104
+  },
+  "masking": {
+    "sizes": [
+      8,
+      16,
+      32
+    ],
+    "seed": 20261105
+  },
+  "training_design": {
+    "updates": 750,
+    "auxiliary_validation": false
+  },
+  "external_pool_sequences": 1437,
+  "matched_pairs": 1437,
+  "unmatched_external_sequences": 0,
+  "a_original_groups": 78,
+  "s_training_proteins_available": 1644,
+  "s_training_proteins_without_stable_mapping": 496,
+  "s_selected_unique_proteins": 250,
+  "s_selected_components": 42,
+  "s_maximum_pairs_from_one_protein": 61,
+  "a_unique_fragment_sequences": 1437,
+  "s_unique_fragment_sequences": 665,
+  "matching_quantiles": {
+    "a_length": {
+      "min": 26.0,
+      "q25": 160.0,
+      "median": 197.0,
+      "q75": 215.0,
+      "max": 269.0
+    },
+    "s_length": {
+      "min": 26.0,
+      "q25": 159.0,
+      "median": 183.0,
+      "q75": 187.0,
+      "max": 229.0
+    },
+    "length_difference_s_minus_a": {
+      "min": -51.0,
+      "q25": -29.0,
+      "median": -12.0,
+      "q75": 0.0,
+      "max": 25.0
+    },
+    "common_count": {
+      "min": 9.0,
+      "q25": 40.0,
+      "median": 60.0,
+      "q75": 80.0,
+      "max": 154.0
+    },
+    "common_fraction_of_a_mapping": {
+      "min": 0.8,
+      "q25": 0.889763779527559,
+      "median": 0.9259259259259259,
+      "q75": 0.9560439560439561,
+      "max": 1.0
+    },
+    "eligible_s_proteins": {
+      "min": 1.0,
+      "q25": 1095.0,
+      "median": 1113.0,
+      "q75": 1130.0,
+      "max": 1148.0
+    },
+    "eligible_s_components": {
+      "min": 1.0,
+      "q25": 37.0,
+      "median": 39.0,
+      "q75": 39.0,
+      "max": 42.0
+    }
+  },
+  "s_extension_quantiles": {
+    "min": 0.0,
+    "q25": 32.0,
+    "median": 69.0,
+    "q75": 108.0,
+    "max": 199.0
+  },
+  "a_group_total_weight_quantiles": {
+    "min": 18.423076923076785,
+    "q25": 18.423076923076923,
+    "median": 18.423076923076923,
+    "q75": 18.423076923076923,
+    "max": 18.423076923076934
+  },
+  "s_component_total_weight_quantiles": {
+    "min": 25.96966729698615,
+    "q25": 28.812309055790024,
+    "median": 33.784058727995784,
+    "q75": 39.81140755015392,
+    "max": 44.30238001385588
+  },
+  "actual_mask_sizes": {
+    "8": {
+      "8": 1437
+    },
+    "16": {
+      "16": 1384,
+      "13": 3,
+      "15": 15,
+      "9": 7,
+      "14": 9,
+      "10": 2,
+      "11": 10,
+      "12": 6,
+      "8": 1
+    },
+    "32": {
+      "32": 1139,
+      "24": 10,
+      "25": 25,
+      "13": 3,
+      "26": 20,
+      "31": 8,
+      "23": 13,
+      "19": 42,
+      "18": 17,
+      "17": 8,
+      "28": 46,
+      "30": 8,
+      "29": 11,
+      "22": 7,
+      "15": 15,
+      "9": 7,
+      "27": 13,
+      "14": 9,
+      "21": 6,
+      "10": 2,
+      "11": 10,
+      "16": 7,
+      "20": 4,
+      "12": 6,
+      "8": 1
+    }
+  },
+  "matching_definition": "A remains complete. S spans the common mapped WT columns, extends equally at both ends when possible, then uses remaining NMNAT CDD space if one end reaches a boundary. Absolute length difference divided by A length must not exceed the relative tolerance; there is no additional absolute-residue allowance.",
+  "weight_definition": "Each pair shares weight N_pairs/(N_original_A_groups * pairs_in_original_A_group) in both arms. S selection balances cumulative pair weight across eligible NatV components, then source proteins; S weights are reported and are not renormalized.",
+  "limitations": [
+    "Additional S context is from the same training NMNAT domain; non-target residues need not have one-to-one A correspondence.",
+    "Repeated fragments are not independent source proteins. Source-protein and component counts are reported separately.",
+    "Equal updates and batch size do not imply exactly equal FLOPs. No model fitting or test scoring occurs in this preparation."
+  ],
+  "result_sha256": {
+    "natv_training_mappings.csv": "12b47dc498a627f6961b8b2a1737be57ed8436c014e424475f349ada334a4867",
+    "pair_manifest.csv": "350aa5246729d995c8232947a7206a367417bbabba9a90931b99526c196ae4cf",
+    "s_source_weights.csv": "90e8eeac067329a967550642d37e2090219c62d2ed74cf4da7076c72b35b4d1c",
+    "a_fragments.fasta": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48",
+    "unmatched_auxiliary.csv": "5fa2810b7f4ce39bc17be696cf1a5804cf1aee01472180abb0c326047b37f174",
+    "pair_panels.json": "68517ac10a8faff284c97ccce5d4e79e6fef769ebafd6ef94166450443491f36",
+    "s_component_weights.csv": "f7821e29a971a28d99bca17cf3433b43ad451a477c721139075db91f61b9d09c",
+    "s_fragments.fasta": "4051e49373a5019c01437c433b6ea5bcd6c7ffec0c1187d7cfeafb25359aad33"
+  }
+}

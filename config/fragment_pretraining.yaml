@@ -1,0 +1,17 @@
+inputs:
+  relation_directory: data/results/preprocessing/pf01467_fragment_relations
+  population: data/raw/sequences/natv_population.fasta
+  training: data/results/preprocessing/natv_family/train.csv
+  target: config/target.yaml
+selection:
+  min_shared_fraction: 0.8
+  relative_length_tolerance: 0.2
+  max_optimal_alignments: 16
+  seed: 20261104
+masking:
+  sizes: [8, 16, 32]
+  seed: 20261105
+training_design:
+  updates: 750
+  auxiliary_validation: false
+output: data/results/preprocessing/natv_matched_fragment_pretraining

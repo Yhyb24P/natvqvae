@@ -23,7 +23,7 @@ AGENTS.md               项目贡献、文件组织和写作规范
 
 ## 数据与权重
 
-`data/raw/sequences/natv_population.fasta` 是上游筛选后的 1,871 条固定输入，不是全部 2,430 条发现序列。正式划分在 `data/results/preprocessing/natv_family/`：训练 1,644 条、验证 227 条；封存测试仅保留 231 个 ID。输入与划分的校验值见 `config/inputs.sha256`。
+`data/raw/sequences/natv_population.fasta` 是上游筛选后的 1,871 条训练、验证输入。正式划分在 `data/results/preprocessing/natv_family/`：训练 1,644 条、验证 227 条、测试 231 条。原测试清单只有 ID 和分组；完整测试序列及 CDD 注释已从原始数据恢复到 `data/results/preprocessing/natv_test_recovered/`，来源见其中的 `manifest.json`。原训练输入与划分的校验值见 `config/inputs.sha256`。
 
 `config/sources.yaml` 统一引用 `data/weights/esm2/` 及 `data/weights/qvae/`；现役 QVAE 的五组 `seed*/best.pt` 权重由本地放置，不进入 Git。迁移既有权重仅改变路径，内容依 `config/checkpoints.sha256` 核对。
 
@@ -86,6 +86,14 @@ natvqvae nmnat-joint-reference --config config/nmnat_joint.yaml \
 `train`、`generate`、`evaluate` 的 `--output` 分别位于 `data/results/training/`、`generation/`、`evaluation/` 下的独立运行目录；新训练的权重另存 `data/weights/qvae/<run>/checkpoint.pt`。`preprocess` 将旧 PF01467-only 8,849 条恢复到 `data/results/preprocessing/pf01467_8849/`。更多参数见 `natvqvae <command> --help`。
 
 NMNAT 辅助域任务使用 `config/aux_qvae.yaml`，入口为 `aux-train`、`aux-generate`、`aux-evaluate`；`aux-summary` 汇总现有两臂结果并选择代表序列。
+
+投稿准备使用 `config/fragment_transfer_comparison.yaml` 记录比较条件。`fragment-overlap --config config/pf01467_fragment_relations.yaml` 检查辅助片段关系；`fragment-pretraining --config config/fragment_pretraining.yaml` 准备外部与自身片段的配对输入；`aux-train` 可用 `config/fragment_aux_external.yaml` 或 `config/fragment_aux_self.yaml`，并通过 `--seed` 指定重复。既有运行目录拒绝覆盖。
+
+`fragment-plot --directory data/results/preprocessing/natv_matched_fragment_pretraining` 从配对清单绘制片段长度与共同映射位置分布。九份模型评价完成后，可用 `fragment-compare --evaluation-dir <同一划分的九份评价目录> --esm-dir <ESM评价目录> --output <比较目录>` 汇总三条件结果；该命令只读取已有分数。
+
+`esm-evaluate --config config/transfer.yaml --output <评价目录>` 评价冻结 ESM-2 预测头；`esm-compare --esm-dir <ESM评价目录> --output <比较目录>` 与原六个迁移模型比较。`evaluate` 和 `esm-evaluate` 默认仅评价验证集；测试评价须明确提供 `--split test --test-data data/results/preprocessing/natv_test_recovered`。恢复原始 Parquet 测试数据另用 `test-recover --config config/natv_test_recovery.yaml`，需要 `python -m pip install -e ".[data]"`，该命令不做预测评分。
+
+`test-history --recovered-dir data/results/preprocessing/natv_test_recovered` 核对旧评价的序列成员和用途，生成 `historical_use.json`。这批序列在旧项目中已有评价记录；测试比较必须同时读取这份历史说明。
 
 结构工作使用独立配置与结果：`design-build/design-boltz/design-summarize`（`config/design.yaml`）、`microenv-build/microenv-boltz/microenv-summarize`（`config/microenvironment.yaml`）和 `epcr-build/epcr-boltz/epcr-summarize`（`config/epcr_full_length.yaml`）。易错 PCR 比较从 Sanger 峰图与 `NatV.dna` 重建 WT/NatV10/NatV89，使用同一 512 行 MSA 与 Boltz-2 设置，结果在 `data/results/evaluation/kvp40_epcr_full_length_structures/`。
 

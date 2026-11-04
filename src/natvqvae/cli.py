@@ -59,6 +59,59 @@ def _candidate_delivery(config, output):
     return build_candidate_delivery(config, _result_output(output, 'evaluation'))
 
 
+def _fragment_overlap(config):
+    from .fragment_overlap import check_fragment_overlap
+    study = load_yaml(config)
+    return check_fragment_overlap(config, _result_output(study['output'], 'preprocessing'))
+
+
+def _fragment_pretraining(config):
+    from .fragment_pretraining import build_fragment_pretraining
+    study = load_yaml(config)
+    return build_fragment_pretraining(config, _result_output(study['output'], 'preprocessing'))
+
+
+def _fragment_plot(args):
+    from .fragment_pretraining import plot_fragment_matching
+    return plot_fragment_matching(_result_output(args.directory, 'preprocessing'))
+
+
+def _test_recover(args):
+    from .test_data import recover_test_data
+    study = load_yaml(args.config)
+    return recover_test_data(args.config,
+                             _result_output(args.output or study['output'], 'preprocessing'))
+
+
+def _test_history(args):
+    from .test_data import inspect_test_history
+    return inspect_test_history(args.config, _result_output(args.recovered_dir, 'preprocessing'))
+
+
+def _fragment_compare(args):
+    from .fragment_comparison import compare_fragment_transfer
+    return compare_fragment_transfer(args.config, args.evaluation_dir, args.esm_dir,
+                                     _result_output(args.output, 'evaluation'),
+                                     args.split, args.test_data)
+
+
+def _esm_evaluate(args):
+    from .esm_baseline import evaluate_esm
+    return evaluate_esm(args.config, args.sources, args.target,
+                        _result_output(args.output, 'evaluation'), args.device, args.split, args.test_data)
+
+
+def _esm_compare(args):
+    from .esm_baseline import compare_esm_baseline
+    return compare_esm_baseline(args.config, args.esm_dir,
+                                _result_output(args.output, 'evaluation'))
+
+
+def _esm_plot(args):
+    from .esm_baseline import plot_esm_comparison
+    return plot_esm_comparison(_result_output(args.comparison, 'evaluation'))
+
+
 def _result_output(value, category):
     path = Path(value).resolve()
     root = (Path(__file__).resolve().parents[2] / 'data' / 'results' / category).resolve()
@@ -107,9 +160,55 @@ def build_parser():
         'target': dict(default='config/target.yaml'),
         'device': dict(default=None),
     }
+    esm = sub.add_parser('esm-evaluate', help='score the frozen ESM-2 head on identical validation masks')
+    for name, options in common.items():
+        esm.add_argument('--' + name, **options)
+    esm.add_argument('--output', required=True)
+    esm.add_argument('--split', choices=('validation', 'test'), default='validation')
+    esm.add_argument('--test-data', default=None)
+    esm.set_defaults(func=_esm_evaluate)
+    esm_compare = sub.add_parser('esm-compare', help='compare ESM-2 and NatV scores on paired validation tasks')
+    esm_compare.add_argument('--config', default='data/results/evaluation/natv_transfer/manifest.json')
+    esm_compare.add_argument('--esm-dir', required=True)
+    esm_compare.add_argument('--output', required=True)
+    esm_compare.set_defaults(func=_esm_compare)
+    esm_plot = sub.add_parser('esm-plot', help='export a figure from existing ESM comparison results')
+    esm_plot.add_argument('--comparison', required=True)
+    esm_plot.set_defaults(func=_esm_plot)
     prep = sub.add_parser('preprocess', help='recover and stratify the old PF01467-only corpus')
     prep.add_argument('--config', default='config/pf01467.yaml')
     prep.set_defaults(func=lambda args: preprocess(args.config))
+
+    overlap = sub.add_parser('fragment-overlap', help='check auxiliary fragments against NatV splits')
+    overlap.add_argument('--config', default='config/fragment_overlap.yaml')
+    overlap.set_defaults(func=lambda args: _fragment_overlap(args.config))
+
+    paired_fragments = sub.add_parser('fragment-pretraining', help='prepare matched external and NatV training fragments')
+    paired_fragments.add_argument('--config', default='config/fragment_pretraining.yaml')
+    paired_fragments.set_defaults(func=lambda args: _fragment_pretraining(args.config))
+
+    fragment_plot = sub.add_parser('fragment-plot', help='plot the prepared fragment-length and alignment matching')
+    fragment_plot.add_argument('--directory', required=True)
+    fragment_plot.set_defaults(func=_fragment_plot)
+
+    test_recover = sub.add_parser('test-recover', help='recover test sequences and CDD annotations without scoring')
+    test_recover.add_argument('--config', default='config/natv_test_recovery.yaml')
+    test_recover.add_argument('--output', default=None)
+    test_recover.set_defaults(func=_test_recover)
+
+    test_history = sub.add_parser('test-history', help='verify historical test membership without reading score values')
+    test_history.add_argument('--config', default='config/natv_test_history.yaml')
+    test_history.add_argument('--recovered-dir', required=True)
+    test_history.set_defaults(func=_test_history)
+
+    fragment_compare = sub.add_parser('fragment-compare', help='compare completed random/self/external prediction scores')
+    fragment_compare.add_argument('--config', default='config/fragment_transfer_comparison.yaml')
+    fragment_compare.add_argument('--evaluation-dir', required=True)
+    fragment_compare.add_argument('--esm-dir', required=True)
+    fragment_compare.add_argument('--output', required=True)
+    fragment_compare.add_argument('--split', choices=('validation', 'test'), default='validation')
+    fragment_compare.add_argument('--test-data', default=None)
+    fragment_compare.set_defaults(func=_fragment_compare)
 
     summary = sub.add_parser('aux-summary', help='compare completed auxiliary runs and select WT candidates')
     summary.add_argument('--config', default='config/aux_qvae.yaml')
@@ -152,25 +251,27 @@ def build_parser():
         args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'generation'),
         args.device, args.group, args.draws))
 
-    evaluator = sub.add_parser('evaluate', help='evaluate a checkpoint on validation masks')
+    evaluator = sub.add_parser('evaluate', help='evaluate a checkpoint on validation or explicit recovered test data')
     evaluator.add_argument('--config', **common['config'])
     evaluator.add_argument('--sources', **common['sources'])
     evaluator.add_argument('--target', **common['target'])
     evaluator.add_argument('--device', **common['device'])
     evaluator.add_argument('--checkpoint', required=True)
     evaluator.add_argument('--output', required=True)
-    evaluator.add_argument('--split', default='validation')
+    evaluator.add_argument('--split', choices=('validation', 'test'), default='validation')
+    evaluator.add_argument('--test-data', default=None)
     evaluator.add_argument('--limit', type=int, default=None)
     evaluator.set_defaults(func=lambda args: evaluate(
         args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'evaluation'),
-        args.device, args.split, args.limit))
+        args.device, args.split, args.limit, args.test_data))
 
     aux_trainer = sub.add_parser('aux-train', help='train QVAE and deterministic arms on auxiliary domains')
     aux_trainer.add_argument('--config', default='config/aux_qvae.yaml')
     aux_trainer.add_argument('--device', default=None)
+    aux_trainer.add_argument('--seed', type=int, default=None)
     aux_trainer.add_argument('--output', required=True)
     aux_trainer.set_defaults(func=lambda args: train_aux(
-        args.config, _result_output(args.output, 'training'), args.device))
+        args.config, _result_output(args.output, 'training'), args.device, args.seed))
 
     aux_generator = sub.add_parser('aux-generate', help='sample auxiliary-domain variants from a QVAE checkpoint')
     aux_generator.add_argument('--config', default='config/aux_qvae.yaml')

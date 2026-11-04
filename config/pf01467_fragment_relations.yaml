@@ -1,0 +1,29 @@
+auxiliary:
+  domains: data/results/preprocessing/pf01467_8849/aux_domains.fasta
+  split: data/results/preprocessing/pf01467_8849/aux_split.csv
+  masks: data/results/preprocessing/pf01467_8849/aux_masks.json
+  records: data/results/preprocessing/pf01467_8849/records.csv.gz
+  selected_splits: [train, val]
+aux_training_record: data/results/training/aux_qvae_seed8601/training_summary.json
+natv:
+  population: data/raw/sequences/natv_population.fasta
+  splits:
+    training: data/results/preprocessing/natv_family/train.csv
+    validation: data/results/preprocessing/natv_family/validation.csv
+    test: data/results/preprocessing/natv_family/test.csv
+  source_fastas:
+    - /home/yhshy/git_files/nad_qvae/experiments/run_reports/pretraining_scientific_validation_20260909/stage3_accepted_sequences.fasta
+    - /home/yhshy/git_files/nad_qvae/experiments/run_reports/natv_family_corpus_p0a_v1/corrected_a_recluster_all_seqs.fasta
+paired_summary: data/results/evaluation/natv_transfer/paired_summary.json
+output: data/results/preprocessing/pf01467_fragment_relations
+mmseqs:
+  enabled: true
+  executable: /home/yhshy/miniconda3/envs/nad_data/bin/mmseqs
+  min_identity: 0.5
+  query_coverage: 0.8
+  evalue: 0.001
+  sensitivity: 7.5
+  threads: 8
+auxiliary_relations:
+  enabled: true
+  wt_domain_length: 178
