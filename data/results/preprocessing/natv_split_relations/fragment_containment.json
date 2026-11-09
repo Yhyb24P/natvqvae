@@ -1,0 +1,162 @@
+{
+  "status": "completed",
+  "method": "exact amino-acid substring containment in both directions; no alignment",
+  "auxiliary_sequences": {
+    "train": 2395,
+    "val": 1684
+  },
+  "natv_sequences": {
+    "train": 1644,
+    "validation": 227,
+    "test": 231
+  },
+  "pairs": {
+    "aux_train_vs_natv_validation_full": {
+      "auxiliary_sequences": 2395,
+      "natv_sequences": 227,
+      "events": 2,
+      "events_truncated": false,
+      "auxiliary_with_event": 1,
+      "natv_with_event": 2,
+      "events_detail": [
+        {
+          "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+          "reference_id": "0bd9d1c79d893fc9acd9f667553d73b97b6026a542a0d340db200f73b4ca75c4",
+          "direction": "query_in_reference",
+          "shorter_length": 124,
+          "longer_length": 352,
+          "offset_0based": 9,
+          "shorter_fraction_of_longer": 0.3522727272727273,
+          "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+        },
+        {
+          "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+          "reference_id": "2d5b1552330535ddd229017a844bdd4a35c5c9532a810c0e7457bfa3def8e604",
+          "direction": "query_in_reference",
+          "shorter_length": 124,
+          "longer_length": 353,
+          "offset_0based": 9,
+          "shorter_fraction_of_longer": 0.35127478753541075,
+          "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+        }
+      ]
+    },
+    "aux_train_vs_natv_validation_nmnat": {
+      "auxiliary_sequences": 2395,
+      "natv_sequences": 227,
+      "events": 2,
+      "events_truncated": false,
+      "auxiliary_with_event": 1,
+      "natv_with_event": 2,
+      "events_detail": [
+        {
+          "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+          "reference_id": "0bd9d1c79d893fc9acd9f667553d73b97b6026a542a0d340db200f73b4ca75c4",
+          "direction": "query_in_reference",
+          "shorter_length": 124,
+          "longer_length": 182,
+          "offset_0based": 2,
+          "shorter_fraction_of_longer": 0.6813186813186813,
+          "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+        },
+        {
+          "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+          "reference_id": "2d5b1552330535ddd229017a844bdd4a35c5c9532a810c0e7457bfa3def8e604",
+          "direction": "query_in_reference",
+          "shorter_length": 124,
+          "longer_length": 182,
+          "offset_0based": 2,
+          "shorter_fraction_of_longer": 0.6813186813186813,
+          "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+        }
+      ]
+    },
+    "aux_train_vs_natv_test_full": {
+      "auxiliary_sequences": 2395,
+      "natv_sequences": 231,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    },
+    "aux_train_vs_natv_test_nmnat": {
+      "auxiliary_sequences": 2395,
+      "natv_sequences": 231,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    },
+    "aux_val_vs_natv_validation_full": {
+      "auxiliary_sequences": 1684,
+      "natv_sequences": 227,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    },
+    "aux_val_vs_natv_validation_nmnat": {
+      "auxiliary_sequences": 1684,
+      "natv_sequences": 227,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    },
+    "aux_val_vs_natv_test_full": {
+      "auxiliary_sequences": 1684,
+      "natv_sequences": 231,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    },
+    "aux_val_vs_natv_test_nmnat": {
+      "auxiliary_sequences": 1684,
+      "natv_sequences": 231,
+      "events": 0,
+      "events_truncated": false,
+      "auxiliary_with_event": 0,
+      "natv_with_event": 0,
+      "events_detail": []
+    }
+  },
+  "inputs_sha256": {
+    "config/natv_fragment_containment.yaml": "7bcb3aaab92199c73b7c8bba3ffc1dc6307ffe97ac4775c1e5f3aae5f207bb12",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_test_recovered/test.fasta": "26cc91e8fe2cc9f3259043817215658357ef02038e384b8fc019d18c1af0fa2c",
+    "data/results/preprocessing/pf01467_8849/aux_domains.fasta": "18a59ebe26bf797fd8f64e06a98d9eb8b3cec9e9b76f02a03343c6125ffebd55",
+    "data/results/preprocessing/pf01467_8849/aux_split.csv": "5cba23475e42209c618251e38df26920701629d6b3f1efeb688bdb471df25061",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/preprocessing/natv_test_recovered/test.csv": "f3fff9880359b24e1e0ddeb500db9f8b382371ef8d3f82bc57184d6b51a370b2"
+  },
+  "implementation_sha256": "5c2585e109e55d8f3e0f96973765f2a00a150c499039ac9343f0e4d663c6bb75",
+  "known_124_case_candidates": [
+    {
+      "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+      "reference_id": "0bd9d1c79d893fc9acd9f667553d73b97b6026a542a0d340db200f73b4ca75c4",
+      "direction": "query_in_reference",
+      "shorter_length": 124,
+      "longer_length": 182,
+      "offset_0based": 2,
+      "shorter_fraction_of_longer": 0.6813186813186813,
+      "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+    },
+    {
+      "query_id": "aux:b98462efe8148e737a0a374b375fcad367feff028a5cb49a76525e9d338efd7c",
+      "reference_id": "2d5b1552330535ddd229017a844bdd4a35c5c9532a810c0e7457bfa3def8e604",
+      "direction": "query_in_reference",
+      "shorter_length": 124,
+      "longer_length": 182,
+      "offset_0based": 2,
+      "shorter_fraction_of_longer": 0.6813186813186813,
+      "reference_component": "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702"
+    }
+  ]
+}

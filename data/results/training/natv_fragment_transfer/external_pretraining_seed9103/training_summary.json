@@ -1,0 +1,67 @@
+{
+  "status": "COMPLETED",
+  "device": "cuda",
+  "seed": 9103,
+  "train_records": 1437,
+  "train_sequences": 1437,
+  "validation_sequences": 0,
+  "train_panels": 4311,
+  "validation_panels": 0,
+  "nonstandard_domains": 5,
+  "excluded_masked_positions": 0,
+  "mask_sizes": [
+    8,
+    16,
+    32
+  ],
+  "K": 8,
+  "steps_per_arm": 750,
+  "arms": {
+    "QVAE": {
+      "steps": 750,
+      "epochs": 17,
+      "seconds": 426.8882920539909,
+      "selection_metric": null,
+      "checkpoint_rule": "fixed_updates",
+      "initial_validation": null,
+      "best_validation": null,
+      "best_epoch": null,
+      "last_validation": null,
+      "checkpoints": {
+        "initial": {
+          "path": "data/weights/natv_fragment_pretraining/external/QVAE_seed9103_initial.pt",
+          "sha256": "18f0b4aea4ce2c5407411e28738041972dbc9e5118cf05551ae9edf6b0166c59"
+        },
+        "last": {
+          "path": "data/weights/natv_fragment_pretraining/external/QVAE_seed9103_last.pt",
+          "sha256": "1b3288039b56d9cf76ce15b8400e0bc7c2a93e5a184764b4a36eb87cc3b36e2a"
+        }
+      },
+      "validation_curve": []
+    }
+  },
+  "selection": {
+    "method": "fixed_updates",
+    "updates": 750
+  },
+  "input_paths": {
+    "pair_manifest": "data/results/preprocessing/natv_matched_fragment_pretraining/pair_manifest.csv",
+    "pair_panels": "data/results/preprocessing/natv_matched_fragment_pretraining/pair_panels.json",
+    "a_fragments": "data/results/preprocessing/natv_matched_fragment_pretraining/a_fragments.fasta",
+    "s_fragments": "data/results/preprocessing/natv_matched_fragment_pretraining/s_fragments.fasta",
+    "target": "config/target.yaml"
+  },
+  "input_domains": null,
+  "input_masks": null,
+  "input_split": null,
+  "esm_model": "data/weights/esm2",
+  "fragment_condition": "external",
+  "input_sha256": {
+    "pair_manifest": "350aa5246729d995c8232947a7206a367417bbabba9a90931b99526c196ae4cf",
+    "pair_panels": "68517ac10a8faff284c97ccce5d4e79e6fef769ebafd6ef94166450443491f36",
+    "a_fragments": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48",
+    "s_fragments": "4051e49373a5019c01437c433b6ea5bcd6c7ffec0c1187d7cfeafb25359aad33",
+    "target": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "config": "07162cb4c682427ace16772ced43fcdef68f49c0129ea4bddf2ccfa31d01773f"
+  }
+}

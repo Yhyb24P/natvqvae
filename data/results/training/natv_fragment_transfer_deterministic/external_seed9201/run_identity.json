@@ -1,0 +1,93 @@
+{
+  "input_sha256": {
+    "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
+    "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/weights/natv_fragment_pretraining/external_deterministic/deterministic_seed9101_last.pt": "3416fd13c331e2c8862192412b48290d6a4e03433034efcd09b8ec35018a872f"
+  },
+  "esm_files_sha256": {
+    "config.json": "539095c22efc52a09d6147074ba4ca119f76a890df5901213b2b55f7d2f96b2b",
+    "model.safetensors": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0",
+    "special_tokens_map.json": "3aedcd4211c0d43aec4e607ff60a63255f3174ead795e997350f09a5f8cd9ee1",
+    "tokenizer_config.json": "7e9161ecdb548ec45a41cbc6b24aa4476fdd418461f491c4207baa99419a29ad",
+    "vocab.txt": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+  },
+  "code_sha256": {
+    "train.py": "8a174f528d5efd647beee86bf83c9877dde536fa9e54b48de2a6b78121b35ef9",
+    "model.py": "e9894de2f4ea3b034c92080a28c30cb12ab3846349f8538aac78a25dd0218768",
+    "data.py": "4cb18f0b9d1cc0f45c695fa5e972ccb0743c36f4d168043fb4174f00541c68ee",
+    "evaluate.py": "39eff7fab9cc4197af2b68aa5ab6041127e482ec13a4d08640980343f145ca71"
+  },
+  "git_revision": "c5e9e596fc703b8d70169ec7b62a43a8726ce712",
+  "git_status": [
+    " M .gitignore",
+    " M README.md",
+    " M docs/RESEARCH_PLAN.md",
+    " M docs/RESULTS.md",
+    " M docs/manuscript/README.md",
+    " M docs/manuscript/manuscript.tex",
+    " M src/natvqvae/cli.py",
+    " M src/natvqvae/evaluate.py",
+    " M src/natvqvae/fragment_comparison.py",
+    " M src/natvqvae/generate.py",
+    " M src/natvqvae/train.py",
+    " M tests/test_cli.py",
+    " M tests/test_fragment_comparison.py",
+    "?? config/fragment_aux_external_deterministic.yaml",
+    "?? config/fragment_aux_self_deterministic.yaml",
+    "?? config/fragment_evaluation_batch_test.yaml",
+    "?? config/fragment_evaluation_batch_validation.yaml",
+    "?? config/fragment_generation.yaml",
+    "?? config/fragment_generation_comparison.yaml",
+    "?? config/fragment_six_cell_comparison.yaml",
+    "?? config/fragment_transfer_deterministic_comparison.yaml",
+    "?? config/natv_fragment_containment.yaml",
+    "?? config/natv_sequence_neighbors.yaml",
+    "?? config/natv_split_relations.yaml",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.html\"",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.md\"",
+    "?? src/natvqvae/generation_comparison.py",
+    "?? src/natvqvae/latent_precision.py",
+    "?? src/natvqvae/split_relations.py",
+    "?? tests/test_deterministic_arm.py",
+    "?? tests/test_evaluation_batch.py",
+    "?? tests/test_generation_comparison.py",
+    "?? tests/test_generation_identity.py",
+    "?? tests/test_latent_precision.py",
+    "?? tests/test_six_cell_contrasts.py",
+    "?? tests/test_split_relations.py"
+  ],
+  "python": "3.10.19",
+  "torch": "2.11.0+cu128",
+  "effective_training": {
+    "seed": 9201,
+    "batch_size": 32,
+    "max_steps": 2704,
+    "K": 8,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.01,
+    "beta_warmup_epochs": 10,
+    "learning_rate_warmup_epochs": 5,
+    "gradient_clip": 1.0,
+    "feature_batch_size": 16,
+    "mask_seed": 7401,
+    "selection": {
+      "records": 128,
+      "panels": [
+        "NMNAT_8_count",
+        "NMNAT_16_count",
+        "NMNAT_32_count"
+      ],
+      "sample_count": 16,
+      "interval_epochs": 5,
+      "min_improvement": 0.0001
+    }
+  },
+  "seed_override": 9201,
+  "device": "cuda",
+  "arm": "deterministic",
+  "initialization": "data/weights/natv_fragment_pretraining/external_deterministic/deterministic_seed9101_last.pt"
+}

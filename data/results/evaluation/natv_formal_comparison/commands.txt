@@ -1,0 +1,51 @@
+# Authoritative execution records:
+#   run_after_training.sh  (training verification, validation/test batch evaluation,
+#                           ESM test baseline, six-cell comparisons, test latent precision)
+#   run_generation.sh      (27 fixed-background generation runs and generation comparison)
+# This file is only an index; do not use it as a separate command transcript.
+
+# 1. Verify 9 deterministic training summaries inside run_after_training.sh:
+#    status COMPLETED, arm deterministic, steps 2704, seed 9201-9203.
+# 2. Batch validation evaluation:
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli evaluate-batch \
+  --config config/transfer.yaml --runs config/fragment_evaluation_batch_validation.yaml \
+  --split validation --device cuda
+# 3. GPU bf16 frozen ESM-2 test baseline (inside run_after_training.sh):
+#    esm-evaluate --config config/transfer.yaml --sources config/sources.yaml \
+#      --target config/target.yaml --output data/results/evaluation/esm2_natv_test_gpu_bf16 \
+#      --split test --test-data data/results/preprocessing/natv_test_recovered --device cuda
+# 4. Batch test evaluation, selected checkpoints, no --limit:
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli evaluate-batch \
+  --config config/transfer.yaml --runs config/fragment_evaluation_batch_test.yaml \
+  --split test --test-data data/results/preprocessing/natv_test_recovered --device cuda
+# 5. Six-cell validation then test:
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli six-cell-compare \
+  --config config/fragment_six_cell_comparison.yaml \
+  --output data/results/evaluation/natv_six_cell/validation --split validation
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli six-cell-compare \
+  --config config/fragment_six_cell_comparison.yaml \
+  --output data/results/evaluation/natv_six_cell/test --split test
+# 6. Test latent precision (inside run_after_training.sh):
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli latent-precision \
+  --comparison-dir data/results/evaluation/natv_six_cell/test/QVAE \
+  --output data/results/evaluation/natv_six_cell/test_latent_precision
+# 7. Generation (authoritative loop in run_generation.sh):
+#    27 model/distribution runs, 45 backgrounds each (44 held-out component representatives
+#    plus KVP40), 6 masks, 64 draws per mask; completion checked from batch_generation.json.
+#    Final comparison:
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli generation-compare \
+  --config config/fragment_generation_comparison.yaml \
+  --output data/results/evaluation/natv_six_cell_generation
+
+# 8. First generation-compare attempt after the 27 batch runs (2026-11-09 23:47 local)
+#    failed before writing summary.json: a real None side value reached np.mean in
+#    _component_effects. Fix: treat both 'NA' and None as unavailable for component
+#    difference/left/right aggregation; added regression test with None side values.
+#    Re-run afterward (completed 2026-11-10 00:05 local):
+PYTHONPATH=src /home/yhshy/miniconda3/envs/nad_data/bin/python -m natvqvae.cli generation-compare \
+  --config config/fragment_generation_comparison.yaml \
+  --output data/results/evaluation/natv_six_cell_generation
+#    Result: COMPLETED; summary counts 27 model/distribution runs x 45 backgrounds
+#    = 1,215 background-run records, 1,620 comparisons, 672 component effects; output at
+#    data/results/evaluation/natv_six_cell_generation. The failed attempt is preserved
+#    in data/results/evaluation/natv_formal_comparison/generation.log.

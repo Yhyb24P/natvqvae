@@ -35,11 +35,16 @@ def conditional_scores(model, context_features, full_features, valid, mask, labe
     sites = use.sum(1)
     if model.arm == 'deterministic':
         latent = model.deterministic_context(hidden, valid, mask)
-        nll = reconstruction_nll(model.decode(targets, latent.unsqueeze(0)), y, use)[0]
-        return {'sites': sites, 'prior_joint_nll': nll, 'posterior_joint_nll': nll,
-                'marginal_nll': nll, 'prior_expected_reconstruction_nll': nll,
-                'posterior_expected_reconstruction_nll': nll,
-                'kl': torch.zeros_like(nll), 'ess': None, 'max_weight': None}
+        logits = model.decode(targets, latent.unsqueeze(0))[0]
+        site_log_probs = logits.float().log_softmax(-1).gather(-1, y[..., None]).squeeze(-1)
+        nll = -(site_log_probs * use).sum(-1)
+        result = {'sites': sites, 'prior_joint_nll': nll, 'posterior_joint_nll': nll,
+                  'marginal_nll': nll, 'prior_expected_reconstruction_nll': nll,
+                  'posterior_expected_reconstruction_nll': nll,
+                  'kl': torch.zeros_like(nll), 'ess': None, 'max_weight': None}
+        if return_site_log_probs:
+            result['prior_site_marginal_log_probs'] = site_log_probs
+        return result
     if full_features is None:
         raise ValueError('Posterior importance scoring requires full target features')
     prior = model.prior(hidden, valid, mask)
@@ -80,22 +85,31 @@ def conditional_scores(model, context_features, full_features, valid, mask, labe
 
 def evaluate(config_path, sources_path, target_path, checkpoint, output, device=None,
              split='validation', limit=None, test_data=None):
+    return evaluate_many(config_path, sources_path, target_path,
+                         [{'checkpoint': checkpoint, 'output': output}], device, split, limit, test_data)[0]
+
+
+def evaluate_many(config_path, sources_path, target_path, runs, device=None,
+                  split='validation', limit=None, test_data=None):
+    """Score several fitted models using one frozen-encoder pass per query batch."""
     if split not in ('validation', 'test'):
         raise ValueError('Evaluation supports validation and explicitly recovered test data')
     if (split == 'test') != (test_data is not None):
         raise ValueError('Test evaluation requires --test-data; validation must not use it')
-    output = Path(output)
-    if output.exists() and any(output.iterdir()):
-        raise FileExistsError(f'Evaluation output already contains files: {output}')
+    if not runs:
+        raise ValueError('Evaluation requires at least one checkpoint/output pair')
+    runs = [{'checkpoint': run['checkpoint'], 'output': Path(run['output'])} for run in runs]
+    outputs = [run['output'].resolve() for run in runs]
+    if any(left == right or left in right.parents or right in left.parents
+           for i, left in enumerate(outputs) for right in outputs[i + 1:]):
+        raise ValueError('Evaluation outputs must be distinct non-overlapping directories')
+    for output in outputs:
+        if output.exists() and any(output.iterdir()):
+            raise FileExistsError(f'Evaluation output already contains files: {output}')
     data = PopulationData(sources_path, config_path, target_path)
     study = data.study
     config = study['evaluation']
     device = torch.device(device or ('cuda' if torch.cuda.is_available() else 'cpu'))
-    payload = load_checkpoint(checkpoint, device='cpu')
-    if payload.get('arm') != 'QVAE':
-        raise ValueError('Evaluation requires a QVAE checkpoint')
-    model = build_model(payload, device=device)
-    encoder = FrozenEncoder(data.sources['esm_model'], device=device)
     if split == 'test':
         from .test_data import load_recovered_test
         records = load_recovered_test(data, test_data)
@@ -106,21 +120,20 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
     component_sizes = Counter(record.component for record in records)
     if limit is not None:
         queries = queries[:int(limit)]
-    totals = []
+    if not queries:
+        raise ValueError('No queries to evaluate')
     started = time.monotonic()
     batch_size = int(config['batch_size'])
     sample_count = int(config['sample_count'])
-    repeats = int(config['repeats'])
-    if batch_size < 1 or sample_count < 1 or repeats < 1:
+    if batch_size < 1 or sample_count < 1 or int(config['repeats']) < 1:
         raise ValueError('Evaluation requires positive batch size, sample count and repeats')
-    output.mkdir(parents=True, exist_ok=True)
-    input_paths = [config_path, sources_path, target_path, checkpoint, data.sources['population'],
+    input_paths = [config_path, sources_path, target_path, data.sources['population'],
                    data.sources['splits']['training'], data.sources['splits']['validation'],
                    data.sources['splits']['test']]
     if test_data is not None:
         input_paths.extend(Path(test_data) / name for name in ('test.csv', 'test.fasta', 'manifest.json'))
     esm_path = Path(data.sources['esm_model'])
-    write_json(output / 'identity.json', {
+    identity = {
         'split': split, 'test_data': str(test_data) if test_data is not None else None,
         'input_sha256': {str(path): sha256_file(path) for path in input_paths},
         'esm_files_sha256': {path.name: sha256_file(path) for path in sorted(esm_path.iterdir())
@@ -133,60 +146,84 @@ def evaluate(config_path, sources_path, target_path, checkpoint, output, device=
         'limit': limit, 'sequences': len(records), 'groups': len(component_sizes),
         'precision': 'bfloat16 forward, float32 probabilities' if device.type == 'cuda' else 'float32',
         'amino_acid_output_count': 20,
-    })
+        'shared_encoder_checkpoints': len(runs),
+    }
+    for run in runs:
+        payload = load_checkpoint(run['checkpoint'], device='cpu')
+        arm = payload.get('arm')
+        if arm not in {'QVAE', 'deterministic'}:
+            raise ValueError('Evaluation requires a QVAE or deterministic checkpoint')
+        run.update({'model': build_model(payload, device=device), 'arm': arm,
+                    'repeats': 1 if arm == 'deterministic' else int(config['repeats']),
+                    'checkpoint_sha256': sha256_file(run['checkpoint']), 'totals': [],
+                    'estimator': ('exact factorized site probabilities (deterministic arm)' if arm == 'deterministic'
+                                  else 'posterior importance sampling and direct-prior categorical Monte Carlo')})
+    encoder = FrozenEncoder(data.sources['esm_model'], device=device)
+    for run in runs:
+        run['output'].mkdir(parents=True, exist_ok=True)
+        write_json(run['output'] / 'identity.json', {
+            **identity, 'arm': run['arm'], 'estimator': run['estimator'], 'effective_repeats': run['repeats'],
+            'input_sha256': {**identity['input_sha256'], str(run['checkpoint']): run['checkpoint_sha256']},
+        })
+    need_full = any(run['arm'] == 'QVAE' for run in runs)
     for start in range(0, len(queries), batch_size):
         batch = queries[start:start + batch_size]
         with torch.no_grad(), torch.autocast(device_type=device.type, dtype=torch.bfloat16,
                                            enabled=device.type == 'cuda'):
-            context, full, valid, mask, labels = data.batch(batch, encoder, device, need_full=True)
-            for repeat in range(repeats):
-                generator = torch.Generator(device=device.type)
-                generator.manual_seed(stable_seed(config['seed'], 'evaluation', start, repeat))
-                scores = conditional_scores(model, context, full, valid, mask, labels,
-                                            sample_count, generator, return_site_log_probs=True)
-                for index, query in enumerate(batch):
-                    sites = int(scores['sites'][index].item())
-                    item = {
-                        'sequence_id': query['record'].sequence_id,
-                        'component': query['record'].component,
-                        'panel': query['panel']['panel'],
-                        'positions_0based': query['panel']['positions'],
-                        'repeat': repeat,
-                        'weight': float(query['panel']['weight']) /
-                                  component_sizes[query['record'].component],
-                        'sites': sites,
-                    }
-                    for name, values in scores.items():
-                        if name == 'sites' or values is None:
-                            continue
-                        if name == 'prior_site_marginal_log_probs':
-                            item[name] = values[index, :sites].float().cpu().tolist()
-                            continue
-                        value = float(values[index].item())
-                        item[name + '_per_residue' if name.endswith('nll') else name] = (
-                            value / sites if name.endswith('nll') else value)
-                    totals.append(item)
-    if not totals:
-        raise ValueError('No queries evaluated')
-    weighted = sum(item['weight'] for item in totals)
-    summary = {
-        'status': 'COMPLETED', 'split': split, 'checkpoint': str(checkpoint),
-        'checkpoint_sha256': sha256_file(checkpoint),
-        'queries': len(totals), 'sample_count': sample_count, 'repeats': repeats,
-        'aggregation': 'component-weighted mean of per-target-residue query scores',
-        'estimator': 'posterior importance sampling and direct-prior categorical Monte Carlo',
-        'seconds': time.monotonic() - started,
-        'esm_model': data.sources['esm_model'], 'target_sha256': sha256_file(target_path),
-    }
-    for name in totals[0]:
-        if name.endswith('_per_residue') or name in {'kl', 'ess', 'max_weight'}:
-            summary[name] = sum(item['weight'] * item[name] for item in totals) / weighted
-    output.mkdir(parents=True, exist_ok=True)
-    write_json(output / 'evaluation.json', summary)
-    with (output / 'per_query.jsonl').open('w') as handle:
-        for item in totals:
-            handle.write(json.dumps(item, ensure_ascii=False) + '\n')
-    return summary
+            context, full, valid, mask, labels = data.batch(batch, encoder, device, need_full=need_full)
+            for run in runs:
+                for repeat in range(run['repeats']):
+                    generator = torch.Generator(device=device.type)
+                    generator.manual_seed(stable_seed(config['seed'], 'evaluation', start, repeat))
+                    scores = conditional_scores(run['model'], context, full, valid, mask, labels,
+                                                sample_count, generator, return_site_log_probs=True)
+                    for index, query in enumerate(batch):
+                        sites = int(scores['sites'][index].item())
+                        item = {
+                            'sequence_id': query['record'].sequence_id,
+                            'component': query['record'].component,
+                            'panel': query['panel']['panel'],
+                            'positions_0based': query['panel']['positions'],
+                            'repeat': repeat,
+                            'weight': float(query['panel']['weight']) /
+                                      component_sizes[query['record'].component],
+                            'sites': sites,
+                        }
+                        for name, values in scores.items():
+                            if name == 'sites' or values is None:
+                                continue
+                            if name == 'prior_site_marginal_log_probs':
+                                item[name] = values[index, :sites].float().cpu().tolist()
+                                continue
+                            value = float(values[index].item())
+                            item[name + '_per_residue' if name.endswith('nll') else name] = (
+                                value / sites if name.endswith('nll') else value)
+                        run['totals'].append(item)
+    summaries = []
+    elapsed = time.monotonic() - started
+    for run in runs:
+        totals, output = run['totals'], run['output']
+        weighted = sum(item['weight'] for item in totals)
+        summary = {
+            'status': 'COMPLETED', 'split': split, 'arm': run['arm'], 'checkpoint': str(run['checkpoint']),
+            'checkpoint_sha256': run['checkpoint_sha256'],
+            'queries': len(totals), 'sample_count': None if run['arm'] == 'deterministic' else sample_count,
+            'repeats': run['repeats'],
+            'aggregation': 'component-weighted mean of per-target-residue query scores',
+            'estimator': run['estimator'], 'seconds': elapsed,
+            'seconds_scope': 'shared batch wall time including model/encoder loading; not isolated per-model cost',
+            'shared_encoder_checkpoints': len(runs),
+            'esm_model': data.sources['esm_model'], 'target_sha256': sha256_file(target_path),
+        }
+        for name in totals[0]:
+            if name.endswith('_per_residue') or name in {'kl', 'ess', 'max_weight'}:
+                summary[name] = sum(item['weight'] * item[name] for item in totals) / weighted
+        with (output / 'per_query.jsonl').open('w') as handle:
+            for item in totals:
+                handle.write(json.dumps(item, ensure_ascii=False) + '\n')
+        write_json(output / 'evaluation.json', summary)
+        summaries.append(summary)
+    return summaries
 
 
 def evaluate_auxiliary(config_path, checkpoint, output, device=None):

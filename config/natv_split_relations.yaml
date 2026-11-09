@@ -1,0 +1,9 @@
+historical:
+  manifest: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/split_manifest_v2.json
+  family: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_family_v2/family_eligibility_v2.parquet
+  edges: /home/yhshy/git_files/nad_qvae/data/processed/releases/natv_vnext_v5_6/homology_edges_exact_trace.parquet
+splits:
+  training: data/results/preprocessing/natv_family/train.csv
+  validation: data/results/preprocessing/natv_family/validation.csv
+  test: data/results/preprocessing/natv_family/test.csv
+output: data/results/preprocessing/natv_split_relations

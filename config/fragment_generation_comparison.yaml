@@ -1,0 +1,23 @@
+backgrounds: data/results/preprocessing/natv_generation_backgrounds/backgrounds.json
+generation_root: data/results/generation/natv_six_cell
+sources: config/sources.yaml
+target: config/target.yaml
+study_config: config/fragment_generation.yaml
+test_data: data/results/preprocessing/natv_test_recovered
+neighbors: data/results/preprocessing/natv_sequence_neighbors
+training:
+  QVAE: data/results/training/natv_fragment_transfer
+  deterministic: data/results/training/natv_fragment_transfer_deterministic
+run_prefix:
+  QVAE: fragment_
+  deterministic: ''
+conditions: [random, self, external]
+seeds: [9201, 9202, 9203]
+downstream_steps: 2704
+draws_per_mask: 64
+expected_components: 44
+max_optimal_alignments: 16
+uncertainty:
+  bootstrap_repeats: 2000
+  bootstrap_seed: 8802
+kvp40_id: KVP40

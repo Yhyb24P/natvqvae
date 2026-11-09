@@ -1,0 +1,430 @@
+{
+  "status": "completed",
+  "sequence_counts": {
+    "training": 1644,
+    "validation": 227,
+    "test": 231
+  },
+  "regions": {
+    "full_length": {
+      "search": {
+        "command": [
+          "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs",
+          "easy-search",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/full_length.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/full_length.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/full_length.tsv",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/full_length_tmp",
+          "--min-seq-id",
+          "0.0",
+          "--cov-mode",
+          "2",
+          "-c",
+          "0.0",
+          "-e",
+          "0.001",
+          "-s",
+          "7.5",
+          "--max-seqs",
+          "2102",
+          "--alignment-mode",
+          "3",
+          "--seq-id-mode",
+          "0",
+          "--threads",
+          "8",
+          "--format-output",
+          "query,target,fident,qcov,tcov,qstart,qend,tstart,tend,qlen,tlen,alnlen,evalue,bits"
+        ],
+        "version": "18.8cc5c",
+        "columns": [
+          "query",
+          "target",
+          "fident",
+          "qcov",
+          "tcov",
+          "qstart",
+          "qend",
+          "tstart",
+          "tend",
+          "qlen",
+          "tlen",
+          "alnlen",
+          "evalue",
+          "bits"
+        ],
+        "limit": "Heuristic local alignment search, not exhaustive detection of all homologous fragments."
+      },
+      "both": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 210,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 213,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.698
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1567,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1537,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 176,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.697
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 183,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        }
+      },
+      "shorter": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 211,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 214,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.698
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1567,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1537,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 176,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.697
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 183,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.699
+        }
+      }
+    },
+    "nmnat": {
+      "search": {
+        "command": [
+          "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs",
+          "easy-search",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nmnat.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nmnat.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nmnat.tsv",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nmnat_tmp",
+          "--min-seq-id",
+          "0.0",
+          "--cov-mode",
+          "2",
+          "-c",
+          "0.0",
+          "-e",
+          "0.001",
+          "-s",
+          "7.5",
+          "--max-seqs",
+          "2102",
+          "--alignment-mode",
+          "3",
+          "--seq-id-mode",
+          "0",
+          "--threads",
+          "8",
+          "--format-output",
+          "query,target,fident,qcov,tcov,qstart,qend,tstart,tend,qlen,tlen,alnlen,evalue,bits"
+        ],
+        "version": "18.8cc5c",
+        "columns": [
+          "query",
+          "target",
+          "fident",
+          "qcov",
+          "tcov",
+          "qstart",
+          "qend",
+          "tstart",
+          "tend",
+          "qlen",
+          "tlen",
+          "alnlen",
+          "evalue",
+          "bits"
+        ],
+        "limit": "Heuristic local alignment search, not exhaustive detection of all homologous fragments."
+      },
+      "both": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 192,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.693
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 135,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.686
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1359,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.693
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 514,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.647
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 123,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.686
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 151,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.647
+        }
+      },
+      "shorter": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 195,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.693
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 150,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.686
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1389,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.693
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 549,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.647
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 127,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.686
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 152,
+          "identity_ge_70pct": 0,
+          "maximum_identity": 0.647
+        }
+      }
+    },
+    "nudix": {
+      "search": {
+        "command": [
+          "/home/yhshy/miniconda3/envs/nad_data/bin/mmseqs",
+          "easy-search",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nudix.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nudix.fasta",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nudix.tsv",
+          "/home/yhshy/git_files/natvqvae/data/results/preprocessing/natv_sequence_neighbors/nudix_tmp",
+          "--min-seq-id",
+          "0.0",
+          "--cov-mode",
+          "2",
+          "-c",
+          "0.0",
+          "-e",
+          "0.001",
+          "-s",
+          "7.5",
+          "--max-seqs",
+          "2102",
+          "--alignment-mode",
+          "3",
+          "--seq-id-mode",
+          "0",
+          "--threads",
+          "8",
+          "--format-output",
+          "query,target,fident,qcov,tcov,qstart,qend,tstart,tend,qlen,tlen,alnlen,evalue,bits"
+        ],
+        "version": "18.8cc5c",
+        "columns": [
+          "query",
+          "target",
+          "fident",
+          "qcov",
+          "tcov",
+          "qstart",
+          "qend",
+          "tstart",
+          "tend",
+          "qlen",
+          "tlen",
+          "alnlen",
+          "evalue",
+          "bits"
+        ],
+        "limit": "Heuristic local alignment search, not exhaustive detection of all homologous fragments."
+      },
+      "both": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 227,
+          "identity_ge_70pct": 192,
+          "maximum_identity": 0.898
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 226,
+          "identity_ge_70pct": 106,
+          "maximum_identity": 0.876
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1640,
+          "identity_ge_70pct": 1126,
+          "maximum_identity": 0.898
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1640,
+          "identity_ge_50pct": 1636,
+          "identity_ge_70pct": 1098,
+          "maximum_identity": 0.905
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 216,
+          "identity_ge_70pct": 97,
+          "maximum_identity": 0.876
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 215,
+          "identity_ge_70pct": 123,
+          "maximum_identity": 0.905
+        }
+      },
+      "shorter": {
+        "test_to_training": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 229,
+          "identity_ge_70pct": 196,
+          "maximum_identity": 0.898
+        },
+        "test_to_validation": {
+          "queries": 231,
+          "with_qualifying_hit": 231,
+          "identity_ge_50pct": 230,
+          "identity_ge_70pct": 117,
+          "maximum_identity": 0.884
+        },
+        "training_to_test": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1640,
+          "identity_ge_70pct": 1535,
+          "maximum_identity": 0.898
+        },
+        "training_to_validation": {
+          "queries": 1644,
+          "with_qualifying_hit": 1644,
+          "identity_ge_50pct": 1640,
+          "identity_ge_70pct": 1504,
+          "maximum_identity": 0.905
+        },
+        "validation_to_test": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 227,
+          "identity_ge_70pct": 128,
+          "maximum_identity": 0.884
+        },
+        "validation_to_training": {
+          "queries": 227,
+          "with_qualifying_hit": 227,
+          "identity_ge_50pct": 226,
+          "identity_ge_70pct": 138,
+          "maximum_identity": 0.905
+        }
+      }
+    }
+  },
+  "definition": "Maximum fident across returned local alignments to each other split; ties use bitscore then target ID. Both: each sequence >=80% covered. Shorter: shorter sequence >=80% covered; equal lengths require both.",
+  "limits": [
+    "MMseqs2 is heuristic; no qualifying returned alignment is not proof of no homolog.",
+    "Identity is local alignment identity, not global identity or functional similarity.",
+    "This compares sequence relationships without fitting models or scoring predictions."
+  ]
+}

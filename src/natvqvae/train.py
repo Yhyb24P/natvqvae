@@ -67,7 +67,7 @@ def _state_cpu(model):
 
 def _save_checkpoint(path, model, config, study, step, epoch, initialization, selection):
     path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({'state_dict': _state_cpu(model), 'arm': 'QVAE',
+    torch.save({'state_dict': _state_cpu(model), 'arm': model.arm,
                 'seed': int(config['seed']), 'model_config': dict(study['model']),
                 'step': int(step), 'epoch': int(epoch), 'config': dict(config),
                 'initialization': initialization, 'selection': selection}, path)
@@ -128,7 +128,9 @@ def _score_validation(model, data, encoder, queries, device, sample_count, seed)
 
 
 def train(config_path, sources_path, target_path, output, device=None,
-          init_checkpoint=None, seed=None):
+          init_checkpoint=None, seed=None, arm='QVAE'):
+    if arm not in {'QVAE', 'deterministic'}:
+        raise ValueError('Training supports QVAE and deterministic arms')
     data = PopulationData(sources_path, config_path, target_path)
     study = data.study
     config = dict(study['training'])
@@ -157,15 +159,16 @@ def train(config_path, sources_path, target_path, output, device=None,
         'git_status': subprocess.check_output(['git', 'status', '--porcelain'], text=True).splitlines(),
         'python': platform.python_version(), 'torch': torch.__version__,
         'effective_training': config, 'seed_override': seed, 'device': str(device),
+        'arm': arm,
         'initialization': str(init_checkpoint) if init_checkpoint else 'random',
     })
     torch.manual_seed(int(config['seed']))
     encoder = FrozenEncoder(data.sources['esm_model'], device=device)
-    model = ConditionalModel('QVAE', **study['model']).to(device).train()
+    model = ConditionalModel(arm, **study['model']).to(device).train()
     if init_checkpoint:
         init_payload = load_checkpoint(init_checkpoint, device='cpu')
-        if init_payload.get('arm') != 'QVAE':
-            raise ValueError('Initialization checkpoint must be QVAE')
+        if init_payload.get('arm') != arm:
+            raise ValueError(f'Initialization checkpoint arm must be {arm}')
         model.load_state_dict(init_payload['state_dict'], strict=True)
         initialization = {'mode': 'checkpoint', 'path': str(init_checkpoint),
                           'sha256': sha256_file(init_checkpoint),
@@ -294,7 +297,7 @@ def train(config_path, sources_path, target_path, output, device=None,
                      initialization, last_scores)
     returned = paths['best'] if selection_config else paths['last']
     summary = {
-        'status': 'COMPLETED', 'steps': step, 'seed': int(config['seed']),
+        'status': 'COMPLETED', 'steps': step, 'seed': int(config['seed']), 'arm': arm,
         'initialization': initialization, 'checkpoint': str(returned),
         'checkpoint_sha256': sha256_file(returned),
         'checkpoints': {kind: {'path': str(path), 'sha256': sha256_file(path)}

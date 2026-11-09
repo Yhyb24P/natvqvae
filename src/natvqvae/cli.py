@@ -65,6 +65,27 @@ def _fragment_overlap(config):
     return check_fragment_overlap(config, _result_output(study['output'], 'preprocessing'))
 
 
+def _generation_backgrounds(args):
+    from .generate import prepare_generation_backgrounds
+    return prepare_generation_backgrounds(args.config, args.sources, args.target,
+                                          args.test_data, _result_output(args.output, 'preprocessing'))
+
+
+def _split_relations(args):
+    from .split_relations import analyze_split_relations
+    return analyze_split_relations(args.config)
+
+
+def _fragment_containment(args):
+    from .split_relations import analyze_fragment_containment
+    return analyze_fragment_containment(args.config)
+
+
+def _sequence_neighbors(args):
+    from .split_relations import analyze_sequence_neighbors
+    return analyze_sequence_neighbors(args.config, reuse_alignments=args.reuse_alignments)
+
+
 def _fragment_pretraining(config):
     from .fragment_pretraining import build_fragment_pretraining
     study = load_yaml(config)
@@ -92,7 +113,34 @@ def _fragment_compare(args):
     from .fragment_comparison import compare_fragment_transfer
     return compare_fragment_transfer(args.config, args.evaluation_dir, args.esm_dir,
                                      _result_output(args.output, 'evaluation'),
-                                     args.split, args.test_data)
+                                     args.split, args.test_data, args.neighbors_dir)
+
+
+def _generation_compare(args):
+    from .generation_comparison import compare_generation
+    return compare_generation(args.config, _result_output(args.output, 'evaluation'))
+
+
+def _six_cell_compare(args):
+    from .fragment_comparison import compare_six_cells
+    return compare_six_cells(args.config, _result_output(args.output, 'evaluation'), split=args.split)
+
+
+def _six_cell_plot(args):
+    from .fragment_comparison import plot_six_cells
+    return plot_six_cells(_result_output(args.comparison, 'evaluation'))
+
+
+def _latent_precision(args):
+    from .latent_precision import summarize_latent_precision
+    return summarize_latent_precision(args.comparison_dir,
+                                      _result_output(args.output, 'evaluation'))
+
+
+def _fragment_generation_summary(args):
+    from .fragment_comparison import summarize_fragment_generation
+    return summarize_fragment_generation(args.config, args.generation_dir,
+                                          _result_output(args.output, 'evaluation'))
 
 
 def _esm_evaluate(args):
@@ -118,6 +166,22 @@ def _result_output(value, category):
     if root not in path.parents:
         raise ValueError(f'Output must be a run directory under data/results/{category}/')
     return path
+
+
+def _evaluate_batch(args):
+    from .evaluate import evaluate_many
+
+    runs = load_yaml(args.runs)
+    if not isinstance(runs, list) or not runs:
+        raise ValueError('Evaluation batch file must contain a non-empty list of runs')
+    routed = []
+    for item in runs:
+        if set(item) != {'checkpoint', 'output'}:
+            raise ValueError('Each evaluation batch run needs checkpoint and output')
+        routed.append({'checkpoint': item['checkpoint'],
+                       'output': str(_result_output(item['output'], 'evaluation'))})
+    return evaluate_many(args.config, args.sources, args.target, routed, args.device,
+                         args.split, args.limit, args.test_data)
 
 
 def _doctor(args):
@@ -183,6 +247,22 @@ def build_parser():
     overlap.add_argument('--config', default='config/fragment_overlap.yaml')
     overlap.set_defaults(func=lambda args: _fragment_overlap(args.config))
 
+    split_relations = sub.add_parser(
+        'split-relations', help='restore component_v2 rules and report cross-split sequence relations')
+    split_relations.add_argument('--config', default='config/natv_split_relations.yaml')
+    split_relations.set_defaults(func=_split_relations)
+
+    containment = sub.add_parser(
+        'fragment-containment', help='report exact short-fragment containment across auxiliary and NatV splits')
+    containment.add_argument('--config', default='config/natv_fragment_containment.yaml')
+    containment.set_defaults(func=_fragment_containment)
+
+    sequence_neighbors = sub.add_parser(
+        'sequence-neighbors', help='report cross-split nearest neighbours for full and domain sequences')
+    sequence_neighbors.add_argument('--config', default='config/natv_sequence_neighbors.yaml')
+    sequence_neighbors.add_argument('--reuse-alignments', action='store_true')
+    sequence_neighbors.set_defaults(func=_sequence_neighbors)
+
     paired_fragments = sub.add_parser('fragment-pretraining', help='prepare matched external and NatV training fragments')
     paired_fragments.add_argument('--config', default='config/fragment_pretraining.yaml')
     paired_fragments.set_defaults(func=lambda args: _fragment_pretraining(args.config))
@@ -208,7 +288,35 @@ def build_parser():
     fragment_compare.add_argument('--output', required=True)
     fragment_compare.add_argument('--split', choices=('validation', 'test'), default='validation')
     fragment_compare.add_argument('--test-data', default=None)
+    fragment_compare.add_argument('--neighbors-dir', default=None)
     fragment_compare.set_defaults(func=_fragment_compare)
+
+    six_cell = sub.add_parser('six-cell-compare', help='summarize the model-arm by pretraining-source six-cell comparison')
+    six_cell.add_argument('--config', default='config/fragment_six_cell_comparison.yaml')
+    six_cell.add_argument('--output', required=True)
+    six_cell.add_argument('--split', choices=('validation', 'test'), default='validation')
+    six_cell.set_defaults(func=_six_cell_compare)
+
+    six_cell_plot = sub.add_parser('six-cell-plot', help='re-export six-cell figures from completed comparisons')
+    six_cell_plot.add_argument('--comparison', required=True)
+    six_cell_plot.set_defaults(func=_six_cell_plot)
+
+    generation_compare = sub.add_parser('generation-compare', help='compare fixed-background six-cell generation runs')
+    generation_compare.add_argument('--config', default='config/fragment_generation_comparison.yaml')
+    generation_compare.add_argument('--output', required=True)
+    generation_compare.set_defaults(func=_generation_compare)
+
+    latent_precision = sub.add_parser(
+        'latent-precision', help='summarize scoring repeats of the latent-marginal comparison')
+    latent_precision.add_argument('--comparison-dir', required=True)
+    latent_precision.add_argument('--output', required=True)
+    latent_precision.set_defaults(func=_latent_precision)
+
+    fragment_generation = sub.add_parser('fragment-generation-summary', help='compare nine completed KVP40 generation runs')
+    fragment_generation.add_argument('--config', default='config/fragment_transfer_comparison.yaml')
+    fragment_generation.add_argument('--generation-dir', required=True)
+    fragment_generation.add_argument('--output', required=True)
+    fragment_generation.set_defaults(func=_fragment_generation_summary)
 
     summary = sub.add_parser('aux-summary', help='compare completed auxiliary runs and select WT candidates')
     summary.add_argument('--config', default='config/aux_qvae.yaml')
@@ -226,7 +334,7 @@ def build_parser():
     transfer_summary.set_defaults(func=lambda args: summarize_transfer(
         args.manifest, _result_output(args.output, 'evaluation')))
 
-    trainer = sub.add_parser('train', help='train a QVAE from raw population and split config')
+    trainer = sub.add_parser('train', help='train a QVAE or deterministic model from raw population and split config')
     trainer.add_argument('--config', **common['config'])
     trainer.add_argument('--sources', **common['sources'])
     trainer.add_argument('--target', **common['target'])
@@ -234,9 +342,10 @@ def build_parser():
     trainer.add_argument('--output', required=True)
     trainer.add_argument('--init-checkpoint', default=None)
     trainer.add_argument('--seed', type=int, default=None)
+    trainer.add_argument('--arm', choices=('QVAE', 'deterministic'), default='QVAE')
     trainer.set_defaults(func=lambda args: train(
         args.config, args.sources, args.target, _result_output(args.output, 'training'),
-        args.device, args.init_checkpoint, args.seed))
+        args.device, args.init_checkpoint, args.seed, args.arm))
 
     generator = sub.add_parser('generate', help='sample full NatV variants from a checkpoint')
     generator.add_argument('--config', **common['config'])
@@ -247,9 +356,22 @@ def build_parser():
     generator.add_argument('--output', required=True)
     generator.add_argument('--group', default=None)
     generator.add_argument('--draws', type=int, default=None)
+    generator.add_argument('--distribution', choices=('joint', 'site_marginal'), default='joint')
+    generator.add_argument('--background-id', default=None)
+    generator.add_argument('--test-data', default=None)
+    generator.add_argument('--backgrounds-manifest', default=None)
     generator.set_defaults(func=lambda args: generate(
         args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'generation'),
-        args.device, args.group, args.draws))
+        args.device, args.group, args.draws, args.distribution, args.background_id, args.test_data,
+        args.backgrounds_manifest))
+
+    backgrounds = sub.add_parser('generation-backgrounds', help='fix one held-out background per component')
+    backgrounds.add_argument('--config', **common['config'])
+    backgrounds.add_argument('--sources', **common['sources'])
+    backgrounds.add_argument('--target', **common['target'])
+    backgrounds.add_argument('--test-data', required=True)
+    backgrounds.add_argument('--output', required=True)
+    backgrounds.set_defaults(func=_generation_backgrounds)
 
     evaluator = sub.add_parser('evaluate', help='evaluate a checkpoint on validation or explicit recovered test data')
     evaluator.add_argument('--config', **common['config'])
@@ -264,6 +386,17 @@ def build_parser():
     evaluator.set_defaults(func=lambda args: evaluate(
         args.config, args.sources, args.target, args.checkpoint, _result_output(args.output, 'evaluation'),
         args.device, args.split, args.limit, args.test_data))
+
+    evaluator_batch = sub.add_parser('evaluate-batch', help='evaluate several checkpoints with one encoder load')
+    evaluator_batch.add_argument('--config', **common['config'])
+    evaluator_batch.add_argument('--sources', **common['sources'])
+    evaluator_batch.add_argument('--target', **common['target'])
+    evaluator_batch.add_argument('--device', **common['device'])
+    evaluator_batch.add_argument('--runs', required=True)
+    evaluator_batch.add_argument('--split', choices=('validation', 'test'), default='validation')
+    evaluator_batch.add_argument('--test-data', default=None)
+    evaluator_batch.add_argument('--limit', type=int, default=None)
+    evaluator_batch.set_defaults(func=_evaluate_batch)
 
     aux_trainer = sub.add_parser('aux-train', help='train QVAE and deterministic arms on auxiliary domains')
     aux_trainer.add_argument('--config', default='config/aux_qvae.yaml')

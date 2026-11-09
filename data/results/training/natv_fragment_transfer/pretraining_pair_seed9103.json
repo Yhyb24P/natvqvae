@@ -1,0 +1,12 @@
+{
+  "status": "checked",
+  "seed": 9103,
+  "identical_initial_parameters": true,
+  "matched_update_target_counts_and_schedules": true,
+  "updates": 750,
+  "target_residue_occurrences_per_condition": 429224,
+  "input_sha256": {
+    "data/results/training/natv_fragment_transfer/external_pretraining_seed9103/training_summary.json": "1d1fa1e9ce25a196dcf786804bbec8a442c0b975fa6ab090049c8b46a5041e9a",
+    "data/results/training/natv_fragment_transfer/self_pretraining_seed9103/training_summary.json": "dff3d15c6bc3c7d5ebdf4e9b30e4adbb1853068098546661dfad217d99e82046"
+  }
+}

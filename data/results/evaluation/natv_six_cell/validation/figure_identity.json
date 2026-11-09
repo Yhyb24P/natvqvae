@@ -1,0 +1,11 @@
+{
+  "summary_sha256": "4be97ed24dcbfae7ba794a294466399cba2a413f98f2580484f8c8b2279dbc4d",
+  "implementation_sha256": "0c3188c74434cb0d27cae77b2dbcbc38fb92797f56e37e34464de1ab2627e438",
+  "outputs_sha256": {
+    "prediction_effects.csv": "3fa595e7dc8a9d0f04177186c89b3c68e64420ba4b117a928c9df0bc4ed9ccf6",
+    "prediction_effects.pdf": "b4e084b36cb7b1afc2ffa144e75a66cdf3234255fee8a79fa723de74b81cb623",
+    "prediction_effects.png": "7a6aca7809344b9a4edab61ff52e12f6d38eb4a02878451493df9b81d694283a",
+    "REPORT.md": "b6c23972a1a457103b14e3219e2d639ccd7d1a4f0fc9f54f2259e765644d17fa"
+  },
+  "prediction_scoring_performed": false
+}

@@ -1,0 +1,122 @@
+{
+  "status": "completed",
+  "comparison_config_sha256": "fe60b69922db3ab0b03216d76ee9f3fd77a520877bfff034cbae4d17d709c2d9",
+  "runs": [
+    {
+      "condition": "self",
+      "seed": 9101,
+      "command": [
+        "/home/yhshy/miniconda3/envs/nad_data/bin/python",
+        "-m",
+        "natvqvae.cli",
+        "aux-train",
+        "--config",
+        "config/fragment_aux_self.yaml",
+        "--seed",
+        "9101",
+        "--device",
+        "cuda",
+        "--output",
+        "data/results/training/natv_fragment_transfer/self_pretraining_seed9101"
+      ],
+      "status": "completed",
+      "started_unix": 1793776091.4484055,
+      "exit_code": 0,
+      "finished_unix": 1793776581.1572983,
+      "summary_sha256": "90844ecf7c26a7db726253437db094ae7b1bf379ad8d6ea7ce0bc59f0d4f0d13"
+    },
+    {
+      "condition": "external",
+      "seed": 9102,
+      "command": [
+        "/home/yhshy/miniconda3/envs/nad_data/bin/python",
+        "-m",
+        "natvqvae.cli",
+        "aux-train",
+        "--config",
+        "config/fragment_aux_external.yaml",
+        "--seed",
+        "9102",
+        "--device",
+        "cuda",
+        "--output",
+        "data/results/training/natv_fragment_transfer/external_pretraining_seed9102"
+      ],
+      "status": "completed",
+      "started_unix": 1793776581.1579363,
+      "exit_code": 0,
+      "finished_unix": 1793777113.3347833,
+      "summary_sha256": "3fe3b72f2a3a4320d2c44f0e10ce57e030f7b0ea2d34a59a103fbafdc9d4d39b"
+    },
+    {
+      "condition": "self",
+      "seed": 9102,
+      "command": [
+        "/home/yhshy/miniconda3/envs/nad_data/bin/python",
+        "-m",
+        "natvqvae.cli",
+        "aux-train",
+        "--config",
+        "config/fragment_aux_self.yaml",
+        "--seed",
+        "9102",
+        "--device",
+        "cuda",
+        "--output",
+        "data/results/training/natv_fragment_transfer/self_pretraining_seed9102"
+      ],
+      "status": "completed",
+      "started_unix": 1793777113.335294,
+      "exit_code": 0,
+      "finished_unix": 1793777603.1675751,
+      "summary_sha256": "1807ce25af2dafa1b6816f81495b386bd35d72d1788f7a0db834cfe49e984f0d"
+    },
+    {
+      "condition": "external",
+      "seed": 9103,
+      "command": [
+        "/home/yhshy/miniconda3/envs/nad_data/bin/python",
+        "-m",
+        "natvqvae.cli",
+        "aux-train",
+        "--config",
+        "config/fragment_aux_external.yaml",
+        "--seed",
+        "9103",
+        "--device",
+        "cuda",
+        "--output",
+        "data/results/training/natv_fragment_transfer/external_pretraining_seed9103"
+      ],
+      "status": "completed",
+      "started_unix": 1793777603.1680684,
+      "exit_code": 0,
+      "finished_unix": 1793778081.8577206,
+      "summary_sha256": "1d1fa1e9ce25a196dcf786804bbec8a442c0b975fa6ab090049c8b46a5041e9a"
+    },
+    {
+      "condition": "self",
+      "seed": 9103,
+      "command": [
+        "/home/yhshy/miniconda3/envs/nad_data/bin/python",
+        "-m",
+        "natvqvae.cli",
+        "aux-train",
+        "--config",
+        "config/fragment_aux_self.yaml",
+        "--seed",
+        "9103",
+        "--device",
+        "cuda",
+        "--output",
+        "data/results/training/natv_fragment_transfer/self_pretraining_seed9103"
+      ],
+      "status": "completed",
+      "started_unix": 1793778081.8581784,
+      "exit_code": 0,
+      "finished_unix": 1793778539.2078023,
+      "summary_sha256": "dff3d15c6bc3c7d5ebdf4e9b30e4adbb1853068098546661dfad217d99e82046"
+    }
+  ],
+  "note": "Executed through aux-train; runtime may include concurrent downstream training on the same GPU."
+}

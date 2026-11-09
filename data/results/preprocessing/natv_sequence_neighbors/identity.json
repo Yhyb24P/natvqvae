@@ -1,0 +1,15 @@
+{
+  "input_sha256": {
+    "config/natv_sequence_neighbors.yaml": "527e5a7ccc1366cbd709198f85a8b019e02be14fdf3fd3ed99f383ef64526774",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_test_recovered/test.fasta": "26cc91e8fe2cc9f3259043817215658357ef02038e384b8fc019d18c1af0fa2c",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/preprocessing/natv_test_recovered/test.csv": "f3fff9880359b24e1e0ddeb500db9f8b382371ef8d3f82bc57184d6b51a370b2"
+  },
+  "code_sha256": {
+    "split_relations.py": "8a60ea10c540bef7ab6bb1c46cbbb982d64730c7d514472d9e46579989316a45",
+    "fragment_overlap.py": "fe1c4d761d7d7c01436748c6c33c6edece331bc4c16a8bf0f4cef7b34da41f1d"
+  },
+  "git_revision": "c5e9e596fc703b8d70169ec7b62a43a8726ce712"
+}

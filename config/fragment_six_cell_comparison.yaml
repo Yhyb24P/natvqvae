@@ -1,0 +1,12 @@
+models:
+  QVAE:
+    config: config/fragment_transfer_comparison.yaml
+    evaluation_root: data/results/evaluation/natv_fragment_transfer
+  deterministic:
+    config: config/fragment_transfer_deterministic_comparison.yaml
+    evaluation_root: data/results/evaluation/natv_fragment_transfer_deterministic
+esm:
+  validation: data/results/evaluation/esm2_natv_validation
+  test: data/results/evaluation/esm2_natv_test_gpu_bf16
+test_data: data/results/preprocessing/natv_test_recovered
+neighbors: data/results/preprocessing/natv_sequence_neighbors

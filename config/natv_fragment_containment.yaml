@@ -1,0 +1,9 @@
+population: data/raw/sequences/natv_population.fasta
+test_fasta: data/results/preprocessing/natv_test_recovered/test.fasta
+aux_domains: data/results/preprocessing/pf01467_8849/aux_domains.fasta
+aux_split: data/results/preprocessing/pf01467_8849/aux_split.csv
+natv_splits:
+  train: data/results/preprocessing/natv_family/train.csv
+  validation: data/results/preprocessing/natv_family/validation.csv
+  test: data/results/preprocessing/natv_test_recovered/test.csv
+output: data/results/preprocessing/natv_split_relations/fragment_containment.json

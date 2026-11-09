@@ -85,13 +85,25 @@ natvqvae nmnat-joint-reference --config config/nmnat_joint.yaml \
 
 `train`、`generate`、`evaluate` 的 `--output` 分别位于 `data/results/training/`、`generation/`、`evaluation/` 下的独立运行目录；新训练的权重另存 `data/weights/qvae/<run>/checkpoint.pt`。`preprocess` 将旧 PF01467-only 8,849 条恢复到 `data/results/preprocessing/pf01467_8849/`。更多参数见 `natvqvae <command> --help`。
 
+对固定背景清单批量生成时，给 `generate` 提供 `--backgrounds-manifest data/results/preprocessing/natv_generation_backgrounds/backgrounds.json --test-data data/results/preprocessing/natv_test_recovered --config config/fragment_generation.yaml`，并指定 checkpoint、分布和新的输出目录。每次加载一次模型与 ESM，依次生成所有已选保留集背景及 KVP40；逐背景结果写入 ID 子目录，整批完成后写 `batch_generation.json`。清单的输入哈希、代表序列、掩码与生成设置须一致；批量模式不能同时指定 `--background-id` 或 `--group`。
+
 NMNAT 辅助域任务使用 `config/aux_qvae.yaml`，入口为 `aux-train`、`aux-generate`、`aux-evaluate`；`aux-summary` 汇总现有两臂结果并选择代表序列。
 
 投稿准备使用 `config/fragment_transfer_comparison.yaml` 记录比较条件。`fragment-overlap --config config/pf01467_fragment_relations.yaml` 检查辅助片段关系；`fragment-pretraining --config config/fragment_pretraining.yaml` 准备外部与自身片段的配对输入；`aux-train` 可用 `config/fragment_aux_external.yaml` 或 `config/fragment_aux_self.yaml`，并通过 `--seed` 指定重复。既有运行目录拒绝覆盖。
 
 `fragment-plot --directory data/results/preprocessing/natv_matched_fragment_pretraining` 从配对清单绘制片段长度与共同映射位置分布。九份模型评价完成后，可用 `fragment-compare --evaluation-dir <同一划分的九份评价目录> --esm-dir <ESM评价目录> --output <比较目录>` 汇总三条件结果；该命令只读取已有分数。
 
+`six-cell-compare --config config/fragment_six_cell_comparison.yaml --split validation --output <比较目录>` 联合汇总 QVAE、确定性模型各三种初始化的完整评分，并按训练最近邻相似性和目标位点数分层。单臂分层可给 `fragment-compare` 添加 `--neighbors-dir data/results/preprocessing/natv_sequence_neighbors`；比较同时核对逐更新训练日志中的实际预测残基数。`latent-precision --comparison-dir <已完成的QVAE片段比较目录> --output <评价目录>` 从已保存的评分重复计算配对 Monte Carlo 标准误，并在概率空间合并重复以检查样本量敏感性；不重新评分，也不把采样重复计为独立序列组。
+
 `esm-evaluate --config config/transfer.yaml --output <评价目录>` 评价冻结 ESM-2 预测头；`esm-compare --esm-dir <ESM评价目录> --output <比较目录>` 与原六个迁移模型比较。`evaluate` 和 `esm-evaluate` 默认仅评价验证集；测试评价须明确提供 `--split test --test-data data/results/preprocessing/natv_test_recovered`。恢复原始 Parquet 测试数据另用 `test-recover --config config/natv_test_recovery.yaml`，需要 `python -m pip install -e ".[data]"`，该命令不做预测评分。
+
+多个模型使用同一划分和评价任务时，可用 `evaluate-batch --config config/transfer.yaml --runs config/fragment_evaluation_batch_validation.yaml --device cuda` 共享冻结 ESM 编码。运行清单是 `{checkpoint, output}` 的 YAML 列表，各模型仍写入独立结果目录；测试清单为 `config/fragment_evaluation_batch_test.yaml`，同时提供上述测试划分参数。每批输入只编码一次遮蔽上下文，含 QVAE 时再编码一次完整序列；模型保留各自的评分与采样重复。输出中的 `seconds` 是整个共享批次的耗时，不能相加作为各模型独立耗时。
+
+`six-cell-compare` 同时输出 `REPORT.md`、`prediction_effects.pdf/png` 和对应的 `prediction_effects.csv`，显示组级配对差值、区间及各完整训练重复。主图展示 NMNAT、Nudix 和 global 掩码；其余区域与交互项在报告和数值表中保留，不重新评分。
+
+已有比较仅需重新导出图表时，用 `six-cell-plot --comparison <六格比较目录>`；它更新图表、显示数据表和报告，保留原始分析摘要及逐组结果，并在 `figure_identity.json` 记录原摘要和新图表的哈希。
+
+`generation-compare --config config/fragment_generation_comparison.yaml --output <评价目录>` 核对固定背景的27组生成，汇总逐位点、位点对、训练域距离和Hamming分层配对，并分别输出44个保留组代表与KVP40结果。该入口读取既有候选，不重新生成。
 
 `test-history --recovered-dir data/results/preprocessing/natv_test_recovered` 核对旧评价的序列成员和用途，生成 `historical_use.json`。这批序列在旧项目中已有评价记录；测试比较必须同时读取这份历史说明。
 

@@ -1,0 +1,15 @@
+fastas:
+  - data/raw/sequences/natv_population.fasta
+  - data/results/preprocessing/natv_test_recovered/test.fasta
+splits:
+  training: data/results/preprocessing/natv_family/train.csv
+  validation: data/results/preprocessing/natv_family/validation.csv
+  test: data/results/preprocessing/natv_test_recovered/test.csv
+mmseqs:
+  executable: /home/yhshy/miniconda3/envs/nad_data/bin/mmseqs
+  min_identity: 0.0
+  query_coverage: 0.0
+  evalue: 0.001
+  sensitivity: 7.5
+  threads: 8
+output: data/results/preprocessing/natv_sequence_neighbors

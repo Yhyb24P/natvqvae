@@ -1,0 +1,76 @@
+{
+  "input_sha256": {
+    "pair_manifest": "350aa5246729d995c8232947a7206a367417bbabba9a90931b99526c196ae4cf",
+    "pair_panels": "68517ac10a8faff284c97ccce5d4e79e6fef769ebafd6ef94166450443491f36",
+    "a_fragments": "f7c63c256f447d743f73fb242a5580c4d2b4819bd674806a1adb0238c2a28a48",
+    "s_fragments": "4051e49373a5019c01437c433b6ea5bcd6c7ffec0c1187d7cfeafb25359aad33",
+    "target": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "config": "07162cb4c682427ace16772ced43fcdef68f49c0129ea4bddf2ccfa31d01773f"
+  },
+  "esm_files_sha256": {
+    "config.json": "539095c22efc52a09d6147074ba4ca119f76a890df5901213b2b55f7d2f96b2b",
+    "model.safetensors": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0",
+    "special_tokens_map.json": "3aedcd4211c0d43aec4e607ff60a63255f3174ead795e997350f09a5f8cd9ee1",
+    "tokenizer_config.json": "7e9161ecdb548ec45a41cbc6b24aa4476fdd418461f491c4207baa99419a29ad",
+    "vocab.txt": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+  },
+  "code_sha256": {
+    "auxiliary.py": "972e85f69b4ab9c5b31162899527914f492b292228265c5fa9b6cb038bd3ef35",
+    "train.py": "8c72f228ff3521eb060075c9ec7707f4443453914ecfe6b2d8802e6259482a01",
+    "model.py": "e9894de2f4ea3b034c92080a28c30cb12ab3846349f8538aac78a25dd0218768",
+    "data.py": "4cb18f0b9d1cc0f45c695fa5e972ccb0743c36f4d168043fb4174f00541c68ee"
+  },
+  "git_revision": "87071c0979f26a88a0a8645cb1c10baac4cdceed",
+  "git_status": [
+    " M .gitignore",
+    " M data/results/evaluation/natv_transfer/REPORT.md",
+    " M docs/RESEARCH_PLAN.md",
+    " M docs/RESULTS.md",
+    " M src/natvqvae/auxiliary.py",
+    " M src/natvqvae/cli.py",
+    " M src/natvqvae/model.py",
+    " M src/natvqvae/train.py",
+    "?? config/fragment_aux_external.yaml",
+    "?? config/fragment_aux_self.yaml",
+    "?? config/fragment_overlap.yaml",
+    "?? config/fragment_pretraining.yaml",
+    "?? config/fragment_transfer_comparison.yaml",
+    "?? config/pf01467_fragment_relations.yaml",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.html\"",
+    "?? \"docs/NMNAT_\\346\\267\\261\\345\\205\\245\\350\\260\\203\\347\\240\\224\\346\\212\\245\\345\\221\\212.md\"",
+    "?? docs/manuscript/",
+    "?? src/natvqvae/esm_baseline.py",
+    "?? src/natvqvae/fragment_overlap.py",
+    "?? src/natvqvae/fragment_pretraining.py",
+    "?? tests/test_auxiliary_training.py",
+    "?? tests/test_esm_baseline.py",
+    "?? tests/test_fragment_overlap.py",
+    "?? tests/test_fragment_pretraining.py"
+  ],
+  "python": "3.10.19",
+  "torch": "2.11.0+cu128",
+  "effective_training": {
+    "seed": 9101,
+    "arms": [
+      "QVAE"
+    ],
+    "batch_size": 32,
+    "max_steps": 750,
+    "K": 8,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.01,
+    "gradient_clip": 1.0,
+    "mask_seed": 20261105,
+    "mask_sizes": [
+      8,
+      16,
+      32
+    ],
+    "learning_rate_warmup_steps": 375,
+    "beta_warmup_steps": 750,
+    "checkpoint_selection": "fixed_updates"
+  },
+  "seed_override": 9101,
+  "device": "cuda",
+  "checkpoint_rule": "fixed_updates"
+}
