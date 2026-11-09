@@ -1,0 +1,806 @@
+{
+  "config_sha256": "b84b95bdd6048da1716f3d2bdd6fa79dd428e49b0a557ec1ef4292bb0e39bb79",
+  "input_sha256": {
+    "config/natv_head_mixture.yaml": "b84b95bdd6048da1716f3d2bdd6fa79dd428e49b0a557ec1ef4292bb0e39bb79",
+    "data/results/evaluation/esm2_natv_validation/identity.json": "5d0c9ea38d34d8171fb6df85356b50e1ae4fced8727e5bfc729a198c7ebfeb45",
+    "data/results/evaluation/esm2_natv_validation/evaluation.json": "d2d3b9260316a95ab79691c3d87b5ac27630a675f06b8dff4af24158708a6a74",
+    "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
+    "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/evaluation/esm2_natv_validation/per_query.jsonl": "887c4b645188d578c8997b63af8f17c609320f356400eda70ef881e93f92ff59",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/identity.json": "98e831801e953f2ce3ec366365a2cd995063475f7f99e69af5b2d7684370bb77",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/evaluation.json": "2c0ebabd669073dfaee1af45a7674e8e90b57c8d7a24052f8474d533e8675bcf",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9201/training_summary.json": "efb9b41bacfdaebdb157acf7e45d36e7c90a517dfc6525164d3f6de1e4829529",
+    "data/weights/qvae/fragment_random_seed9201/best.pt": "2ed241ac1af3e5c3e36d343a37a3591b12dfc05f383c65576cc571c1ea499490",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/per_query.jsonl": "2bee61758b506177973bb54fe1187986007a218dfe0ef9cf34a2e7c51a042299",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/identity.json": "5e628b021afb13576caf4e26b933874dab5e1455afb1e8f5883be9add958f3cd",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/evaluation.json": "d37e41c8a126b0954d33d821c4d19e5114900fad38fda473a38c12303075a6d6",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9202/training_summary.json": "9dcb52cce3b7d449af277762da28380465889bfe605beafaac1cd9885359aca1",
+    "data/weights/qvae/fragment_random_seed9202/best.pt": "bc065d3df2d0d99f2fe1ca93d4f15096ae4aee8b255940aaeceaad73b16eb684",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/per_query.jsonl": "2716f919d6951e40f5d301e64845935bec442711778d6b1c8df7cd6f4367f991",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/identity.json": "422c6731d47c490f5ed95aecee90f3f3d770bd330813feaf73b8d0641d413547",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/evaluation.json": "0fd7cabe58e47ed2c07c7fa17b4d2f1fb0f594db4c4ac34cfd1956cc4d3e01d1",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9203/training_summary.json": "3937e4de66d8c6db91c0d33cad7cfeaf63f52c5821c8024235f6b2ca280e3ac8",
+    "data/weights/qvae/fragment_random_seed9203/best.pt": "8d59ef6760992aa91c6ce99e5e38711cad93756784c130891d2a62ba6bdb3fab",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/per_query.jsonl": "2e3916167be1fc1339f25176f500c47f58a2725d35fe1c0655c9e4119fca26a7",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/identity.json": "5ecc164769141285e367391e13ff9959c516e5ec3f35e9981f5f21a2a04375d2",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/evaluation.json": "531b61d9c8be62ae9111e24faefd767cb58b14d94e271d48a5377e1d64c8d479",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9201/training_summary.json": "d93922b431e0f687d383e0a72a64d7f1ec7de893264dfcfdf08e873f81e1752a",
+    "data/weights/qvae/random_seed9201/best.pt": "acbf33318d7c74fb4fd3df67c9715bea38ca6e82ad412d69e6746c99b643b3b1",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/per_query.jsonl": "ba1e701950cd83a152108c37288bdfd38354287fe707a38b0eba86ba3722f159",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/identity.json": "ce00ccea77f9d155c00b03d89cc366f604a745657df4c953ddcc7df9617e25a5",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/evaluation.json": "c1b331586066dfc8d97a69e5933be0a3b9ed70d766dcf7cb97ed0ab1cca4f8e1",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9202/training_summary.json": "396880ffba3952814737c8cee7e441ec28ea6e7c5a508e3d6dd6a328cdaebcf1",
+    "data/weights/qvae/random_seed9202/best.pt": "6f22f83f50baf30315cf57a46442e2c6ef05e1dde191148690671350d0697a48",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/per_query.jsonl": "f2f1d785f55449b2f3033ef26d4951d23769d3e9a087465e08835f07c11cf9ff",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/identity.json": "ab0972073502c36f29d3188fc7ec3646e849d7f673d0e7d7038c9a452a9454f8",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/evaluation.json": "a63cffe245997393d6fbcb406e6766317633d0e8a5dd2bc650356066471404df",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9203/training_summary.json": "71555eba87774c8c98d2171fd7b4f09e56744ca5bc81feee12d9681c5f6a3dc7",
+    "data/weights/qvae/random_seed9203/best.pt": "bb9ad9497ce498652ef297c6eac8142375364d0fcb7e0c50670653d64dad4fc7",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/per_query.jsonl": "3a8910820f86973053285c15797fa6c976112d4b76538bb1ab544c27779bb333",
+    "data/results/preprocessing/natv_sequence_neighbors/nmnat_both_nearest.csv": "f2c56c3f29da5e16ae96eab13f627595a838186c9a89f5683f89a43d3bd6007e",
+    "data/results/preprocessing/natv_sequence_neighbors/nudix_both_nearest.csv": "c5c98f8fc010631fc012e6618a873ac9418f5ffc4c782ef10b762d13c9b4a20c",
+    "data/results/preprocessing/natv_sequence_neighbors/full_length_both_nearest.csv": "12b0756fb1ef2a9a0e6475d6a42a3725c615e58d339e38ce3b948a339f421629"
+  },
+  "implementation_sha256": "0063a7c4f3dc64a9a3dd4b6197151d52babac2aaaa8efeea2ce9777c4e760a5c",
+  "completed_utc": "2026-11-09T17:35:58.533547+00:00",
+  "checkpoints": {
+    "QVAE:9201": "2ed241ac1af3e5c3e36d343a37a3591b12dfc05f383c65576cc571c1ea499490",
+    "QVAE:9202": "bc065d3df2d0d99f2fe1ca93d4f15096ae4aee8b255940aaeceaad73b16eb684",
+    "QVAE:9203": "8d59ef6760992aa91c6ce99e5e38711cad93756784c130891d2a62ba6bdb3fab",
+    "deterministic:9201": "acbf33318d7c74fb4fd3df67c9715bea38ca6e82ad412d69e6746c99b643b3b1",
+    "deterministic:9202": "6f22f83f50baf30315cf57a46442e2c6ef05e1dde191148690671350d0697a48",
+    "deterministic:9203": "bb9ad9497ce498652ef297c6eac8142375364d0fcb7e0c50670653d64dad4fc7"
+  },
+  "status": "FITTED_ON_VALIDATION",
+  "fit_split": "validation",
+  "weights": {
+    "QVAE": {
+      "full_indices": [
+        6,
+        12,
+        8,
+        12,
+        9,
+        10
+      ],
+      "full_alphas": {
+        "NMNAT": 0.3,
+        "Nudix": 0.6,
+        "global": 0.4,
+        "linker": 0.6,
+        "random": 0.45,
+        "all_panels": 0.5
+      },
+      "excluded_group_indices": {
+        "0019c6177dc96b8e36c8fd01547c087c8ae254f8d4a8f5c6f76a5f5c6242fcb4": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0134572d28cde1921cf37ee9c84fbd7e227eeaf73f43f4a63271a5fd24170527": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0664207cae5cb277b6a5627cf537125291eee819631e9cad3a69fa3f4dd67ba3": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "06888f44974894a6bac2e9fbb1418a83f978e29fb6541a96f6f2d7cf1012fb78": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "084e0ee944bd7090dd79ce8bdfa0bf93e87923dc5a36f328bf2933d8b010e68a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0bf91eab41a67fec3ad808df8c3e3fbe4b35669daa0a2b12ce2a64d52672a450": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0e81af97389db9950133a4ff45757c8055256be05f60ebbf36032a27eaa86e5f": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0e8f86cf48af3be184db29946c5fc417dd673e899072f324f2b09e1d02fd03ce": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0ebf5e4f543a78e3f6ba66c90f8bb63bee7ac42f48fcc9b1a83215305dbf4824": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "101933c54cea115b53142e783464380e733fa31ef4865dabc5ac50fc8e2fcc9f": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "19af1cbb4677b92f611fa93ea3aac1144ae4eebae75f613caa29eac8c2e090c1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "1a7d5a4186c502b1cf37788abbaba44631b9be006816c66015a90774e446bbc8": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "21c1c7d5975241b1f5fbc21b81f768c34c0682a8470fc4eb096b04b28f3413f1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "2ac15050c596ca98cba3ff55e772ca967501173e7d452256c87f01177668366a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "2e6ef84b7e13c7c7161f4330c8f2eb4d29cc9bf65270b0ab746bfd489fa91134": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "355f4d0cdcc261dc59bd790bc85266896c4555a143c5f1c3309714762109a3f1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "3b791bfb152eee6a93afe2b3e46084df2629ddb0701b50f86bdf88a1e97b7dc9": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "41d1ed0c11641ebf65f8c87c1364d33d0664e6c0268343e439db94736eda353b": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "428a783d0feae8ad0674076a496d3834bcdef901c7e67f8223dc3c89f7cf4f3d": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "4332c6db9737a6ce2cd5e1d84eb834e16ac20d02c9235f348846d8f3f61ac5a8": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "43580af40a556c322c4c4f9804c0cb90c88f03d226aa5ce9fdfa893413b5a292": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "48d5e86f8baa1024a33f602c8514e66c38ea662f64d35bc759def9c86e0fbaf6": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "53fc30155746179841009cee69db3a22870992999e8cf5a5a956a2a2a9f546fb": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "60f5de647dfab7b3be74f3916850a340c8084cbe841f49dfcd4d30ec604b8498": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "62bf7c9e0a529b03c2eea2eaafd41683b82a74741cc010593beddeda63cc7737": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "69405c0f0efc464946cc424e3eabacbc1c319914efe755c4cec73248983a797e": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "6a9f705c0db639b0298fdc65a3452f15f51501bf210b0a6990bc74ac5ac8b653": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "775aed777d2295d16dce8e235ca5f586d4fd9e0a03778830b4a38236308d980a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "880da7c9bed4911f91d3bc05d570ebe399db6f339c2e8ca1c1331c9970509672": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "900bebf1c7dd61e26e0f12f2fa8b71fc10cbb9b3aeb542ba991cb7b2d9c64a53": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "961812b89145918ef29b415c3703ab0d34816c98046ba4656d2181658a4b7ee3": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "9c2ae2a88b22321cf606be964b737918df9c9fb58fc3a583112dfaa193c75675": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a2fb0fb167478abca375f2a6b60cf64fb5f4e890447906f2c0beb69b984464f9": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a463315bd58304dcbd14a81a2f49e3d089b10ed0d2f239b05a6e6595d5c75614": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a5951d18e5065c9d476a4524d9431dfa4a5eabb47d109fcadeaea2f06e1d81c1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a81bf8ff25f2a9ad219c3713f23bc46fc06fae19fe3308ee8d461670522a17d7": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "b1a768a537181c0545fb47006681f199af717bdbbdd263ceb137662cb7614cd4": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "c9227528acb5037ad49c00a8bf87c8f90d58f4c43b13ec822d2702916b33cd6c": [
+          6,
+          12,
+          9,
+          12,
+          9,
+          10
+        ],
+        "d21fb89eb0796537fef0e7555d936b3aca496d0cc6fb10493536fbfe8c9ea54e": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "e277cb7b4f9ecc5fe2d710856f3a37bb819d0d98504857218e4fea242f67a26b": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "e70ecee4f2879ea36c09183663795095656189913e265484e26c5224c25d02ad": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "f1d025702ad7249bd6cb6dbd4051e230aded895663c6328f0d19c7e4dd238869": [
+          7,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "fbe5a8928c2ad2ebdfc18c9e662e0a84d099d074ec5a45c382af63f057bc0763": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ]
+      }
+    },
+    "deterministic": {
+      "full_indices": [
+        6,
+        12,
+        8,
+        12,
+        9,
+        10
+      ],
+      "full_alphas": {
+        "NMNAT": 0.3,
+        "Nudix": 0.6,
+        "global": 0.4,
+        "linker": 0.6,
+        "random": 0.45,
+        "all_panels": 0.5
+      },
+      "excluded_group_indices": {
+        "0019c6177dc96b8e36c8fd01547c087c8ae254f8d4a8f5c6f76a5f5c6242fcb4": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0134572d28cde1921cf37ee9c84fbd7e227eeaf73f43f4a63271a5fd24170527": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0224c34d6aa923582b2aed45a7347df38d4b033656a260610bd97c677057b702": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0664207cae5cb277b6a5627cf537125291eee819631e9cad3a69fa3f4dd67ba3": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "06888f44974894a6bac2e9fbb1418a83f978e29fb6541a96f6f2d7cf1012fb78": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "084e0ee944bd7090dd79ce8bdfa0bf93e87923dc5a36f328bf2933d8b010e68a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0bf91eab41a67fec3ad808df8c3e3fbe4b35669daa0a2b12ce2a64d52672a450": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0e81af97389db9950133a4ff45757c8055256be05f60ebbf36032a27eaa86e5f": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0e8f86cf48af3be184db29946c5fc417dd673e899072f324f2b09e1d02fd03ce": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "0ebf5e4f543a78e3f6ba66c90f8bb63bee7ac42f48fcc9b1a83215305dbf4824": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "101933c54cea115b53142e783464380e733fa31ef4865dabc5ac50fc8e2fcc9f": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "19af1cbb4677b92f611fa93ea3aac1144ae4eebae75f613caa29eac8c2e090c1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "1a7d5a4186c502b1cf37788abbaba44631b9be006816c66015a90774e446bbc8": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "21c1c7d5975241b1f5fbc21b81f768c34c0682a8470fc4eb096b04b28f3413f1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "2ac15050c596ca98cba3ff55e772ca967501173e7d452256c87f01177668366a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "2e6ef84b7e13c7c7161f4330c8f2eb4d29cc9bf65270b0ab746bfd489fa91134": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "355f4d0cdcc261dc59bd790bc85266896c4555a143c5f1c3309714762109a3f1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "3b791bfb152eee6a93afe2b3e46084df2629ddb0701b50f86bdf88a1e97b7dc9": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "41d1ed0c11641ebf65f8c87c1364d33d0664e6c0268343e439db94736eda353b": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "428a783d0feae8ad0674076a496d3834bcdef901c7e67f8223dc3c89f7cf4f3d": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "4332c6db9737a6ce2cd5e1d84eb834e16ac20d02c9235f348846d8f3f61ac5a8": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "43580af40a556c322c4c4f9804c0cb90c88f03d226aa5ce9fdfa893413b5a292": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "48d5e86f8baa1024a33f602c8514e66c38ea662f64d35bc759def9c86e0fbaf6": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "53fc30155746179841009cee69db3a22870992999e8cf5a5a956a2a2a9f546fb": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "60f5de647dfab7b3be74f3916850a340c8084cbe841f49dfcd4d30ec604b8498": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "62bf7c9e0a529b03c2eea2eaafd41683b82a74741cc010593beddeda63cc7737": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "69405c0f0efc464946cc424e3eabacbc1c319914efe755c4cec73248983a797e": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "6a9f705c0db639b0298fdc65a3452f15f51501bf210b0a6990bc74ac5ac8b653": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "775aed777d2295d16dce8e235ca5f586d4fd9e0a03778830b4a38236308d980a": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "880da7c9bed4911f91d3bc05d570ebe399db6f339c2e8ca1c1331c9970509672": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "900bebf1c7dd61e26e0f12f2fa8b71fc10cbb9b3aeb542ba991cb7b2d9c64a53": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "961812b89145918ef29b415c3703ab0d34816c98046ba4656d2181658a4b7ee3": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "9c2ae2a88b22321cf606be964b737918df9c9fb58fc3a583112dfaa193c75675": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a2fb0fb167478abca375f2a6b60cf64fb5f4e890447906f2c0beb69b984464f9": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a463315bd58304dcbd14a81a2f49e3d089b10ed0d2f239b05a6e6595d5c75614": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a5951d18e5065c9d476a4524d9431dfa4a5eabb47d109fcadeaea2f06e1d81c1": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "a81bf8ff25f2a9ad219c3713f23bc46fc06fae19fe3308ee8d461670522a17d7": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "b1a768a537181c0545fb47006681f199af717bdbbdd263ceb137662cb7614cd4": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "c9227528acb5037ad49c00a8bf87c8f90d58f4c43b13ec822d2702916b33cd6c": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "d21fb89eb0796537fef0e7555d936b3aca496d0cc6fb10493536fbfe8c9ea54e": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "e277cb7b4f9ecc5fe2d710856f3a37bb819d0d98504857218e4fea242f67a26b": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "e70ecee4f2879ea36c09183663795095656189913e265484e26c5224c25d02ad": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "f1d025702ad7249bd6cb6dbd4051e230aded895663c6328f0d19c7e4dd238869": [
+          7,
+          12,
+          8,
+          12,
+          9,
+          10
+        ],
+        "fbe5a8928c2ad2ebdfc18c9e662e0a84d099d074ec5a45c382af63f057bc0763": [
+          6,
+          12,
+          8,
+          12,
+          9,
+          10
+        ]
+      }
+    }
+  }
+}

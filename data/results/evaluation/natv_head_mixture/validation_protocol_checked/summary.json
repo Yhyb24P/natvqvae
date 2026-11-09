@@ -1,0 +1,1178 @@
+{
+  "status": "COMPLETED",
+  "split": "validation",
+  "config_sha256": "b84b95bdd6048da1716f3d2bdd6fa79dd428e49b0a557ec1ef4292bb0e39bb79",
+  "completed_utc": "2026-11-09T17:35:58.533547+00:00",
+  "input_sha256": {
+    "config/natv_head_mixture.yaml": "b84b95bdd6048da1716f3d2bdd6fa79dd428e49b0a557ec1ef4292bb0e39bb79",
+    "data/results/evaluation/esm2_natv_validation/identity.json": "5d0c9ea38d34d8171fb6df85356b50e1ae4fced8727e5bfc729a198c7ebfeb45",
+    "data/results/evaluation/esm2_natv_validation/evaluation.json": "d2d3b9260316a95ab79691c3d87b5ac27630a675f06b8dff4af24158708a6a74",
+    "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
+    "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/evaluation/esm2_natv_validation/per_query.jsonl": "887c4b645188d578c8997b63af8f17c609320f356400eda70ef881e93f92ff59",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/identity.json": "98e831801e953f2ce3ec366365a2cd995063475f7f99e69af5b2d7684370bb77",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/evaluation.json": "2c0ebabd669073dfaee1af45a7674e8e90b57c8d7a24052f8474d533e8675bcf",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9201/training_summary.json": "efb9b41bacfdaebdb157acf7e45d36e7c90a517dfc6525164d3f6de1e4829529",
+    "data/weights/qvae/fragment_random_seed9201/best.pt": "2ed241ac1af3e5c3e36d343a37a3591b12dfc05f383c65576cc571c1ea499490",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9201/per_query.jsonl": "2bee61758b506177973bb54fe1187986007a218dfe0ef9cf34a2e7c51a042299",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/identity.json": "5e628b021afb13576caf4e26b933874dab5e1455afb1e8f5883be9add958f3cd",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/evaluation.json": "d37e41c8a126b0954d33d821c4d19e5114900fad38fda473a38c12303075a6d6",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9202/training_summary.json": "9dcb52cce3b7d449af277762da28380465889bfe605beafaac1cd9885359aca1",
+    "data/weights/qvae/fragment_random_seed9202/best.pt": "bc065d3df2d0d99f2fe1ca93d4f15096ae4aee8b255940aaeceaad73b16eb684",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9202/per_query.jsonl": "2716f919d6951e40f5d301e64845935bec442711778d6b1c8df7cd6f4367f991",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/identity.json": "422c6731d47c490f5ed95aecee90f3f3d770bd330813feaf73b8d0641d413547",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/evaluation.json": "0fd7cabe58e47ed2c07c7fa17b4d2f1fb0f594db4c4ac34cfd1956cc4d3e01d1",
+    "data/results/training/natv_fragment_transfer/fragment_random_seed9203/training_summary.json": "3937e4de66d8c6db91c0d33cad7cfeaf63f52c5821c8024235f6b2ca280e3ac8",
+    "data/weights/qvae/fragment_random_seed9203/best.pt": "8d59ef6760992aa91c6ce99e5e38711cad93756784c130891d2a62ba6bdb3fab",
+    "data/results/evaluation/natv_fragment_transfer/validation/fragment_random_seed9203/per_query.jsonl": "2e3916167be1fc1339f25176f500c47f58a2725d35fe1c0655c9e4119fca26a7",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/identity.json": "5ecc164769141285e367391e13ff9959c516e5ec3f35e9981f5f21a2a04375d2",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/evaluation.json": "531b61d9c8be62ae9111e24faefd767cb58b14d94e271d48a5377e1d64c8d479",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9201/training_summary.json": "d93922b431e0f687d383e0a72a64d7f1ec7de893264dfcfdf08e873f81e1752a",
+    "data/weights/qvae/random_seed9201/best.pt": "acbf33318d7c74fb4fd3df67c9715bea38ca6e82ad412d69e6746c99b643b3b1",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9201/per_query.jsonl": "ba1e701950cd83a152108c37288bdfd38354287fe707a38b0eba86ba3722f159",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/identity.json": "ce00ccea77f9d155c00b03d89cc366f604a745657df4c953ddcc7df9617e25a5",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/evaluation.json": "c1b331586066dfc8d97a69e5933be0a3b9ed70d766dcf7cb97ed0ab1cca4f8e1",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9202/training_summary.json": "396880ffba3952814737c8cee7e441ec28ea6e7c5a508e3d6dd6a328cdaebcf1",
+    "data/weights/qvae/random_seed9202/best.pt": "6f22f83f50baf30315cf57a46442e2c6ef05e1dde191148690671350d0697a48",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9202/per_query.jsonl": "f2f1d785f55449b2f3033ef26d4951d23769d3e9a087465e08835f07c11cf9ff",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/identity.json": "ab0972073502c36f29d3188fc7ec3646e849d7f673d0e7d7038c9a452a9454f8",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/evaluation.json": "a63cffe245997393d6fbcb406e6766317633d0e8a5dd2bc650356066471404df",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9203/training_summary.json": "71555eba87774c8c98d2171fd7b4f09e56744ca5bc81feee12d9681c5f6a3dc7",
+    "data/weights/qvae/random_seed9203/best.pt": "bb9ad9497ce498652ef297c6eac8142375364d0fcb7e0c50670653d64dad4fc7",
+    "data/results/evaluation/natv_fragment_transfer_deterministic/validation/random_seed9203/per_query.jsonl": "3a8910820f86973053285c15797fa6c976112d4b76538bb1ab544c27779bb333",
+    "data/results/preprocessing/natv_sequence_neighbors/nmnat_both_nearest.csv": "f2c56c3f29da5e16ae96eab13f627595a838186c9a89f5683f89a43d3bd6007e",
+    "data/results/preprocessing/natv_sequence_neighbors/nudix_both_nearest.csv": "c5c98f8fc010631fc012e6618a873ac9418f5ffc4c782ef10b762d13c9b4a20c",
+    "data/results/preprocessing/natv_sequence_neighbors/full_length_both_nearest.csv": "12b0756fb1ef2a9a0e6475d6a42a3725c615e58d339e38ce3b948a339f421629"
+  },
+  "implementation_sha256": "0063a7c4f3dc64a9a3dd4b6197151d52babac2aaaa8efeea2ce9777c4e760a5c",
+  "checkpoints": {
+    "QVAE:9201": "2ed241ac1af3e5c3e36d343a37a3591b12dfc05f383c65576cc571c1ea499490",
+    "QVAE:9202": "bc065d3df2d0d99f2fe1ca93d4f15096ae4aee8b255940aaeceaad73b16eb684",
+    "QVAE:9203": "8d59ef6760992aa91c6ce99e5e38711cad93756784c130891d2a62ba6bdb3fab",
+    "deterministic:9201": "acbf33318d7c74fb4fd3df67c9715bea38ca6e82ad412d69e6746c99b643b3b1",
+    "deterministic:9202": "6f22f83f50baf30315cf57a46442e2c6ef05e1dde191148690671350d0697a48",
+    "deterministic:9203": "bb9ad9497ce498652ef297c6eac8142375364d0fcb7e0c50670653d64dad4fc7"
+  },
+  "effects": {
+    "QVAE": {
+      "task_marginal_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": 0.13085263785513648,
+          "ci95": [
+            0.09685450005240187,
+            0.16545744195908754
+          ],
+          "method_mean": 1.8556800627167795,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            0.13310001433684324,
+            0.13413865140836279,
+            0.1253192478202034
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.0660425998378958,
+          "ci95": [
+            -0.13817020649958156,
+            0.009469423804560293
+          ],
+          "method_mean": 1.4908567838100577,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.07768254341716009,
+            -0.04550223823678519,
+            -0.0749430178597421
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": 0.07761155516080966,
+          "ci95": [
+            0.027787659552565312,
+            0.12843914264229644
+          ],
+          "method_mean": 1.7234081043501461,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            0.06969870250258313,
+            0.0923311090267331,
+            0.07080485395311274
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.0480299417517916,
+          "ci95": [
+            -0.14218099159374892,
+            0.05071706028131925
+          ],
+          "method_mean": 1.9106758825977757,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.07984153359003514,
+            -0.007524675091888167,
+            -0.056723616573451464
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": 0.0493549583065033,
+          "ci95": [
+            0.009046595815945222,
+            0.09047956660946076
+          ],
+          "method_mean": 1.7809360423510816,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            0.06697695280033074,
+            0.052719954502184446,
+            0.028367967616994703
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": 0.03003717421904937,
+          "ci95": [
+            -0.014526005376729097,
+            0.07913953573545603
+          ],
+          "method_mean": 1.7541004168642875,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            0.025233233168625992,
+            0.04570052245800041,
+            0.01917776703052171
+          ]
+        }
+      },
+      "global_mixture_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.02805086141984712,
+          "ci95": [
+            -0.04305038862365767,
+            -0.011448615464558914
+          ],
+          "method_mean": 1.6967765634417957,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            -0.021251765757424948,
+            -0.0327683779973904,
+            -0.030132440504726007
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.1622418795034001,
+          "ci95": [
+            -0.19838768696835224,
+            -0.12613452594762367
+          ],
+          "method_mean": 1.3946575041445533,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.15663314545839785,
+            -0.16070672922710336,
+            -0.16938576382469914
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.06892767571108785,
+          "ci95": [
+            -0.09254201418340251,
+            -0.04526856924925378
+          ],
+          "method_mean": 1.5768688734782488,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            -0.06435402641883164,
+            -0.06955250504228477,
+            -0.07287649567214713
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.14684658233241943,
+          "ci95": [
+            -0.18935814492565345,
+            -0.10440302887232981
+          ],
+          "method_mean": 1.8118592420171478,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.1585047672418127,
+            -0.14607488815588834,
+            -0.1359600915995573
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.08521289204743161,
+          "ci95": [
+            -0.10357011008219051,
+            -0.0669568056024619
+          ],
+          "method_mean": 1.6463681919971467,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            -0.07333520851297401,
+            -0.09042088418647715,
+            -0.09188258344284365
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.09744078531812438,
+          "ci95": [
+            -0.11791376461332272,
+            -0.07608497903446772
+          ],
+          "method_mean": 1.6266224573271137,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            -0.0934732467925811,
+            -0.09931193987586932,
+            -0.09953716928592268
+          ]
+        }
+      },
+      "global_mixture_minus_task_marginal": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.15890349927498357,
+          "ci95": [
+            -0.18036444662922493,
+            -0.1389396755335462
+          ],
+          "method_mean": 1.6967765634417957,
+          "reference_mean": 1.8556800627167795,
+          "per_seed": [
+            -0.15435178009426817,
+            -0.1669070294057532,
+            -0.15545168832492937
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.09619927966550432,
+          "ci95": [
+            -0.13683674964661638,
+            -0.058111675376416455
+          ],
+          "method_mean": 1.3946575041445533,
+          "reference_mean": 1.4908567838100577,
+          "per_seed": [
+            -0.07895060204123777,
+            -0.11520449099031817,
+            -0.09444274596495704
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.14653923087189752,
+          "ci95": [
+            -0.17385274080245958,
+            -0.11831031301465267
+          ],
+          "method_mean": 1.5768688734782488,
+          "reference_mean": 1.7234081043501461,
+          "per_seed": [
+            -0.1340527289214148,
+            -0.16188361406901788,
+            -0.14368134962525989
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.09881664058062785,
+          "ci95": [
+            -0.15811087509523508,
+            -0.04228772611996367
+          ],
+          "method_mean": 1.8118592420171478,
+          "reference_mean": 1.9106758825977757,
+          "per_seed": [
+            -0.07866323365177756,
+            -0.1385502130640002,
+            -0.07923647502610581
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.1345678503539349,
+          "ci95": [
+            -0.15839199415719943,
+            -0.11121879144152526
+          ],
+          "method_mean": 1.6463681919971467,
+          "reference_mean": 1.7809360423510816,
+          "per_seed": [
+            -0.14031216131330476,
+            -0.14314083868866162,
+            -0.12025055105983835
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.12747795953717375,
+          "ci95": [
+            -0.15620637509781712,
+            -0.10143168401183923
+          ],
+          "method_mean": 1.6266224573271137,
+          "reference_mean": 1.7541004168642875,
+          "per_seed": [
+            -0.1187064799612071,
+            -0.14501246233386975,
+            -0.11871493631644438
+          ]
+        }
+      },
+      "region_mixture_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.03644735661911183,
+          "ci95": [
+            -0.04634756352967497,
+            -0.025491698855502426
+          ],
+          "method_mean": 1.688380068242531,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            -0.031218386102903502,
+            -0.04047362946163419,
+            -0.03765005429279778
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.165652211961552,
+          "ci95": [
+            -0.20702608497725872,
+            -0.12459233850052043
+          ],
+          "method_mean": 1.3912471716864017,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.16101787491988115,
+            -0.16256632080677322,
+            -0.17337244015800163
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.070698090994583,
+          "ci95": [
+            -0.09068224701491841,
+            -0.05084946445923694
+          ],
+          "method_mean": 1.5750984581947536,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            -0.06604319147519921,
+            -0.07193650242112977,
+            -0.07411457908742
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.15019079806638802,
+          "ci95": [
+            -0.20022451184992748,
+            -0.10063705958022552
+          ],
+          "method_mean": 1.8085150262831793,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.16425680477551394,
+            -0.1465427888991588,
+            -0.13977280052449126
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.08573375545575665,
+          "ci95": [
+            -0.10260970805499768,
+            -0.0689735739125401
+          ],
+          "method_mean": 1.645847328588822,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            -0.07466432948784264,
+            -0.09083639804127454,
+            -0.09170053883815274
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.10074377467174565,
+          "ci95": [
+            -0.12111645820296052,
+            -0.07889830510293704
+          ],
+          "method_mean": 1.6233194679734926,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            -0.09789163061074145,
+            -0.10174395730819909,
+            -0.10259573609629634
+          ]
+        }
+      },
+      "region_mixture_minus_task_marginal": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.16729999447424826,
+          "ci95": [
+            -0.19276559050044476,
+            -0.14297116116225003
+          ],
+          "method_mean": 1.688380068242531,
+          "reference_mean": 1.8556800627167795,
+          "per_seed": [
+            -0.16431840043974677,
+            -0.174612280869997,
+            -0.16296930211300117
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.09960961212365621,
+          "ci95": [
+            -0.13459696824911227,
+            -0.06693785364305485
+          ],
+          "method_mean": 1.3912471716864017,
+          "reference_mean": 1.4908567838100577,
+          "per_seed": [
+            -0.08333533150272103,
+            -0.11706408256998797,
+            -0.09842942229825953
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.14830964615539266,
+          "ci95": [
+            -0.179233814621469,
+            -0.11715414306226321
+          ],
+          "method_mean": 1.5750984581947536,
+          "reference_mean": 1.7234081043501461,
+          "per_seed": [
+            -0.13574189397778236,
+            -0.16426761144786284,
+            -0.14491943304053276
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.10216085631459638,
+          "ci95": [
+            -0.15423339015787266,
+            -0.0532256879110847
+          ],
+          "method_mean": 1.8085150262831793,
+          "reference_mean": 1.9106758825977757,
+          "per_seed": [
+            -0.08441527118547883,
+            -0.13901811380727064,
+            -0.08304918395103977
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.13508871376225995,
+          "ci95": [
+            -0.16042116629946707,
+            -0.11010624174152223
+          ],
+          "method_mean": 1.645847328588822,
+          "reference_mean": 1.7809360423510816,
+          "per_seed": [
+            -0.14164128228817338,
+            -0.143556352543459,
+            -0.12006850645514743
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.130780948890795,
+          "ci95": [
+            -0.15932720456934607,
+            -0.10494973368527948
+          ],
+          "method_mean": 1.6233194679734926,
+          "reference_mean": 1.7541004168642875,
+          "per_seed": [
+            -0.12312486377936746,
+            -0.14744447976619954,
+            -0.12177350312681808
+          ]
+        }
+      },
+      "region_mixture_minus_global_mixture": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.008396495199264706,
+          "ci95": [
+            -0.013945717613406657,
+            -0.0031650883677049445
+          ],
+          "method_mean": 1.688380068242531,
+          "reference_mean": 1.6967765634417957,
+          "per_seed": [
+            -0.009966620345478551,
+            -0.007705251464243789,
+            -0.007517613788071778
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.003410332458151882,
+          "ci95": [
+            -0.008914627623341057,
+            0.002380519625106053
+          ],
+          "method_mean": 1.3912471716864017,
+          "reference_mean": 1.3946575041445533,
+          "per_seed": [
+            -0.0043847294614832825,
+            -0.001859591579669864,
+            -0.003986676333302502
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.0017704152834951497,
+          "ci95": [
+            -0.005518515442806125,
+            0.0018675526124161165
+          ],
+          "method_mean": 1.5750984581947536,
+          "reference_mean": 1.5768688734782488,
+          "per_seed": [
+            -0.0016891650563675698,
+            -0.002383997378845007,
+            -0.0012380834152728726
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.003344215733968559,
+          "ci95": [
+            -0.01097621396382794,
+            0.004681716072084252
+          ],
+          "method_mean": 1.8085150262831793,
+          "reference_mean": 1.8118592420171478,
+          "per_seed": [
+            -0.00575203753370126,
+            -0.0004679007432704562,
+            -0.0038127089249339607
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.0005208634083250298,
+          "ci95": [
+            -0.0020665113016119104,
+            0.0010358705069791086
+          ],
+          "method_mean": 1.645847328588822,
+          "reference_mean": 1.6463681919971467,
+          "per_seed": [
+            -0.001329120974868632,
+            -0.0004155138547973982,
+            0.00018204460469094114
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.003302989353621254,
+          "ci95": [
+            -0.004806129547452318,
+            -0.0017439968068260073
+          ],
+          "method_mean": 1.6233194679734926,
+          "reference_mean": 1.6266224573271137,
+          "per_seed": [
+            -0.004418383818160343,
+            -0.0024320174323297565,
+            -0.0030585668103736622
+          ]
+        }
+      }
+    },
+    "deterministic": {
+      "task_marginal_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": 0.13276483920693768,
+          "ci95": [
+            0.09854564028140386,
+            0.16781020931355395
+          ],
+          "method_mean": 1.8575922640685805,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            0.1345339690353219,
+            0.1346380836471542,
+            0.12912246493833687
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.06480741606654274,
+          "ci95": [
+            -0.13696812844925707,
+            0.011218563647135912
+          ],
+          "method_mean": 1.4920919675814108,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.07779856221441955,
+            -0.04516480480847441,
+            -0.07145888117673428
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": 0.07938007061461173,
+          "ci95": [
+            0.029370125907359584,
+            0.13041737961848612
+          ],
+          "method_mean": 1.7251766198039487,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            0.071693547653868,
+            0.09125651775290619,
+            0.07519014643706103
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.047613117613164474,
+          "ci95": [
+            -0.14177654493007927,
+            0.050726056839747985
+          ],
+          "method_mean": 1.9110927067364034,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.07918414329093292,
+            -0.007040068739420848,
+            -0.056615140809139645
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": 0.0515537602539102,
+          "ci95": [
+            0.01103163110724926,
+            0.09313685196137166
+          ],
+          "method_mean": 1.7831348442984885,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            0.06799998533567626,
+            0.053896199269894064,
+            0.03276509615616028
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": 0.03158676059007298,
+          "ci95": [
+            -0.013222829498430948,
+            0.08084329119954439
+          ],
+          "method_mean": 1.7556500032353113,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            0.02623339843088858,
+            0.04604087378975456,
+            0.022486009549575792
+          ]
+        }
+      },
+      "global_mixture_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.027710098250226852,
+          "ci95": [
+            -0.04292928207046515,
+            -0.011089536552869863
+          ],
+          "method_mean": 1.697117326611416,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            -0.021133150852812452,
+            -0.03276957366780547,
+            -0.029227570230062637
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.16244010915665338,
+          "ci95": [
+            -0.19854686232210722,
+            -0.12659668419060277
+          ],
+          "method_mean": 1.3944592744913002,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.15677631017677307,
+            -0.1609385111594696,
+            -0.16960550613371744
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.06875980561081911,
+          "ci95": [
+            -0.09248494037534574,
+            -0.04513018096652652
+          ],
+          "method_mean": 1.5770367435785175,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            -0.06398438329731111,
+            -0.07002928130028434,
+            -0.07226575223486187
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.14698443804207378,
+          "ci95": [
+            -0.18953254039434322,
+            -0.10440411720380627
+          ],
+          "method_mean": 1.8117213863074935,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.15841050691222366,
+            -0.14539608313840782,
+            -0.13714672407558987
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.08504194106378117,
+          "ci95": [
+            -0.1033888912081892,
+            -0.06676422415340337
+          ],
+          "method_mean": 1.646539142980797,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            -0.07334884566259184,
+            -0.09034628412473987,
+            -0.0914306934040118
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.09736569483965268,
+          "ci95": [
+            -0.11793733112415526,
+            -0.07590056227543161
+          ],
+          "method_mean": 1.6266975478055856,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            -0.09339427727298291,
+            -0.09929909276855374,
+            -0.09940371447742145
+          ]
+        }
+      },
+      "global_mixture_minus_task_marginal": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.16047493745716454,
+          "ci95": [
+            -0.1818836051055801,
+            -0.14031329719592575
+          ],
+          "method_mean": 1.697117326611416,
+          "reference_mean": 1.8575922640685805,
+          "per_seed": [
+            -0.15566711988813434,
+            -0.16740765731495968,
+            -0.15835003516839954
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.09763269309011063,
+          "ci95": [
+            -0.13862950773886834,
+            -0.05935058735417965
+          ],
+          "method_mean": 1.3944592744913002,
+          "reference_mean": 1.4920919675814108,
+          "per_seed": [
+            -0.0789777479623535,
+            -0.11577370635099521,
+            -0.09814662495698318
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.14813987622543084,
+          "ci95": [
+            -0.17561782488592856,
+            -0.11966775558053888
+          ],
+          "method_mean": 1.5770367435785175,
+          "reference_mean": 1.7251766198039487,
+          "per_seed": [
+            -0.1356779309511791,
+            -0.16128579905319052,
+            -0.14745589867192288
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.09937132042890932,
+          "ci95": [
+            -0.15829092314531762,
+            -0.04331288098153313
+          ],
+          "method_mean": 1.8117213863074935,
+          "reference_mean": 1.9110927067364034,
+          "per_seed": [
+            -0.07922636362129074,
+            -0.138356014398987,
+            -0.08053158326645023
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.13659570131769136,
+          "ci95": [
+            -0.16045326662504078,
+            -0.11321507602962934
+          ],
+          "method_mean": 1.646539142980797,
+          "reference_mean": 1.7831348442984885,
+          "per_seed": [
+            -0.14134883099826812,
+            -0.14424248339463394,
+            -0.1241957895601721
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.1289524554297257,
+          "ci95": [
+            -0.15785406933557647,
+            -0.10264794198801111
+          ],
+          "method_mean": 1.6266975478055856,
+          "reference_mean": 1.7556500032353113,
+          "per_seed": [
+            -0.11962767570387149,
+            -0.1453399665583083,
+            -0.12188972402699724
+          ]
+        }
+      },
+      "region_mixture_minus_esm": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.03628014113574122,
+          "ci95": [
+            -0.04623026536311144,
+            -0.025121925239227412
+          ],
+          "method_mean": 1.688547283725902,
+          "reference_mean": 1.7248274248616429,
+          "per_seed": [
+            -0.031238068823413255,
+            -0.04048522745999488,
+            -0.037117127123815534
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.16577943449762825,
+          "ci95": [
+            -0.207258153710075,
+            -0.12466729188344396
+          ],
+          "method_mean": 1.3911199491503252,
+          "reference_mean": 1.5568993836479534,
+          "per_seed": [
+            -0.16117996856608363,
+            -0.16281811112701103,
+            -0.17334022379979017
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.0709182303726373,
+          "ci95": [
+            -0.09073923459464137,
+            -0.05139791145370306
+          ],
+          "method_mean": 1.5748783188166993,
+          "reference_mean": 1.6457965491893367,
+          "per_seed": [
+            -0.066084183455731,
+            -0.07268008524649411,
+            -0.07399042241568675
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.15021007606752335,
+          "ci95": [
+            -0.20017729101257783,
+            -0.1006021305810229
+          ],
+          "method_mean": 1.8084957482820443,
+          "reference_mean": 1.9587058243495679,
+          "per_seed": [
+            -0.16404262968818017,
+            -0.1456334074925928,
+            -0.14095419102179704
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.08562280193655568,
+          "ci95": [
+            -0.10252278879432994,
+            -0.0688165327786171
+          ],
+          "method_mean": 1.6459582821080225,
+          "reference_mean": 1.7315810840445782,
+          "per_seed": [
+            -0.07470735018692767,
+            -0.0907890090036864,
+            -0.09137204661905293
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.10075342837292577,
+          "ci95": [
+            -0.12118629556098703,
+            -0.07887362139107627
+          ],
+          "method_mean": 1.6233098142723128,
+          "reference_mean": 1.7240632426452385,
+          "per_seed": [
+            -0.09790399702174592,
+            -0.10175040812456397,
+            -0.10260587997246748
+          ]
+        }
+      },
+      "region_mixture_minus_task_marginal": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.1690449803426789,
+          "ci95": [
+            -0.19482078589418433,
+            -0.14443347290302846
+          ],
+          "method_mean": 1.688547283725902,
+          "reference_mean": 1.8575922640685805,
+          "per_seed": [
+            -0.16577203785873515,
+            -0.17512331110714913,
+            -0.1662395920621524
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.10097201843108555,
+          "ci95": [
+            -0.13618203053569763,
+            -0.06783408308334354
+          ],
+          "method_mean": 1.3911199491503252,
+          "reference_mean": 1.4920919675814108,
+          "per_seed": [
+            -0.0833814063516641,
+            -0.11765330631853663,
+            -0.1018813426230559
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.15029830098724906,
+          "ci95": [
+            -0.18147323549338398,
+            -0.1187406261584217
+          ],
+          "method_mean": 1.5748783188166993,
+          "reference_mean": 1.7251766198039487,
+          "per_seed": [
+            -0.137777731109599,
+            -0.1639366029994003,
+            -0.14918056885274777
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.10259695845435884,
+          "ci95": [
+            -0.1544826191630369,
+            -0.054048287014590905
+          ],
+          "method_mean": 1.8084957482820443,
+          "reference_mean": 1.9110927067364034,
+          "per_seed": [
+            -0.08485848639724723,
+            -0.13859333875317195,
+            -0.0843390502126574
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.1371765621904659,
+          "ci95": [
+            -0.1624766524122495,
+            -0.11210808334813874
+          ],
+          "method_mean": 1.6459582821080225,
+          "reference_mean": 1.7831348442984885,
+          "per_seed": [
+            -0.14270733552260395,
+            -0.14468520827358045,
+            -0.12413714277521323
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.13234018896299873,
+          "ci95": [
+            -0.16091203095173107,
+            -0.10629367474636686
+          ],
+          "method_mean": 1.6233098142723128,
+          "reference_mean": 1.7556500032353113,
+          "per_seed": [
+            -0.12413739545263448,
+            -0.14779128191431853,
+            -0.1250918895220433
+          ]
+        }
+      },
+      "region_mixture_minus_global_mixture": {
+        "NMNAT": {
+          "groups": 44,
+          "mean": -0.00857004288551437,
+          "ci95": [
+            -0.014137144179462413,
+            -0.0033135567020253017
+          ],
+          "method_mean": 1.688547283725902,
+          "reference_mean": 1.697117326611416,
+          "per_seed": [
+            -0.010104917970600803,
+            -0.007715653792189409,
+            -0.007889556893752895
+          ]
+        },
+        "Nudix": {
+          "groups": 44,
+          "mean": -0.0033393253409748987,
+          "ci95": [
+            -0.008859309030355058,
+            0.0024470348197072216
+          ],
+          "method_mean": 1.3911199491503252,
+          "reference_mean": 1.3944592744913002,
+          "per_seed": [
+            -0.0044036583893105885,
+            -0.001879599967541395,
+            -0.0037347176660727107
+          ]
+        },
+        "global": {
+          "groups": 44,
+          "mean": -0.0021584247618181866,
+          "ci95": [
+            -0.006066641025490557,
+            0.0017384413095669292
+          ],
+          "method_mean": 1.5748783188166993,
+          "reference_mean": 1.5770367435785175,
+          "per_seed": [
+            -0.0020998001584198937,
+            -0.0026508039462097717,
+            -0.0017246701808248943
+          ]
+        },
+        "linker": {
+          "groups": 44,
+          "mean": -0.003225638025449544,
+          "ci95": [
+            -0.010889544575453557,
+            0.004817432401089445
+          ],
+          "method_mean": 1.8084957482820443,
+          "reference_mean": 1.8117213863074935,
+          "per_seed": [
+            -0.005632122775956493,
+            -0.00023732435418498271,
+            -0.0038074669462071524
+          ]
+        },
+        "random": {
+          "groups": 44,
+          "mean": -0.0005808608727744971,
+          "ci95": [
+            -0.00213359733458938,
+            0.0009862657546060901
+          ],
+          "method_mean": 1.6459582821080225,
+          "reference_mean": 1.646539142980797,
+          "per_seed": [
+            -0.0013585045243358301,
+            -0.000442724878946517,
+            5.8646784958856074e-05
+          ]
+        },
+        "all_panels": {
+          "groups": 44,
+          "mean": -0.0033877335332730724,
+          "ci95": [
+            -0.004873280132536144,
+            -0.0018485131589955346
+          ],
+          "method_mean": 1.6233098142723128,
+          "reference_mean": 1.6266975478055856,
+          "per_seed": [
+            -0.004509719748763014,
+            -0.0024513153560101956,
+            -0.0032021654950460084
+          ]
+        }
+      }
+    }
+  },
+  "probability_definition": "(1-alpha)*p_ESM(site) + alpha*p_task_marginal(site); product across sites",
+  "mc_definition": "Compute mixture NLL in each stored repeat then average NLL; no new samples",
+  "aggregation": "Equal components; equal queries within component/region; panel-weighted queries for all_panels. Single global alpha optimizes all_panels, not equal regions.",
+  "normalization_check": "Stored target-label probabilities alone cannot verify full 20AA normalization; new complete-distribution export checks it at every site.",
+  "interpretation": "Exploratory complementarity diagnostic, not an architecture-causal or independent-generalization test",
+  "calibration": "Validation leave-one-component-out weights only; original checkpoints were selected using validation",
+  "uncertainty": "Equal component bootstrap conditional on fitted heads, weights and stored MC draws",
+  "identity_use": "Descriptive strata only; full-query nearest identity is never a mixture predictor"
+}

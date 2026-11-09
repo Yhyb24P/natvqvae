@@ -200,6 +200,11 @@ class FrozenEncoder:
     def amino_acid_log_probs(self, sequences, positions):
         """Use the frozen MLM head on the same masked inputs, normalized over AA."""
         h, valid, mask = self(sequences, positions)
+        return self.amino_acid_log_probs_from_features(h), valid, mask
+
+    @torch.no_grad()
+    def amino_acid_log_probs_from_features(self, h):
+        """Reuse a masked ESM forward when comparing several prediction heads."""
         token_ids = self.tokenizer.convert_tokens_to_ids(list(AA))
         if (len(set(token_ids)) != len(AA) or
                 self.tokenizer.convert_ids_to_tokens(token_ids) != list(AA)):
@@ -207,7 +212,7 @@ class FrozenEncoder:
         with torch.autocast(device_type=self.device.type, dtype=torch.bfloat16,
                             enabled=self.device.type == 'cuda'):
             logits = self.model.lm_head(h)
-        return logits[..., token_ids].float().log_softmax(-1), valid, mask
+        return logits[..., token_ids].float().log_softmax(-1)
 
 
 def load_checkpoint(path, device='cpu'):

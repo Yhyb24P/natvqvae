@@ -1,0 +1,97 @@
+{
+  "input_sha256": {
+    "config/natv_head_calibration.yaml": "d430b45f35381823d2f55dfa622239b951f1963128bed321ee333a9533c46dbb",
+    "config/natv_head_mixture.yaml": "b84b95bdd6048da1716f3d2bdd6fa79dd428e49b0a557ec1ef4292bb0e39bb79",
+    "config/sources.yaml": "ffb78879a371eeec2c14c47ad090e976d1573b6ddfc75dc2adbdfcf26c6433f9",
+    "config/target.yaml": "97cce8e36ffb435107ce21d5ebcb77fee67bb5cd90cb96b9f95dde84cbc91553",
+    "config/transfer.yaml": "5d1ee569a26715bc3dc425b32b91666eddebd4c030724cf92d1019bee67fff15",
+    "data/raw/sequences/natv_population.fasta": "4d066c0db223856368306c0bd883506cca5ca684166e92054e5f7277e49b750a",
+    "data/results/evaluation/natv_head_calibration/validation_probabilities/identity.json": "7dd315596372bd5f6c57af3367a43e26b5f2653a1464dba466fab2d7a9b5c6de",
+    "data/results/evaluation/natv_head_calibration/validation_probabilities/queries.json": "09b58e0d9e74eb3e3a1f33dde186e0259c3c72592021ce604033c21ecda39106",
+    "data/results/evaluation/natv_head_calibration/validation_probabilities/site_log_probs.npz": "7e0c93945292b4ec5b103ecfae38f155fc730f6fdee526a2b4b6f97810354cce",
+    "data/results/preprocessing/natv_family/train.csv": "6ef23311fe138daef6df77b2622f52d5e4a6e8ac8bb26218b61c9e97d6ba5167",
+    "data/results/preprocessing/natv_family/validation.csv": "f25aa63aa5c4247741f788c158b28046ad8c691310a5b731ea1d4e7806aaf835",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9201/training_summary.json": "d93922b431e0f687d383e0a72a64d7f1ec7de893264dfcfdf08e873f81e1752a",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9202/training_summary.json": "396880ffba3952814737c8cee7e441ec28ea6e7c5a508e3d6dd6a328cdaebcf1",
+    "data/results/training/natv_fragment_transfer_deterministic/random_seed9203/training_summary.json": "71555eba87774c8c98d2171fd7b4f09e56744ca5bc81feee12d9681c5f6a3dc7",
+    "data/weights/qvae/random_seed9201/best.pt": "acbf33318d7c74fb4fd3df67c9715bea38ca6e82ad412d69e6746c99b643b3b1",
+    "data/weights/qvae/random_seed9202/best.pt": "6f22f83f50baf30315cf57a46442e2c6ef05e1dde191148690671350d0697a48",
+    "data/weights/qvae/random_seed9203/best.pt": "bb9ad9497ce498652ef297c6eac8142375364d0fcb7e0c50670653d64dad4fc7"
+  },
+  "implementation_sha256": "0063a7c4f3dc64a9a3dd4b6197151d52babac2aaaa8efeea2ce9777c4e760a5c",
+  "esm_files_sha256": {
+    "special_tokens_map.json": "3aedcd4211c0d43aec4e607ff60a63255f3174ead795e997350f09a5f8cd9ee1",
+    "tokenizer_config.json": "7e9161ecdb548ec45a41cbc6b24aa4476fdd418461f491c4207baa99419a29ad",
+    "model.safetensors": "a08adabb949fa67ad3c14b509d04fd60368b35007b0095e3358f81200c4f4db0",
+    "config.json": "539095c22efc52a09d6147074ba4ca119f76a890df5901213b2b55f7d2f96b2b",
+    "vocab.txt": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+  },
+  "weights": {
+    "single": {
+      "all_panels": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 10,
+        "uncalibrated_alpha_index": 10,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.5,
+        "uncalibrated_alpha": 0.5
+      }
+    },
+    "region": {
+      "NMNAT": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 6,
+        "uncalibrated_alpha_index": 6,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.3,
+        "uncalibrated_alpha": 0.3
+      },
+      "Nudix": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 13,
+        "uncalibrated_alpha_index": 12,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.65,
+        "uncalibrated_alpha": 0.6
+      },
+      "global": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 9,
+        "uncalibrated_alpha_index": 8,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.45,
+        "uncalibrated_alpha": 0.4
+      },
+      "linker": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 13,
+        "uncalibrated_alpha_index": 12,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.65,
+        "uncalibrated_alpha": 0.6
+      },
+      "random": {
+        "esm_temperature_index": 2,
+        "task_temperature_index": 3,
+        "alpha_index": 10,
+        "uncalibrated_alpha_index": 9,
+        "esm_temperature": 1.0,
+        "task_temperature": 1.25,
+        "alpha": 0.5,
+        "uncalibrated_alpha": 0.45
+      }
+    }
+  },
+  "status": "FITTED_ON_VALIDATION",
+  "fit_split": "validation"
+}

@@ -1,0 +1,6 @@
+mixture_config: config/natv_head_mixture.yaml
+temperatures: [0.5, 0.75, 1, 1.25, 1.5, 2]
+probabilities:
+  validation: data/results/evaluation/natv_head_calibration/validation_probabilities
+  test: data/results/evaluation/natv_head_calibration/test_probabilities
+purpose: exploratory_temperature_and_probability_complementarity

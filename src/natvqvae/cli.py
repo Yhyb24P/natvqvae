@@ -131,6 +131,40 @@ def _six_cell_plot(args):
     return plot_six_cells(_result_output(args.comparison, 'evaluation'))
 
 
+def _head_mixture(args):
+    from .head_mixture import run_head_mixture
+    return run_head_mixture(args.config, _result_output(args.output, 'evaluation'),
+                            getattr(args, 'fit', None))
+
+
+def _head_probabilities(args):
+    from .head_probabilities import export_head_probabilities
+    return _head_run(export_head_probabilities, args, split=args.split, device=args.device)
+
+
+def _head_calibration(args):
+    from .head_mixture import run_head_calibration
+    return _head_run(run_head_calibration, args, fitted_path=getattr(args, 'fit', None))
+
+
+def _head_run(function, args, **kwargs):
+    from .data import write_json
+    output = _result_output(args.output, 'evaluation')
+    if output.exists() and any(output.iterdir()):
+        raise FileExistsError(output)
+    try:
+        return function(args.config, output, **kwargs)
+    except BaseException as error:
+        output.mkdir(parents=True, exist_ok=True)
+        failure = {'status': 'FAILED', 'error_type': type(error).__name__, 'error': str(error),
+                   'retry': 'Use a new empty output directory; existing results are never overwritten.'}
+        write_json(output / 'failure.json', failure)
+        identity = output / 'identity.json'
+        if identity.exists():
+            write_json(identity, json.loads(identity.read_text()) | failure)
+        raise
+
+
 def _latent_precision(args):
     from .latent_precision import summarize_latent_precision
     return summarize_latent_precision(args.comparison_dir,
@@ -300,6 +334,32 @@ def build_parser():
     six_cell_plot = sub.add_parser('six-cell-plot', help='re-export six-cell figures from completed comparisons')
     six_cell_plot.add_argument('--comparison', required=True)
     six_cell_plot.set_defaults(func=_six_cell_plot)
+
+    for command in ('fit', 'evaluate'):
+        calibration = sub.add_parser(f'head-calibration-{command}', help='temperature and probability mixture control')
+        calibration.add_argument('--config', default='config/natv_head_calibration.yaml')
+        calibration.add_argument('--output', required=True)
+        if command == 'evaluate':
+            calibration.add_argument('--fit', required=True)
+        calibration.set_defaults(func=_head_calibration)
+
+    mixture_fit = sub.add_parser('head-mixture-fit', help='fit ESM/task probability mixtures on validation only')
+    mixture_fit.add_argument('--config', default='config/natv_head_mixture.yaml')
+    mixture_fit.add_argument('--output', required=True)
+    mixture_fit.set_defaults(func=_head_mixture)
+
+    head_probs = sub.add_parser('head-probabilities', help='export full ESM and deterministic site probabilities')
+    head_probs.add_argument('--config', default='config/natv_head_mixture.yaml')
+    head_probs.add_argument('--output', required=True)
+    head_probs.add_argument('--split', choices=('validation', 'test'), default='validation')
+    head_probs.add_argument('--device', default='cuda')
+    head_probs.set_defaults(func=_head_probabilities)
+
+    mixture_test = sub.add_parser('head-mixture-evaluate', help='apply frozen validation mixture weights to held-out scores')
+    mixture_test.add_argument('--config', default='config/natv_head_mixture.yaml')
+    mixture_test.add_argument('--fit', required=True)
+    mixture_test.add_argument('--output', required=True)
+    mixture_test.set_defaults(func=_head_mixture)
 
     generation_compare = sub.add_parser('generation-compare', help='compare fixed-background six-cell generation runs')
     generation_compare.add_argument('--config', default='config/fragment_generation_comparison.yaml')
