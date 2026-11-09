@@ -1,0 +1,7 @@
+{
+  "status": "VERIFIED",
+  "members_checked": 23,
+  "archive_bytes": 71055029,
+  "archive_sha256": "b128d83f7dd28ab760b80cc9806d2542ee1aa743a1f54e4afec44b2d62cc746f",
+  "method": "Stream-decompress tar; verify every member against current file SHA256, reject duplicate/unexpected members; no extraction or recomputation of predictions."
+}

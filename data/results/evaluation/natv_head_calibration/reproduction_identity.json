@@ -1,0 +1,29 @@
+{
+  "purpose": "Complete-distribution and calibration supplement to the existing six-cell archive",
+  "files": 21,
+  "uncompressed_bytes": 87144779,
+  "base_commit": "d359cc28f6d5ac019ea641a59674ead0cb72bb90",
+  "source_sha256": {
+    "src/natvqvae/head_mixture.py": "0063a7c4f3dc64a9a3dd4b6197151d52babac2aaaa8efeea2ce9777c4e760a5c",
+    "src/natvqvae/head_probabilities.py": "ab57cd2faea6337b6c064d16478357c6a9a27c6ababa6b185c6825f8adf00708",
+    "src/natvqvae/model.py": "43e70474dfe37779008c9476a8061ecc4c76457736d39679a0bd3a9534732977",
+    "src/natvqvae/data.py": "4cb18f0b9d1cc0f45c695fa5e972ccb0743c36f4d168043fb4174f00541c68ee",
+    "src/natvqvae/cli.py": "df8f677b3c00ccf0231db860f542b761c5706fe8882d41e77f7b327b9cd030ed"
+  },
+  "required_base_archive": {
+    "path": "data/results/evaluation/natv_formal_comparison/reproduction_data.tar.zst",
+    "sha256": "e32ef9423eb69d666c204db20924c882896812afbb71aa8c1da480e686ae8f77"
+  },
+  "review_messages": [
+    "ds-temperature-review-20261110",
+    "ds-binding-final-review-20261110",
+    "ds-test-result-review-20261110"
+  ],
+  "validation_fit_used": "data/results/evaluation/natv_head_calibration/validation_protocol_checked/fitted_weights.json",
+  "previous_validation_fit": "data/results/evaluation/natv_head_calibration/validation",
+  "refit_check": "Full/fold weights and all prior effects identical; group_scores.csv byte-identical. Earlier attempt retained locally, not duplicated in this supplement.",
+  "no_training_or_generation": true,
+  "execution_base_commit": "a971d6e5646aff6f11fa43ecc1be1e21b75a3777",
+  "source_commit": "d359cc28f6d5ac019ea641a59674ead0cb72bb90",
+  "commit_fields": "source_commit (also base_commit for compatibility with the earlier manifest field) contains the recorded source hashes; execution_base_commit is the checkout before those source changes were committed."
+}

@@ -6,12 +6,12 @@
 \raggedbottom
 \newcommand{\pending}[1]{\textbf{[Author information required: #1]}}
 \begin{document}
-\title[Homologous-fragment pretraining for NatV]{Auxiliary pretraining on homologous sequence fragments for conditional modeling of NatV}
+\title[Region-dependent family adaptation for NatV]{Region-dependent prediction and limits of auxiliary pretraining for NatV}
 \author{\fnm{Author list} \sur{pending confirmation}}
 \affil{\orgname{Affiliations and corresponding author pending confirmation}}
-\abstract{\doublespacing\unboldmath\noindent\textbf{Background:} Related protein fragments may provide additional training information for family-specific sequence models built on frozen protein language representations. We studied whether such auxiliary pretraining changes masked-residue prediction and conditional sequence generation for the bifunctional NMNAT--Nudix protein NatV.
-\par\noindent\textbf{Results:} An initial study showed development-score improvement but contained exact auxiliary-fragment overlap with validation proteins. After screening, we paired 1,437 external/self fragments and fitted three pipeline replicates for each of six combinations of initialization and QVAE or deterministic model. On 231 held-out proteins in 44 components, which had prior evaluation history, the primary NMNAT external-minus-self NLL difference was $-0.00330$ for QVAE (conditional 95\% group interval $[-0.01666,+0.00947]$) and $-0.00359$ for the deterministic model ($[-0.01692,+0.00914]$), in nats per target residue. The model-by-initialization interaction interval also included zero. QVAE scored approximately 0.0016--0.0019 lower than the deterministic model under the three initializations, whereas its joint-versus-own-marginal differences were only approximately $6$--$8\times10^{-5}$. Those small differences changed little when saved Monte Carlo probabilities were pooled from 64 to 256 samples. All six task-model conditions scored worse than frozen ESM-2 on NMNAT masks but better on Nudix masks and the all-panel aggregate. Self pretraining worsened Nudix scores relative to random initialization in both arms; external pretraining did not establish improvement over random initialization there. Across 44 fixed generation backgrounds, external pretraining increased mean edits by 0.063--0.069 and unique counts by less than one per 384 attempts, without a resolved edit-covariance difference.
-\par\noindent\textbf{Conclusions:} Matched training did not establish additional NMNAT predictive value from external over self fragments, or dependence of that effect on the latent-variable model. Family-specific prediction benefits were region-dependent. Fragment containment, evaluation history, fitted-pipeline variation, and the separation of sequence scores from protein function are necessary considerations when assessing auxiliary transfer.}
+\abstract{\doublespacing\unboldmath\noindent\textbf{Background:} Family-specific models can adapt frozen protein language representations, but improvement over another task model need not imply improvement over the original pretrained prediction head. We compared auxiliary fragment pretraining, latent-variable and deterministic models, and frozen ESM-2 for masked-residue prediction and conditional generation in the bifunctional NMNAT--Nudix protein NatV.
+\par\noindent\textbf{Results:} After screening auxiliary-fragment overlap, we paired 1,437 external/self fragments and fitted three pipeline replicates for six combinations of initialization and QVAE or deterministic model. On 231 held-out proteins in 44 components with prior evaluation history, the primary NMNAT external-minus-self NLL difference was $-0.00330$ for QVAE (conditional 95\% group interval $[-0.01666,+0.00947]$) and $-0.00359$ for the deterministic model ($[-0.01692,+0.00914]$), in nats per target residue. QVAE scored approximately 0.0016--0.0019 lower than the deterministic model, while joint-versus-own-marginal differences were only approximately $6$--$8\times10^{-5}$. All six task-model conditions scored worse than frozen ESM-2 on NMNAT masks but better on Nudix masks overall; the below-50\% Nudix stratum contained only four proteins in two components and showed the opposite direction. In a subsequent frozen-parameter probability-mixture experiment, mixtures of deterministic and ESM-2 predictions improved NMNAT scores even after a fixed head-level scalar-temperature control: the regional mixture-minus-ESM difference was $-0.04504$ ($[-0.05813,-0.03284]$). A single mixture parameter set gave a similar improvement, while mixtures of temperature-scaled heads scored slightly worse than mixtures of the original heads. Across 44 fixed generation backgrounds, pretraining changed mean edits and uniqueness slightly without a resolved edit-covariance advantage.
+\par\noindent\textbf{Conclusions:} Matched training did not establish additional NMNAT predictive value from external over self fragments or useful shared-latent generation. Family adaptation was region-dependent, and simple probability mixtures improved prediction under the specified calibration control. These exploratory score improvements do not identify a causal mechanism or demonstrate better enzyme variants; evaluation history and validation reuse remain material limitations.}
 \keywords{protein sequence modeling, auxiliary pretraining, conditional generation, variational autoencoder, NatV, sequence overlap}
 \maketitle
 
@@ -63,15 +63,6 @@ Training uses eight posterior samples and a leave-one-out score-function estimat
 
 Training weights each sequence inversely to the size of its similarity group, normalized to a mean weight of one. The reconstruction loss sums over masked residues before applying the sequence weight; it is not first divided by the number of masked sites. The per-target-residue scores reported below are evaluation quantities, rather than the exact training objective.
 
-\subsection{Auxiliary initialization and model selection}
-We compared random initialization of the trainable task model with initialization from auxiliary fragment pretraining. Both conditions retain the same frozen ESM-2 encoder. Thus, ``random initialization'' does not mean that the entire system learns protein sequences from scratch.
-
-Auxiliary training used seed 8601 and ran for 3,000 updates. The transferred parameters came from the selected epoch-10 checkpoint, after 750 updates. Three downstream training seeds, 8301--8303, were then used in each condition, with 2,704 updates per run. All auxiliary-initialized runs share that one pretrained checkpoint. The downstream budgets are matched, but the total optimization histories and total computation are not.
-
-Auxiliary checkpoint selection used 128 validation fragments selected by cycling across auxiliary groups. Each received its nominal 16-position mask and 16 prior samples. The selection score was evaluated initially, every five epochs, and at completion; the lowest prior NLL determined the checkpoint. This score sums negative log probabilities across queries and divides by their total target count. It therefore weights by target count, unlike the downstream group-balanced selection score.
-
-Downstream model selection used 128 development sequences covering all 44 validation groups and three NMNAT masks of 8, 16, and 32 residues, giving 384 queries. The selection score was evaluated using 16 prior samples initially, every five epochs, and at the end. The lowest group-balanced prior negative log likelihood (NLL), with a minimum improvement of $10^{-4}$, determined the selected checkpoint. Randomly initialized models were selected at epochs 20, 15, and 20; auxiliary-initialized models at epochs 20, 15, and 15. These correspond to 1,040 or 780 downstream updates. The final development evaluation includes the sequences and masks used for selection, so it is not an independent estimate of generalization.
-
 \subsection{Predictive scores and uncertainty}
 For each sequence and mask, the primary score is the negative logarithm of the joint conditional probability, divided by the number of target residues. Direct prior Monte Carlo estimates use $K=64$ samples:
 \begin{equation}
@@ -90,6 +81,20 @@ We applied the existing ESM-2 masked-amino-acid head to the same 6,129 sequence-
 
 Query identifiers, group membership, target counts, and weights were checked across the six original task-model evaluations and the ESM evaluation. Historical query files did not store individual masked positions; these were reconstructed from the matching configuration and input-sequence hashes and checked against the positions saved in the ESM run. The current ESM weight checksum was recorded, but no checksum of the ESM file used during the historical runs was available. Both implementations used BF16 forward calculations on the GPU and float32 log-probability normalization. Differences were aggregated by group and training condition using the same bootstrap procedure as above.
 
+\subsection{Exploratory prediction-head mixture and temperature controls}
+After examining the six-cell results, we asked whether the frozen pretrained head and the family-trained head supplied complementary probabilities. This is an exploratory follow-up, separate from the external-minus-self primary contrast. We first mixed stored target-site probabilities from ESM-2 and the three randomly initialized checkpoints in each model arm. For QVAE, the task probability was its own site marginal; each stored Monte Carlo repeat was mixed and scored separately before averaging NLL. The experiment changed neither the fitted models nor their latent samples.
+
+To examine a specified calibration explanation, we then exported complete 20-amino-acid distributions for ESM-2 and the three randomly initialized deterministic heads from one shared masked-encoder pass per input batch. Temperature scaling and mixing were defined by
+\begin{equation}
+ p_{h,T}(a\mid c,M)=\frac{\exp[\log p_h(a\mid c,M)/T]}{\sum_{b=1}^{20}\exp[\log p_h(b\mid c,M)/T]},
+ \qquad p_{\mathrm{mix}}=(1-\alpha)p_{\mathrm{ESM},T_E}+\alpha p_{\mathrm{task},T_D}.
+\end{equation}
+We checked complete-distribution normalization and agreement of all exported target-label probabilities with the existing scores. No complete-distribution QVAE export or additional training was performed for this control. Temperatures were restricted to $\{0.5,0.75,1,1.25,1.5,2\}$ and $\alpha$ to $0,0.05,\ldots,1$. Each deterministic seed produced its own mixed predictor; we averaged scores across seeds, not probabilities across checkpoints.
+
+For validation, an outer leave-one-component-out procedure fitted an ESM temperature and a shared-across-seed task temperature on the other 43 components. It then fitted $\alpha$ on those same training components using the selected temperatures. Thus, the excluded component participated in neither fit. We compared a single parameter set fitted to the panel-weighted all-panel objective with separate sets fitted to equal-query means in each of five masking regions. Both objectives gave components equal weight. Comparisons included uncalibrated heads, temperature-calibrated heads, mixtures of the original heads, mixtures of the calibrated heads, and region-specific versus single parameter sets. NMNAT remained the main region of interest. Whole-query nearest-training identity was used only descriptively, never as a mixture gate, because it includes masked target residues.
+
+All-validation temperatures and weights were frozen before held-out evaluation, with checks on configuration, input, checkpoint, export implementation, and numerical-precision identities. Component intervals used 2,000 bootstrap replicates with seed 20261110 after averaging paired seed differences; they condition on fitted heads and calibration parameters. Original checkpoint selection used validation, and the held-out set has prior method-development history. The leave-component-out procedure therefore validates only this additional calibration fit. Temperature optimization preceded mixture fitting rather than optimizing their joint objective, and we did not apply a further temperature to the mixture distribution itself. This control tests only the stated head-level scalar-temperature grid; it cannot separate architecture, coverage, optimization, and more general calibration mechanisms.
+
 \subsection{Direct sequence-overlap examination}
 We compared every complete auxiliary training fragment with downstream full-length sequences using exact string containment, retaining sequence identifiers, group identifiers, and match coordinates. Auxiliary sequence and split-file hashes were compared with the recorded training inputs. This test detects exact containment irrespective of the longer sequence's coverage. It does not exclude approximate matches. After identifying an affected validation group, we repeated the existing group-bootstrap calculation after removing that entire group. The model parameters and selected checkpoints were unchanged; only the affected validation group was excluded from score aggregation.
 
@@ -103,6 +108,8 @@ Each retained external fragment was paired with a fragment drawn solely from a N
 Both conditions use identical target columns, actual masked counts, pair order, and pair weights. A pair's weight is inversely proportional to its original external-group size and normalized to mean one. Nominal masks of 8, 16, and 32 columns retain at least one common column visible. The auxiliary QVAE models use paired seeds 9101--9103, 750 updates, batch size 32, eight latent samples, and no auxiliary-validation selection. Learning-rate and divergence warmups span 375 and 750 updates, respectively. The last auxiliary checkpoint initializes downstream training with paired seeds 9201--9203. Random initialization provides a third condition with no auxiliary stage. Downstream training runs for 2,704 updates and retains the original checkpoint-selection rule. We summed actual target-residue counts from each update log and checked their equality between paired conditions at every update. These counts exclude validation and are not multiplied by the number of latent samples. Equal target exposure does not imply equal visible contexts or total computation.
 
 The specified primary contrast is external minus self NMNAT joint NLL. We evaluated the validation-selected checkpoints on all 231 recovered held-out sequences, without further checkpoint selection from those scores and with explicit reporting of their historical use. As in the development comparison, uncertainty was estimated by resampling sequence groups after averaging paired pipeline-seed differences. The three pipeline replicates do not separately identify auxiliary and downstream seed variation. All models and the frozen ESM-2 baseline used GPU bfloat16 forward computation and float32 logits; the incomplete CPU float32 baseline was excluded. Batch evaluation reused frozen encoder outputs across checkpoints while preserving each model's scoring and Monte Carlo repeats.
+
+Downstream checkpoint selection used 128 validation proteins covering all 44 components, each evaluated under three NMNAT masks of 8, 16, and 32 residues (384 queries). Evaluation occurred before training, every five epochs, and at completion; the lowest group-balanced prior NLL, requiring an improvement of at least $10^{-4}$, selected the checkpoint. QVAE selection used 16 prior samples; deterministic selection was exact. These tasks were part of the final validation evaluation, so validation performance is conditional on this selection rather than an independent generalization estimate.
 
 The completed six-cell comparison crosses these three initialization conditions with QVAE and a deterministic conditional model. The deterministic model uses the same visible input, context encoder, and positionwise decoder, with a context-derived deterministic modulation in place of sampled categorical codes. It has no variational posterior or latent Monte Carlo samples, and its factorized probability is scored exactly. It receives paired auxiliary and downstream seeds, the same update budgets, and the same checkpoint-selection tasks. Matching the generative backbone and visible information does not make the total trainable parameter counts identical. The analysis includes within-initialization QVAE-minus-deterministic contrasts, each QVAE's joint-minus-own-marginal contrast, and the difference between the two arms' external-minus-self effects. These supplementary contrasts do not replace the primary external-versus-self question.
 
@@ -145,6 +152,8 @@ AI-assisted tools were used to inspect code and study records, implement sequenc
 The reconstructed historical graph reproduced the current full-length split assignments. In the new search, all 227 validation and 231 held-out sequences had qualifying full-length and NMNAT training matches at 80\% bidirectional coverage, but none reached 70\% identity. Maximum full-length identity was 69.9\% in both splits; maximum NMNAT identity was 64.7\% and 69.3\%, respectively. Nudix matches reached at least 70\% identity for 123 of 227 validation proteins and 192 of 231 held-out proteins, with maxima of 90.5\% and 89.8\%. The full-length split therefore does not establish domain-level separation at the same identity threshold. These observations motivate region-specific similarity strata and do not support describing the entire evaluation set as remote homologs.
 
 \subsection{Held-out six-cell prediction results}
+All 18 downstream runs completed 52 epochs, but their selected checkpoints occurred at epoch 10 (two runs), 15 (12 runs), or 20 (four runs). At completion, the checkpoint-selection NLL was 0.10059--0.18320 higher than each run's selected minimum. Extending the same training schedule is therefore not supported by these validation trajectories as a remedy for the observed prediction deficits.
+
 All 18 selected task-model checkpoints completed the same 6,237 masking tasks on 231 held-out sequences in 44 components. The primary NMNAT external-minus-self effect was $-0.00330$ nats per target residue for QVAE (conditional 95\% group interval $[-0.01666,+0.00947]$) and $-0.00359$ for the deterministic model ($[-0.01692,+0.00914]$). Neither comparison established an additional benefit from external fragments. For QVAE, 27 of 44 component-averaged differences were negative; the three pipeline effects were $+0.00060$, $-0.00226$, and $-0.00825$. The corresponding deterministic effects were $+0.00174$, $-0.00419$, and $-0.00833$. The difference between the two arms' external-minus-self effects was $+0.00029$ ($[-0.00066,+0.00122]$). These results do not establish equality of either initialization procedures or model arms.
 
 \begin{table}[ht]
@@ -183,6 +192,53 @@ Held-out QVAE joint-minus-own-marginal NMNAT differences were $-8.091\times10^{-
 \caption{Held-out paired prediction contrasts. Columns refer to NMNAT, Nudix, and global masking panels; global is not the all-panel weighted aggregate. Black points average paired pipeline differences within each component and then weight components equally; lines show 95\% component-bootstrap intervals conditional on the fitted models. Colored triangles show individual pipeline replicates. Axis scales differ between panels. The joint-minus-own-marginal row requires the separately reported Monte Carlo precision assessment; its interval alone does not establish useful dependence in generated sequences.}\label{fig:six_cell_prediction}
 \end{figure}
 
+\subsection{Prediction-head differences across domain similarity strata}
+The aggregate difference between NMNAT and Nudix masks did not describe every similarity stratum. For the randomly initialized QVAE, the held-out NMNAT difference from ESM-2 was $+0.14972$ below 50\% nearest-training domain identity, compared with $+0.01628$ at 50--70\% identity, where the interval included zero (Table~\ref{tab:head_identity}). On Nudix masks, the task model scored worse in the below-50\% stratum but better at 50--70\% and 70--90\%. The below-50\% Nudix estimate represents only four proteins in two components and cannot support a general low-identity claim. The deterministic arm showed nearly the same pattern.
+
+Validation estimates had the same signs in the corresponding strata. The QVAE differences were $+0.15014$ and $+0.10500$ for the two NMNAT strata, and $+0.22742$, $-0.02503$, and $-0.27614$ for Nudix below 50\%, at 50--70\%, and at 70--90\%; the middle Nudix interval included zero. One additional validation protein formed a one-component Nudix stratum at or above 90\% identity, with no group interval. These comparisons are descriptive: validation was used to select checkpoints, components can appear in multiple strata, and sequence identity covaries with domain, lineage, alignment coverage, and prediction difficulty. They neither identify training proximity as the cause nor justify using the complete target sequence's identity as a prediction gate.
+
+\begin{table}[ht]
+\centering\small
+\caption{Exploratory held-out task-model minus frozen ESM-2 NLL by domain similarity. Both task arms use random initialization and average three fitted training replicates. QVAE intervals condition on these replicates and resample represented components without multiplicity adjustment; the deterministic column shows point estimates only. Identity is the nearest qualifying training-domain alignment with at least 80\% coverage of both domains; component counts across strata overlap.}\label{tab:head_identity}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrll}
+\toprule
+Domain & Identity & Proteins & Components & QVAE difference [95\% interval] & Deterministic \\
+\midrule
+NMNAT & $<50\%$ & 39 & 21 & $+0.14972\ [ +0.10345,+0.19133]$ & $+0.15190$ \\
+NMNAT & $50$--$70\%$ & 192 & 26 & $+0.01628\ [ -0.03415,+0.07126]$ & $+0.01765$ \\
+Nudix & $<50\%$ & 4 & 2 & $+0.49759\ [ +0.19193,+0.80326]$ & $+0.50432$ \\
+Nudix & $50$--$70\%$ & 35 & 23 & $-0.08939\ [ -0.16985,-0.01237]$ & $-0.08857$ \\
+Nudix & $70$--$90\%$ & 192 & 21 & $-0.28064\ [ -0.34523,-0.21254]$ & $-0.28097$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Complementary head probabilities after scalar-temperature controls}
+On validation, mixtures of stored probabilities improved NMNAT scores relative to ESM-2 in both the QVAE and deterministic arms. Region-specific mixtures had differences of $-0.03645$ and $-0.03628$ nats per target residue, respectively, under leave-component-out weight fitting. This similarity motivated the complete-distribution temperature control using only the deterministic heads. Across all validation folds, the selected temperatures were 1 for ESM-2 and 1.25 for the task head. The all-validation fit used $\alpha=0.50$ for the single parameter set and $0.30$, $0.65$, $0.45$, $0.65$, and $0.50$ for NMNAT, Nudix, two-domain-interval, intervening-region, and random masking panels. Exported target-label log probabilities agreed exactly with the existing scores for all four heads on both splits.
+
+With these parameters frozen, the held-out task head after temperature scaling still scored worse than ESM-2 on NMNAT masks: $+0.04389$ ($[+0.00613,+0.07869]$). Mixing the two temperature-scaled heads improved NMNAT scores relative to either head alone (Table~\ref{tab:head_calibration}). The region-specific mixture-minus-ESM difference was $-0.04504$ ($[-0.05813,-0.03284]$); its three seed-specific differences were $-0.04401$, $-0.05030$, and $-0.04082$. Its difference from the temperature-scaled task head was $-0.08894$ ($[-0.11226,-0.06454]$). On Nudix, the corresponding differences were $-0.20140$ ($[-0.23975,-0.16463]$) and $-0.03160$ ($[-0.05603,-0.00922]$). These are improvements in masked-residue log scores under the fixed calibration protocol, not evidence of better enzyme variants.
+
+\begin{table}[ht]
+\centering\small
+\caption{Held-out effects of frozen temperature and mixture parameters. Differences are nats per target residue, averaged over three deterministic training seeds and 44 components. ``Scaled'' means that each individual head was temperature-scaled before mixture fitting; the mixture itself received no further temperature. NMNAT intervals are conditional component-bootstrap intervals; the Nudix column shows point estimates only, with key intervals reported in the text.}\label{tab:head_calibration}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrr}
+\toprule
+Comparison & NMNAT & NMNAT 95\% interval & Nudix \\
+\midrule
+Scaled task $-$ ESM & $+0.04389$ & $[+0.00613,+0.07869]$ & $-0.16980$ \\
+Single scaled mixture $-$ ESM & $-0.04473$ & $[-0.06411,-0.02652]$ & $-0.18824$ \\
+Regional scaled mixture $-$ ESM & $-0.04504$ & $[-0.05813,-0.03284]$ & $-0.20140$ \\
+Regional scaled mixture $-$ scaled task & $-0.08894$ & $[-0.11226,-0.06454]$ & $-0.03160$ \\
+Regional $-$ single scaled mixture & $-0.00031$ & $[-0.00624,+0.00602]$ & $-0.01316$ \\
+Regional scaled $-$ unscaled mixture & $+0.00547$ & $[+0.00303,+0.00796]$ & $+0.01200$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Region-specific fitting did not establish an additional held-out NMNAT benefit over a single mixture parameter set ($-0.00031$, $[-0.00624,+0.00602]$), despite its validation advantage. It did improve Nudix relative to the single set ($-0.01316$, $[-0.01978,-0.00643]$). Moreover, mixtures of temperature-scaled heads scored worse than mixtures of the original heads on both NMNAT ($+0.00547$, $[+0.00303,+0.00796]$) and Nudix ($+0.01200$, $[+0.00650,+0.01692]$). Thus, head-level temperature scaling did not improve the mixture, although mixing remained better than either scaled head. The result does not exclude other calibration explanations or identify which architectural or training differences produced the complementarity.
+
 \subsection{Fixed-background generation across the six cells}
 All 27 fitted-model distributions completed 466,560 proposals without filtering. Across the 44 component representatives, the QVAE joint samples averaged 11.5814, 11.6423, and 11.7052 substitutions for random, self, and external initialization. Mean unique counts per 384 attempts were 382.7652, 382.6364, and 383.0606. The corresponding deterministic means were 11.5759, 11.6331, and 11.7017 substitutions and 382.7348, 382.7273, and 382.9545 unique sequences. These counts are close to the sampling ceiling and provide little room for a large uniqueness improvement.
 
@@ -201,6 +257,79 @@ KVP40 did not reproduce the pooled background pattern uniformly. Its QVAE extern
 \includegraphics[width=\textwidth]{../../data/results/evaluation/natv_six_cell_generation/generation_effects.pdf}
 \caption{Generation contrasts over 44 fixed component representatives. Points and lines give paired means and 95\% component-bootstrap intervals conditional on three fitted pipelines and the sampled proposals; triangles show pipeline replicates. Substitution counts and unique sequences refer to 384 attempts per background. Covariance is computed within each fixed mask and averaged over its site pairs as described in Methods. The exact joint and own-marginal distributions have equal expected substitution counts; small observed differences reflect finite sampling, even where the displayed interval excludes zero. KVP40 is reported separately.}\label{fig:six_cell_generation}
 \end{figure}
+
+\section{Discussion}
+\subsection{What the current evidence can establish}
+The matched comparison and the original pretrained head provide the principal tests of family adaptation in this study. Earlier development gains motivated these tests, but exact fragment overlap, validation reuse, a single auxiliary-pretraining seed, and unmatched optimization histories prevented those gains from establishing the contribution of external information. The earlier experiments and their limitations are retained in Appendix~\ref{app:development}; they do not replace the six-cell comparison.
+
+The completed six-cell comparison separated random task-model initialization, pretraining on NatV training fragments, and pretraining on screened external fragments. Matched target columns, weights, update counts, and selection rules controlled several alternative explanations for an initialization benefit, while approximate length matching still left differences in visible context and sequence diversity. Both model arms had primary held-out NMNAT intervals spanning zero, and their interaction was small relative to its group interval. This does not demonstrate that external information has no value; it limits the benefit established by this protocol and sample. The direction of the lower-identity NMNAT subgroup estimates merits explicit reporting, but overlapping components, unadjusted comparisons, and the absence of a demonstrated interaction prevent a claim that transfer specifically benefits distant sequences. The evaluation history also matters: the recovered held-out set is not independent of all earlier method development.
+
+The frozen ESM-2 reference changes the interpretation of task-model performance in a domain-dependent way. The selected family-specific models scored worse on held-out NMNAT masks but better on Nudix masks and the all-panel aggregate. Thus, a gain over random task-model initialization is not necessarily a gain over the pretrained head, and one region cannot stand for the entire conditional prediction task. The higher Nudix training similarity in the held-out set is an important description of this comparison, but the present observations do not identify it as the cause of the differing prediction-head ranking.
+
+The exploratory mixture control adds a distinct observation: task-head probabilities contain information useful in combination with the original pretrained head, even when the task head alone has worse NMNAT NLL. This held under the specified head-level temperature grid and did not require latent variables or new training. It supports retaining the original head and a simple mixture as references when evaluating future family adaptation. It does not prove that the task architecture discarded information, establish an optimal calibration procedure, or restore the unconfirmed external-pretraining claim. Because the study was designed after examining the six-cell results and reused historically evaluated sequences, further work must distinguish this descriptive improvement from independent confirmation and from benefits to KVP40 candidate design.
+
+The regional controls also matter. The Nudix self-pretraining cost persisted in the held-out comparison and the deterministic arm. External pretraining scored better than self pretraining there, but did not establish improvement over random initialization. The data therefore support a cost associated with the fitted self-fragment procedure without identifying whether fragment composition, optimization, or visible partner-domain information caused it. The corresponding between-arm interaction intervals spanned zero. This pattern does not establish external NMNAT information as a source of useful cross-domain coupling.
+
+\subsection{Latent dependence, context, and biological compatibility}
+Equation~\ref{eq:joint} separates shared-latent dependence among masked outputs from their dependence on visible context. A small joint-versus-marginal score difference does not show that Nudix context is unused. Conversely, supplying the full NatV sequence does not establish that the model learned functional coordination between its domains. Domain-to-domain translation provides a relevant precedent for explicitly testing conditional information \cite{meynard2023}, but the present sparse-mask task does not test whole-domain generation.
+
+Context comparisons would require recomputing ESM-2 features from the altered input; deleting Nudix vectors only after encoding would leave potentially relevant information in the NMNAT representations. A model trained and tested with matched domain-local context would be more interpretable than a model suddenly deprived of a whole domain at inference. Even a benefit from true domain pairing could include shared evolutionary history and would not by itself identify physical interactions.
+
+Generated sequences also require comparisons suited to the claim. Expected substitution counts depend only on single-site marginals (Equation~\ref{eq:hamming}), and unique-sequence counts near the sample size offer little discrimination. Joint substitution patterns can differ while these summaries remain nearly unchanged. Statistical sequence-model evaluation \cite{mcgee2021} and functional measurements \cite{hawkins2021,praljak2023} address distinct aspects of this problem.
+
+\subsection{Scope of the protein-design application}
+The wider NatV project includes three generated multi-substitution NMNAT candidates, two substitutions proposed from Nudix mechanistic evidence, their combinations, and two separately sequenced error-prone-PCR clones. The three generated candidates came from randomly initialized task models, so their existence cannot demonstrate an auxiliary-pretraining benefit. The experimental clones are not validation examples generated by this model.
+
+Structure predictions and short molecular simulations provide descriptions of selected sequence or ligand hypotheses, but do not measure synthesis, hydrolysis, or NAD$^+$ accumulation. They are not used here to assign activity labels or rank candidate performance. The present manuscript concerns conditional sequence statistics. Establishing improved enzyme function would require different evidence and a different claim.
+
+\section{Conclusions}
+The matched six-cell comparison did not establish additional held-out NMNAT predictive value from external over self fragments. Both model arms gave similar external-minus-self effects, while QVAE joint-minus-own-marginal differences were small. Task models scored worse than frozen ESM-2 on NMNAT but better on Nudix and the all-panel aggregate. A subsequent frozen-parameter mixture improved masked-residue prediction relative to either head, including after the specified head-level temperature controls. Fixed-background generation showed small changes in editing and uniqueness, without resolving a shared-latent covariance advantage. These results support regional evaluation and pretrained-head references for family adaptation; they do not establish improved NatV function or a useful shared-latent generation advantage.
+
+\section*{Abbreviations}
+ESM: evolutionary scale modeling; NMNAT: nicotinamide mononucleotide adenylyltransferase; NLL: negative log likelihood; VAE: variational autoencoder; WT: wild type.
+
+\section*{Declarations}
+\subsection*{Ethics approval and consent to participate}
+Not applicable. This manuscript analyzes protein sequences and computational results, with no human participants or animal experiments.
+\subsection*{Consent for publication}
+Not applicable.
+\subsection*{Availability of data and materials}
+The NatV source code, configurations, selected result summaries, and generated-candidate records are available in the project repository \cite{natvrepo}. The six-cell source snapshot is commit \texttt{a971d6e}; the prediction-head calibration implementation and frozen results are at commit \texttt{d359cc2}. A local reproducibility bundle contains the selected model weights, auxiliary initialization checkpoints, per-query evaluations, all unfiltered six-cell proposals, comparison outputs, and file checksums. Frozen ESM-2 remains an external dependency with recorded hashes. This bundle has not yet been deposited as a complete manuscript-associated public release. The data-availability statement must be updated with the actual deposited materials and persistent identifier before submission.
+
+A separate local calibration supplement contains 23 members (71,055,029 bytes; SHA256 \texttt{b128d83f7dd28ab760b80cc9806d2542ee\allowbreak 1aa743a1f54e4afec44b2d62cc746f}): complete validation and held-out amino-acid probabilities, task manifests, export identities, frozen parameters, group scores, and configuration files. It uses the six-cell bundle for shared inputs, selected weights, and the original scores required for parity checks. This supplement is also not publicly archived. Its manifest, checksum, execution commands, and corrected source-version metadata are retained with the selected repository results; CPU-only recalculation can reuse the saved distributions.
+
+The original six-cell archive retains historical preparation-checkout metadata. For its actual source snapshot, the published \path{data/results/evaluation/natv_formal_comparison/reproduction_source_identity.json} takes precedence: every recorded source-file hash matches commit \texttt{a971d6e}. This separate correction does not alter the original archive or its checksum and is not overwritten by extraction of that archive.
+
+\begin{itemize}
+\item Project name: NatV QVAE (Python package \texttt{natvqvae}, version 0.0.1).
+\item Project home page: the repository cited above \cite{natvrepo}.
+\item Archived version: \pending{persistent identifier for the manuscript-associated data and code release.}
+\item Operating system: Linux for the reported local analyses; portability has not been established.
+\item Programming language: Python 3.10 or later.
+\item Requirements: PyTorch 2.1 or later, Transformers 4.40 or later, NumPy 1.24 or later, Biopython 1.81 or later, Gemmi 0.7 or later, Matplotlib 3.7 or later, Safetensors 0.4 or later, and PyYAML 6 or later, as declared in \texttt{pyproject.toml}. The fragment search reported here used MMseqs2 18.8cc5c.
+\item License and restrictions on use: \pending{the inspected repository version contains no project license file; the authors must specify the license and any restrictions.}
+\end{itemize}
+\subsection*{Competing interests}
+\pending{confirm the declarations of all authors.}
+\subsection*{Funding}
+\pending{funding sources, grant numbers, and funder roles.}
+\subsection*{Authors' contributions}
+\pending{names and actual contributions; authorship order and corresponding author.}
+\subsection*{Acknowledgements}
+\pending{acknowledgements and consent of any named individuals, or Not applicable.}
+
+\appendix
+\section{Earlier development studies and fragment preparation}\label{app:development}
+The following results document the development history and the construction of the matched comparison. Their validation scores are not additional independent tests of the six-cell conclusions.
+
+\subsection{Original auxiliary initialization and model selection}
+We compared random initialization of the trainable task model with initialization from auxiliary fragment pretraining. Both conditions retain the same frozen ESM-2 encoder. Thus, ``random initialization'' does not mean that the entire system learns protein sequences from scratch.
+
+Auxiliary training used seed 8601 and ran for 3,000 updates. The transferred parameters came from the selected epoch-10 checkpoint, after 750 updates. Three downstream training seeds, 8301--8303, were then used in each condition, with 2,704 updates per run. All auxiliary-initialized runs share that one pretrained checkpoint. The downstream budgets are matched, but the total optimization histories and total computation are not.
+
+Auxiliary checkpoint selection used 128 validation fragments selected by cycling across auxiliary groups. Each received its nominal 16-position mask and 16 prior samples. The selection score was evaluated initially, every five epochs, and at completion; the lowest prior NLL determined the checkpoint. This score sums negative log probabilities across queries and divides by their total target count. It therefore weights by target count, unlike the downstream group-balanced selection score.
+
+Downstream model selection used 128 development sequences covering all 44 validation groups and three NMNAT masks of 8, 16, and 32 residues, giving 384 queries. The selection score was evaluated using 16 prior samples initially, every five epochs, and at the end. The lowest group-balanced prior negative log likelihood (NLL), with a minimum improvement of $10^{-4}$, determined the selected checkpoint. Randomly initialized models were selected at epochs 20, 15, and 20; auxiliary-initialized models at epochs 20, 15, and 15. These correspond to 1,040 or 780 downstream updates. The final development evaluation includes the sequences and masks used for selection, so it is not an independent estimate of generalization.
 
 \subsection{Controlled external-versus-self development comparison}
 The three-condition comparison produced NMNAT NLLs of 1.85560 for random initialization, 1.84759 for self-fragment pretraining, and 1.83947 for external-fragment pretraining. The prespecified external-minus-self difference was $-0.00812$ (conditional 95\% group-bootstrap interval $[-0.02209,+0.00624]$). Per-pipeline differences were $-0.01374$, $-0.00828$, and $-0.00233$. Although all three had the same direction, only 19 of 44 group-averaged differences favored external pretraining, and the interval included zero. The result does not establish equivalence either.
@@ -321,60 +450,6 @@ Of 4,079 auxiliary fragments, 81 directly matched a validation or test protein. 
 \includegraphics[width=\textwidth]{../../data/results/preprocessing/natv_matched_fragment_pretraining/fragment_matching.pdf}
 \caption{Matched external and NatV training fragments. A: Lengths of the 1,437 selected pairs; the dashed line indicates equality and the shaded band shows the allowed 20\% difference relative to external length. B: Fraction of each external fragment's reliable KVP40 alignment columns also mapped in its paired NatV fragment. Counts describe selected pairs without training weights. The self fragments originate from 250 training proteins, so the 1,437 pairs are not independent proteins.}\label{fig:fragments}
 \end{figure}
-
-\section{Discussion}
-\subsection{What the current evidence can establish}
-The original experiments identify a repeatable development-score difference between two task-model initialization procedures. They do not yet isolate the contribution of external homologous information. Exact fragment overlap, reuse of validation sequences for model selection, a single auxiliary-pretraining seed, and unmatched optimization histories all affect that interpretation. The group-removal analysis shows that one identified group does not account for the mean difference, but cannot repair those design limitations.
-
-The completed six-cell comparison separated random task-model initialization, pretraining on NatV training fragments, and pretraining on screened external fragments. Matched target columns, weights, update counts, and selection rules controlled several alternative explanations for an initialization benefit, while approximate length matching still left differences in visible context and sequence diversity. Both model arms had primary held-out NMNAT intervals spanning zero, and their interaction was small relative to its group interval. This does not demonstrate that external information has no value; it limits the benefit established by this protocol and sample. The direction of the lower-identity NMNAT subgroup estimates merits explicit reporting, but overlapping components, unadjusted comparisons, and the absence of a demonstrated interaction prevent a claim that transfer specifically benefits distant sequences. The evaluation history also matters: the recovered held-out set is not independent of all earlier method development.
-
-The frozen ESM-2 reference changes the interpretation of task-model performance in a domain-dependent way. The selected family-specific models scored worse on held-out NMNAT masks but better on Nudix masks and the all-panel aggregate. Thus, a gain over random task-model initialization is not necessarily a gain over the pretrained head, and one region cannot stand for the entire conditional prediction task. The higher Nudix training similarity in the held-out set is an important description of this comparison, but the present observations do not identify it as the cause of the differing prediction-head ranking.
-
-The regional controls also matter. The Nudix self-pretraining cost persisted in the held-out comparison and the deterministic arm. External pretraining scored better than self pretraining there, but did not establish improvement over random initialization. The data therefore support a cost associated with the fitted self-fragment procedure without identifying whether fragment composition, optimization, or visible partner-domain information caused it. The corresponding between-arm interaction intervals spanned zero. This pattern does not establish external NMNAT information as a source of useful cross-domain coupling.
-
-\subsection{Latent dependence, context, and biological compatibility}
-Equation~\ref{eq:joint} separates shared-latent dependence among masked outputs from their dependence on visible context. A small joint-versus-marginal score difference does not show that Nudix context is unused. Conversely, supplying the full NatV sequence does not establish that the model learned functional coordination between its domains. Domain-to-domain translation provides a relevant precedent for explicitly testing conditional information \cite{meynard2023}, but the present sparse-mask task does not test whole-domain generation.
-
-Context comparisons would require recomputing ESM-2 features from the altered input; deleting Nudix vectors only after encoding would leave potentially relevant information in the NMNAT representations. A model trained and tested with matched domain-local context would be more interpretable than a model suddenly deprived of a whole domain at inference. Even a benefit from true domain pairing could include shared evolutionary history and would not by itself identify physical interactions.
-
-Generated sequences also require comparisons suited to the claim. Expected substitution counts depend only on single-site marginals (Equation~\ref{eq:hamming}), and unique-sequence counts near the sample size offer little discrimination. Joint substitution patterns can differ while these summaries remain nearly unchanged. Statistical sequence-model evaluation \cite{mcgee2021} and functional measurements \cite{hawkins2021,praljak2023} address distinct aspects of this problem.
-
-\subsection{Scope of the protein-design application}
-The wider NatV project includes three generated multi-substitution NMNAT candidates, two substitutions proposed from Nudix mechanistic evidence, their combinations, and two separately sequenced error-prone-PCR clones. The three generated candidates came from randomly initialized task models, so their existence cannot demonstrate an auxiliary-pretraining benefit. The experimental clones are not validation examples generated by this model.
-
-Structure predictions and short molecular simulations provide descriptions of selected sequence or ligand hypotheses, but do not measure synthesis, hydrolysis, or NAD$^+$ accumulation. They are not used here to assign activity labels or rank candidate performance. The present manuscript concerns conditional sequence statistics. Establishing improved enzyme function would require different evidence and a different claim.
-
-\section{Conclusions}
-The matched six-cell comparison did not establish additional held-out NMNAT predictive value from external over self fragments. Both model arms gave similar external-minus-self effects, while QVAE joint-minus-own-marginal differences were small. Task models scored worse than frozen ESM-2 on NMNAT but better on Nudix and the all-panel aggregate. Fixed-background generation showed small changes in editing and uniqueness, without resolving a shared-latent covariance advantage. These results support region-specific evaluation of family adaptation and limit claims about external information, shared-latent benefit, and improved NatV activity.
-
-\section*{Abbreviations}
-ESM: evolutionary scale modeling; NMNAT: nicotinamide mononucleotide adenylyltransferase; NLL: negative log likelihood; VAE: variational autoencoder; WT: wild type.
-
-\section*{Declarations}
-\subsection*{Ethics approval and consent to participate}
-Not applicable. This manuscript analyzes protein sequences and computational results, with no human participants or animal experiments.
-\subsection*{Consent for publication}
-Not applicable.
-\subsection*{Availability of data and materials}
-The NatV source code, configurations, selected result summaries, and generated-candidate records are available in the project repository \cite{natvrepo}. The starting version for this draft is commit \texttt{87071c0}. A local reproducibility bundle contains the selected model weights, auxiliary initialization checkpoints, per-query evaluations, all unfiltered six-cell proposals, comparison outputs, and file checksums. Frozen ESM-2 remains an external dependency with recorded hashes. This bundle has not yet been deposited as a complete manuscript-associated public release. The data-availability statement must be updated with the actual deposited materials and persistent identifier before submission.
-
-\begin{itemize}
-\item Project name: NatV QVAE (Python package \texttt{natvqvae}, version 0.0.1).
-\item Project home page: the repository cited above \cite{natvrepo}.
-\item Archived version: \pending{persistent identifier for the manuscript-associated data and code release.}
-\item Operating system: Linux for the reported local analyses; portability has not been established.
-\item Programming language: Python 3.10 or later.
-\item Requirements: PyTorch 2.1 or later, Transformers 4.40 or later, NumPy 1.24 or later, Biopython 1.81 or later, Gemmi 0.7 or later, Matplotlib 3.7 or later, Safetensors 0.4 or later, and PyYAML 6 or later, as declared in \texttt{pyproject.toml}. The fragment search reported here used MMseqs2 18.8cc5c.
-\item License and restrictions on use: \pending{the inspected repository version contains no project license file; the authors must specify the license and any restrictions.}
-\end{itemize}
-\subsection*{Competing interests}
-\pending{confirm the declarations of all authors.}
-\subsection*{Funding}
-\pending{funding sources, grant numbers, and funder roles.}
-\subsection*{Authors' contributions}
-\pending{names and actual contributions; authorship order and corresponding author.}
-\subsection*{Acknowledgements}
-\pending{acknowledgements and consent of any named individuals, or Not applicable.}
 
 \bibliography{references}
 \end{document}

@@ -1,0 +1,17 @@
+Commands executed for the delivered outputs, from the repository root.
+Python: /home/yhshy/miniconda3/envs/nad_data/bin/python (replace for another environment).
+Outputs must be empty. The first validation fit predates protocol-binding fixes;
+validation_protocol_checked is the frozen fit actually used for test. It preserves
+all original fitted parameters, prior contrasts, and group_scores.csv exactly.
+
+python -m natvqvae.cli head-probabilities --config config/natv_head_mixture.yaml --output data/results/evaluation/natv_head_calibration/validation_probabilities --split validation --device cuda
+python -m natvqvae.cli head-calibration-fit --config config/natv_head_calibration.yaml --output data/results/evaluation/natv_head_calibration/validation_protocol_checked
+python -m natvqvae.cli head-mixture-fit --config config/natv_head_mixture.yaml --output data/results/evaluation/natv_head_mixture/validation_protocol_checked
+python -m natvqvae.cli head-probabilities --config config/natv_head_mixture.yaml --output data/results/evaluation/natv_head_calibration/test_probabilities --split test --device cuda
+python -m natvqvae.cli head-calibration-evaluate --config config/natv_head_calibration.yaml --fit data/results/evaluation/natv_head_calibration/validation_protocol_checked/fitted_weights.json --output data/results/evaluation/natv_head_calibration/test
+
+For CPU-only recalculation, reuse the archived full distributions and run the
+fit/evaluate commands with empty result paths. GPU export is unnecessary.
+The baseline six-cell data archive supplies shared inputs, selected checkpoints,
+and original target-probability scores used by the parity checks. Frozen ESM-2
+weights are needed only to repeat export; their hashes are in export identity.json.
