@@ -15,12 +15,12 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build manuscript.te
 - 原迁移结果：[两臂报告](../../data/results/evaluation/natv_transfer/REPORT.md)、同目录 `paired_summary.json` 与 `generation_summary.json`。
 - 实际训练记录：`data/results/training/aux_qvae_seed8601/` 和 `data/results/training/natv_transfer/`。
 - 原始数据恢复与片段比较：[序列比较报告](../../data/results/preprocessing/pf01467_natv_overlap/REPORT.md)。
-- 数据与模型示意图：[SVG 源图](model_design.svg)及 LaTeX 使用的 [PDF](model_design.pdf)，依据 `src/natvqvae/model.py` 的上下文、先验、后验和解码路径；用 fireworks-tech-graph 生成并检查几何，再以 CairoSVG 导出。图中表示数据和两类模型的实际比较设计。
+- 现役研究设计与模型路径：[研究设计SVG](../../data/results/evaluation/natv_prediction_figures/study_design.svg)、[QVAE路径SVG](../../data/results/evaluation/natv_prediction_figures/qvae_paths.svg)，对应PDF/PNG由正式绘图CLI以同一语义几何导出。旧 `model_design.svg/pdf` 保留原文件，已退出正文引用。
 - 冻结 ESM-2 预测头与原模型：[比较结果](../../data/results/evaluation/esm2_natv_validation_comparison/REPORT.md)，相应图来自同目录 `esm_comparison.pdf`。
 - 新比较的输入：`data/results/preprocessing/natv_matched_fragment_pretraining/` 中的配对清单、掩码和序列；片段匹配图来自 `fragment_matching.pdf`。这是数据准备结果，不是新训练的预测表现。
 - 清洗后三条件 QVAE 的验证分数、实际训练量和分层分数：[分层比较](../../data/results/evaluation/natv_fragment_transfer/validation_stratified_comparison/REPORT.md)；MC 标准误及64/128/256样本敏感性：[分析报告](../../data/results/evaluation/natv_fragment_transfer/validation_latent_sample_sensitivity/REPORT.md)。
-- 六格完整预测：[保留集报告](../../data/results/evaluation/natv_six_cell/test/REPORT.md)、[验证报告](../../data/results/evaluation/natv_six_cell/validation/REPORT.md)与[保留集MC分析](../../data/results/evaluation/natv_six_cell/test_latent_precision/REPORT.md)；正文预测图来自 `test/prediction_effects.pdf`，绘图身份另存于 `figure_identity.json`。
-- 六格固定背景生成：[生成报告](../../data/results/evaluation/natv_six_cell_generation/REPORT.md)、`component_effects.csv`、`hamming_paired.csv`、`candidate_distances.csv`；正文使用同目录 `generation_effects.pdf`。
+- 六格完整预测：[保留集报告](../../data/results/evaluation/natv_six_cell/test/REPORT.md)、[验证报告](../../data/results/evaluation/natv_six_cell/validation/REPORT.md)与[保留集MC分析](../../data/results/evaluation/natv_six_cell/test_latent_precision/REPORT.md)；完整旧预测对比数据仍保存在该目录；本轮主图由下述正式绘图入口读取冻结结果重组。
+- 六格固定背景生成：[生成报告](../../data/results/evaluation/natv_six_cell_generation/REPORT.md)、`component_effects.csv`、`hamming_paired.csv`、`candidate_distances.csv`；完整比较保留，现已改为补充图，并增加每384次尝试的绝对替换数/唯一序列数图。
 - 预测头互补与温度对照：[验证报告](../../data/results/evaluation/natv_head_calibration/validation_protocol_checked/REPORT.md)、[冻结参数保留集报告](../../data/results/evaluation/natv_head_calibration/test/REPORT.md)；对应summary与group_scores记录全部对比、逐seed和逐组结果。初始QVAE/确定性目标概率混合见 `natv_head_mixture/validation_protocol_checked/`，没有追加QVAE温度导出或训练。
 - 预测头互补的位点分解：[保留集报告](../../data/results/evaluation/natv_head_complementarity/test/REPORT.md)、[验证报告](../../data/results/evaluation/natv_head_complementarity/validation/REPORT.md)，同目录CSV和summary记录可加贡献、Jensen项、top-1/真实残基排序、逐组稳健性及输入/源码哈希；命令见 `data/results/evaluation/natv_head_complementarity/commands.txt`。分解复用现有完整概率，没有新增训练、前向或生成。
 - 历史分组重建：[图重建记录](../../data/results/preprocessing/natv_split_relations/historical_components.json)；全长与域最近邻：[搜索汇总](../../data/results/preprocessing/natv_sequence_neighbors/summary.json)。
@@ -43,7 +43,7 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build manuscript.te
 | `six_cell_source_identity.json` | `natv_formal_comparison/reproduction_source_identity.json` | 4,265 bytes |
 | `SHA256SUMS`、`REPRODUCE.md` | 下载校验与源版本、解压、CPU复算说明 | 见Release |
 
-源码/结果tag保留数据发布前的文稿；**当前交付文稿、可用性声明及核验记录**固定于[文档tag `natv-prediction-study-2026-11-10-delivery`](https://github.com/Yhyb24P/natvqvae/tree/natv-prediction-study-2026-11-10-delivery/docs/manuscript)。这两个tag职责不同，原源码tag不移动；复算仍使用原源码tag，阅读本次交付文稿使用文档tag。Release说明及REPRODUCE附件均给出这一对应关系。
+源码/结果tag保留数据发布前的文稿；**数据发布时的交付文稿、可用性声明及核验记录**固定于[文档tag `natv-prediction-study-2026-11-10-delivery`](https://github.com/Yhyb24P/natvqvae/tree/natv-prediction-study-2026-11-10-delivery/docs/manuscript)。这两个tag职责不同，原源码tag不移动；复算仍使用原源码tag，阅读数据发布时的交付文稿使用文档tag。Release说明及REPRODUCE附件均给出这一对应关系。
 
 五个附件已匿名下载并逐一核对SHA；独立源码目录用相同字节的数据包还原后，CPU复算的REPORT和两份CSV与正式结果逐字节一致，summary的统计值、输入哈希和一致性检查也一致。执行约12秒，没有链接原工作区数据或加载ESM权重。核验记录见[public_release.json](../../data/results/evaluation/natv_formal_comparison/public_release.json)。这里提供GitHub Release下载，不宣称已获得DOI或长期存档保证，也不替作者决定许可。
 
@@ -65,3 +65,17 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build manuscript.te
 本轮本地数据包为 `data/results/evaluation/natv_formal_comparison/reproduction_data.tar.zst`（约1.09 GB，解压约5.29 GB），包含6,510个清单内数据文件及2个包级元数据成员（总计6,512个归档成员）：18份选定下游权重、12次辅助预训练的初始/最终权重、训练记录、恢复与配对输入、最近邻原始比对、逐任务预测、全部466,560次生成及比较输出。逐文件路径/大小/SHA256见同目录 `reproduction_manifest.csv`，压缩包校验值见 `.sha256` 文件；代码与配置使用对应Git版本；`reproduction_identity.json` 保留历史准备记录和ESM哈希，六格实际源码身份以独立发布的 `reproduction_source_identity.json` 为准。包已以 `natv_six_cell_reproduction.tar.zst` 公开下载，内容与该本地包逐字节相同；公开链接见下表。
 
 在仓库根目录解压 `tar --zstd -xf data/results/evaluation/natv_formal_comparison/reproduction_data.tar.zst --transform='s,^historical_inputs/,data/raw/historical_split_inputs/,'` 可还原相对数据路径。包内 `historical_inputs/` 保存重建历史分组所需的三个原始文件，上述解压命令将其放入 `data/raw/historical_split_inputs/`；复算该检查时将 `config/natv_split_relations.yaml` 的历史绝对路径改为对应归档路径；原路径及哈希在清单中保留。冻结ESM-2不重复打包，须另外提供与 `reproduction_identity.json` 中五项哈希一致的文件。特征缓存和未选定下游权重不在包内；它们不是复算本轮已选模型统计的必要输入。
+
+## 预测头互补的图件修订
+
+本轮四张主图及补充图由 `src/natvqvae/manuscript_figures.py`、`config/manuscript_figures.yaml` 统一生成：
+
+```bash
+python -m natvqvae.cli manuscript-figures --config config/manuscript_figures.yaml --output data/results/evaluation/natv_prediction_figures
+```
+
+复算使用新的空输出目录。输入是六格汇总、最近训练近邻表、两种划分的冻结预测头逐组评分和贡献分解，以及原六格生成汇总；不需要完整概率导出、训练或ESM前向。`figure_identity.json` 记录所有输入及实现/输出校验值、四象限计数、同源距离分布和本轮总体accuracy条件区间。配置中的2,000次bootstrap以seed平均后的component为单位，概率层accuracy仅作描述，不套用NLL区间。
+
+`study_design`、`pretraining_and_identity`、`head_mixture_test`、`head_decomposition_test` 是正文四图。QVAE路径、完整六格各类对比、原生成差值与绝对量级、验证集两张对应图进入补充材料。图件均提供PDF、SVG和PNG，按170 mm实际宽度绘制，统计图最小字号8.5 pt；架构图和PDF采用同一语义几何，SVG经过fireworks-tech-graph检查，并借鉴diagram-design的减少冗余节点与限制视觉焦点原则。稿件版心为170 mm，保留双倍行距、页码及行号，不改动原模板类文件。旧完整矩阵及数据包保持原记录。
+
+本次图件/稿件快照使用 `natv-prediction-figures-2026-11-10`；数据发布时的原始源码与文稿tag继续保留。后续查看当前论文使用这一图件修订快照，不把原数据发布tag中的旧图件当成这次版本。图件重排没有新增混合头在同源距离上的分层结论，也没有新增混合生成或候选功能证据。

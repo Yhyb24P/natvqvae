@@ -1,0 +1,11 @@
+six_cell: data/results/evaluation/natv_six_cell/test/summary.json
+neighbors: data/results/preprocessing/natv_sequence_neighbors
+calibration: data/results/evaluation/natv_head_calibration/test/summary.json
+scores:
+  test: data/results/evaluation/natv_head_calibration/test/group_scores.csv
+  validation: data/results/evaluation/natv_head_calibration/validation_protocol_checked/group_scores.csv
+complementarity: data/results/evaluation/natv_head_complementarity
+bootstrap_repeats: 2000
+bootstrap_seed: 20261110
+generation_runs: data/results/evaluation/natv_six_cell_generation/run_summary.csv
+generation_effects: data/results/evaluation/natv_six_cell_generation/generation_effects.csv

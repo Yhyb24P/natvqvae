@@ -1,0 +1,43 @@
+{
+  "status": "PASSED",
+  "main_figure_and_caption_sizes": [
+    {
+      "figure": "study_design",
+      "page": 12,
+      "figure_and_caption_height_mm": 183.87
+    },
+    {
+      "figure": "pretraining_and_identity",
+      "page": 17,
+      "figure_and_caption_height_mm": 208.05
+    },
+    {
+      "figure": "head_mixture_test",
+      "page": 20,
+      "figure_and_caption_height_mm": 189.71
+    },
+    {
+      "figure": "head_decomposition_test",
+      "page": 22,
+      "figure_and_caption_height_mm": 198.05
+    }
+  ],
+  "all_generated_pdf_width_mm": 170,
+  "all_generated_pdf_fonts_embedded": true,
+  "svg_checks": {
+    "study_design": true,
+    "qvae_paths": true
+  },
+  "manuscript_pages": 41,
+  "main_figures": 4,
+  "supplementary_figures": 12,
+  "original_sections_retained": true,
+  "original_tables_retained": 9,
+  "original_equation_labels_retained": 3,
+  "overfull_boxes": 0,
+  "undefined_references": 0,
+  "baseline_commit": "92674626bb15dd34bd1b94900d99d4b5f328e9d0",
+  "manuscript_pdf_sha256": "f882eae10fa4e160b7648482a3d292f6899d4c43407711ad6a388f72f86b4092",
+  "figure_identity_sha256": "725ad95571216c11f487ac807663eb1c7c1f70d8001f6d9e484edfeb5e258c24",
+  "caption_measurement": "Poppler word bounding boxes; infer canvas origin from standalone and embedded first text; measure through last caption word on single-figure main pages."
+}

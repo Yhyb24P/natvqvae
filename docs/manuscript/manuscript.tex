@@ -1,6 +1,10 @@
 % Working manuscript. Historical and cleaned-fragment development results are distinguished.
 % Six-cell prediction and fixed-background generation analyses are complete.
-\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}
+\documentclass[referee,pdflatex,sn-vancouver-num]{sn-jnl}
+\geometry{reset,a4paper,left=20mm,right=20mm,top=22mm,bottom=22mm,bindingoffset=0mm}
+\usepackage{lineno}
+\linenumbers
+\renewcommand{\floatpagefraction}{0.55}
 \usepackage{amsmath,amssymb,booktabs,graphicx}
 \usepackage{array}
 \raggedbottom
@@ -112,6 +116,8 @@ For constant $\alpha$, with all three losses averaged under identical weights,
 \end{equation}
 For varying panel parameters we calculate the corresponding terms at each position before aggregation. This identity measures the log-score gain from pooling relative to the weighted individual losses, not independent biological information. A separate descriptive reference selects the lower single-head mean NLL in each component after averaging seeds. This hindsight reference is not deployable and does not add independent validation.
 
+The revised main figures and new supplementary figures were rendered from frozen score tables at 170\,mm width with at least 8.5\,pt statistical-plot type, embedded vector fonts, and recorded input/output checksums \cite{natvfigures}. The main figures retain the original primary comparison while presenting the subsequent mixture and decomposition; complete original prediction and generation matrices and validation analogues appear in supplementary figures.
+
 \subsection{Direct sequence-overlap examination}
 We compared every complete auxiliary training fragment with downstream full-length sequences using exact string containment, retaining sequence identifiers, group identifiers, and match coordinates. Auxiliary sequence and split-file hashes were compared with the recorded training inputs. This test detects exact containment irrespective of the longer sequence's coverage. It does not exclude approximate matches. After identifying an affected validation group, we repeated the existing group-bootstrap calculation after removing that entire group. The model parameters and selected checkpoints were unchanged; only the affected validation group was excluded from score aggregation.
 
@@ -132,12 +138,12 @@ The completed six-cell comparison crosses these three initialization conditions 
 
 After inspecting the aggregate QVAE validation scores by region, we added self-minus-random and external-minus-random contrasts to the identity- and mask-size-stratified six-cell report. These exploratory reference comparisons distinguish a difference relative to self pretraining from an improvement over random initialization; they do not replace the prespecified primary contrast or change model selection.
 
-Figure~\ref{fig:model_design} summarizes the comparison design and the information paths in the categorical model.
+Figure~\ref{fig:model_design} summarizes the task, controlled comparison, and mixed prediction path; Figure~\ref{fig:qvae_paths} details QVAE sampling.
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{model_design.pdf}
-\caption{Study design and conditional model. A: Each initialization is paired with QVAE and deterministic models and three pipeline replicates. Auxiliary training uses 1,437 external/self fragment pairs; downstream training and selection use 1,644 training and 227 validation sequences. The 231 held-out sequences have prior evaluation history. B: Targets are masked before frozen ESM-2 encoding. The trainable context encoder supplies the prior, posterior, and decoder; full-sequence features additionally enter the posterior. Generation samples from the prior, never the posterior. Joint generation shares a latent draw across target positions; own-marginal generation draws independently for each target. The deterministic arm replaces sampled codes with context-derived modulation and has no posterior. The frozen ESM-2 baseline uses its original prediction head on the same masked input.}\label{fig:model_design}
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/study_design.pdf}
+\caption{Study design and actual prediction paths. A: Reference KVP40 coordinates and illustrative masks; homolog tasks use their own annotations. B: Three initializations by two model arms, with three complete pipeline replicates per cell. External/self fragment pairs share target columns and update budgets. C: The same masked sequence enters frozen ESM-2; its original head and an existing no-auxiliary-pretraining deterministic task model produce normalized 20AA probabilities. The arithmetic 50:50 pool is selected on validation. Each task seed is mixed and scored separately before scores are averaged. It does not generate the original six-cell proposals. QVAE information paths are shown in the supplementary material.}\label{fig:model_design}
 \end{figure}
 
 \subsection{Conditional generation}
@@ -162,7 +168,7 @@ Candidate distances used fixed alignments from each background NMNAT domain to t
 We retained the raw comparisons and separately stratified proposals into 0, 1--2, 3--4, 5--8, and more than 8 substitutions. Within each background, pipeline, mask, and stratum, deterministic independent subsampling retained the smaller of the two proposal counts from each distribution; it did not require matching draw identifiers. Counts, discarded proposals, and unavailable cells were retained. The wider bins do not enforce exactly equal substitution counts, and conditioning on edit count can itself alter covariance. Neither these comparisons nor distance and diversity metrics measure functional quality.
 
 \subsection{Use of AI-assisted tools}
-AI-assisted tools were used to inspect code and study records, implement sequence-overlap checks, and prepare this working draft. Numerical results were calculated from the specified inputs by the analysis code. \pending{verify and complete the account of AI-assisted work and author verification before submission.}
+AI-assisted tools were used to inspect code and study records, implement sequence-overlap checks, and prepare this working draft and figure code. Numerical results were calculated from the specified inputs by the analysis code. \pending{verify and complete the account of AI-assisted work and author verification before submission.}
 
 \section{Results}
 \subsection{Full-length grouping did not remove high Nudix similarity}
@@ -205,8 +211,8 @@ Held-out QVAE joint-minus-own-marginal NMNAT differences were $-8.091\times10^{-
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{../../data/results/evaluation/natv_six_cell/test/prediction_effects.pdf}
-\caption{Held-out paired prediction contrasts. Columns refer to NMNAT, Nudix, and global masking panels; global is not the all-panel weighted aggregate. Black points average paired pipeline differences within each component and then weight components equally; lines show 95\% component-bootstrap intervals conditional on the fitted models. Colored triangles show individual pipeline replicates. Axis scales differ between panels. The joint-minus-own-marginal row requires the separately reported Monte Carlo precision assessment; its interval alone does not establish useful dependence in generated sequences.}\label{fig:six_cell_prediction}
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/pretraining_and_identity.pdf}
+\caption{Original comparisons and held-out homology context. A: External minus self and external minus random NLL, retaining the primary external/self comparison. B: All six task conditions minus ESM-2. N/Nu denote NMNAT/Nudix; Q/D denote QVAE/deterministic; rnd denotes random initialization. C: Nearest-training empirical identity distributions for the same 231 proteins, with both alignment coverages at least 80\%; the dashed line is 70\%. D: Random-initialized deterministic head minus ESM-2 by domain identity. Labels give proteins (p) and represented components (c); components can span strata. Axis scales differ between panels. All intervals condition on fitted models; identity strata are exploratory and unadjusted. These distributions describe the comparison; they do not identify a causal homology effect or show mixture performance at different identities. Complete six-cell contrasts appear in supplementary figures.}\label{fig:six_cell_prediction}
 \end{figure}
 
 \subsection{Prediction-head differences across domain similarity strata}
@@ -275,6 +281,12 @@ Regional scaled $-$ unscaled mixture & $+0.00547$ & $[+0.00303,+0.00796]$ & $+0.
 
 Region-specific fitting did not establish an additional held-out NMNAT benefit over a single mixture parameter set ($-0.00031$, $[-0.00624,+0.00602]$), despite its validation advantage. It did improve Nudix relative to the single set ($-0.01316$, $[-0.01978,-0.00643]$). Moreover, mixtures of temperature-scaled heads scored worse than mixtures of the original heads on both NMNAT ($+0.00547$, $[+0.00303,+0.00796]$) and Nudix ($+0.01200$, $[+0.00650,+0.01692]$). For the single parameter set, scaling increased mixture NLL by 0.00515 on NMNAT, 0.01633 on Nudix, and 0.01348 over all panels. Thus, scaling improved the task head alone but did not improve the mixture. The panel-specific scaled mixture retained advantages over both scaled heads; the single scaled mixture versus the scaled task head on Nudix had an interval spanning zero. Single-head-optimal temperatures need not optimize the mixture, and temperature scaling does not by itself establish adequate calibration. The result does not exclude other calibration explanations or identify which architectural or training differences produced the complementarity.
 
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/head_mixture_test.pdf}
+\caption{Original-head mixture prediction on the historically evaluated held-out set. A--B: Absolute NLL; horizontal marks average three training seeds and faint points show each seed. The task head has no auxiliary pretraining. C--D: One point per component after seed averaging, with $x=L_D-L_E$ and $y=L_M-L_E$; axes at zero and the dashed $y=x$ reference expose when mixing improves either individual head. Numbers count quadrants; NMNAT has 16 components with a weaker task head but a better mixture, 30/44 below ESM, and 28/44 below both single heads. The hindsight best single head is descriptive, not deployable. E--F: Temperature-scaled minus raw task and scaled minus raw single-weight mixture, with conditional 95\% component intervals. Scaling improves the task alone but worsens the mixture; panels do not represent successive upgrades.}\label{fig:head_mixture}
+\end{figure}
+
 \subsection{Both probability buffering and changes in top-ranked predictions contribute}
 For held-out NMNAT, the raw 50:50 mixture improved over ESM-2 in 30 of 44 components and over the hindsight component-wise best single head in 28 of 44. The panel-specific scaled mixture improved relative to temperature-scaled ESM-2 in 39 of 44 components, with median mixture-minus-scaled-ESM difference $-0.03718$; removing the component with the largest improvement left a mean difference of $-0.04269$. It also scored below the hindsight best scaled single head in 31 of 44 components, with mean difference $-0.01173$. These latter counts refer specifically to the scaled panel-specific method and must not be attributed to the raw mixture.
 
@@ -300,10 +312,16 @@ ESM true probability $\geq0.05$ & 0.82686 & $-0.01592$ & $[-0.02912,-0.00285]$ \
 \end{tabular}
 \end{table}
 
-Observations with ESM true-residue probability below 0.05 accounted for 17.31\% of weighted NMNAT observations but 68.1\% of the raw mixture's net improvement; those below 0.01 contributed 20.3\%. The scaled panel-specific mixture had a stronger concentration: below-0.05 observations contributed $-0.04441$ of the total $-0.04504$. Thus, the probability control changes the distribution of gains even while preserving an overall advantage. These probability-defined strata overlap the top-1 partitions and cannot be added to them as separate explanations. All decompositions are post hoc analyses of existing predictions, not new independent confirmation, evidence of restored structural constraints, or an identification of separate biological information sources.
+Observations with ESM true-residue probability below 0.05 accounted for 17.31\% of weighted NMNAT observations but 68.1\% of the raw mixture's net improvement; those below 0.01 contributed 20.3\%. The scaled panel-specific mixture had a stronger concentration: below-0.05 observations contributed $-0.04441$ of the total $-0.04504$. Thus, the probability control changes the distribution of gains even while preserving an overall advantage. These probability-defined strata overlap the top-1 partitions and cannot be added to them as separate explanations. The below-0.05 stratum contributed only 0.173 percentage points of the overall top-1 gain, compared with 1.887 points from the remaining observations. Thus, most NLL gain and most top-1 gain arose in different probability strata (Figure~\ref{fig:head_decomposition}). The overall top-1 difference was $+2.06$ percentage points (conditional 95\% interval $[+1.04,+3.06]$); validation was $+0.88$ points with an interval spanning zero ($[-0.10,+1.80]$). These intervals use the same 2,000 component bootstrap replicates after seed averaging. All decompositions are post hoc analyses of existing predictions, not new independent confirmation, evidence of restored structural constraints, or an identification of separate biological information sources.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/head_decomposition_test.pdf}
+\caption{NMNAT raw-mixture decomposition with original weights. A: Correctness transitions use the common full denominator and sum to 100\%, rather than normalizing rows. B: NLL contributions where the heads agree or differ on top-1; agreement does not imply identical full amino-acid rankings. C--D: The same three strata of ESM probability assigned to the known true residue, showing additive NLL and accuracy contributions (percentage points, pp). This is not maximum output confidence or an inference-time gate. NLL bars show conditional component intervals; stratum accuracy points are descriptive without intervals. Mass denotes weighted query/component/seed proportion, not independent residue counts. Partitions overlap: their contributions sum internally but cannot be added across partitions. E: The log-score algebraic identity, not a causal partition of biological information. The overall top-1 interval resamples 44 components after seed averaging. Validation analogues appear in supplementary figures.}\label{fig:head_decomposition}
+\end{figure}
 
 \subsection{Fixed-background generation across the six cells}
-All 27 original six-cell fitted-model distributions completed 466,560 proposals without filtering. None used the prediction-head mixtures; these proposals therefore cannot establish improved candidate quality from mixing. Across the 44 component representatives, the QVAE joint samples averaged 11.5814, 11.6423, and 11.7052 substitutions for random, self, and external initialization. Mean unique counts per 384 attempts were 382.7652, 382.6364, and 383.0606. The corresponding deterministic means were 11.5759, 11.6331, and 11.7017 substitutions and 382.7348, 382.7273, and 382.9545 unique sequences. These counts are close to the sampling ceiling and provide little room for a large uniqueness improvement.
+All 27 original six-cell fitted-model distributions completed 466,560 proposals without filtering. None used the prediction-head mixtures; these proposals therefore cannot establish improved candidate quality from mixing. Across the 44 component representatives, the QVAE joint samples averaged 11.5814, 11.6423, and 11.7052 substitutions for random, self, and external initialization. Mean unique counts per 384 attempts were 382.7652, 382.6364, and 383.0606. The corresponding deterministic means were 11.5759, 11.6331, and 11.7017 substitutions and 382.7348, 382.7273, and 382.9545 unique sequences. Figure~\ref{fig:generation_absolute} shows the absolute values and the 384-attempt ceiling. These counts are close to the sampling ceiling and provide little room for a large uniqueness improvement.
 
 External-minus-self increased the mean substitution count by 0.06284 for QVAE ($[0.02069,0.10380]$) and 0.06858 for the deterministic model ($[0.02636,0.10989]$). Unique-count differences were 0.42424 ($[0.16667,0.71212]$) and 0.22727 ($[0.02273,0.43958]$) per 384 attempts. Thus, the external-fragment procedure slightly changed editing and candidate diversity without establishing better protein designs. Mean edit-covariance differences were $+4.84\times10^{-6}$ and $-2.35\times10^{-6}$, with both intervals spanning zero (Figure~\ref{fig:six_cell_generation}).
 
@@ -315,15 +333,11 @@ The matched-stratum analysis retained 48,594 QVAE and 48,597 deterministic exter
 
 KVP40 did not reproduce the pooled background pattern uniformly. Its QVAE external-minus-self substitution-count differences were $+0.20573$, $+0.22656$, and $-0.31771$ across the three replicates, averaging $+0.03819$; deterministic differences averaged $+0.06771$. Both arms averaged $-0.33333$ unique sequences per 384 attempts for external versus self. These are observations for one application background, without a biological replicate interval or evidence of enzyme improvement.
 
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{../../data/results/evaluation/natv_six_cell_generation/generation_effects.pdf}
-\caption{Generation contrasts over 44 fixed component representatives. Points and lines give paired means and 95\% component-bootstrap intervals conditional on three fitted pipelines and the sampled proposals; triangles show pipeline replicates. Substitution counts and unique sequences refer to 384 attempts per background. Covariance is computed within each fixed mask and averaged over its site pairs as described in Methods. The exact joint and own-marginal distributions have equal expected substitution counts; small observed differences reflect finite sampling, even where the displayed interval excludes zero. KVP40 is reported separately.}\label{fig:six_cell_generation}
-\end{figure}
+
 
 \section{Discussion}
 \subsection{What the current evidence can establish}
-The matched comparison and the original pretrained head provide the principal tests of family adaptation in this study. Earlier development gains motivated these tests, but exact fragment overlap, validation reuse, a single auxiliary-pretraining seed, and unmatched optimization histories prevented those gains from establishing the contribution of external information. The earlier experiments and their limitations are retained in Appendix~\ref{app:development}; they do not replace the six-cell comparison.
+Figures~\ref{fig:head_mixture} and \ref{fig:head_decomposition} distinguish combined prediction gains from their descriptive decomposition. The matched comparison and the original pretrained head provide the principal tests of family adaptation in this study. Earlier development gains motivated these tests, but exact fragment overlap, validation reuse, a single auxiliary-pretraining seed, and unmatched optimization histories prevented those gains from establishing the contribution of external information. The earlier experiments and their limitations are retained in Appendix~\ref{app:development}; they do not replace the six-cell comparison.
 
 The completed six-cell comparison separated random task-model initialization, pretraining on NatV training fragments, and pretraining on screened external fragments. Matched target columns, weights, update counts, and selection rules controlled several alternative explanations for an initialization benefit, while approximate length matching still left differences in visible context and sequence diversity. Both model arms had primary held-out NMNAT intervals spanning zero, and their interaction was small relative to its group interval. This does not demonstrate that external information has no value; it limits the benefit established by this protocol and sample. The direction of the lower-identity NMNAT subgroup estimates merits explicit reporting, but overlapping components, unadjusted comparisons, and the absence of a demonstrated interaction prevent a claim that transfer specifically benefits distant sequences. The evaluation history also matters: the recovered held-out set is not independent of all earlier method development.
 
@@ -357,7 +371,7 @@ Not applicable. This manuscript analyzes protein sequences and computational res
 \subsection*{Consent for publication}
 Not applicable.
 \subsection*{Availability of data and materials}
-The source code, configurations, selected statistics, and working manuscript are available in the project repository \cite{natvrepo}. Public reproducibility data are distributed as GitHub Release attachments \cite{natvdata}. The six-cell source snapshot is \texttt{a971d6e}, the calibration implementation and frozen results are \texttt{d359cc2}, and the additional probability decomposition is \texttt{8d4eaed}. The release tag is the code/results snapshot and includes the decomposition code, configuration, tests, and selected results. Its manuscript predates data publication. The delivery manuscript and verification record are instead preserved at repository tag \path{natv-prediction-study-2026-11-10-delivery}, without moving the original source tag.
+The source code, configurations, selected statistics, and working manuscript are available in the project repository \cite{natvrepo}. Public reproducibility data are distributed as GitHub Release attachments \cite{natvdata}. The six-cell source snapshot is \texttt{a971d6e}, the calibration implementation and frozen results are \texttt{d359cc2}, and the additional probability decomposition is \texttt{8d4eaed}. The release tag is the code/results snapshot and includes the decomposition code, configuration, tests, and selected results. Its manuscript predates data publication. The data-release manuscript and verification record are instead preserved at repository tag \path{natv-prediction-study-2026-11-10-delivery}, without moving the original source tag.
 
 The file \path{natv_six_cell_reproduction.tar.zst} contains selected NatV model weights, auxiliary checkpoints, restored inputs, training records, per-query scores, and all 466,560 unfiltered original six-cell proposals (1,094,147,264 bytes; SHA256 \texttt{e32ef9423eb69d666c204db20924c882896\allowbreak 812afbb71aa8c1da480e686ae8f77}). The file \path{natv_head_calibration_reproduction.tar.zst} contains 23 members with complete validation and held-out amino-acid probabilities, task manifests, export identities, frozen parameters, comparisons, and configurations (71,055,029 bytes; SHA256 \texttt{b128d83f7dd28ab760b80cc9806d2542ee\allowbreak 1aa743a1f54e4afec44b2d62cc746f}). The latter supplement depends on the former for shared inputs, selected weights, and original scores used for parity checks. The two downloads have distinct names but preserve the bytes of their documented local \path{reproduction_data.tar.zst} archives.
 
@@ -368,7 +382,7 @@ The original six-cell archive retains historical preparation-checkout metadata. 
 \begin{itemize}
 \item Project name: NatV QVAE (Python package \texttt{natvqvae}, version 0.0.1).
 \item Project home page: the repository cited above \cite{natvrepo}.
-\item Released version: public GitHub Release \cite{natvdata}; no DOI or long-term preservation claim. The delivery manuscript and availability record are at repository tag \path{natv-prediction-study-2026-11-10-delivery}.
+\item Released version: public GitHub Release \cite{natvdata}; no DOI or long-term preservation claim. The data-release manuscript and availability record are at repository tag \path{natv-prediction-study-2026-11-10-delivery}.
 \item Operating system: Linux for the reported local analyses; portability has not been established.
 \item Programming language: Python 3.10 or later.
 \item Requirements: PyTorch 2.1 or later, Transformers 4.40 or later, NumPy 1.24 or later, Biopython 1.81 or later, Gemmi 0.7 or later, Matplotlib 3.7 or later, Safetensors 0.4 or later, and PyYAML 6 or later, as declared in \texttt{pyproject.toml}. The fragment search reported here used MMseqs2 18.8cc5c.
@@ -384,6 +398,8 @@ The original six-cell archive retains historical preparation-checkout metadata. 
 \pending{acknowledgements and consent of any named individuals, or Not applicable.}
 
 \appendix
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
 \section{Earlier development studies and fragment preparation}\label{app:development}
 The following results document the development history and the construction of the matched comparison. Their validation scores are not additional independent tests of the six-cell conclusions.
 
@@ -514,6 +530,60 @@ Of 4,079 auxiliary fragments, 81 directly matched a validation or test protein. 
 \centering
 \includegraphics[width=\textwidth]{../../data/results/preprocessing/natv_matched_fragment_pretraining/fragment_matching.pdf}
 \caption{Matched external and NatV training fragments. A: Lengths of the 1,437 selected pairs; the dashed line indicates equality and the shaded band shows the allowed 20\% difference relative to external length. B: Fraction of each external fragment's reliable KVP40 alignment columns also mapped in its paired NatV fragment. Counts describe selected pairs without training weights. The self fragments originate from 250 training proteins, so the 1,437 pairs are not independent proteins.}\label{fig:fragments}
+\end{figure}
+
+
+\section{Supplementary prediction and generation figures}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/qvae_paths.pdf}
+\caption{QVAE information and sampling paths. The context encoder uses masked ESM features; full-sequence features additionally enter the posterior with that context. Training samples posterior categorical states; importance scoring also uses the posterior. Generation samples the conditional prior. Both condition the FiLM decoder together with the same visible context. Joint samples share a state across targets; the own-marginal reference draws states independently by site. The deterministic arm has context-derived modulation and no posterior.}\label{fig:qvae_paths}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/six_cell_initialization.pdf}
+\caption{Initialization contrasts. Complete original six-cell regional matrix, with pooled conditional 95\% component intervals and faint pipeline-seed triangles. Q/D denote QVAE/deterministic; columns are NMNAT, Nudix and global masks. Global is not the all-panel weighted aggregate. Scale differs between contrasts; latent differences require the Monte Carlo precision analysis reported in the text.}\label{fig:supp_initialization}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/six_cell_model_arms.pdf}
+\caption{QVAE minus deterministic. Complete original six-cell regional matrix, with pooled conditional 95\% component intervals and faint pipeline-seed triangles. Q/D denote QVAE/deterministic; columns are NMNAT, Nudix and global masks. Global is not the all-panel weighted aggregate. Scale differs between contrasts; latent differences require the Monte Carlo precision analysis reported in the text.}\label{fig:supp_model_arms}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/six_cell_latent.pdf}
+\caption{Joint minus own site marginals. Complete original six-cell regional matrix, with pooled conditional 95\% component intervals and faint pipeline-seed triangles. Q/D denote QVAE/deterministic; columns are NMNAT, Nudix and global masks. Global is not the all-panel weighted aggregate. Scale differs between contrasts; latent differences require the Monte Carlo precision analysis reported in the text.}\label{fig:supp_latent}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/six_cell_esm_reference.pdf}
+\caption{All six task models minus ESM-2. Complete original six-cell regional matrix, with pooled conditional 95\% component intervals and faint pipeline-seed triangles. Q/D denote QVAE/deterministic; columns are NMNAT, Nudix and global masks. Global is not the all-panel weighted aggregate. Scale differs between contrasts; latent differences require the Monte Carlo precision analysis reported in the text.}\label{fig:supp_esm_reference}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/generation_absolute.pdf}
+\caption{Absolute behavior of the original six-cell generated distributions. Each mean weights 44 fixed components and three pipeline replicates equally; gray points show replicates. Q joint/marginal denote shared versus independent-site latent sampling; D denotes deterministic factorized sampling. Each background has 384 attempts; the dashed line marks the uniqueness ceiling. KVP40 is excluded from these group means and reported separately in the text. These are original-model samples, without mixed prediction heads.}\label{fig:generation_absolute}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/generation_external_minus_self.pdf}
+\caption{External minus self for original six-cell generation. Values are conditional component-bootstrap differences in 384 attempts per fixed background, across 44 component representatives. Unique counts were near the ceiling (approximately 383/384); small differences do not establish candidate quality. All these proposals predate and exclude mixed prediction heads. Exact matching joint/marginal distributions have equal expected substitution counts; observed differences reflect finite sampling.}\label{fig:six_cell_generation}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/generation_within_condition.pdf}
+\caption{Joint minus own site marginals for original six-cell generation. Values are conditional component-bootstrap differences in 384 attempts per fixed background, across 44 component representatives. Unique counts were near the ceiling (approximately 383/384); small differences do not establish candidate quality. All these proposals predate and exclude mixed prediction heads. Exact matching joint/marginal distributions have equal expected substitution counts; observed differences reflect finite sampling.}\label{fig:generation_marginals}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/head_mixture_validation.pdf}
+\caption{Validation analogue of the raw-head mixture figure. Parameters exclude the scored component during additional fitting, but checkpoints were selected using validation. The original 50:50 weight was selected in every leave-component-out fit. Components, seed averaging, axes and temperature contrasts match the held-out figure. These are conditional development results, not independent validation of the entire training pipeline.}\label{fig:mixture_validation}
+\end{figure}
+\begin{figure}[p]
+\centering
+\includegraphics[width=170mm]{../../data/results/evaluation/natv_prediction_figures/head_decomposition_validation.pdf}
+\caption{Validation analogue of the raw NMNAT decomposition. Weighted transitions and contributions retain the common denominator. The overall top-1 improvement is $+0.88$ percentage points with conditional interval $[-0.10,+1.80]$, which includes zero. NLL intervals cannot be substituted for accuracy intervals. Probability-defined strata and head-agreement strata overlap.}\label{fig:decomposition_validation}
 \end{figure}
 
 \bibliography{references}

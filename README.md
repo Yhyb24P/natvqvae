@@ -154,3 +154,5 @@ natvqvae nmnat-af3-analyze --config config/nmnat_af3.yaml \
 `delivery-build`（`config/natv_candidate_delivery.yaml`）把 12 条设计候选与 2 条 ePCR 克隆合并成 14 条唯一蛋白的交接包，包含统一 CSV/FASTA、来源/身份清单、42 个候选 PDB、3 个 ePCR 批次 WT 参照和必要结构附件；不重算结构或指标。结果在 `data/results/evaluation/natv_candidate_delivery/`，要求新目录或空目录。
 
 现役科学目标与方法见 [RESEARCH_PLAN.md](docs/RESEARCH_PLAN.md)，已完成结果与重要负结果见 [RESULTS.md](docs/RESULTS.md)。
+
+论文图件通过 `manuscript-figures --config config/manuscript_figures.yaml --output <evaluation下的空目录>` 从冻结结果生成，输出170 mm宽的矢量PDF、SVG及检查用PNG；四张主图及补充材料对应关系见[稿件说明](docs/manuscript/README.md)。

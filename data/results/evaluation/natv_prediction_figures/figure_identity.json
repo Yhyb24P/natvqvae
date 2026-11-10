@@ -1,0 +1,208 @@
+{
+  "status": "COMPLETED",
+  "input_sha256": {
+    "config/manuscript_figures.yaml": "58b416415213772aa1dee4e3759c5e90f82887cf5eb86dc9e34a8cdc24c2e711",
+    "data/results/evaluation/natv_head_calibration/test/group_scores.csv": "c3b4fa015fa7546280ba1c4966010d0b5e68ad2233a73a893ba8667dcb9b0928",
+    "data/results/evaluation/natv_head_calibration/test/summary.json": "9ce9761b006ede58b5742c2a0946e9fab247c31c14c16e5536945996264cdd9b",
+    "data/results/evaluation/natv_head_calibration/validation_protocol_checked/group_scores.csv": "bf92f393a8231e48e72656ea90c8d65c9ae32c8daf4b11e160c7d94b985867be",
+    "data/results/evaluation/natv_head_complementarity/test/group_scores.csv": "4a4671d62c1d8678c11955b392cd0b40ab8ae2bd8e28ba0187ed69c5c2aa5479",
+    "data/results/evaluation/natv_head_complementarity/test/stratum_contributions.csv": "0138431824e0f9f5895afacebc795119bccdf7f561cd41331f29a5a050567e9e",
+    "data/results/evaluation/natv_head_complementarity/validation/group_scores.csv": "a1720504814088d4a894c88148ff1357fe9509e447e4dd5c099effde531fc8a4",
+    "data/results/evaluation/natv_head_complementarity/validation/stratum_contributions.csv": "c724dc2219f441f5bc8a150066b5fa1b961fd65680c57bf51610d6c01c2710cf",
+    "data/results/evaluation/natv_six_cell/test/summary.json": "bbce0501e305eab6d612539a23970fd51b8c583decca8cf18039945520a99f05",
+    "data/results/evaluation/natv_six_cell_generation/generation_effects.csv": "1eda59343959a6823801e74f2066648d11ae95dbd947499da0dc3d58409e220d",
+    "data/results/evaluation/natv_six_cell_generation/run_summary.csv": "2093b3f780b776e5bf8e98f1a46e6a9748926d8f498bb657887721f562b31168",
+    "data/results/preprocessing/natv_sequence_neighbors/full_length_both_nearest.csv": "12b0756fb1ef2a9a0e6475d6a42a3725c615e58d339e38ce3b948a339f421629",
+    "data/results/preprocessing/natv_sequence_neighbors/nmnat_both_nearest.csv": "f2c56c3f29da5e16ae96eab13f627595a838186c9a89f5683f89a43d3bd6007e",
+    "data/results/preprocessing/natv_sequence_neighbors/nudix_both_nearest.csv": "c5c98f8fc010631fc012e6618a873ac9418f5ffc4c782ef10b762d13c9b4a20c"
+  },
+  "implementation_sha256": "5dbde36e303851cfe8c3e69767e9dfaf505a2c032100788e52950f84d84dc5a1",
+  "output_sha256": {
+    "generation_absolute.pdf": "77d66bae7c588df58895f368bf4bc97beb5d6b1122d6b1ec07946c6f0cc016b4",
+    "generation_absolute.png": "af3739669742aa8d15ffff0a1c1b6568ba1f619548e1ef8b56755c390e8a8f61",
+    "generation_absolute.svg": "576d082062fe423cb6b6a2b7f2544304e74f2b9cfc5d580d0c023bfbe907f0ad",
+    "generation_external_minus_self.pdf": "1a0e963573f8b9aa6cc67b8cc6b1d4c291a837a9b0e0f20b72b4f67657041b01",
+    "generation_external_minus_self.png": "a92c690895d72d2ebbf8a360b33c60a28a2ebc9b2443cb2535853e5cb7b0af63",
+    "generation_external_minus_self.svg": "af4e203f93fd64a7db590077e3bf04b0a91309f7a4f239b0b05868141be0d86a",
+    "generation_within_condition.pdf": "fcb8d1a30a35e363822df177c7107770ea47a7d68ac55576a2c4283fe72ac02b",
+    "generation_within_condition.png": "eb4f11f595c2f48f565cb52484886e195054fda1d512368c09c9d89f634aa201",
+    "generation_within_condition.svg": "3e3e699627e9634af9f39ad127b30f841d788df078b60428119512001e3ceec9",
+    "head_decomposition_test.pdf": "7442c5c0cbd5cb0381bc4724105b9628ec55b6e62521bfec50bd7c0c50f4cf8f",
+    "head_decomposition_test.png": "707b1c2221f36d078e4f0dae51ef5ff94ffed1625c825664432836e3884a8cf0",
+    "head_decomposition_test.svg": "97ceb11d6428ba85e1923062747c2cbdfbb15f7192815cd419c573bff33c3ac0",
+    "head_decomposition_validation.pdf": "273c359d38bf16aadb8c5e5d6aecffd2051fc520777e692a2c43f2b6e57816f5",
+    "head_decomposition_validation.png": "fd44b9e62e25380d9507e093814491a36252cf05364d7d649526363760cd1b8e",
+    "head_decomposition_validation.svg": "623b42f27ff03427b548646b0bd57c2b0e162af33840f4ad7fad2a3fed860b66",
+    "head_mixture_test.pdf": "2849b6d0b7759e290ec32acc3d11707477b1862f096733bec52999f28d56dfe0",
+    "head_mixture_test.png": "9a8b344e1325c75604befce1624ff997feba1ed20309e32441c933aa8c38cf31",
+    "head_mixture_test.svg": "1260ec990423c38971be220b808e79356f05ed5270405f36f0574ee942617f2e",
+    "head_mixture_validation.pdf": "f0f06eb5da6423a54a62c68eb11f9101835fd7bcd88a553a9ff52ae180203f7f",
+    "head_mixture_validation.png": "9aeb335b9a1abdb8231ae5ce1ae3602cdf211d8c8a2bcf029574868c98f99ecb",
+    "head_mixture_validation.svg": "98dd648580e0af38fda9010ea74c11b54973782a2a71509e4d49ccc419652177",
+    "pretraining_and_identity.pdf": "019cd1204f6051191971e77cfdfca21ebfa3ebd366a0d3e162d28911774bf6ca",
+    "pretraining_and_identity.png": "a06bf4107b95f89c0035bb6e7b86b2149ba812347519877345cbbf683e418714",
+    "pretraining_and_identity.svg": "b7b875cea73192ebf991c8218ca9bcd0b1ead9aadfad38e21f5bb6f3e7cdebea",
+    "qvae_paths.pdf": "3f341291a5f28b21f5f30da9855f11b87de40cb0fc841093607d6887db8d2597",
+    "qvae_paths.png": "662c9ec95aaf33d503b789e49255889d057e71a740b59a6f8d33284329bd5b0c",
+    "qvae_paths.svg": "b9cef8286bc50dee6d0414a32b0e6817d79ce5147df6ea243dcbdf395528b917",
+    "six_cell_esm_reference.pdf": "016526d1692ffd1ea0114da6e77c60c37e58b10980408a5bbbf8c1b495aa3267",
+    "six_cell_esm_reference.png": "a11cf129d2a43420fb2d998cecb4489e92057eb2ba6d00875529dea81b1c4030",
+    "six_cell_esm_reference.svg": "bd16778bfe6e0a395ef1c87e0b041b839040d091e59fc7d1e778a3e6ba99c941",
+    "six_cell_initialization.pdf": "f553e3f52294186aabe807dd776c370e51ac528c5790d094327cf9cbf889ad07",
+    "six_cell_initialization.png": "f72d3358a0ea9f788b7355e187291541355889616ce8a8ffc8ca81bf857a55b0",
+    "six_cell_initialization.svg": "5fb7b44d40a8fb09c053e3d11ef64dac228751deb8cb31c3dc367cc964167a62",
+    "six_cell_latent.pdf": "e1e007f2acde91b7a6a19e7f7a835c2f634a41c797cdffee970f168907e82503",
+    "six_cell_latent.png": "58e8d49998b21d63177eaa0dde0ff88fb8bbbdc417e6dd8658480936e485e5be",
+    "six_cell_latent.svg": "1c62066194dd58f79baf34be2155865ce01c3eeb0c44e607b5f1174461ea46a8",
+    "six_cell_model_arms.pdf": "22f87f1b48d2034e29f5a3b50f26ecf45e6301ac5e55d757abc36b9734e3a5af",
+    "six_cell_model_arms.png": "6fe58e2a63cf6334b9303482a45d560880a1b1f7197f774da5d69331a1d78c7b",
+    "six_cell_model_arms.svg": "fc811e52a972297d771556f46da95c972323495059f789beb3420da4e8104f73",
+    "study_design.pdf": "19f0a98c61e11901f892cab2a6ad8fb447f36ee8868ab3952d8938fea731ff5c",
+    "study_design.png": "f6747aef7bc5ad0feb2825287fbfe753c3b53b451722950c4cf4c1d7dc61d84c",
+    "study_design.svg": "3d74f8bb0758e4c148cc482be69944e6303e8b875989d647f9a57bab4a6ff12b"
+  },
+  "width_mm": 170,
+  "minimum_font_pt": 8.5,
+  "figures": {
+    "paired": {
+      "test:NMNAT": {
+        "task_worse_mix_better": 16,
+        "both_better": 14,
+        "both_worse": 14,
+        "task_better_mix_worse": 0,
+        "mix_better_than_esm": 30,
+        "mix_better_than_both": 28
+      },
+      "test:Nudix": {
+        "task_worse_mix_better": 13,
+        "both_better": 30,
+        "both_worse": 1,
+        "task_better_mix_worse": 0,
+        "mix_better_than_esm": 43,
+        "mix_better_than_both": 27
+      },
+      "validation:NMNAT": {
+        "task_worse_mix_better": 21,
+        "both_better": 7,
+        "both_worse": 16,
+        "task_better_mix_worse": 0,
+        "mix_better_than_esm": 28,
+        "mix_better_than_both": 28
+      },
+      "validation:Nudix": {
+        "task_worse_mix_better": 15,
+        "both_better": 26,
+        "both_worse": 3,
+        "task_better_mix_worse": 0,
+        "mix_better_than_esm": 41,
+        "mix_better_than_both": 30
+      }
+    },
+    "accuracy": {
+      "test": {
+        "groups": 44,
+        "mean": 2.0595372031031243,
+        "ci95": [
+          1.0435896988873032,
+          3.061739183866178
+        ]
+      },
+      "validation": {
+        "groups": 44,
+        "mean": 0.8788257452125401,
+        "ci95": [
+          -0.10304009151992585,
+          1.7953072202536127
+        ]
+      }
+    },
+    "nearest": {
+      "full_length": {
+        "sequences": 231,
+        "at_least_70": 0,
+        "maximum": 69.89999999999999
+      },
+      "nmnat": {
+        "sequences": 231,
+        "at_least_70": 0,
+        "maximum": 69.3
+      },
+      "nudix": {
+        "sequences": 231,
+        "at_least_70": 192,
+        "maximum": 89.8
+      }
+    },
+    "generation_absolute": [
+      {
+        "arm": "QVAE",
+        "distribution": "joint",
+        "condition": "random",
+        "mean_Hamming": 11.581419665404042,
+        "unique_sequences": 382.76515151515144
+      },
+      {
+        "arm": "QVAE",
+        "distribution": "joint",
+        "condition": "self",
+        "mean_Hamming": 11.642341382575758,
+        "unique_sequences": 382.6363636363636
+      },
+      {
+        "arm": "QVAE",
+        "distribution": "joint",
+        "condition": "external",
+        "mean_Hamming": 11.705176767676766,
+        "unique_sequences": 383.060606060606
+      },
+      {
+        "arm": "QVAE",
+        "distribution": "site_marginal",
+        "condition": "random",
+        "mean_Hamming": 11.580926452020202,
+        "unique_sequences": 382.659090909091
+      },
+      {
+        "arm": "QVAE",
+        "distribution": "site_marginal",
+        "condition": "self",
+        "mean_Hamming": 11.638888888888888,
+        "unique_sequences": 382.69696969696975
+      },
+      {
+        "arm": "QVAE",
+        "distribution": "site_marginal",
+        "condition": "external",
+        "mean_Hamming": 11.701941287878789,
+        "unique_sequences": 382.91666666666674
+      },
+      {
+        "arm": "deterministic",
+        "distribution": "factorized",
+        "condition": "random",
+        "mean_Hamming": 11.575935132575756,
+        "unique_sequences": 382.73484848484844
+      },
+      {
+        "arm": "deterministic",
+        "distribution": "factorized",
+        "condition": "self",
+        "mean_Hamming": 11.633108428030305,
+        "unique_sequences": 382.7272727272728
+      },
+      {
+        "arm": "deterministic",
+        "distribution": "factorized",
+        "condition": "external",
+        "mean_Hamming": 11.70168481691919,
+        "unique_sequences": 382.95454545454544
+      }
+    ]
+  },
+  "bootstrap": {
+    "repeats": 2000,
+    "seed": 20261110,
+    "unit": "component after seed averaging"
+  },
+  "limits": "Historically evaluated samples; conditional intervals. Probability strata use the true label and are not inference gates. Overlapping partitions are not additive to each other."
+}

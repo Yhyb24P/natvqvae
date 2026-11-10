@@ -1,0 +1,6 @@
+# From repository root; use a new empty output directory for reruns.
+python -m natvqvae.cli manuscript-figures --config config/manuscript_figures.yaml --output data/results/evaluation/natv_prediction_figures
+# Actual interpreter: /home/yhshy/miniconda3/envs/nad_data/bin/python
+# From docs/manuscript:
+latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build manuscript.tex
+# No training, model forward passes, fitting, or generation were performed.

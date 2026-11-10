@@ -152,6 +152,11 @@ def _head_complementarity(args):
     return _head_run(run_head_complementarity, args, split=args.split)
 
 
+def _manuscript_figures(args):
+    from .manuscript_figures import render_manuscript_figures
+    return _head_run(render_manuscript_figures, args)
+
+
 def _head_run(function, args, **kwargs):
     from .data import write_json
     output = _result_output(args.output, 'evaluation')
@@ -339,6 +344,11 @@ def build_parser():
     six_cell_plot = sub.add_parser('six-cell-plot', help='re-export six-cell figures from completed comparisons')
     six_cell_plot.add_argument('--comparison', required=True)
     six_cell_plot.set_defaults(func=_six_cell_plot)
+
+    figures = sub.add_parser('manuscript-figures', help='render manuscript figures from frozen scores')
+    figures.add_argument('--config', default='config/manuscript_figures.yaml')
+    figures.add_argument('--output', required=True)
+    figures.set_defaults(func=_manuscript_figures)
 
     explain = sub.add_parser('head-complementarity', help='decompose existing frozen head-mixture scores')
     explain.add_argument('--config', default='config/head_complementarity.yaml')
