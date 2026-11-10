@@ -1,6 +1,6 @@
 # NatV 计算研究论文工作稿
 
-目标期刊为 BMC Bioinformatics。`manuscript.tex` 和 `references.bib` 是英文稿件及文献；编译后的本地 PDF 为 `build/manuscript.pdf`。2026-11-10 修订稿以六格比较、冻结ESM对照、域相似度分层及预测头互补为主线，原迁移与三条件开发结果移入附录。新增实验复用既有确定性权重，验证集拟合温度与混合参数后冻结，完成一次有历史用途的保留集评价；不据此声称外部预训练、共享潜变量或酶学优势。生成、训练曲线和MC精度结果保留，作者资料与完整公开归档仍未完成，不能作为可直接投稿的版本。
+目标期刊为 BMC Bioinformatics。`manuscript.tex` 和 `references.bib` 是英文稿件及文献；编译后的本地 PDF 为 `build/manuscript.pdf`。2026-11-10 修订稿以六格比较、冻结ESM对照、域相似度分层及预测头互补为主线，原迁移与三条件开发结果移入附录。稿件以原始统一50:50概率混合呈现新阳性结果，温度/面板参数作为补充对照，并补充线性概率池、温度缩放、Tranception及RAG-ESM文献。已有概率的位点分解区分排名变化与top-1不变时的概率改善。新增实验复用既有确定性权重，验证集拟合温度与混合参数后冻结，完成一次有历史用途的保留集评价；不据此声称外部预训练、共享潜变量或酶学优势。生成、训练曲线和MC精度结果保留，作者资料与完整公开归档仍未完成，不能作为可直接投稿的版本。
 
 在此目录执行：
 
@@ -22,6 +22,7 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build manuscript.te
 - 六格完整预测：[保留集报告](../../data/results/evaluation/natv_six_cell/test/REPORT.md)、[验证报告](../../data/results/evaluation/natv_six_cell/validation/REPORT.md)与[保留集MC分析](../../data/results/evaluation/natv_six_cell/test_latent_precision/REPORT.md)；正文预测图来自 `test/prediction_effects.pdf`，绘图身份另存于 `figure_identity.json`。
 - 六格固定背景生成：[生成报告](../../data/results/evaluation/natv_six_cell_generation/REPORT.md)、`component_effects.csv`、`hamming_paired.csv`、`candidate_distances.csv`；正文使用同目录 `generation_effects.pdf`。
 - 预测头互补与温度对照：[验证报告](../../data/results/evaluation/natv_head_calibration/validation_protocol_checked/REPORT.md)、[冻结参数保留集报告](../../data/results/evaluation/natv_head_calibration/test/REPORT.md)；对应summary与group_scores记录全部对比、逐seed和逐组结果。初始QVAE/确定性目标概率混合见 `natv_head_mixture/validation_protocol_checked/`，没有追加QVAE温度导出或训练。
+- 预测头互补的位点分解：[保留集报告](../../data/results/evaluation/natv_head_complementarity/test/REPORT.md)、[验证报告](../../data/results/evaluation/natv_head_complementarity/validation/REPORT.md)，同目录CSV和summary记录可加贡献、Jensen项、top-1/真实残基排序、逐组稳健性及输入/源码哈希；命令见 `data/results/evaluation/natv_head_complementarity/commands.txt`。分解复用现有完整概率，没有新增训练、前向或生成。
 - 历史分组重建：[图重建记录](../../data/results/preprocessing/natv_split_relations/historical_components.json)；全长与域最近邻：[搜索汇总](../../data/results/preprocessing/natv_sequence_neighbors/summary.json)。
 - test 序列的历史用途：[逐项核查记录](../../data/results/preprocessing/natv_test_recovered/historical_use.json)。记录包含原始逐序列表、模型种子与执行时间；本轮未重新计算或汇总旧模型分数。
 - 本轮入口冒烟评分的执行记录：[test_smoke_execution.json](../../data/results/evaluation/natv_fragment_transfer/test_smoke_execution.json)。该次逐任务输出已删除，记录区分可核验输入与执行者报告；其分数不用于研究结论或选模。

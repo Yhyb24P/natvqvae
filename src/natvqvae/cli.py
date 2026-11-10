@@ -147,6 +147,11 @@ def _head_calibration(args):
     return _head_run(run_head_calibration, args, fitted_path=getattr(args, 'fit', None))
 
 
+def _head_complementarity(args):
+    from .head_complementarity import run_head_complementarity
+    return _head_run(run_head_complementarity, args, split=args.split)
+
+
 def _head_run(function, args, **kwargs):
     from .data import write_json
     output = _result_output(args.output, 'evaluation')
@@ -334,6 +339,12 @@ def build_parser():
     six_cell_plot = sub.add_parser('six-cell-plot', help='re-export six-cell figures from completed comparisons')
     six_cell_plot.add_argument('--comparison', required=True)
     six_cell_plot.set_defaults(func=_six_cell_plot)
+
+    explain = sub.add_parser('head-complementarity', help='decompose existing frozen head-mixture scores')
+    explain.add_argument('--config', default='config/head_complementarity.yaml')
+    explain.add_argument('--output', required=True)
+    explain.add_argument('--split', choices=('validation', 'test'), default='test')
+    explain.set_defaults(func=_head_complementarity)
 
     for command in ('fit', 'evaluate'):
         calibration = sub.add_parser(f'head-calibration-{command}', help='temperature and probability mixture control')

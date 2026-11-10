@@ -1,0 +1,6 @@
+# Run from the repository root after restoring the six-cell and calibration data bundles.
+# Existing outputs are protected; use new empty destinations for reproduction.
+python -m natvqvae.cli head-complementarity --config config/head_complementarity.yaml --split validation --output data/results/evaluation/natv_head_complementarity/validation
+python -m natvqvae.cli head-complementarity --config config/head_complementarity.yaml --split test --output data/results/evaluation/natv_head_complementarity/test
+# Actual interpreter: /home/yhshy/miniconda3/envs/nad_data/bin/python
+# No model forward passes, fitting, training, or generation.

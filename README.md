@@ -107,6 +107,8 @@ NMNAT 辅助域任务使用 `config/aux_qvae.yaml`，入口为 `aux-train`、`au
 
 预测头诊断复用既有随机初始化权重。`head-mixture-fit --config config/natv_head_mixture.yaml --output <验证输出>` 读取已存目标概率并拟合混合权重。温度对照先用 `head-probabilities --config config/natv_head_mixture.yaml --split validation --output <验证概率目录>` 共享一次ESM编码，导出ESM及三个确定性头的完整20AA概率，再用 `head-calibration-fit --config config/natv_head_calibration.yaml --output <验证拟合目录>` 拟合温度和混合权重；配置中的概率路径须指向对应导出。冻结验证参数后导出test概率，并通过 `head-calibration-evaluate --config config/natv_head_calibration.yaml --fit <验证拟合目录>/fitted_weights.json --output <保留集输出>` 评价。各输出须为空目录；评价入口核对验证输入与实现身份，不使用保留集重新拟合。
 
+`head-complementarity --config config/head_complementarity.yaml --split test --output <分解输出>` 复用完整概率和冻结参数，分解top-1一致性、正确性转换、真实残基概率与排序的NLL贡献；`--split validation` 使用已存留组参数。该命令仅做CPU统计，保留原query/component权重，不重新训练或拟合。
+
 `test-history --recovered-dir data/results/preprocessing/natv_test_recovered` 核对旧评价的序列成员和用途，生成 `historical_use.json`。这批序列在旧项目中已有评价记录；测试比较必须同时读取这份历史说明。
 
 结构工作使用独立配置与结果：`design-build/design-boltz/design-summarize`（`config/design.yaml`）、`microenv-build/microenv-boltz/microenv-summarize`（`config/microenvironment.yaml`）和 `epcr-build/epcr-boltz/epcr-summarize`（`config/epcr_full_length.yaml`）。易错 PCR 比较从 Sanger 峰图与 `NatV.dna` 重建 WT/NatV10/NatV89，使用同一 512 行 MSA 与 Boltz-2 设置，结果在 `data/results/evaluation/kvp40_epcr_full_length_structures/`。

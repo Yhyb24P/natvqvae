@@ -1,0 +1,7 @@
+calibration_config: config/natv_head_calibration.yaml
+fitted: data/results/evaluation/natv_head_calibration/validation_protocol_checked/fitted_weights.json
+scores:
+  validation: data/results/evaluation/natv_head_calibration/validation_protocol_checked
+  test: data/results/evaluation/natv_head_calibration/test
+true_probability_bins: [0.01, 0.05]
+purpose: descriptive_decomposition_of_existing_frozen_predictions
