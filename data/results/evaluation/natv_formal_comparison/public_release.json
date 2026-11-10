@@ -1,0 +1,88 @@
+{
+  "status": "PUBLIC_DOWNLOADS_VERIFIED",
+  "release_url": "https://github.com/Yhyb24P/natvqvae/releases/tag/natv-prediction-study-2026-11-10",
+  "tag": "natv-prediction-study-2026-11-10",
+  "published_at": "2026-11-10T01:17:32Z",
+  "verified_at": "2026-11-10T01:28:12.290147+00:00",
+  "assets": [
+    {
+      "name": "natv_head_calibration_reproduction.tar.zst",
+      "url": "https://github.com/Yhyb24P/natvqvae/releases/download/natv-prediction-study-2026-11-10/natv_head_calibration_reproduction.tar.zst",
+      "size_bytes": 71055029,
+      "sha256": "b128d83f7dd28ab760b80cc9806d2542ee1aa743a1f54e4afec44b2d62cc746f",
+      "anonymous_download": true,
+      "download_api_url": "https://api.github.com/repos/Yhyb24P/natvqvae/releases/assets/729629213",
+      "archive_members": 23,
+      "regular_files": 23
+    },
+    {
+      "name": "natv_six_cell_reproduction.tar.zst",
+      "url": "https://github.com/Yhyb24P/natvqvae/releases/download/natv-prediction-study-2026-11-10/natv_six_cell_reproduction.tar.zst",
+      "size_bytes": 1094147264,
+      "sha256": "e32ef9423eb69d666c204db20924c882896812afbb71aa8c1da480e686ae8f77",
+      "anonymous_download": true,
+      "download_api_url": "https://api.github.com/repos/Yhyb24P/natvqvae/releases/assets/729629223",
+      "archive_members": 6512,
+      "regular_files": 6512
+    },
+    {
+      "name": "REPRODUCE.md",
+      "url": "https://github.com/Yhyb24P/natvqvae/releases/download/natv-prediction-study-2026-11-10/REPRODUCE.md",
+      "size_bytes": 3700,
+      "sha256": "37d3e7f8bb743a9a0ab96fff3c5e59cead425aa94ffc648ee61fc9e204b1c084",
+      "anonymous_download": true,
+      "download_api_url": "https://api.github.com/repos/Yhyb24P/natvqvae/releases/assets/729659476"
+    },
+    {
+      "name": "SHA256SUMS",
+      "url": "https://github.com/Yhyb24P/natvqvae/releases/download/natv-prediction-study-2026-11-10/SHA256SUMS",
+      "size_bytes": 306,
+      "sha256": "86c9dda9c02646cd894b7de6999ec8c10c96baaa110def3adf97d08ae2c42c7d",
+      "anonymous_download": true,
+      "download_api_url": "https://api.github.com/repos/Yhyb24P/natvqvae/releases/assets/729629216"
+    },
+    {
+      "name": "six_cell_source_identity.json",
+      "url": "https://github.com/Yhyb24P/natvqvae/releases/download/natv-prediction-study-2026-11-10/six_cell_source_identity.json",
+      "size_bytes": 4265,
+      "sha256": "c882c02358ae5fa34ac96cd7204969b89b14eb615ce679575794a4f385e1ff64",
+      "anonymous_download": true,
+      "download_api_url": "https://api.github.com/repos/Yhyb24P/natvqvae/releases/assets/729629226"
+    }
+  ],
+  "isolated_recalculation": {
+    "status": "CPU_RECALCULATION_VERIFIED",
+    "source_commit": "8d4eaedb3d70f4560545e1d0caf52c1bc79cf653",
+    "source_sha256": {
+      "src/natvqvae/head_complementarity.py": "bf4e3803c12547743ac6fe1d3242a9e9148bc597e1887b88d0356ff33608ed1b",
+      "src/natvqvae/head_mixture.py": "0063a7c4f3dc64a9a3dd4b6197151d52babac2aaaa8efeea2ce9777c4e760a5c",
+      "src/natvqvae/cli.py": "3a3f95ae99731029812e2cba0e1b56754a64b62f2b425c6baa0f8246fb4b69f6",
+      "config/head_complementarity.yaml": "2f0010f7a0b80f381311d0447cb44038f801b0345d095f3690501599feae4566"
+    },
+    "output_sha256": {
+      "REPORT.md": "0d23248cdd7ebc92ab929d980a3e483c8207f50b3930e1cc6cd549458b735b88",
+      "group_scores.csv": "4a4671d62c1d8678c11955b392cd0b40ab8ae2bd8e28ba0187ed69c5c2aa5479",
+      "stratum_contributions.csv": "0138431824e0f9f5895afacebc795119bccdf7f561cd41331f29a5a050567e9e"
+    },
+    "summary_fields_exact": [
+      "strata",
+      "robustness",
+      "checks",
+      "baseline_parity",
+      "input_sha256"
+    ],
+    "execution": "Fresh source tree of source_commit plus both unchanged data archives; no link to workspace data, no ESM weights, no forward passes or fitting. Public download hashes are checked separately against these same archive bytes.",
+    "command": "python -m natvqvae.cli head-complementarity --config config/head_complementarity.yaml --split test --output data/results/evaluation/natv_head_complementarity/recalculated_test",
+    "elapsed_seconds": 11.72
+  },
+  "scope": "GitHub Release downloads; no DOI or long-term preservation claim. Frozen ESM-2 weights excluded. No new license granted.",
+  "source_tag": "natv-prediction-study-2026-11-10",
+  "documentation_ref": "natv-prediction-study-2026-11-10-delivery",
+  "documentation_url": "https://github.com/Yhyb24P/natvqvae/tree/natv-prediction-study-2026-11-10-delivery/docs/manuscript",
+  "snapshot_roles": "The release/source tag contains code and results plus a pre-publication manuscript. The documentation_ref preserves the delivery manuscript, actual availability statement and this verification record; the original source tag is unchanged.",
+  "six_cell_member_counts": {
+    "manifest_data_files": 6510,
+    "package_metadata_files": 2,
+    "total_archive_members": 6512
+  }
+}
